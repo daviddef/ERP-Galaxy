@@ -19,17 +19,27 @@ for path in sorted(glob.glob(f"{TXT}/*.txt")):
     if base=="SAP EHS Tables":
         TYPES=r'(Transparent Table|General View Structure|Append Structure|Pooled Table|Cluster Table|Structure|View)'
         head=re.compile(r'^\s*(\d+)\s+([A-Z0-9_/]{2,30})\s{2,}(.+?)\s{2,}'+TYPES+r'\s*$')
-        cur=None
-        for line in raw.split("\n"):
-            r=line.rstrip()
-            if not r.strip(): continue
+        cur=None; col=None
+        def flush():
+            if cur: add(cur["n"], cur["d"], cur["t"], base, bucket)
+        for r in raw.split("\n"):
+            r=r.replace("\x0c"," ").rstrip()
+            if not r.strip():
+                continue
             m=head.match(r)
             if m:
+                flush()
                 cur={"n":m.group(2),"d":m.group(3).strip(),"t":m.group(4)}
-                add(cur["n"], cur["d"], cur["t"], base, bucket)
-            elif cur and r.startswith(" "*40):
-                cur["d"]+=" "+r.strip()
-                add(cur["n"], cur["d"], cur["t"], base, bucket)
+                col=m.start(3)                      # where the description column begins
+            elif cur is not None:
+                indent=len(r)-len(r.lstrip())
+                # a continuation must align to THIS row's description column (+/- 3),
+                # which rejects page artifacts and the trailing table-of-contents
+                if abs(indent-col)<=3:
+                    cur["d"]+=" "+r.strip()
+                else:
+                    flush(); cur=None; col=None
+        flush()
         continue
 
     if base=="SAP HR Infotypes":
