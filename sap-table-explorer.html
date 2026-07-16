@@ -33,6 +33,20 @@
   .burger.open span:nth-child(2){opacity:0;}
   .burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
   .tools-backdrop{display:none;}
+  /* "What happens in S/4" verdict box — evidence-backed, sourced. */
+  .lc-box{border-radius:10px;padding:11px 12px;margin:10px 0 14px;border:1px solid var(--border);background:var(--surface2);}
+  .lc-head{font-size:.9rem;margin-bottom:5px;}
+  .lc-body{font-size:.76rem;color:var(--text-muted);line-height:1.45;}
+  .lc-by{margin-top:8px;font-size:.76rem;}
+  .lc-jump{background:var(--fi);color:#fff;border:none;border-radius:5px;padding:3px 8px;font-weight:700;font-size:.74rem;cursor:pointer;font-family:inherit;}
+  .lc-ev{margin-top:8px;font-size:.72rem;font-style:italic;color:var(--text-muted);border-left:2px solid var(--border);padding-left:8px;line-height:1.4;}
+  .lc-src{margin-top:8px;font-size:.64rem;color:var(--text-muted);opacity:.8;}
+  .lc-gone{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.08);}
+  .lc-replaced{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.08);}
+  .lc-compat{border-color:rgba(79,156,249,.5);background:rgba(79,156,249,.08);}
+  .lc-changed{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.06);}
+  .lc-same{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.07);}
+  .lc-unknown{opacity:.85;}
   .depth-control{display:none;}
   .depth-control label{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--text-muted);}
   .depth-value{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
@@ -202,7 +216,7 @@
     <div class="subtitle">Table Universe · ECC6 → S/4HANA · Tap to Explore</div>
   </div>
   <div class="search-box">
-    <span class="search-icon" id="search-icon">🔭</span>
+    <span class="search-icon" id="search-icon">🔍</span>
     <input type="text" id="search" placeholder="Search tables, modules, T-codes…" autocomplete="off" autocorrect="off" spellcheck="false"/>
     <span class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear">✕</span>
   </div>
@@ -275,7 +289,7 @@
           🟢 <strong style="color:#22c55e">Green link</strong> = new in S/4HANA<br>
           🔴 <strong style="color:#ef4444">Red dashed</strong> = ECC6 only / deprecated<br>
           🟢🟡🔴 <strong style="color:var(--text)">Ring colour</strong> = node migration status<br>
-          🔭 <strong style="color:var(--text)">Search</strong> by table, keyword or module<br>
+          🔍 <strong style="color:var(--text)">Search</strong> by table, keyword or module<br>
           🎯 <strong style="color:var(--fi)">Focus</strong> button = 1-hop neighbourhood view
         </div>
       </div>
@@ -2310,6 +2324,40 @@ let selectedNode=null, searchQuery='', simulation, svg, g, link, node, zoomBehav
 let focusMode=false, focusCenter=null, focusDepth=1;
 
 // Lifecycle of a link: based on the status of both endpoint tables
+const S4_LIFECYCLE={"ACDOCA":["changed",null,"The content of most of the former Material Ledger database tables is now stored in table ACDOCA","18.2"],"ANEP":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"ANLC":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"BSAD":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"BSAK":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"BSAS":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"BSEG":["changed",null,"logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion","2.17"],"BSID":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"BSIK":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"BSIM":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"BSIS":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"BUT000":["changed",null,"Time dependency has been disabled at the header level of BUT000 in SAP S/4HANA","3.9"],"CATSDB":["unchanged",null,"CAT2 and CATSDB related transactions (Fiori and WebDynpro ABAP) will continue to be supported as per SAP S/4HANA timelines.","2.41"],"CDPOS":["changed",null,"logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion","2.17"],"COBK":["unchanged",null,"Currently, COBK is written as before.","12.9"],"COEP":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"COSP":["replaced","ACDOCA","reports in Controlling will show only the fields formerly available in COSP/COSS","15.2"],"COSS":["replaced","ACDOCA","reports in Controlling will show only the fields formerly available in COSP/COSS","15.2"],"FAGLFLEXA":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"FAGLFLEXT":["replaced","ACDOCA","reports in Financial Accounting will show only the fields formerly available in FAGLFLEXT","15.2"],"GLFUNCT":["replaced","ACDOCA","the contents of the cost of sales ledger and all special ledgers created in table GLFUNCT are included in the Universal Journal (table ACDOCA)","8.8"],"GLPCA":["changed",null,"Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards","12.6"],"GLT0":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"KNA1":["changed",null,"Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.","3.13"],"KNC1":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"KNC3":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"LFA1":["changed",null,"Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.","3.13"],"LFC1":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"LFC3":["compat_view",null,"totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views","8.2"],"MARC":["compat_view",null,"there are Core Data Service (CDS) Views assigned as proxy objects to all those tables","27.5"],"MARD":["compat_view",null,"there are Core Data Service (CDS) Views assigned as proxy objects to all those tables","27.5"],"MBEW":["replaced","ACDOCA","all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)","18.5"],"MCHB":["compat_view",null,"there are Core Data Service (CDS) Views assigned as proxy objects to all those tables","27.5"],"MKPF":["replaced","MATDOC","Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG","27.5"],"MLHD":["deprecated",null,"these tables and views are obsolete. No read or write access is allowed anymore","8.2"],"MLIT":["deprecated",null,"these tables and views are obsolete. No read or write access is allowed anymore","8.2"],"MSEG":["replaced","MATDOC","Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG","27.5"],"MSTB":["compat_view",null,"there are Core Data Service (CDS) Views assigned as proxy objects to all those tables","27.5"],"MSTE":["compat_view",null,"there are Core Data Service (CDS) Views assigned as proxy objects to all those tables","27.5"],"RFBLG":["deprecated",null,"pool tables and cluster tables are no longer supported","2.17"],"T012K":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"T012T":["replaced","ACDOCA","additional tables were (partially) replaced by Universal Journal (ACDOCA)","8.2"],"T161W":["changed",null,"Field T161W-EXPRF: Procedure in customizing table T161W: Order Types for Stock Transfer","16.3"]};
+const S4_LABEL={
+  deprecated:{icon:"❌",text:"Gone in S/4HANA",cls:"lc-gone"},
+  replaced:{icon:"➡️",text:"Replaced",cls:"lc-replaced"},
+  compat_view:{icon:"🪞",text:"Compatibility view only",cls:"lc-compat"},
+  changed:{icon:"⚠️",text:"Still there, but changed",cls:"lc-changed"},
+  unchanged:{icon:"✅",text:"Unchanged in S/4HANA",cls:"lc-same"}
+};
+function buildLifecycle(d){
+  const e=S4_LIFECYCLE[d.id];
+  if(!e) return `<div class="lc-box lc-unknown">
+      <div class="lc-head">❓ <strong>Not in the Simplification List</strong></div>
+      <div class="lc-body">SAP has not published a simplification item naming this table.
+      That usually means it carries over untouched — but absence of an item is not a promise. Verify before you rely on it.</div>
+    </div>`;
+  const [status,by,ev,item]=e;
+  const L=S4_LABEL[status]||S4_LABEL.changed;
+  const byChip = by ? `<div class="lc-by">Data now lives in <button class="lc-jump" onclick="jumpTo('${by}')">${by}</button></div>` : '';
+  const detail = {
+    deprecated:"This table does not exist in S/4HANA. Code reading it will break.",
+    replaced:"The table may still exist, but it is no longer the system of record.",
+    compat_view:"Reads still work through a compatibility view. It is no longer a real table, and writes are not supported.",
+    changed:"Still present, but its structure, semantics or content changed.",
+    unchanged:"SAP states this table is unaffected."
+  }[status]||"";
+  return `<div class="lc-box ${L.cls}">
+      <div class="lc-head">${L.icon} <strong>${L.text}</strong></div>
+      <div class="lc-body">${detail}</div>
+      ${byChip}
+      ${ev?`<div class="lc-ev">“${ev}”</div>`:''}
+      <div class="lc-src">SAP Simplification List 2023 · item ${item||'—'}</div>
+    </div>`;
+}
+
 function linkLifecycle(aId, bId){
   const a=TABLES.find(t=>t.id===aId), b=TABLES.find(t=>t.id===bId);
   if(!a||!b) return 'retained';
@@ -2387,7 +2435,7 @@ function init(){
   document.getElementById('search').addEventListener('input',e=>{
     searchQuery=e.target.value.toLowerCase();
     document.getElementById('search-clear').classList.toggle('visible',searchQuery.length>0);
-    document.getElementById('search-icon').textContent=searchQuery.length>0?'⭐':'🔭';
+    document.getElementById('search-icon').textContent=searchQuery.length>0?'⭐':'🔍';
     updateGraph();
   });
 }
@@ -2671,6 +2719,8 @@ function buildDetailHTML(d){
     </div>`;
 
   const bodyHtml=`
+    <div class="section-title">🧭 What happens in S/4HANA</div>
+    ${buildLifecycle(d)}
     ${journeySection}
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${d.plainEnglish}</div>
