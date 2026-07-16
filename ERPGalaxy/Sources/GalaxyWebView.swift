@@ -3,6 +3,7 @@ import WebKit
 
 struct GalaxyWebView: UIViewRepresentable {
     @Binding var isLoaded: Bool
+    @Binding var pending: String?
 
     func makeCoordinator() -> GalaxyCoordinator {
         GalaxyCoordinator(isLoaded: $isLoaded)
@@ -45,6 +46,9 @@ struct GalaxyWebView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        // All graph state lives in JS; nothing to push from SwiftUI yet.
+        // Spotlight handed us a table id — show it once the page is ready.
+        guard let id = pending, isLoaded else { return }
+        context.coordinator.showTable(id)
+        DispatchQueue.main.async { pending = nil }
     }
 }

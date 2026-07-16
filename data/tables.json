@@ -111,7 +111,7 @@
    "ACTIVITY"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Task activity codes for CfP task management — the specific action a task represents. Referenced by only a handful of tables, so this is fine-grained config sitting underneath the broader task category and status structure.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -170,7 +170,7 @@
    "REGCHECK"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "A third-party (TDAG) add-on table defining substance regulation checks for Compliance for Products — the rule that flags when a material exceeds a regulated substance limit. It points to normalization and substance-regulation tables (CPC_NOR, CPC_SREG, CPC_UEFU), so it's a hub for check logic rather than the raw regulation data.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -320,7 +320,7 @@
    "CLASS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Extra classification data attached to product specifications in CfP — a supplementary tagging layer on top of the specification, not the specification data itself.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -364,7 +364,7 @@
    "COMPID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The component registry for CfP itself — an internal map of the application's own building blocks (COMPID), used to organize things like tab strips. More about the app's structure than about compliance data.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -437,7 +437,7 @@
    "DECLTYPE"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "One of the /TDAG/-namespaced tables — a third-party add-on, not core SAP — this one defines the declaration types available in Compliance for Products. Three other CfP tables reference it to classify their own declarations.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -522,7 +522,7 @@
    "DOCTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The document types available in Compliance for Products. Notably no MANDT in the key — this table is client-independent, so the same document type list applies to every client in the system.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -612,7 +612,7 @@
    "EMLCAT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Email category codes (EMLCAT) for CfP's messaging — labels classifying the automated emails the compliance process sends out. A categorization table for the notification layer, nothing more.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -641,7 +641,7 @@
    "EMLNO"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Individual emails logged inside Compliance for Products — CLIENT plus a running EMLNO, so one row per email sent or tracked by the CfP process, not just a template.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -671,7 +671,7 @@
    "EMLTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The catalog of email types, category plus type, that Compliance for Products can send. It points to /TDAG/CPC_EMLC for the underlying category configuration, so type and category are kept as separate layers.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -732,7 +732,7 @@
    "REASONID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Escalation reason codes for Compliance for Products — why a compliance task got kicked upstairs. Referenced by the CfP task-history tables, so it's the explanation attached to every escalated task.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -852,7 +852,7 @@
    "COMP_GROUP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Configuration for BOS-explosion processing inside Compliance for Products — one row per COMP_GROUP, the component group the explosion logic runs against. Three other CfP explosion-detail tables build on it.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -973,7 +973,7 @@
    "IMPTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Import format definitions for CfP — how an incoming file (IMPTYP) maps to check reasons, declarations, and document types once it lands. A routing table at the front of the import pipeline, tying four other config tables together.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1065,7 +1065,7 @@
    "SEGMENT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Segments within a REACH import template (IMPTYP) — the sub-blocks of an incoming file layout. Points back to RCSC_INTPL, the template it's a piece of, so this is the fine detail underneath the import mapping.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1156,7 +1156,7 @@
    "MATCAT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Material category codes (MATCAT) used specifically for import classification in CfP — a compliance-side categorization of materials, distinct from standard MM material types. Points to CPC_SPTYPE, so it's one layer of a broader classification scheme.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1213,7 +1213,7 @@
    "NORMVAR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Normalization variants (NORMVAR) — rules for standardizing substance data before it's checked against regulations. Feeds into CPC_CHECK, so it's part of getting messy supplier data into comparable shape before compliance logic runs.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1431,7 +1431,7 @@
    "REPNO"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Report format definitions for Compliance for Products, keyed by report number. Eight other CPC_REP0xx tables build on it, so it's the shared header for whatever family of compliance reports CfP generates.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1461,7 +1461,7 @@
    "ELEMENTID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The individual elements that make up a CfP report — keyed down to REPNO plus ELEMENTID, so this is report structure at the field level. It points back to /TDAG/CPC_REP001, another table in the same report family.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1625,7 +1625,7 @@
    "REGLIST"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The substance regulation list (REGLIST) behind CPC_CHECK's compliance checks. Nine tables reference it, mostly other CfP declaration and exemption tables, so it's the reference data the check logic is actually built on.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1655,7 +1655,7 @@
    "EXEMPTION"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The exemptions carved out against substance regulations in Compliance for Products — REGLIST plus EXEMPTION, so it's specifically the exceptions layered on top of whatever /TDAG/CPC_SREG defines as the base regulation list.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1699,7 +1699,7 @@
    "STATUS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The status values a CfP compliance task can be in — the lookup driving the task list's status column. Seven other CPC/CPT tables reference it, so status logic across compliance tasks all traces back to this one list.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1763,7 +1763,7 @@
    "TABSTRIPID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "UI tab strip definitions for a given CfP component (COMPID) — screen layout config, not compliance data. Points back to CPC_COMP, the component registry it organizes tabs for.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1793,7 +1793,7 @@
    "TASKCAT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Task category codes (TASKCAT) for CfP's task management — grouping compliance tasks by kind. Notably points to USR02, the user master, which suggests a category can carry a default responsible user.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -1904,7 +1904,7 @@
    "USEXNAM"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The wiring table connecting CfP user exits to actual function modules — this is where custom logic gets hooked into the standard process. It points to /TDAG/CPC_UETY, the user-exit type table.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -2020,7 +2020,7 @@
    "VIEWER_NO"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Registered viewer applications for opening CfP-generated documents. Config for the tooling layer — which program renders a compliance document — not the compliance data itself.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -2064,7 +2064,7 @@
    "WLNAME"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The named worklists available in Compliance for Products — just the valid worklist names. Referenced by the worklist config and parameter tables that actually populate what shows up in each one.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -2093,7 +2093,7 @@
    "WLSTATUS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The status values a CfP worklist entry can carry. A plain lookup, but five CPT_ worklist tables — checks, history, imports, reviews — all key off it, so it's the shared vocabulary for where an item stands in the process.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -2370,7 +2370,7 @@
    "ORGID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "IMDS organization identifiers (ORGID) — companies as they're known in the International Material Data System, used when exchanging substance data with suppliers. Referenced by the IMDS sync and address tables.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -2540,7 +2540,7 @@
    "HDRNO"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The header record for a CfP compliance task — one row per task, tying together the check performed, its status, category, and escalation reason, plus links out to the customer (KNA1), material (MARA), and plant (T001W) involved. The central record the rest of the CPT_TASK* detail tables hang off.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3268,7 +3268,7 @@
    "ALTTYPE"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "An obsolete table — SAP's own description says so — that used to define alternative types for REACH compliance. Still referenced by three other tables, so it hasn't been fully cleaned up even though it's retired.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3356,7 +3356,7 @@
    "DOCGRP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Document groups for REACH compliance — the grouping layer over CfP documents. It's referenced by /TDAG/RCSC_EMLC, tying document grouping into how compliance emails get configured downstream.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3399,7 +3399,7 @@
    "EML_CONFID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The communication settings hub for REACH compliance — it ties together document groups, email groups, and templates (three separate points_to) under one configuration id. A central table for how REACH correspondence goes out.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3458,7 +3458,7 @@
    "EMLGRP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Email groups for REACH compliance — who receives which category of compliance correspondence. /TDAG/RCSC_EMLC references it directly when assembling its communication settings.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3551,7 +3551,7 @@
    "IMPTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Incoming import templates (IMPTYP) for REACH compliance data — how the system reads a supplier's substance declaration file. Points out to five other tables (check reasons, declarations, document types, a viewer, and its own template table), so it's the entry point of an import pipeline rather than the data itself.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3745,7 +3745,7 @@
    "EXPTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Outgoing REACH templates (EXPTYP) — the mirror of RCSC_INTPL, defining how compliance data gets formatted on the way out rather than the way in. Pulls in normalization rules and a viewer, so it's the export half of the import/export pipeline.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3915,7 +3915,7 @@
    "TEMPLID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "REACH compliance templates, one row per TEMPLID. Referenced by both an inbound and an outbound processing table, so the same template list serves correspondence going in both directions.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -3987,7 +3987,7 @@
    "TPLGRP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Template groups (TPLGRP) for REACH compliance — a grouping layer over the individual import/export templates, referenced by requirement and email-category tables. Organizational config more than working data.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -4706,7 +4706,7 @@
    "BELNR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The header for a Funds Management posting document — same header-then-lines pattern as BKPF and BSEG, just scoped to FM controlling objects. BPEG, BPEJ, and BPEP hang off it as the line-item detail.",
   "module": "FM",
   "submodule": "FM",
   "tier": 2
@@ -5479,7 +5479,7 @@
    "VERSION"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Header record for a dangerous goods regulation exception — a case where a shipment is exempt from a rule it would otherwise trigger, versioned so exceptions can change over time. Country lists, texts, and UN numbers for the exception hang off it in DGTEXCCNTRIES, DGTEXCTEXTS, and DGTEXCUNNO.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -6699,7 +6699,7 @@
    "DATBIS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Funds center master data (FICTR) in Funds Management — the budget-holding unit within a financial management area (FIKRS), roughly Funds Management's answer to a cost center. Ties back to company code, country, currency, and business area, inheriting a lot of context from core FI.",
   "module": "FM",
   "submodule": "FM",
   "tier": 2
@@ -6924,7 +6924,7 @@
    "PLAN_REQUEST"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The header for a travel request — keyed down to person (PERNR), trip (REINR), and even a request version, so multiple versions of the same request can coexist. It links to PTRV_HEAD, T005 for country, and TCURC for currency.",
   "module": "FI",
   "submodule": "FI-TV",
   "tier": 2
@@ -6958,7 +6958,7 @@
    "VARIANTVRS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Alternate versions of a travel plan — same trip, different variant — so a traveler can compare options before booking. Keyed all the way down to PERNR, REINR, PLANNR and a variant number, and tied to FTPT_PLAN and TCURC for currency.",
   "module": "FI",
   "submodule": "FI-TV",
   "tier": 2
@@ -10662,7 +10662,7 @@
    "PERNR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Infotype 0003, one row per employee (PERNR) — payroll status data: where that employee currently stands in payroll processing. With 456 tables referencing it, this is one of the most load-bearing tables in HR; nobody browses it directly, but nearly everything checks it.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -19726,7 +19726,7 @@
    "AFTLF"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Run header data for the program that retroactively corrects a missing business area or profit center on postings — one row per correction run, per company code (BUKRS). Referenced by the BFIT/BFOD/BFOK adjustment tables that hold the actual fix.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -20200,7 +20200,7 @@
    "BTRTL"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Personnel subareas (BTRTL) under a personnel area (WERKS) — the finest-grained slice of HR org assignment, feeding into pay scale (T510A) and country grouping (T500L). Every employee's org assignment on PA0001 ultimately resolves down to one of these.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -20242,7 +20242,7 @@
    "BUSAB"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Accounting clerk codes (BUSAB) assigned within a company code — who's responsible for which customer or vendor accounts. Shows up on KNB1/LFB1 master records and REGUH, so it's how dunning and payment processing know who to flag.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -20311,7 +20311,7 @@
    "MYKEY"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Valuation levels for LIFO inventory costing (MYKEY) — the grouping a LIFO pool is calculated at. Referenced by the MY-prefixed family (MYML, MYMP, MYPL and their variants), so it's foundational if a company runs LIFO, invisible if it doesn't.",
   "module": "MM",
   "submodule": "MM-IM",
   "tier": 2
@@ -20519,7 +20519,7 @@
    "QLAND"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Country-specific withholding tax keys (QLAND) — used where a vendor's tax residence differs from the paying country. Referenced by KNB1, LFB1 and the T059F/T059FB withholding family, so it matters most for cross-border payments.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -20548,7 +20548,7 @@
    "MWSKZ"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Tax code definitions (MWSKZ) within a calculation procedure (KALSM) — the config behind every tax line on a posting. 31 tables depend on it, including BSEG and BSET, so a missing or wrong entry here shows up as a tax error on live documents, not just in customizing.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -20761,7 +20761,7 @@
    "ZAHLS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Payment block reason codes (ZAHLS) — why a vendor or customer line is being held back from a payment run. Sits on BSEG, BSID, BSIK as well as the KNB1/LFB1 master records, so the same code explains a block whether it's set at document or master data level.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -20983,7 +20983,7 @@
    "LZBKZ"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "SCB ratio codes — a slim piece of FI configuration (LZBKZ) referenced from BSEG and the open-item tables BSID/BSIK. The description doesn't spell out what SCB stands for, so treat it as low-visibility config that occasionally surfaces on a posting line rather than something with a bigger story.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -20996,7 +20996,7 @@
    "BRSCH"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Industry codes (BRSCH) — a classification tag on customer and HR master data (KNA1, PA0023, PA0634). A simple lookup, mostly used for reporting and segmentation rather than driving process logic.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -21108,7 +21108,7 @@
    "SRVAR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Sort variant definitions for how FI line items get displayed — the config behind those line-item report sort options. It points to DD02L, the ABAP Dictionary table catalog, since a sort variant ultimately references real table fields.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -21223,7 +21223,7 @@
    "KKBER"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Credit representative groups (SBGRP) within a credit control area (KKBER) — who on the credit team owns which customers. Sits alongside T691A's risk categories in the credit management picture, referenced by the same KNKK/VBAK circle of tables.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -21236,7 +21236,7 @@
    "EKORG"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The list of purchasing organisations — the \"who is allowed to buy\" unit in MM. 31 tables point back at this one, which tells you how much of purchasing hangs off it. Small table, wide blast radius.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -21320,7 +21320,7 @@
    "EVERS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Shipping instruction codes attached to purchasing documents — how the goods should be handled or shipped. EINE (purchasing info record conditions) and MSEG (material document line items) both reference it, so it follows the order through to goods movement.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -21646,7 +21646,7 @@
    "BWBER"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Depreciation areas (BWBER) — the parallel valuation views on a fixed asset, such as book vs. tax depreciation or a group-currency view. Every asset value in the system exists once per depreciation area defined here.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -21707,7 +21707,7 @@
    "KTOSY"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Account symbols used in account determination — a level of indirection so config tables can say 'post to this symbol' instead of hard-coding a G/L account directly. Three other T033 tables build on it.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -21793,7 +21793,7 @@
    "STGRD"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Reason codes explaining why a posting got reversed — the STGRD code you pick when backing out a document. VBRK, the billing header, references it too, so the same reason list covers reversed billing documents.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -21878,7 +21878,7 @@
    "ZLSCH"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Every payment method your payment run can use — cheque, transfer, direct debit — one row each. When F110 says a method isn't allowed, this is usually where the answer is.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -21905,7 +21905,7 @@
    "TOGRU"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Tolerance limits set per company code (BUKRS) for a group of customers or vendors — how much of a discrepancy gets waved through before someone has to look at it. Both KNB1 and LFB1 point back to it.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22321,7 +22321,7 @@
    "XAUSZ"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "A flag controlling whether a customer or vendor gets periodic account statements — XAUSZ is the on/off switch. KNB1 and LFB1 both carry it, so it's set per business partner per company code.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22507,7 +22507,7 @@
    "URLID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Defines negotiated payment terms, one row per URLID, alongside the standard payment terms config. KNB1 references it, so it's attached at the individual customer level within the company code data.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22591,7 +22591,7 @@
    "SREGL"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Selection rules (SREGL) for payment advices — how the system decides which open items a payment advice note should match against. Referenced from AVIK (the advice header) and KNB1, it's config behind the automatic matching, not the advice data itself.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22675,7 +22675,7 @@
    "RSTGR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Reason codes (RSTGR) for payment differences, kept per company code (BUKRS). When a customer or vendor pays the wrong amount and someone needs to record why, this is the classification they pick from — referenced straight off BSEG, BSID and BSIK.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22703,7 +22703,7 @@
    "VRSDG"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Version codes (VRSDG) for reason code conversion — lets a company redefine what a payment reason code means over time without losing what it used to mean. Referenced by AVIK and the T053E/T053W reason-code tables.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22730,7 +22730,7 @@
    "DBAKZ"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The schedule that drives recurring postings — how often a recurring document template fires. BKDF, the recurring entry document table, references it directly to know when to run.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -22815,7 +22815,7 @@
    "VZSKZ"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Interest calculation indicators (VZSKZ) used in interest settlement — referenced from customer and vendor master records (KNB1, LFB1) as well as G/L accounts (SKB1, SKM1). One code drives interest calc wherever it's switched on, across both accounts and account types.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -23045,7 +23045,7 @@
    "QSREC"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Withholding tax classes (QSREC) — the exemption or rate tier a vendor falls into for a given withholding tax type. This is the config that determines how much actually gets withheld, one step past T059P's basic tax type.",
   "module": "FI",
   "submodule": "FI-AP",
   "tier": 2
@@ -23075,7 +23075,7 @@
    "QEKAR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Income types for withholding tax, defined per country (LAND1) via a link to T005. Before tax can be withheld correctly, the system needs to know what kind of income it's dealing with — this is that classification.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -23248,7 +23248,7 @@
    "WITHT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The catalog of withholding tax types, one set per country (LAND1). It sits at the top of a small hierarchy — T059C and T059D, both in its referenced_by list, hang their detail off the WITHT code defined here.",
   "module": "FI",
   "submodule": "FI-AP",
   "tier": 2
@@ -23338,7 +23338,7 @@
    "WT_WTEXRS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Reasons a vendor can be exempted from a specific withholding tax type, per country. LFBW — vendor withholding tax data — references it directly, so this is the code that shows up when a vendor legitimately shouldn't have tax withheld.",
   "module": "FI",
   "submodule": "FI-AP",
   "tier": 2
@@ -23368,7 +23368,7 @@
    "WT_WITHCD"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Extended withholding tax codes (WT_WITHCD), one layer more granular than T059P's tax type — this is the actual code posted against a vendor line. Five other config tables feed into it (T005, T005P, T059E, T059O, T059P), which tells you extended withholding tax setup isn't a one-table job.",
   "module": "FI",
   "submodule": "FI-AP",
   "tier": 2
@@ -23431,7 +23431,7 @@
    "AWTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Evaluation type definitions for the A/R and A/P information system — KOART tells you whether an entry is for customers or vendors. It's config sitting under T060, the information system's core table.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -23505,7 +23505,7 @@
    "KOART"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Evaluation view definitions for the A/R and A/P information system — the saved 'lens' (by owner, by account type KOART) that reporting gets run through. Config for how the info system presents receivables and payables, not the transactions themselves.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -23590,7 +23590,7 @@
    "BSTAR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Stock type codes (BSTAR) used in physical inventory — the state a counted quantity gets flagged as. Referenced by the inventory count tables SBSE and SLGH, it's about the tag, not the quantity itself.",
   "module": "MM",
   "submodule": "MM-IM",
   "tier": 2
@@ -23691,7 +23691,7 @@
    "UMSKZ"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Behavior flags for special G/L indicators (UMSKZ), by account type (KOART) — the setup behind transactions like down payments, bills of exchange, and guarantees. It's what tells the system a posting needs special handling instead of normal open-item logic.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -23783,7 +23783,7 @@
    "KTOKD"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Customer account groups (KTOKD) — the classification set at customer creation that controls which fields are required, optional, or hidden, and what number range gets used. Referenced by KNA1 and tables like T077K, T077X and TPAKD that hang further config off it, decided once at master-data creation and rarely touched again.",
   "module": "FI",
   "submodule": "FI-AP",
   "tier": 2
@@ -23978,7 +23978,7 @@
    "HKRIT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Main criteria (HKRIT) for vendor evaluation — the top-level scoring categories, things like price, quality, delivery, service. Everything under vendor evaluation's sub-criteria and scores (ELBM, ELBP) eventually rolls up into one of these.",
   "module": "MM",
   "submodule": "MM-VE",
   "tier": 2
@@ -24291,7 +24291,7 @@
    "BSART"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Purchasing document types (BSART), with BSTYP marking the broader document category — standard PO, contract, scheduling agreement, RFQ. Eight other tables (T161P/T/W, the T166 family, TVKO) hang further configuration off whichever type is defined here.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24365,7 +24365,7 @@
    "PSTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Item categories (PSTYP) for purchasing documents — the flag that decides how a line behaves under the hood. Referenced across RSEG (invoice line items) and QALS (quality inspection lots) among others, so it's a switch multiple downstream processes check.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24378,7 +24378,7 @@
    "BEWTP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The categories that classify each line in a purchase order's history — BEWTP is the category code. EKBE, the PO history table itself, depends on it to say what kind of event each history line represents.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24418,7 +24418,7 @@
    "EBTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Confirmation categories (EBTYP) in purchasing — the type tag on a vendor confirmation, distinguishing an order acknowledgment from a shipping notice or a delivery date change. Referenced by EKES and PEKES, the confirmation tables that hang off a PO line.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24473,7 +24473,7 @@
    "KNTTP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Account assignment categories for purchasing documents (KNTTP) — the setting that decides whether a PO line is charged to stock, a cost center, an order, or a project. Referenced by RESB and RSEG, it's the switch between 'this becomes inventory' and 'this is a direct expense.'",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24500,7 +24500,7 @@
    "BSTAE"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Confirmation control keys (BSTAE), set on the vendor (LFM1/LFM2) to say which confirmation categories are expected, and in what sequence, for that vendor's purchase orders. This is the setup; T163E's categories are what get plugged into it.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24845,7 +24845,7 @@
    "FRGCO"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Release codes for purchasing approval strategies — the individual sign-off steps (FRGCO) within a release group (FRGGR). Points to T16FG, the release strategy itself, so this is one level down: the actual codes an approver enters.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24887,7 +24887,7 @@
    "FRGGR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Release groups (FRGGR) — the first fork in purchasing's release-strategy tree, before release codes and strategies get involved. Referenced by six T16F* tables, it's config plumbing behind who has to approve a PO before it goes out.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -24937,7 +24937,7 @@
    "FRGSX"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Release strategies (FRGSX) within a release group (FRGGR) — the actual approval workflow for a purchasing document, spelling out which codes must sign off and in what combination. Referenced straight from EKKO, it's the rule the system checks before letting a PO go out.",
   "module": "MM",
   "submodule": "MM-PUR",
   "tier": 2
@@ -25092,7 +25092,7 @@
    "MOLGA"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Just the list of country groupings (MOLGA) — the code SAP HR uses to localize payroll and personnel rules per country. Referenced from org management (HRP1005, HRP1501...), personnel areas, even travel management (PTRV_HEAD). Tiny table, wide reach.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25105,7 +25105,7 @@
    "PERSA"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Personnel areas (PERSA) — the HR-specific division of a company code, sitting one level below it in the org structure. Points back to T001 (company code) and T500L (country grouping), so it's the join between legal entity and HR administration.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25119,7 +25119,7 @@
    "FAMST"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The language-dependent text for marital status codes (SPRSL plus FAMST) — just the labels, not the codes themselves. Referenced from PA0106 and PA0394, the personnel infotypes that actually store an employee's status.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25198,7 +25198,7 @@
    "TRFAR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Pay scale types (TRFAR), defined per country grouping (MOLGA) — referenced by compensation infotypes like PA0008 and by organizational management tables (HRP1005, HRP1501). Part of the config chain behind what an employee is paid, one level up from the actual pay numbers.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25277,7 +25277,7 @@
    "ENDDA"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Valuation rules for wage types — how a given LGART actually gets computed during payroll, per country grouping (MOLGA). Sits right next to T512Z, which controls whether a wage type is allowed at all; this one governs what happens once it is.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25293,7 +25293,7 @@
    "ENDDA"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The rulebook for which wage types (LGART) are permitted on which infotype (INFTY), per country grouping (MOLGA). It's config, not data — but if a wage type isn't listed here, payroll simply won't let anyone enter it.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25367,7 +25367,7 @@
    "MASSG"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The reason codes behind every personnel action — why someone was hired, transferred, or let go, not just that it happened. PA0000, the core Actions infotype, points straight at it, along with PA0044 and PA0302.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25414,7 +25414,7 @@
    "ENDDA"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Daily work schedule rules for time management — a deep key (program, variant, sequence, end date) because schedules can vary and change over time. PA2003 and two other T550/T552 tables all build on it.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25494,7 +25494,7 @@
    "ENDDA"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The catalog of attendance and absence types (MOABW). Referenced by the time infotypes PA2001/PA2002 and by CATSHR (cross-application time sheets), so every logged absence or attendance record points back to a type defined here.",
   "module": "HR",
   "submodule": "HR",
   "tier": 2
@@ -25599,7 +25599,7 @@
    "KKBER"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Risk categories for customer credit management, scored within a credit control area (KKBER). Referenced by KNKK (the credit master) and sales documents like VBAK, so this label is ultimately what decides how much rope a customer gets before an order gets blocked.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -25670,7 +25670,7 @@
    "ABSFO"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Forms of payment security (ABSFO) — letters of credit, bank guarantees, and similar — used in credit management on higher-risk sales. Referenced on sales document lines (VBAP, VBRP), it's what a risky order gets backed by instead of open credit.",
   "module": "FI",
   "submodule": "FI-AR-CR",
   "tier": 2
@@ -25697,7 +25697,7 @@
    "ABSSC"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Payment guarantee procedures (ABSSC) — the processing logic layered on top of T691K's guarantee forms. Sits on the delivery (LIKP) and the sales document (VBKD), governing how a secured order actually gets handled downstream.",
   "module": "FI",
   "submodule": "FI-AR-CR",
   "tier": 2
@@ -25738,7 +25738,7 @@
    "KABSS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Payment guarantee procedure assigned per customer — KABSS is the procedure code sitting on KNVV, the customer's sales data. This is credit-management config: how a customer's payment gets secured before goods ship.",
   "module": "FI",
   "submodule": "FI-AR-CR",
   "tier": 2
@@ -25765,7 +25765,7 @@
    "BABSS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The document-level counterpart to T691P — same payment guarantee procedure concept, but assigned per document (BABSS) rather than per customer. TVAK, the sales document type table, references it.",
   "module": "FI",
   "submodule": "FI-AR-CR",
   "tier": 2
@@ -25836,7 +25836,7 @@
    "RGION"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Maps each country to its trip region and country group inside Travel Management — the geography layer that lets travel rules apply per-region instead of country by country. PTRV_HEAD, the travel header table, relies on it.",
   "module": "FI",
   "submodule": "FI-TV",
   "tier": 2
@@ -25964,7 +25964,7 @@
    "QANSW_TYPE"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Answer type codes for EHS questionnaires — the format a response takes (QANSW_TYPE), whatever those turn out to be: free text, yes/no, or otherwise. Referenced from the question catalog and generation tables, it defines what kind of response a given question expects.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -25991,7 +25991,7 @@
    "QUEST_CATALOG"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The question catalogs themselves in EHS questionnaires — the named sets that questions and groups get organized into. Points to QRELTYP, tying a catalog back to what kind of object it's meant to be used against.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26033,7 +26033,7 @@
    "FORMTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The catalog of form types available to EHS questionnaires — the shape a questionnaire can take before anyone starts asking safety questions. Four questionnaire-related tables, including the form and category tables, hang off it.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26207,7 +26207,7 @@
    "QUEST_GROUP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Question groups within an EHS catalog — the folder layer between a catalog and its individual questions. A straightforward hierarchy: catalog contains groups, groups contain questions, both traceable back through the same QUEST_CATALOG key.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26251,7 +26251,7 @@
    "TYPE"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The object types an EHS questionnaire can be assigned to. Small config table, but eight other T7EHS00_* tables reference it — catalogs, forms, custom extensions — so it's the pivot point for how a questionnaire attaches to a real object.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26386,7 +26386,7 @@
    "Q_ID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "One row per EHS questionnaire — the definition, not the answers. It links out to a relation type and a status table, so a questionnaire here is a live object with state, not just a static form.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26470,7 +26470,7 @@
    "RSUBD"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Subgroup definitions for consolidation — how entities get bucketed below the main consolidation group. The FILC* tables (consolidation line items) reference it, and it links to TCURC since consolidation always has a currency dimension.",
   "module": "FI",
   "submodule": "FI-CS",
   "tier": 2
@@ -26500,7 +26500,7 @@
    "TRTYP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Transaction type codes used in consolidation — a tag on a posting for what kind of consolidation-relevant event it represents. Referenced from BSEG up through the special-ledger totals tables (FAGLFLEXA, FAGLFLEXT, FILCA, FILCP, FILCT), so it threads from the raw line item into consolidated reporting.",
   "module": "FI",
   "submodule": "FI-CS",
   "tier": 2
@@ -26812,7 +26812,7 @@
    "SUBCAT"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Defines the types a product safety specification can be — the classification layer under EHS specs. It points to TCG51, the property tree, so type determines which properties even apply to a given specification.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26825,7 +26825,7 @@
    "AUTHGRP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The authorization group that gates who can see or edit an EHS specification — AUTHGRP is what gets checked. ESTRH, a core specification table, carries it, so access control is baked into the specification structure itself.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26852,7 +26852,7 @@
    "MENID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The tree that organizes every property an EHS specification can carry — the folder structure for chemical and product attributes. TCG31 and three other EHS tables reference it to know where their properties sit.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26907,7 +26907,7 @@
    "VACLID"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The rating values assigned to characteristics inside EHS specification management. It's a small lookup table, but four other EHS tables depend on it to interpret what a characteristic's value actually means.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -26920,7 +26920,7 @@
    "USEPROF"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Usage profiles that control how an EHS specification can be used downstream. Referenced by /TDAG/CPC_SREG, so the Compliance for Products add-on relies on core EHS usage profiles rather than defining its own.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -27054,7 +27054,7 @@
    "EXCEPTPROFILE"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Exception profiles for dangerous goods regulations — named override sets that let specific shipments bypass standard DG rules. DGTEXCEPT, the exceptions table itself, is built on top of it.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -27095,7 +27095,7 @@
    "DG_PACKAGE_LEVEL"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Packaging levels for dangerous goods — a hierarchy keyed by DG_PACKAGE_LEVEL. VEKP, the handling unit header, references it directly, so DG packaging rules attach right down to the physical handling unit.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -27134,7 +27134,7 @@
    "PROLI"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The dangerous goods profile attached to a sales document — PROLI drives which DG checks and rules apply. Both VBAK (sales order header) and LIKP (delivery header) carry it, so the profile follows the document from order through delivery.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -27161,7 +27161,7 @@
    "DGRPROF"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Dangerous goods regulation profiles (DGRPROF) — the named rule sets a shipment gets checked against. Referenced by delivery item tables like LIPSDG and LIPSDGAP, it's the profile assigned before a shipment can be evaluated for dangerous goods compliance.",
   "module": "EHS",
   "submodule": "EHS",
   "tier": 2
@@ -27390,7 +27390,7 @@
    "GSBER"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The master list of business areas (GSBER). Referenced by 48 tables — asset accounting (ANLZ), document line items (BSEG, BSID, BSIK, BSIS), CO postings (COEP) — so nearly every financial posting can carry one, even though the table itself is little more than a code.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -27822,7 +27822,7 @@
    "MYVER"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Version directory for LIFO valuation runs, sitting underneath T001Y's valuation levels. Effectively tracks which LIFO calculation pass a given value belongs to — plumbing for inventory valuation history, not something anyone browses directly.",
   "module": "MM",
   "submodule": "MM-IM",
   "tier": 2
@@ -27867,7 +27867,7 @@
    "MYPOOL"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The pool a material belongs to for LIFO valuation — materials get grouped into pools so they're valued together rather than one at a time. MBEW, material valuation itself, points here, and it links out to T001Y for further configuration.",
   "module": "MM",
   "submodule": "MM-IM",
   "tier": 2
@@ -27992,7 +27992,7 @@
    "ABTNR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The department code assigned to a contact person — ABTNR. KNVK, the contact person master table, carries it, and it shows up again on LIPS and VBKD, so the same department tag flows into delivery and billing document items.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -28120,7 +28120,7 @@
    "TXJCD"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The valid tax jurisdiction codes. It's a check table, so it exists to stop anyone typing a jurisdiction that doesn't exist. Mostly invisible until someone loads master data and it rejects half the rows.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -28282,7 +28282,7 @@
    "FAKSP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Reason codes for blocking a billing document (FAKSP), referenced from the sales order header (VBAK) down to the delivery item (LIPS). When an invoice won't generate, this is often the code sitting in the way.",
   "module": "SD",
   "submodule": "SD-BIL",
   "tier": 2
@@ -28323,7 +28323,7 @@
    "KTGRD"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The account assignment group sitting on a customer's sales record — it's what tells billing which G/L accounts a sale should hit. KNVV (customer sales data) and VBRK (billing header) both point back to it.",
   "module": "SD",
   "submodule": "SD-BIL",
   "tier": 2
@@ -28350,7 +28350,7 @@
    "PSTYV"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Item categories for sales documents (PSTYV) — the SD counterpart to purchasing's item category tables. Referenced from the sales order item (VBAP) down to handling unit tables (VEKP, VEPO), it decides how a line flows through pricing and delivery.",
   "module": "FI",
   "submodule": "FI-AR",
   "tier": 2
@@ -28540,7 +28540,7 @@
    "GJAHR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "The header for a parked posting document — a draft that hasn't posted yet, one step before it becomes a real BKPF/BSEG pair. The four VBSEG* line-item tables hang off it, mirroring how BSEG hangs off BKPF.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -28663,7 +28663,7 @@
    "WFVAR"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Release workflow variant data (WFVAR), scoped per company code — part of the document release approval chain alongside VBWF02 through VBWF16. If a document is stuck waiting on approval, this family of tables is where the workflow variant that governs it lives.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -28690,7 +28690,7 @@
    "FRWEG"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Approval paths (FRWEG) for the document release workflow — the routing that decides which approver sees a document next. Part of the same VBWF* family as VBWF01, and referenced directly from the release header table VBKPF.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -28747,7 +28747,7 @@
    "FRGRP"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Release approval group assignments (FRGRP) in the document release workflow — who belongs to which approval group. Referenced from customer and vendor master data (KNB1, LFB1) as well as other VBWF* tables, tying people to the approval steps they're allowed to clear.",
   "module": "FI",
   "submodule": "FI-GL",
   "tier": 2
@@ -29005,7 +29005,7 @@
    "CTNOCLASS"
   ],
   "keySource": "public-reference",
-  "lore": null,
+  "lore": "Numbering classes for withholding tax certificates — the scheme controlling how certificate numbers get assigned. Small config table, but the whole WITH_CTNCO/WITH_CTNUM numbering chain hangs off the class defined here.",
   "module": "FI",
   "submodule": "FI-AP",
   "tier": 2

@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		315A02BCB47CE78F910D6D6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333C889F1B30FC8D13A26D3 /* ContentView.swift */; };
 		32C5C8709AC8AD672DD20B83 /* GalaxyWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A4D5EC1260BCC74E5F779 /* GalaxyWebView.swift */; };
+		367A02A75CF26E13AD1C8AAE /* Data in Resources */ = {isa = PBXBuildFile; fileRef = A35B734EDC7464DEEF20DCDC /* Data */; };
 		37682F9D2C802AF15871704F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69F91FC4D01A4114A642BDE3 /* Assets.xcassets */; };
 		5806EC65339BB95F27AE815E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA88511E70477C58391983 /* SplashView.swift */; };
+		69ADCBEF74E6470007870934 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D47951BB73B5DE046FB3E6 /* SpotlightIndexer.swift */; };
 		7D390B4A61282FD026F157F5 /* GalaxyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B8376D39DC6FC1DFDEBFD /* GalaxyCoordinator.swift */; };
 		84FE4DD6605761E082121CF3 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = 00FBA5DD6719B37A4482E8C4 /* Web */; };
+		981C0D51F0DFF2F5E06E2E15 /* TableStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790408778D6A953E96AB70D9 /* TableStore.swift */; };
 		CABF0B23EEE71EB5BB6EA768 /* ERPGalaxyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61555EBC6F26F643717BD185 /* ERPGalaxyApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,11 +23,14 @@
 		00FBA5DD6719B37A4482E8C4 /* Web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Web; path = ERPGalaxy/Resources/Web; sourceTree = SOURCE_ROOT; };
 		61555EBC6F26F643717BD185 /* ERPGalaxyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERPGalaxyApp.swift; sourceTree = "<group>"; };
 		69F91FC4D01A4114A642BDE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		790408778D6A953E96AB70D9 /* TableStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableStore.swift; sourceTree = "<group>"; };
 		85DA88511E70477C58391983 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		A35B734EDC7464DEEF20DCDC /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Data; path = ERPGalaxy/Resources/Data; sourceTree = SOURCE_ROOT; };
 		AE6A4D5EC1260BCC74E5F779 /* GalaxyWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyWebView.swift; sourceTree = "<group>"; };
 		B333C889F1B30FC8D13A26D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B35B8376D39DC6FC1DFDEBFD /* GalaxyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyCoordinator.swift; sourceTree = "<group>"; };
 		B8E70A10F840707D2F8AB297 /* ERPGalaxy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ERPGalaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4D47951BB73B5DE046FB3E6 /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -40,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				69F91FC4D01A4114A642BDE3 /* Assets.xcassets */,
+				A35B734EDC7464DEEF20DCDC /* Data */,
 				00FBA5DD6719B37A4482E8C4 /* Web */,
 			);
 			path = Resources;
@@ -62,6 +69,8 @@
 				B35B8376D39DC6FC1DFDEBFD /* GalaxyCoordinator.swift */,
 				AE6A4D5EC1260BCC74E5F779 /* GalaxyWebView.swift */,
 				85DA88511E70477C58391983 /* SplashView.swift */,
+				E4D47951BB73B5DE046FB3E6 /* SpotlightIndexer.swift */,
+				790408778D6A953E96AB70D9 /* TableStore.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -135,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37682F9D2C802AF15871704F /* Assets.xcassets in Resources */,
+				367A02A75CF26E13AD1C8AAE /* Data in Resources */,
 				84FE4DD6605761E082121CF3 /* Web in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +161,8 @@
 				7D390B4A61282FD026F157F5 /* GalaxyCoordinator.swift in Sources */,
 				32C5C8709AC8AD672DD20B83 /* GalaxyWebView.swift in Sources */,
 				5806EC65339BB95F27AE815E /* SplashView.swift in Sources */,
+				69ADCBEF74E6470007870934 /* SpotlightIndexer.swift in Sources */,
+				981C0D51F0DFF2F5E06E2E15 /* TableStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +247,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = L9SAXP2E2W;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -301,7 +313,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = L9SAXP2E2W;
 				ENABLE_NS_ASSERTIONS = NO;

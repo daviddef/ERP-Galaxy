@@ -75,6 +75,18 @@ final class GalaxyCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHa
         evaluate("enterFocus(\(jsString(tableId)));")
     }
 
+    /// Open a table from a Spotlight result: graph node if we have one,
+    /// otherwise the Codex sheet.
+    func showTable(_ id: String) {
+        evaluate("""
+        (function(){
+          var id = \(jsString(id));
+          if (typeof TABLES !== 'undefined' && TABLES.some(function(t){return t.id===id;})) { jumpTo(id); }
+          else if (typeof CODEX !== 'undefined' && CODEX[id]) { openCodex(id); }
+        })();
+        """)
+    }
+
     func search(_ query: String) {
         evaluate("""
         (function(){
