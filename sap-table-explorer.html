@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAP Galaxy 🌌 — The Data Practitioner's Table Universe</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+    --text:#e6edf3;--text-muted:#8b949e;
+    --fi:#4f9cf9;--co:#a78bfa;--mm:#34d399;--sd:#fb923c;--pp:#fbbf24;
+    --hr:#f472b6;--wm:#2dd4bf;--pm:#f87171;--qm:#a3e635;--ps:#818cf8;
+    --basis:#94a3b8;--new:#22c55e;--modified:#f59e0b;--deprecated:#ef4444;--unchanged:#64748b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+  header{padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;flex-wrap:wrap;}
+  .logo{font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#4f9cf9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;}
+  .subtitle{font-size:0.7rem;color:var(--text-muted);margin-top:1px;}
+  .search-box{flex:1;max-width:320px;position:relative;}
+  .search-box input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 10px 7px 32px;color:var(--text);font-size:0.85rem;outline:none;transition:border-color 0.2s;}
+  .search-box input:focus{border-color:var(--fi);}
+  .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;}
+  .toggle-group{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;}
+  .toggle-btn{padding:6px 14px;font-size:0.78rem;font-weight:600;border:none;background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.2s;}
+  .toggle-btn.active{background:var(--fi);color:#fff;}
+  .toggle-btn.active.s4{background:var(--co);}
+  .toggle-btn.active.both{background:linear-gradient(135deg,var(--fi),var(--co));color:#fff;}
+  .module-filters{display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;}
+  .module-filters::-webkit-scrollbar{height:2px;}
+  .mod-chip{padding:3px 9px;border-radius:20px;font-size:0.68rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all 0.2s;white-space:nowrap;opacity:0.45;}
+  .mod-chip.active{opacity:1;border-color:currentColor;}
+  .main{display:flex;flex:1;overflow:hidden;}
+  #graph-container{flex:1;position:relative;overflow:hidden;}
+  #graph-svg{width:100%;height:100%;cursor:grab;}
+  #graph-svg:active{cursor:grabbing;}
+  .sidebar{width:340px;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+  .sidebar-header{padding:14px;border-bottom:1px solid var(--border);}
+  .sidebar-content{flex:1;overflow-y:auto;padding:14px;}
+  .sidebar-content::-webkit-scrollbar{width:3px;}
+  .sidebar-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+  .table-name{font-size:1.4rem;font-weight:700;font-family:'Courier New',monospace;letter-spacing:1px;}
+  .table-desc{font-size:0.82rem;color:var(--text-muted);margin-top:3px;line-height:1.5;}
+  .badge{display:inline-block;padding:2px 7px;border-radius:12px;font-size:0.62rem;font-weight:700;margin-right:4px;text-transform:uppercase;letter-spacing:0.5px;}
+  .badge-module{background:rgba(79,156,249,.15);color:var(--fi);}
+  .badge-new{background:rgba(34,197,94,.15);color:var(--new);}
+  .badge-modified{background:rgba(245,158,11,.15);color:var(--modified);}
+  .badge-deprecated{background:rgba(239,68,68,.15);color:var(--deprecated);}
+  .badge-unchanged{background:rgba(100,116,139,.15);color:var(--unchanged);}
+  .section-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:14px 0 7px;}
+  .plain-english{background:linear-gradient(135deg,rgba(79,156,249,.08),rgba(167,139,250,.08));border:1px solid rgba(79,156,249,.2);border-radius:8px;padding:11px;font-size:0.78rem;line-height:1.6;}
+  .migration-box{background:var(--surface2);border-radius:8px;padding:11px;font-size:0.78rem;line-height:1.55;}
+  .migration-arrow{display:flex;align-items:center;gap:8px;margin:6px 0;font-family:'Courier New',monospace;font-size:0.78rem;}
+  .ecc-label{color:var(--fi);font-weight:600;}.s4-label{color:var(--co);font-weight:600;}.arrow{color:var(--text-muted);}
+  .relations-list{list-style:none;}
+  .relations-list li{padding:5px 0;border-bottom:1px solid var(--border);font-size:0.78rem;display:flex;align-items:center;gap:7px;cursor:pointer;}
+  .relations-list li:hover{color:var(--fi);}
+  .rel-table{font-family:'Courier New',monospace;font-weight:600;}
+  .rel-desc{color:var(--text-muted);font-size:0.72rem;}
+  .key-fields{display:flex;flex-direction:column;gap:4px;}
+  .key-field-chip{display:flex;align-items:baseline;gap:6px;background:var(--surface2);border:1px solid var(--border);padding:5px 9px;border-radius:6px;font-size:0.7rem;}
+  .kf-name{font-family:'Courier New',monospace;font-weight:700;color:var(--fi);font-size:.72rem;white-space:nowrap;}
+  .kf-desc{color:var(--text-muted);font-size:.67rem;}
+  .tcode-list{display:flex;flex-direction:column;gap:4px;margin-bottom:4px;}
+  .tcode-chip{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);border-radius:6px;padding:5px 9px;display:flex;align-items:baseline;gap:7px;cursor:default;}
+  .tcode-chip:hover{background:rgba(167,139,250,.18);}
+  .tc-code{color:#a78bfa;font-family:'Courier New',monospace;font-weight:700;font-size:.72rem;white-space:nowrap;min-width:70px;}
+  .tc-desc{color:var(--text-muted);font-size:.67rem;line-height:1.3;}
+  .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:20px;gap:10px;}
+  .welcome-icon{font-size:2.5rem;}
+  .welcome h2{font-size:1rem;font-weight:600;}
+  .welcome p{font-size:0.78rem;color:var(--text-muted);line-height:1.6;}
+  .tooltip{position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 11px;font-size:0.72rem;pointer-events:none;opacity:0;transition:opacity 0.15s;max-width:200px;z-index:100;}
+  .tooltip.visible{opacity:1;}
+  .tooltip-name{font-family:'Courier New',monospace;font-weight:700;}
+  .tooltip-desc{color:var(--text-muted);margin-top:2px;}
+  .legend{position:absolute;bottom:12px;left:12px;background:rgba(22,27,34,.92);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:0.68rem;backdrop-filter:blur(8px);max-height:60vh;overflow-y:auto;}
+  .legend-title{font-weight:700;margin-bottom:5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
+  .legend-item{display:flex;align-items:center;gap:5px;margin:2px 0;}
+  .legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .graph-controls{position:absolute;bottom:12px;right:12px;display:flex;flex-direction:column;gap:4px;}
+  .ctrl-btn{width:30px;height:30px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
+  .ctrl-btn:hover{background:var(--surface2);}
+  .count-badge{position:absolute;top:10px;right:10px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 11px;font-size:0.68rem;color:var(--text-muted);}
+  .focus-banner{display:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(79,156,249,.12);border:1px solid var(--fi);border-radius:20px;padding:5px 14px 5px 16px;font-size:.73rem;color:var(--fi);font-weight:600;align-items:center;gap:8px;z-index:10;backdrop-filter:blur(8px);white-space:nowrap;}
+  .focus-banner.active{display:flex;}
+  .focus-exit{background:none;border:none;color:var(--fi);cursor:pointer;font-size:1rem;line-height:1;padding:0;opacity:.7;}
+  .focus-exit:hover{opacity:1;}
+  .focus-btn{width:100%;margin-top:10px;padding:7px 12px;background:rgba(79,156,249,.1);border:1px solid rgba(79,156,249,.3);border-radius:7px;color:var(--fi);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:left;}
+  .focus-btn:hover{background:rgba(79,156,249,.2);border-color:var(--fi);}
+  .focus-btn.exit{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:var(--modified);}
+  .focus-btn.exit:hover{background:rgba(245,158,11,.2);border-color:var(--modified);}
+  line.link{stroke-opacity:0.2;transition:stroke-opacity .2s;}
+  line.link.highlighted{stroke-opacity:.85;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+  .node.selected circle{animation:pulse 2s ease-in-out infinite;}
+  /* Search enhancements */
+  .search-box{position:relative;}
+  .search-clear{position:absolute;right:9px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:11px;cursor:pointer;display:none;width:16px;height:16px;align-items:center;justify-content:center;border-radius:50%;background:var(--border);}
+  .search-clear.visible{display:flex;}
+  .search-box input:focus+.search-clear{display:flex;}
+  /* Mobile overlay panel */
+  .overlay-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(2px);}
+  .overlay-backdrop.active{display:block;}
+  .mobile-panel{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);border-radius:16px 16px 0 0;z-index:201;max-height:80vh;flex-direction:column;overflow:hidden;}
+  .mobile-panel.active{display:flex;}
+  .mobile-panel-drag{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;}
+  .mobile-panel-header{padding:8px 14px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .mobile-panel-close{background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:4px;}
+  .mobile-panel-body{flex:1;overflow-y:auto;padding:14px;}
+  /* Responsive */
+  @media (max-width:700px){
+    .sidebar{display:none;}
+    .module-filters{display:none;}
+    header{gap:8px;padding:8px 10px;}
+    .logo{font-size:1.1rem;}
+    .subtitle{font-size:.6rem;}
+    .toggle-group{font-size:.7rem;}
+    .toggle-btn{padding:5px 10px;font-size:.7rem;}
+    .search-box{flex:1;max-width:none;}
+    .count-badge{top:6px;right:6px;font-size:.6rem;}
+    .legend{display:none;}
+    .mobile-fab{display:flex!important;}
+  }
+  .mobile-fab{display:none;position:fixed;bottom:80px;right:16px;width:48px;height:48px;background:linear-gradient(135deg,var(--fi),var(--co));border-radius:50%;border:none;color:#fff;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;z-index:100;box-shadow:0 4px 20px rgba(79,156,249,.4);}
+  /* Fun search glow */
+  .search-box input:focus{border-color:var(--fi);box-shadow:0 0 0 2px rgba(79,156,249,.15);}
+  @keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
+  /* ECC→S/4 Migration Journey diagram */
+  .journey-flow{display:flex;align-items:center;gap:8px;margin:8px 0 12px;flex-wrap:wrap;}
+  .journey-col{display:flex;flex-direction:column;gap:6px;}
+  .journey-node{border:1.5px solid;border-radius:8px;padding:7px 10px;cursor:pointer;transition:all .2s;min-width:110px;}
+  .journey-node:hover{transform:scale(1.03);}
+  .journey-ecc{border-color:#ef4444;background:rgba(239,68,68,.08);}
+  .journey-s4{border-color:#22c55e;background:rgba(34,197,94,.08);}
+  .journey-current{background:rgba(79,156,249,.06);}
+  .jn-label{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;}
+  .jn-id{font-family:'Courier New',monospace;font-weight:700;font-size:.8rem;}
+  .journey-ecc .jn-id{color:#ef4444;}
+  .journey-s4 .jn-id{color:#22c55e;}
+  .jn-desc{font-size:.6rem;color:var(--text-muted);line-height:1.3;margin-top:2px;}
+  .journey-arrow{font-size:1.4rem;color:var(--text-muted);padding:0 2px;align-self:center;}
+  @keyframes flowArrow{0%,100%{opacity:.4;transform:translateX(0);}50%{opacity:1;transform:translateX(3px);}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">🌌 SAP Galaxy</div>
+    <div class="subtitle">Table Universe · ECC6 → S/4HANA · 175+ Tables · Tap to Explore</div>
+  </div>
+  <div class="search-box">
+    <span class="search-icon" id="search-icon">🔭</span>
+    <input type="text" id="search" placeholder="Search the galaxy… BKPF, vendor, invoice…" autocomplete="off" autocorrect="off" spellcheck="false"/>
+    <span class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear">✕</span>
+  </div>
+  <div class="toggle-group">
+    <button class="toggle-btn active" id="btn-ecc" onclick="setView('ecc')">ECC6</button>
+    <button class="toggle-btn s4" id="btn-s4" onclick="setView('s4')">S/4HANA</button>
+    <button class="toggle-btn both" id="btn-both" onclick="setView('both')">Both</button>
+  </div>
+  <div class="module-filters" id="module-filters"></div>
+</header>
+<div class="main">
+  <div id="graph-container">
+    <svg id="graph-svg"></svg>
+    <div class="tooltip" id="tooltip"><div class="tooltip-name" id="tt-name"></div><div class="tooltip-desc" id="tt-desc"></div></div>
+    <div class="legend" id="legend"></div>
+    <div class="focus-banner" id="focus-banner">
+      <span id="focus-banner-text">🎯 Focus mode</span>
+      <button class="focus-exit" onclick="exitFocus()" title="Exit focus">✕</button>
+    </div>
+    <div class="graph-controls">
+      <button class="ctrl-btn" onclick="zoomIn()">+</button>
+      <button class="ctrl-btn" onclick="zoomOut()">−</button>
+      <button class="ctrl-btn" onclick="resetZoom()">⌂</button>
+    </div>
+    <div class="count-badge" id="count-badge">Loading...</div>
+  </div>
+  <!-- Mobile floating action button -->
+  <button class="mobile-fab" id="mobile-fab" onclick="openMobilePanel()" title="Table Details">📋</button>
+  <!-- Mobile overlay panel -->
+  <div class="overlay-backdrop" id="overlay-backdrop" onclick="closeMobilePanel()"></div>
+  <div class="mobile-panel" id="mobile-panel">
+    <div class="mobile-panel-drag"></div>
+    <div class="mobile-panel-header">
+      <div id="mobile-panel-title" style="font-weight:600;font-size:.88rem;">Table Detail</div>
+      <button class="mobile-panel-close" onclick="closeMobilePanel()">✕</button>
+    </div>
+    <div class="mobile-panel-body" id="mobile-panel-body">
+      <p style="color:var(--text-muted);font-size:.8rem;text-align:center;padding:20px 0">Tap a table node to explore it ✨</p>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="sidebar-header" id="sidebar-header">
+      <div style="font-weight:600;font-size:.88rem;">Table Detail</div>
+      <div style="font-size:.73rem;color:var(--text-muted);margin-top:2px;">Click any node to explore</div>
+    </div>
+    <div class="sidebar-content" id="sidebar-content">
+      <div class="welcome">
+        <div class="welcome-icon" style="font-size:3rem;animation:pulse 3s ease-in-out infinite">🌌</div>
+        <h2 style="background:linear-gradient(135deg,#4f9cf9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.1rem">SAP Galaxy</h2>
+        <p style="color:var(--text-muted);font-size:.78rem;line-height:1.6">Tap any planet (table node) to explore it.<br>Each one shows plain-English descriptions,<br>primary keys, transactions &amp; migration notes.</p>
+        <div style="text-align:left;font-size:.72rem;color:var(--text-muted);background:var(--surface2);padding:11px;border-radius:8px;line-height:1.9;width:100%">
+          🔵 <strong style="color:var(--text)">Bigger planet</strong> = more connections<br>
+          🟢 <strong style="color:#22c55e">Green link</strong> = new in S/4HANA<br>
+          🔴 <strong style="color:#ef4444">Red dashed</strong> = ECC6 only / deprecated<br>
+          🟢🟡🔴 <strong style="color:var(--text)">Ring colour</strong> = node migration status<br>
+          🔭 <strong style="color:var(--text)">Search</strong> by table, keyword or module<br>
+          🎯 <strong style="color:var(--fi)">Focus</strong> button = 1-hop neighbourhood view
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const MODULE_COLORS={FI:"#4f9cf9",CO:"#a78bfa",MM:"#34d399",SD:"#fb923c",PP:"#fbbf24",HR:"#f472b6",WM:"#2dd4bf",PM:"#f87171",QM:"#a3e635",PS:"#818cf8",BASIS:"#94a3b8"};
+const MODULE_EMOJIS={FI:"💰",CO:"📊",MM:"📦",SD:"🛒",PP:"🏭",HR:"👥",WM:"🏗️",PM:"🔧",QM:"✅",PS:"📋",BASIS:"⚙️"};
+
+// Human-readable descriptions for SAP field names
+const FIELD_DESC={
+  MANDT:"Client",BUKRS:"Company Code",BELNR:"Document Number",GJAHR:"Fiscal Year",BUZEI:"Line Item",
+  MATNR:"Material Number",WERKS:"Plant",LGORT:"Storage Location",KUNNR:"Customer Number",
+  LIFNR:"Vendor Number",PERNR:"Personnel Number",VBELN:"Sales Document",POSNR:"Item Number",
+  AUFNR:"Order Number",EQUNR:"Equipment Number",TPLNR:"Functional Location",LGNUM:"Warehouse No.",
+  KOSTL:"Cost Centre",PRCTR:"Profit Centre",ANLN1:"Asset Main Number",ANLN2:"Asset Sub-number",
+  RLDNR:"Ledger",RBUKRS:"Company Code (ACDOCA)",DOCLN:"Document Line",BWKEY:"Valuation Area",
+  BWTAR:"Valuation Type",CHARG:"Batch/Lot Number",EBELN:"Purchase Document",EBELP:"Purchase Item",
+  TRKORR:"Transport Request",AS4POS:"Transport Position",QMNUM:"Notification Number",
+  PRUEFLOS:"Inspection Lot",PSPNR:"WBS Internal No.",OBJNR:"Object Number",PERIV:"FY Variant",
+  POPER:"Posting Period",BUMON:"Calendar Month",KKBER:"Credit Control Area",ABKRS:"Payroll Area",
+  STSMA:"Status Profile",ESTAT:"User Status",TANUM:"Transfer Order No.",TAPOS:"Transfer Order Item",
+  LGPLA:"Storage Bin",NAME:"Variable Name",TYPE:"Variable Type",CHAIN_ID:"Process Chain ID",
+  INSTANCE:"Chain Instance",VARIANTE:"Variant",ANLKL:"Asset Class",SPRAS:"Language Key",
+  AFABE:"Depreciation Area",ILOAN:"Location Internal No.",VERSN:"Costing Version",
+  TVERS:"Costing Date Version",KADKY:"Costing Date Key",KALKA:"Costing Type",
+  KKRSEL:"Costing Variant",MAPOS:"Action Item No.",VORGLFNR:"Inspection Op. No.",
+  UP:"Parent Object",STAT:"Status Code",PERKZ:"Period Indicator",SPMON:"Consumption Month",
+  KAPPL:"Application",KSCHL:"Condition Type",VKORG:"Sales Org.",VTWEG:"Distribution Channel",
+  DATBI:"Valid To Date",BWPOS:"ML Document Item",ZENUM:"Source List No.",ZEILE:"Line Number",
+  SUBTY:"Infotype Subtype",BEGDA:"Start Date",ENDDA:"End Date",AUART:"Document Type",
+  PSTYV:"Item Category",BWART:"Movement Type",LGPLA:"Storage Bin",LGTYP:"Storage Type",
+  QUNUM:"Quant Number",MATNR:"Material Number",LQNUM:"Quant No.",
+  OBJTY:"Object Type",KUNNR:"Customer",LIFNR:"Vendor",ANKT:"Asset Class Text",
+  BZOBJ:"Costing Object Type",GJAHR:"Fiscal Year",BKPF:"Doc Header Ref",
+  VBTYP:"Document Category",KDPOS:"Item from Sales Order",KDAUF:"Sales Order No.",
+  QUANKEY:"Quant Key",LGPLA:"Bin Address",TAPOS:"Transfer Item No.",
+  KTANSW:"Account Key",AS4VERS:"Workbench Request Version",
+  PSPHI:"Project Definition (internal)",POSID:"WBS Code",STUFE:"Hierarchy Level",
+  PKOSA:"CO Object for WBS",PRART:"Project Type",IZWEK:"Investment Reason",
+  RCLNT:"Client (ACDOCA)",RBUKRS:"Company Code (ACDOCA)",RACCT:"Account",
+  SEGMENT:"Segment",KOKRS:"Controlling Area",KALNR:"Costing Run No.",
+  KKALNR:"Product Costing No.",KATYP:"Costing Type",KALVAR:"Costing Variant",
+  KADKY:"Key Date",TVERSN:"Costing Version",ZKALK:"Costing Run ID",
+  ETOEK:"Order Category",AUTYP:"Order Type",PERPR:"Reference Period",
+  QMNUM:"QM Notification No.",MBLNR:"Material Doc. No.",MJAHR:"Material Doc. Year",
+  KDEIN:"Item No. (Delivery Schedule)",ETENR:"Schedule Line Counter",
+  VBTYP_N:"Follow-on Doc Type",VBELN_VOR:"Preceding Doc.",POSNR_VOR:"Preceding Item",
+  LGPLA:"Bin Address",LGBER:"Storage Section",LGTYP:"Storage Type",
+  BELKZ:"Account Indicator",HKONT:"G/L Account",KOART:"Account Type",
+  BSCHL:"Posting Key",SHKZG:"Debit/Credit Indicator",DMBTR:"Amount in LC",
+  WRBTR:"Amount in Doc Currency",WAERS:"Currency",MWSKZ:"Tax Code",
+  QSSHB:"Withholding Tax Base",QSSKZ:"Withholding Tax Code",
+};
+function fieldLabel(f){return FIELD_DESC[f]?`<span title="${f}" class="kf-name">${f}</span><span class="kf-desc">${FIELD_DESC[f]}</span>`:`<span class="kf-name">${f}</span>`;}
+
+// Human-readable descriptions for SAP transaction codes
+const TCODE_DESC={
+  FB03:"Display Accounting Document",FB50:"G/L Journal Entry",FB60:"Enter Vendor Invoice",
+  FB70:"Enter Customer Invoice","F-02":"Manual G/L Posting","F-32":"Clear Customer Open Items",
+  "F-44":"Clear Vendor Open Items",F110:"Payment Run",F112:"Payment Run Log",
+  F150:"Dunning Run",FBL3N:"G/L Line Items",FBL1N:"Vendor Line Items",FBL5N:"Customer Line Items",
+  MIRO:"Logistics Invoice Verification",VF01:"Create Billing Document",VF03:"Display Billing Document",
+  VF04:"Billing Due List",FAGLB03:"G/L Account Balances (New GL)",FAGLL03:"G/L Line Items (New GL)",
+  FAGLGVTR:"Balance Carryforward (New GL)",S_PL0_86000030:"Financial Statements",
+  FS00:"G/L Account Master",FSP0:"G/L Account in Chart of Accounts",FSS0:"G/L Account in Company Code",
+  FI01:"Create Bank",FI03:"Display Bank",FI12:"Maintain House Banks",
+  FK03:"Display Vendor Bank Data",FD03:"Display Customer Bank Data",FD32:"Change Credit Limit",
+  FD11:"Customer Balance Display",OX02:"Define Company Codes",OB45:"Credit Control Areas",
+  OBC7:"Withholding Tax Configuration",OB29:"Fiscal Year Variants",OB08:"Exchange Rates",
+  OB13:"Chart of Accounts",OY03:"Currency Codes",OX01:"Countries",AO90:"Asset Account Determination",
+  OAOA:"Asset Classes",AS01:"Create Asset",AS02:"Change Asset",AS03:"Display Asset",AW01N:"Asset Explorer",
+  MM01:"Create Material",MM02:"Change Material",MM03:"Display Material",MM60:"Material Where-Used",
+  MMBE:"Stock Overview",MB52:"Warehouse Stocks",MB03:"Display Material Document",MB51:"Material Document List",
+  MIGO:"Goods Movement",MB25:"Reservations List",MSC2N:"Change Batch",MSC3N:"Display Batch",
+  MB56:"Batch Where-Used",ME01:"Maintain Source List",ME03:"Display Source List",
+  ME11:"Create Purchasing Info Record",ME12:"Change Info Record",ME13:"Display Info Record",
+  ME21N:"Create Purchase Order",ME22N:"Change Purchase Order",ME23N:"Display Purchase Order",
+  ME51N:"Create Purchase Requisition",ME52N:"Change Purchase Req",ME53N:"Display Purchase Req",
+  ME2M:"POs by Material",ME2L:"POs by Vendor",ME2N:"POs by PO Number",ME9M:"Message Output for POs",
+  ML81N:"Service Entry Sheet",XK01:"Create Vendor (Central)",XK02:"Change Vendor",XK03:"Display Vendor",
+  FK01:"Create Vendor (Accounting)",XD01:"Create Customer (Central)",XD02:"Change Customer",
+  XD03:"Display Customer",FD05:"Block/Unblock Customer",OX10:"Define Plants",OX09:"Storage Locations",
+  OMJJ:"Movement Types",OMFIELD:"Purchasing Groups",
+  VA01:"Create Sales Order",VA02:"Change Sales Order",VA03:"Display Sales Order",VA05:"List of Sales Orders",
+  VD03:"Display Customer (SD)",VL01N:"Create Outbound Delivery",VL02N:"Change Outbound Delivery",
+  VL03N:"Display Outbound Delivery",VT01N:"Create Shipment",NACE:"Condition Technique Output",
+  VV21:"Create Output Condition Record",V_07:"Pricing Procedures",VOV8:"Sales Document Types",
+  VOV7:"Item Categories",VK11:"Create Condition Record",VK12:"Change Condition Record",
+  VK13:"Display Condition Record","V/06":"Condition Types","V/07":"Pricing Procedures","V/08":"Pricing Procedure Assignment",
+  CO01:"Create Production Order",CO02:"Change Production Order",CO03:"Display Production Order",
+  COOIS:"Production Order Information System",MF50:"Order-Independent Planning",
+  CO11N:"Production Order Confirmation",CA01:"Create Routing",CA02:"Change Routing",CA03:"Display Routing",
+  CR01:"Create Work Centre",CR02:"Change Work Centre",CR03:"Display Work Centre",
+  CS01:"Create BOM",CS02:"Change BOM",CS03:"Display BOM",
+  KS01:"Create Cost Centre",KS02:"Change Cost Centre",KS03:"Display Cost Centre",
+  KA01:"Create Cost Element",KA02:"Change Cost Element",KA03:"Display Cost Element",
+  KB03:"Display CO Document",KB41N:"Manual Activity Allocation",KSB1:"Cost Centre: Actual Line Items",
+  KSBB:"Cost Centre: Plan/Actual Comparison",KO01:"Create Internal Order",
+  KO02:"Change Internal Order",KO03:"Display Internal Order",
+  KE51:"Create Profit Centre",KE52:"Change Profit Centre",KE53:"Display Profit Centre",
+  KE5Z:"Profit Centre: Actual Line Items",KE30:"Execute Profitability Report",
+  KEA0:"CO-PA Configuration",CK11N:"Create Standard Cost Estimate",CK13:"Display Cost Estimate",
+  CK40N:"Edit Costing Run",CK84:"Cost Estimate Itemization",
+  OKKP:"Controlling Area Settings",OKKS:"Set Controlling Area",TKA01:"Controlling Area",
+  CJ01:"Create Project",CJ20N:"Project Builder",CJ13:"Display WBS",MS01:"Create MPS",
+  QM01:"Create Quality Notification",QM02:"Change Quality Notification",
+  QM03:"Display Quality Notification",IQS2:"Notification List",IQS22:"Notification Selection",
+  QA01:"Create Inspection Lot",QA02:"Change Inspection Lot",QA03:"Display Inspection Lot",
+  QA32:"Usage Decision for Inspection Lot",QA11:"Record Usage Decision",
+  IE01:"Create Equipment",IE02:"Change Equipment",IE03:"Display Equipment",
+  IL01:"Create Functional Location",IL02:"Change Functional Location",IL03:"Display Functional Location",
+  IW31:"Create Maintenance Order",IW33:"Display Maintenance Order",
+  IP01:"Create Maintenance Plan",IP02:"Change Maintenance Plan",IP03:"Display Maintenance Plan",
+  PA40:"HR Actions (Personnel Action)",PA30:"Maintain HR Master Data",PA20:"Display HR Master Data",
+  PC_PAYRESULT:"Display Payroll Results",PP01:"Maintain Object (Org)",PP02:"Change Object",PP03:"Display Object",
+  PE03:"Maintain Payroll Control",
+  LS01:"Create Storage Bin",LS02:"Change Storage Bin",LS03:"Display Storage Bin",LS26:"Stock in Bins",
+  LT01:"Create Transfer Order",LT21:"Display Transfer Order",LT0A:"Create TO from Inspection Lot",
+  HU03:"Display Handling Unit",BP:"Business Partner",
+  SCC4:"Client Administration",SE11:"ABAP Dictionary",SE16:"Data Browser",SE16N:"General Table Display",
+  SE37:"Function Builder",SE80:"Object Navigator",SE10:"Transport Organiser",STMS:"Transport Management",
+  SM30:"Table Maintenance",SU01:"User Maintenance",SU10:"Mass Changes to Users",PFCG:"Role Maintenance",
+  SADR:"Address Management",RSPC:"Process Chain Maintenance",
+  SCU3:"Table History",RSSCD100:"Change Documents",
+  FPB1:"Payment Medium Workbench",FBCJ:"Cash Journal",
+  FF7A:"Cash Position",FF7B:"Liquidity Forecast",
+  BS02:"Status Profile Maintenance",
+  CL01:"Create Class",CL02:"Change Class",CL03:"Display Class",CT04:"Characteristic Maintenance",
+  CL20N:"Classification Display",
+  IQ08:"Serial Number List",
+  SWDD:"Workflow Builder",SWI5:"Workflow Inbox",
+};
+function tcodeLabel(tc){
+  const d=TCODE_DESC[tc];
+  return d
+    ? `<span class="tcode-chip" title="${tc}: ${d}"><span class="tc-code">${tc}</span><span class="tc-desc">${d}</span></span>`
+    : `<span class="tcode-chip" title="${tc}"><span class="tc-code">${tc}</span></span>`;
+}
+
+// Key SAP transactions that read/write each table
+const TCODE_MAP={
+  BKPF:["FB03","FB50","F-02","MIRO","VF01","FB60","FB70"],
+  BSEG:["FB03","FBL3N","FBL1N","FBL5N","F-32","F-44"],
+  ACDOCA:["FAGLB03","FAGLL03","S_PL0_86000030","FAGLGVTR"],
+  FAGLFLEXA:["FAGLB03","FAGLL03","FAGLGVTR"],
+  FAGLFLEXT:["FAGLB03","FAGLGVTR"],
+  GLT0:["FS10N","F.01"],
+  BSIS:["FBL3N"],BSAS:["FBL3N"],BSID:["FBL5N"],BSAD:["FBL5N"],BSIK:["FBL1N"],BSAK:["FBL1N"],
+  BSEC:["FB03"],BSET:["FB03"],
+  REGUH:["F110","F112"],REGUP:["F110"],
+  SKA1:["FS00","FSP0","FSS0"],SKAT:["FS00"],SKB1:["FS00","FBL3N"],
+  T001:["OX02"],T003:["OBA7"],T004:["OB13"],
+  BNKA:["FI01","FI03"],LFBK:["FK03"],KNBK:["FD03"],
+  ANLA:["AS01","AS02","AS03","AW01N"],ANLZ:["AS03"],ANEP:["AS03"],ANLC:["AW01N"],
+  ANKT:["OAOA"],T095:["AO90"],
+  FBCJ:["FBCJ"],T014:["OB45"],KNKK:["FD32","FD33"],T009:["OB29"],
+  COEP:["KSB1","KB41N"],COSP:["KSB1"],COBK:["KB03"],
+  CSKS:["KS01","KS02","KS03"],CSKA:["KA01","KA02","KA03"],CSKU:["KA03"],
+  TKA01:["OKKP"],AUFK:["KO01","KO02","KO03","IW31"],
+  CEPC:["KE51","KE52","KE53"],GLPCA:["KE5Z","KE30"],
+  PRPS:["CJ20N","CJ13"],PROJ:["CJ20N","CJ01"],PRHI:["CJ20N"],
+  KEKO:["CK11N","CK13","CK40N"],CKIS:["CK13","CK84"],KEPH:["CK13"],
+  COSS:["KSBB"],
+  MARA:["MM01","MM02","MM03","MM60"],MARC:["MM02","MM03"],MARD:["MMBE","MB52"],
+  MAKT:["MM02"],MBEW:["MM03","MR21"],MARM:["MM03"],MVKE:["MM02"],MLAN:["MM03"],
+  MKPF:["MB03","MIGO"],MSEG:["MB03","MB51"],MATDOC:["MIGO","MB03","MB51"],
+  MCHA:["MSC2N","MSC3N"],MCHB:["MMBE","MB52"],CHVW:["MB56"],
+  EORD:["ME01","ME03"],MVER:["MB25"],
+  EKKO:["ME21N","ME22N","ME23N","ME2M","ME2L","ME2N"],
+  EKPO:["ME23N","ME2M","ME2L"],EKET:["ME23N"],EKES:["ME23N"],EBAN:["ME51N","ME52N","ME53N"],
+  EINA:["ME11","ME12","ME13"],EINE:["ME11","ME12"],
+  LFA1:["XK01","XK02","XK03","FK01"],LFB1:["XK02"],LFM1:["XK02"],
+  T001W:["OX10"],T001L:["OX09"],T024:["OMFIELD"],T156:["OMJJ"],
+  VBAK:["VA01","VA02","VA03","VA05"],VBAP:["VA03"],VBKD:["VA03"],
+  VBUK:["VA03"],VBUP:["VA03"],VBEP:["VA03"],
+  VBFA:["VF04","VA03"],LIKP:["VL01N","VL02N","VL03N","VT01N"],
+  LIPS:["VL03N"],VBRK:["VF01","VF03","VF04"],VBRP:["VF03"],
+  KNA1:["XD01","XD02","XD03","FD05"],KNB1:["XD02"],KNVV:["XD02"],KNVP:["XD02"],
+  TVAK:["VOV8"],TVAP:["VOV7"],
+  KONV:["VA03","VF03"],PRCD_ELEMENTS:["VK11","VK12","VK13"],
+  A304:["VK11","VK12","VK13"],A305:["VK11","VK12","VK13"],
+  NAST:["NACE","VV21"],
+  AFKO:["CO01","CO02","CO03","COOIS","MF50"],AFPO:["CO03","COOIS"],
+  AFVC:["CO03"],AFRU:["CO11N","COOIS"],RESB:["CO03","MB25"],
+  MAST:["CS01","CS02","CS03"],STKO:["CS01"],STPO:["CS03"],
+  PLKO:["CA01","CA02","CA03"],PLPO:["CA03"],MAPL:["CA03"],CRHD:["CR01","CR02","CR03"],
+  QMEL:["QM01","QM02","QM03","IQS2"],QMFE:["QM02"],QMMA:["QM02"],QAVE:["QA32"],
+  EQUI:["IE01","IE02","IE03"],IFLOT:["IL01","IL02","IL03"],
+  OBJK:["IE03"],JEST:["IE03","IW33"],TJ30:["BS02"],ILOA:["IW33"],
+  PA0000:["PA40","PA30"],PA0001:["PA30","PA20"],PA0002:["PA30"],
+  PA0006:["PA30"],PA0007:["PA30"],PA0008:["PA30"],PA0014:["PA30"],PA0015:["PA30"],
+  PA0041:["PA30"],PA0105:["PA30"],PCL2:["PC_PAYRESULT"],
+  HRP1000:["PP01","PP02","PP03"],T549A:["PE03"],
+  LGPLA:["LS01","LS02","LS03"],LQUA:["LS26"],LTAP:["LT01","LT0A","LT21"],
+  LTBK:["LT01"],LTAK:["LT01","LT21"],
+  BUT000:["BP"],
+  T000:["SCC4"],DD02L:["SE11","SE16","SE16N"],DD03L:["SE11"],
+  ADRC:["SADR"],TCURR:["OB08"],TCURC:["OY03"],T005:["OX01"],
+  USR02:["SU01","SU10"],T012:["FI12"],T012K:["FI12"],
+  TVKO:["OVX5"],TVTW:["OVXD"],TKA09:["OKKS"],
+  MLHD:["MR00","CKMLCP"],MLIT:["MR00"],
+  MIGO:["MIGO"],FBCJ:["FBCJ"],KEKO:["CK11N","CK40N"],CKIS:["CK13"],
+  E070:["SE10","STMS"],E071:["SE10"],TVARVC:["SM30"],RSPCCHAIN:["RSPC"],
+  FBCJ:["FBCJ"],BSEC:["FB03"],COSS:["KSBB","KSB1"],MVER:["MB25"],
+  VBCO:["VA03","CJ20N"],QAVE:["QA32","QA11"],PLWP:["CJ20N","MS01"],
+  PRHI:["CJ20N"],MIGO:["MIGO","MB03"],
+  FBRA:["FBRA"],PAYR:["F110","FPB1"],T059A:["OBC7"],
+  EKBE:["ME23N","ME2M","ME9M"],EKBZ:["ME23N"],EKPA:["ME23N"],
+  ESLL:["ML81N","ME23N"],ESSR:["ML81N"],
+  VBPA:["VA03","VD03"],LIPS:["VL02N","VL03N"],
+  PLMZ:["CA03"],KAPA:["CR03","CM01"],
+  MPLA:["IP01","IP02","IP03"],MHIO:["IP03"],QMEL2:["QM02"],
+  LENUM:["LS26"],VEKP:["HU03"],VEPO:["HU03"],
+  PA0016:["PA30"],PA0021:["PA30"],T528B:["PP03"],T501:["PA20"],
+  AGR_USERS:["SU01","PFCG"],AGR_1251:["PFCG"],TADIR:["SE80"],ENLFDIR:["SE37"],
+  TOJTB:["SWDD","SWI5"],
+  KLAH:["CL01","CL02","CL03"],CABN:["CT04"],AUSP:["CL20N"],
+  FDFD:["FF7A","FF7B"],T012:["FI12"],
+  T682:["V/07","V/08"],T683:["V/08"],T685:["V/06"],
+  QALS:["QA01","QA02","QA03","QA32"],
+  EQUZ:["IE03"],SER01:["IQ08"],
+  CDHDR:["RSSCD100","SCU3"],CDPOS:["SCU3"],
+  LFB5:["F150"],KNB5:["F150","FD11"],
+  CE11000:["KE30","KEA0"],
+  GLFUNCT:["OKB2"],VBSS:["VA03"],QMEL2:["QM02"],
+  FAGL_SPLINFO:["FAGL_SPLINFO_TOOL","FAGLB03"],T030:["OBYC","OBD4"],MCH1:["MSC3N"],
+  LFB5:["F150","FK03"],KNB5:["F150","FD03"],FBRA:["FBRA"],PAYR:["F110"],
+};
+
+const TABLES=[
+// ─── FI: FINANCIAL ACCOUNTING ───────────────────────────────────────────────
+{id:"BKPF",module:"FI",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Accounting Document Header",
+ plainEnglish:"The cover sheet for every financial posting. One row per document. Who posted it, when, which company code, fiscal year, and document type (invoice, payment, journal entry). If BSEG is the body, BKPF is the envelope.",
+ keyFields:["MANDT","BUKRS","BELNR","GJAHR"],
+ s4note:"Survives in S/4 as an entry-view compatibility structure. Real accounting data now lives in ACDOCA. Always report from ACDOCA in S/4.",
+ relations:[{to:"BSEG",desc:"Line items"},{to:"T001",desc:"Company code"},{to:"T003",desc:"Document type"},{to:"ACDOCA",desc:"replaces BKPF as system of record in S/4"}]},
+
+{id:"BSEG",module:"FI",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Accounting Document Line Items",
+ plainEnglish:"Every single debit and credit line of every financial posting. This is usually the BIGGEST table in any ECC6 system. G/L account, amount, cost centre, profit centre, customer, vendor — all in one row per line.",
+ keyFields:["MANDT","BUKRS","BELNR","GJAHR","BUZEI"],
+ s4note:"Entry-view only in S/4. Use ACDOCA for all financial reporting. BSEG is maintained for compatibility but ACDOCA is the system of record.",
+ relations:[{to:"BKPF",desc:"Document header"},{to:"SKB1",desc:"G/L account"},{to:"KNA1",desc:"Customer"},{to:"LFA1",desc:"Vendor"},{to:"ACDOCA",desc:"replaces BSEG as system of record in S/4"},{to:"BSEC",desc:"One-time acct data"}]},
+
+{id:"ACDOCA",module:"FI",ecc:false,s4:true,s4status:"new",
+ shortDesc:"Universal Journal Entry Line Items",
+ plainEnglish:"THE big table of S/4HANA. SAP merged Finance, Controlling, Asset Accounting, Material Ledger and Profitability Analysis into ONE line-item table. 360+ fields. Primary key includes ledger (RLDNR) — always filter by ledger or you'll get duplicate rows. If you learn one S/4 table, make it this one.",
+ keyFields:["RCLNT","RLDNR","RBUKRS","GJAHR","BELNR","DOCLN"],
+ s4note:"NEW in S/4HANA. Single source of truth replacing BKPF/BSEG, FAGLFLEXA, COEP/COSP, ANEP, GLT0. Links to MATDOC for inventory. Critical: always filter RLDNR='0L' (leading ledger) unless multi-ledger reporting.",
+ relations:[{to:"BKPF",desc:"ECC predecessor — replaced by ACDOCA"},{to:"BSEG",desc:"ECC predecessor — replaced by ACDOCA"},{to:"FAGLFLEXA",desc:"ECC predecessor — replaced by ACDOCA"},{to:"COEP",desc:"ECC CO predecessor — replaced by ACDOCA"},{to:"MATDOC",desc:"Inventory link"},{to:"T001",desc:"Company code"},{to:"CEPC",desc:"Profit center"}]},
+
+{id:"FAGLFLEXA",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"New G/L Line Items (ECC)",
+ plainEnglish:"The New GL line items table in ECC6 with New GL activated. Supports segment reporting and parallel ledgers. If your ECC has New GL switched on, postings appear here as well as BSEG.",
+ keyFields:["MANDT","RBUKRS","BELNR","GJAHR","DOCLN","RLDNR"],
+ s4note:"Fully replaced by ACDOCA in S/4HANA.",
+ relations:[{to:"BKPF",desc:"Document header"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+{id:"FAGLFLEXT",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"New G/L Totals (ECC)",
+ plainEnglish:"Aggregated period totals for the New G/L in ECC6. Used for balance sheet and P&L reporting in New GL. One row per account/period/version/ledger combination.",
+ keyFields:["MANDT","RLDNR","RBUKRS","FISCYEAR","RACCT"],
+ s4note:"Replaced by ACDOCA aggregation in S/4.",
+ relations:[{to:"FAGLFLEXA",desc:"Line items"},{to:"SKB1",desc:"G/L account"}]},
+
+{id:"GLT0",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"G/L Account Transaction Figures (Classic GL)",
+ plainEnglish:"The classic GL totals table — period balances for each G/L account per company code. Used in ECC before New GL. If you query account balances without New GL, this is your table.",
+ keyFields:["MANDT","BUKRS","HKONT","GJAHR"],
+ s4note:"Deprecated in S/4. Reporting on ACDOCA.",
+ relations:[{to:"SKB1",desc:"G/L account"},{to:"T001",desc:"Company code"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+{id:"BSIS",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"G/L Secondary Index — Open Items",
+ plainEnglish:"A fast-lookup index for open (uncleared) G/L items. Not the source of truth — BSEG is. Think of it as a bookmark list: 'these line items are still open'. Used to speed up FBL3N and similar reports.",
+ keyFields:["MANDT","BUKRS","HKONT","GJAHR","BELNR","BUZEI"],
+ s4note:"Deprecated in S/4. Use ACDOCA with clearing status.",
+ relations:[{to:"BSEG",desc:"Line item data"},{to:"SKB1",desc:"G/L account"}]},
+
+{id:"BSAS",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"G/L Secondary Index — Cleared Items",
+ plainEnglish:"Mirror of BSIS for cleared (paid/matched) G/L items. When a payment clears an invoice, the reference moves from BSIS to BSAS.",
+ keyFields:["MANDT","BUKRS","HKONT","GJAHR","BELNR","BUZEI"],
+ s4note:"Deprecated in S/4.",
+ relations:[{to:"BSIS",desc:"Open counterpart"},{to:"BSEG",desc:"Line item data"}]},
+
+{id:"BSID",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Customer Secondary Index — Open Items",
+ plainEnglish:"Fast lookup for unpaid customer invoices. Accounts receivable open items. Used by FBL5N in ECC6.",
+ keyFields:["MANDT","BUKRS","KUNNR","GJAHR","BELNR","BUZEI"],
+ s4note:"Deprecated in S/4.",
+ relations:[{to:"KNA1",desc:"Customer master"},{to:"BSEG",desc:"Line item"}]},
+
+{id:"BSAD",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Customer Secondary Index — Cleared Items",
+ plainEnglish:"Cleared (paid) customer items. When a customer pays, the open item moves from BSID to BSAD.",
+ keyFields:["MANDT","BUKRS","KUNNR","GJAHR","BELNR","BUZEI"],
+ s4note:"Deprecated in S/4.",
+ relations:[{to:"BSID",desc:"Open counterpart"},{to:"KNA1",desc:"Customer"}]},
+
+{id:"BSIK",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Vendor Secondary Index — Open Items",
+ plainEnglish:"Unpaid vendor invoices. Accounts payable open items. Used by FBL1N in ECC6.",
+ keyFields:["MANDT","BUKRS","LIFNR","GJAHR","BELNR","BUZEI"],
+ s4note:"Deprecated in S/4.",
+ relations:[{to:"LFA1",desc:"Vendor master"},{to:"BSEG",desc:"Line item"}]},
+
+{id:"BSAK",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Vendor Secondary Index — Cleared Items",
+ plainEnglish:"Cleared (paid) vendor items. When an invoice is paid, reference moves from BSIK to BSAK.",
+ keyFields:["MANDT","BUKRS","LIFNR","GJAHR","BELNR","BUZEI"],
+ s4note:"Deprecated in S/4.",
+ relations:[{to:"BSIK",desc:"Open counterpart"},{to:"LFA1",desc:"Vendor"}]},
+
+{id:"BSEC",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"One-Time Account Data in Document",
+ plainEnglish:"When you post to a one-time (sundry) vendor or customer, their name and address can't be stored in LFA1/KNA1. Instead the details are stored here, linked to the document line item.",
+ keyFields:["MANDT","BUKRS","BELNR","GJAHR","BUZEI"],
+ s4note:"Still present in S/4.",
+ relations:[{to:"BSEG",desc:"Line item"},{to:"BKPF",desc:"Document header"}]},
+
+{id:"REGUH",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Payment Program: Settlement Data",
+ plainEnglish:"Header records created by the automatic payment program (F110). Each payment run creates rows here with the bank details, payment method, amount to pay. The 'payment order' header.",
+ keyFields:["MANDT","LAUFD","LAUFI","ZBUKR","LIFNR","KUNNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"REGUP",desc:"Items to pay"},{to:"LFA1",desc:"Vendor"},{to:"KNA1",desc:"Customer"},{to:"BNKA",desc:"Bank details"}]},
+
+{id:"REGUP",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Payment Program: Processed Items",
+ plainEnglish:"The individual open items selected for payment in an F110 payment run. Links back to BSEG. Shows exactly which invoices were paid in a given payment run.",
+ keyFields:["MANDT","LAUFD","LAUFI","ZBUKR","LIFNR","BELNR","GJAHR","BUZEI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"REGUH",desc:"Payment header"},{to:"BSEG",desc:"Open item paid"},{to:"LFA1",desc:"Vendor"}]},
+
+{id:"SKA1",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"G/L Account Master (Chart of Accounts)",
+ plainEnglish:"The master catalogue of G/L accounts at chart-of-accounts level. The template every company uses. Account number, description, account type. Company-specific settings live in SKB1.",
+ keyFields:["MANDT","KTOPL","SAKNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"SKB1",desc:"Company code level"},{to:"T004",desc:"Chart of accounts"},{to:"SKAT",desc:"Account descriptions"}]},
+
+{id:"SKAT",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"G/L Account Descriptions",
+ plainEnglish:"Multi-language descriptions for G/L accounts. Always join SKA1+SKAT to get readable account names.",
+ keyFields:["MANDT","SPRAS","KTOPL","SAKNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"SKA1",desc:"Account master"}]},
+
+{id:"SKB1",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"G/L Account Master (Company Code)",
+ plainEnglish:"Company-code-specific G/L account configuration: currency, field status, reconciliation account type, tax category. One row per account per company code.",
+ keyFields:["MANDT","BUKRS","SAKNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"SKA1",desc:"Chart of accounts"},{to:"T001",desc:"Company code"}]},
+
+{id:"T001",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Company Codes",
+ plainEnglish:"The master list of company codes — the smallest unit where full accounting is done. Every FI document, purchase order, and sales order references a company code.",
+ keyFields:["MANDT","BUKRS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"BKPF",desc:"FI documents"},{to:"SKB1",desc:"G/L accounts"},{to:"T001W",desc:"Plants"},{to:"T004",desc:"Chart of accounts"}]},
+
+{id:"T003",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Document Types",
+ plainEnglish:"The configuration table for document types (SA, KR, DR, KZ...). Each type controls what kind of posting it is: vendor invoice, customer payment, G/L posting, etc. Referenced on every BKPF row.",
+ keyFields:["MANDT","BLART"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"BKPF",desc:"Used on FI docs"},{to:"EKKO",desc:"PO document types"}]},
+
+{id:"T004",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Chart of Accounts",
+ plainEnglish:"Master list of Charts of Accounts — the catalogues companies draw their G/L accounts from. Usually one per country or group.",
+ keyFields:["MANDT","KTOPL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"SKA1",desc:"G/L accounts"},{to:"T001",desc:"Company codes"}]},
+
+{id:"BNKA",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Bank Master Record",
+ plainEnglish:"The master record for banks — SWIFT code, bank key, bank name, address. Any bank referenced in vendor/customer master or in payment transactions must exist here.",
+ keyFields:["MANDT","BANKS","BANKL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LFBK",desc:"Vendor bank accounts"},{to:"KNBK",desc:"Customer bank accounts"},{to:"REGUH",desc:"Payment runs"}]},
+
+{id:"LFBK",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Vendor Bank Accounts",
+ plainEnglish:"Bank account details for vendors — IBAN, account number, bank key. When paying a vendor by bank transfer, this table provides the destination account.",
+ keyFields:["MANDT","LIFNR","BANKS","BANKL","BANKN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LFA1",desc:"Vendor master"},{to:"BNKA",desc:"Bank master"}]},
+
+{id:"KNBK",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Customer Bank Accounts",
+ plainEnglish:"Bank account details for customers — used for direct debit collection. The reverse of LFBK.",
+ keyFields:["MANDT","KUNNR","BANKS","BANKL","BANKN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KNA1",desc:"Customer master"},{to:"BNKA",desc:"Bank master"}]},
+
+{id:"ANLA",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Fixed Asset Master Record",
+ plainEnglish:"Master data for every fixed asset — buildings, vehicles, machinery, IT equipment. Asset number, description, acquisition date, asset class, responsible cost centre.",
+ keyFields:["MANDT","BUKRS","ANLN1","ANLN2"],
+ s4note:"Unchanged in S/4. Asset postings now flow directly into ACDOCA rather than separate ANEP table.",
+ relations:[{to:"ANLZ",desc:"Asset allocation"},{to:"ANEP",desc:"Line items (ECC)"},{to:"ACDOCA",desc:"S/4 postings"},{to:"T001",desc:"Company code"}]},
+
+{id:"ANLZ",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Asset Time-Dependent Data",
+ plainEnglish:"Time-dependent attributes of assets that can change over time — cost centre assignment, business area, profit centre. Tracks the history of where an asset was assigned.",
+ keyFields:["MANDT","BUKRS","ANLN1","ANLN2","BDATU"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"ANLA",desc:"Asset master"},{to:"CSKS",desc:"Cost centre"}]},
+
+{id:"ANEP",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Asset Line Items (ECC)",
+ plainEnglish:"Individual asset posting lines in ECC6 — acquisitions, depreciation runs, retirements. One row per asset movement in accounting.",
+ keyFields:["MANDT","BUKRS","ANLN1","ANLN2","GJAHR","LNRAN"],
+ s4note:"Deprecated in S/4. All asset postings go directly to ACDOCA.",
+ relations:[{to:"ANLA",desc:"Asset master"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+// ─── CO: CONTROLLING ────────────────────────────────────────────────────────
+{id:"COEP",module:"CO",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"CO Object: Line Items (by Period)",
+ plainEnglish:"Every cost posting to a CO object (cost centre, internal order, WBS element) in ECC6. The controlling equivalent of BSEG. Cross-charged to finance via BKPF/BSEG. Huge in active CO environments.",
+ keyFields:["MANDT","OBJNR","GJAHR","WRTTP","VERSN","KSTAR","PERIO"],
+ s4note:"Fully replaced by ACDOCA. CO and FI are now unified — no separate line items table needed.",
+ relations:[{to:"CSKS",desc:"Cost centre"},{to:"AUFK",desc:"Internal orders"},{to:"PRPS",desc:"WBS elements"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+{id:"COSP",module:"CO",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"CO Object: Cost Totals (External)",
+ plainEnglish:"Aggregated cost totals per CO object for externally-originated costs (FI postings, goods movements). Period-level totals. Faster for summary reporting than COEP.",
+ keyFields:["MANDT","OBJNR","GJAHR","WRTTP","VERSN","KSTAR","BEKNZ"],
+ s4note:"Deprecated. Use ACDOCA.",
+ relations:[{to:"CSKS",desc:"Cost centre"},{to:"COEP",desc:"Line items source"}]},
+
+{id:"COBK",module:"CO",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"CO Object: Document Header",
+ plainEnglish:"Header records for CO documents — similar to BKPF for FI. Reference document, posting date, document type. Links CO postings to their origin.",
+ keyFields:["MANDT","KOKRS","BELNR","GJAHR"],
+ s4note:"Deprecated in S/4. Replaced by ACDOCA which stores header and line item together.",
+ relations:[{to:"COEP",desc:"CO line items"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+{id:"CSKS",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cost Centre Master Data",
+ plainEnglish:"The master record for cost centres — the organisational buckets where costs accumulate. Name, hierarchy node, responsible manager, controlling area, valid-from/to dates.",
+ keyFields:["MANDT","KOKRS","KOSTL","DATBI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CSKT",desc:"CC descriptions"},{to:"COEP",desc:"Cost postings (ECC)"},{to:"AUFK",desc:"Settlement orders"},{to:"ACDOCA",desc:"S/4 postings"},{to:"TKA01",desc:"Controlling area"}]},
+
+{id:"CSKT",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cost Centre Descriptions",
+ plainEnglish:"Multi-language text descriptions for cost centres. Always join CSKS+CSKT to get readable cost centre names in your reports.",
+ keyFields:["MANDT","SPRAS","KOKRS","KOSTL","DATBI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CSKS",desc:"Cost centre master"}]},
+
+{id:"CSKA",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cost Elements (Chart of Accounts)",
+ plainEnglish:"The master list of cost elements — the CO equivalent of G/L accounts. Every cost category (labour, materials, depreciation) has a cost element here. Primary cost elements mirror G/L accounts; secondary cost elements are CO-only.",
+ keyFields:["MANDT","KTOPL","KSTAR"],
+ s4note:"In S/4, cost elements and G/L accounts are merged. The distinction between G/L account and cost element is removed.",
+ relations:[{to:"CSKU",desc:"Cost element texts"},{to:"SKA1",desc:"G/L account equivalent"},{to:"TKA01",desc:"Controlling area"}]},
+
+{id:"CSKU",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cost Element Descriptions",
+ plainEnglish:"Text descriptions for cost elements in multiple languages.",
+ keyFields:["MANDT","SPRAS","KTOPL","KSTAR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CSKA",desc:"Cost element master"}]},
+
+{id:"TKA01",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Controlling Areas",
+ plainEnglish:"The master list of controlling areas — the top-level CO organisational unit. One controlling area can span multiple company codes. All CO objects (cost centres, orders, profit centres) belong to a controlling area.",
+ keyFields:["MANDT","KOKRS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CSKS",desc:"Cost centres"},{to:"CEPC",desc:"Profit centres"},{to:"T001",desc:"Company codes"}]},
+
+{id:"AUFK",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Order Master Data (Internal Orders)",
+ plainEnglish:"Master records for internal orders — temporary cost collectors for specific events, campaigns, or one-off jobs. Think of it as a cost centre with an on/off switch and a budget.",
+ keyFields:["MANDT","AUFNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"COEP",desc:"Cost postings (ECC)"},{to:"CSKS",desc:"Settlement CC"},{to:"AFKO",desc:"PP production orders"},{to:"ACDOCA",desc:"S/4 postings"}]},
+
+{id:"CEPC",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Profit Centre Master Data",
+ plainEnglish:"The master record for profit centres — the CO object used to measure P&L by business segment. Each profit centre has a name, responsible manager, and controlling area.",
+ keyFields:["MANDT","KOKRS","PRCTR","DATBI"],
+ s4note:"Unchanged in S/4. Profit centres are first-class citizens in ACDOCA.",
+ relations:[{to:"CEPCT",desc:"PC descriptions"},{to:"TKA01",desc:"Controlling area"},{to:"ACDOCA",desc:"Postings"}]},
+
+{id:"CEPCT",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Profit Centre Descriptions",
+ plainEnglish:"Multi-language text descriptions for profit centres.",
+ keyFields:["MANDT","SPRAS","KOKRS","PRCTR","DATBI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CEPC",desc:"Profit centre master"}]},
+
+{id:"GLPCA",module:"CO",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"EC-PCA: Actual Line Items (Profit Ctr Acctg)",
+ plainEnglish:"Profit Centre Accounting line items in ECC6. Costs and revenues allocated to profit centres. Used for profit centre P&L reporting in classic CO-PCA.",
+ keyFields:["MANDT","RYEAR","RBUKRS","DOCNR","POSNR"],
+ s4note:"Deprecated in S/4. Profit centre data is now embedded directly in ACDOCA.",
+ relations:[{to:"CEPC",desc:"Profit centre"},{to:"BKPF",desc:"FI document"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+{id:"PRPS",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"WBS Element Master Data",
+ plainEnglish:"Work Breakdown Structure elements — the building blocks of project cost tracking. Each phase, deliverable, or milestone of a project is a WBS element here.",
+ keyFields:["MANDT","PSPNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PROJ",desc:"Project definition"},{to:"COEP",desc:"Cost postings (ECC)"},{to:"ACDOCA",desc:"S/4 postings"}]},
+
+{id:"PROJ",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Project Definition",
+ plainEnglish:"The top-level header for projects in SAP PS. Contains project manager, responsible company, start/end dates, and overall status.",
+ keyFields:["MANDT","PSPID"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PRPS",desc:"WBS elements"}]},
+
+// ─── MM: MATERIALS MANAGEMENT ───────────────────────────────────────────────
+{id:"MARA",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"General Material Data",
+ plainEnglish:"The global master record for every material — product, raw material, semi-finished good. Material number, type, base unit, weight, shelf life. Not yet tied to a plant — that's MARC.",
+ keyFields:["MANDT","MATNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARC",desc:"Plant data"},{to:"MAKT",desc:"Descriptions"},{to:"MBEW",desc:"Valuation"},{to:"MARD",desc:"Storage location stock"},{to:"MARM",desc:"Units of measure"},{to:"MVKE",desc:"Sales data"}]},
+
+{id:"MARC",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Plant Data for Material",
+ plainEnglish:"Material data at the plant level: MRP settings, procurement type, reorder point, lead time, batch management. If MARA is the global spec, MARC is the local factory setup.",
+ keyFields:["MANDT","MATNR","WERKS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"General data"},{to:"MARD",desc:"Storage location"},{to:"T001W",desc:"Plant master"},{to:"MARC",desc:"Self: plant variant"}]},
+
+{id:"MARD",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Storage Location Stock Data",
+ plainEnglish:"Unrestricted stock quantities at storage location level. 'How many units of material X are in warehouse Y?' — that's MARD. Most granular standard stock view.",
+ keyFields:["MANDT","MATNR","WERKS","LGORT"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARC",desc:"Plant level"},{to:"MARA",desc:"Material"},{to:"T001L",desc:"Storage location"}]},
+
+{id:"MAKT",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Material Descriptions",
+ plainEnglish:"Descriptions for materials in all languages. Without MAKT you just get a material number — join MARA+MAKT to get human-readable names.",
+ keyFields:["MANDT","MATNR","SPRAS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material master"}]},
+
+{id:"MBEW",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Material Valuation",
+ plainEnglish:"The accounting value of materials — standard price, moving average price, total stock value. One row per material per valuation area (usually = plant). Critical for inventory valuation reporting.",
+ keyFields:["MANDT","MATNR","BWKEY"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material"},{to:"MARC",desc:"Plant data"},{to:"ACDOCA",desc:"S/4 stock values"}]},
+
+{id:"MARM",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Units of Measure for Material",
+ plainEnglish:"Alternative units of measure for materials. A material might be sold in 'each' but stored in 'pallet' and weighed in 'kg'. Each unit with its conversion factor to base unit lives here.",
+ keyFields:["MANDT","MATNR","MEINH"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material master"}]},
+
+{id:"MVKE",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Material Sales Data (Sales Org / Dist. Channel)",
+ plainEnglish:"Sales-organisation-specific material data: delivering plant, item category group, material group, sales unit, tax classification. Bridges material master to the sales process. Technically an SD table even though it extends the material master.",
+ keyFields:["MANDT","MATNR","VKORG","VTWEG"],
+ s4note:"Unchanged in S/4. VKORG references TVKO (Sales Organisations), VTWEG references TVTW (Distribution Channels).",
+ relations:[{to:"MARA",desc:"Material"},{to:"VBAP",desc:"Sales order items"},{to:"TVKO",desc:"Sales organisation"},{to:"TVTW",desc:"Distribution channel"}]},
+
+{id:"MLAN",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Tax Classification for Material",
+ plainEnglish:"How a material is classified for tax purposes per country/tax type. Drives automatic tax determination in sales and purchasing.",
+ keyFields:["MANDT","MATNR","ALAND","TATY1"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material"},{to:"VBAP",desc:"SD line items"}]},
+
+{id:"MKPF",module:"MM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Material Document Header (ECC)",
+ plainEnglish:"The header for goods movements in ECC6. Every goods receipt, goods issue, stock transfer creates a material document. MKPF is the cover sheet — document number, date, user who posted it.",
+ keyFields:["MANDT","MBLNR","MJAHR"],
+ s4note:"Merged into MATDOC in S/4. Do not use for S/4.",
+ relations:[{to:"MSEG",desc:"Line items"},{to:"MATDOC",desc:"S/4 replacement"}]},
+
+{id:"MSEG",module:"MM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Material Document Line Items (ECC)",
+ plainEnglish:"The line items of every goods movement in ECC6. What material moved, how many, from/to which storage location, movement type, cost centre, order. This is the backbone of inventory reporting in ECC6.",
+ keyFields:["MANDT","MBLNR","MJAHR","ZEILE"],
+ s4note:"Merged into MATDOC in S/4HANA. The S/4 MATDOC table combines both MKPF and MSEG.",
+ relations:[{to:"MKPF",desc:"Document header"},{to:"MARA",desc:"Material"},{to:"EKPO",desc:"PO reference"},{to:"MATDOC",desc:"S/4 replacement"}]},
+
+{id:"MATDOC",module:"MM",ecc:false,s4:true,s4status:"new",
+ shortDesc:"Material Document (S/4HANA)",
+ plainEnglish:"The S/4HANA replacement for MKPF + MSEG — a single combined table for all goods movements. Same consolidation pattern SAP used for ACDOCA in finance. Simultaneously written with ACDOCA for financial postings when stock value changes.",
+ keyFields:["MANDT","MBLNR","MJAHR","ZEILE"],
+ s4note:"NEW in S/4. Replaces MKPF + MSEG. Header and item data in one table. Real-time link to ACDOCA for financial postings.",
+ relations:[{to:"MKPF",desc:"ECC predecessor"},{to:"MSEG",desc:"ECC predecessor"},{to:"ACDOCA",desc:"Financial link"},{to:"MARA",desc:"Material"}]},
+
+{id:"EKKO",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchasing Document Header",
+ plainEnglish:"Header for all purchasing documents: purchase orders, contracts, scheduling agreements, RFQs. Vendor, purchasing org, document date, payment terms.",
+ keyFields:["MANDT","EBELN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKPO",desc:"Line items"},{to:"LFA1",desc:"Vendor"},{to:"T024",desc:"Purchasing group"},{to:"T003",desc:"Doc type"},{to:"EKES",desc:"Vendor confirmations"}]},
+
+{id:"EKPO",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchasing Document Item",
+ plainEnglish:"The line items of purchasing documents. Material, quantity, price, delivery date, storage location, account assignment. The detail behind every purchase order line.",
+ keyFields:["MANDT","EBELN","EBELP"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKKO",desc:"PO header"},{to:"MARA",desc:"Material"},{to:"T001W",desc:"Plant"},{to:"MSEG",desc:"Goods receipt reference"},{to:"EKET",desc:"Delivery schedule"}]},
+
+{id:"EKET",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Scheduling Agreement Schedule Lines",
+ plainEnglish:"Delivery schedule lines for scheduling agreements and open POs. When a PO has staggered deliveries (Jan: 100 units, Feb: 50 units), each is a row here.",
+ keyFields:["MANDT","EBELN","EBELP","ETENR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKPO",desc:"PO item"},{to:"MSEG",desc:"Goods receipt"}]},
+
+{id:"EKES",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Vendor Confirmations",
+ plainEnglish:"Order acknowledgements and shipping notifications from vendors. When a vendor confirms they've received a PO and will deliver on date X, the confirmation record lives here.",
+ keyFields:["MANDT","EBELN","EBELP","ETENS","EBTYP"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKKO",desc:"PO header"},{to:"EKPO",desc:"PO item"}]},
+
+{id:"EBAN",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchase Requisition",
+ plainEnglish:"Internal requests to procure something. The step before a purchase order. Who wants what, by when, at what quantity. Purchasing converts requisitions into POs.",
+ keyFields:["MANDT","BANFN","BNFPO"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKPO",desc:"Converted to PO item"},{to:"MARA",desc:"Material requested"},{to:"T001W",desc:"Delivery plant"}]},
+
+{id:"EINA",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchasing Info Record: General Data",
+ plainEnglish:"The general data layer of a Purchasing Info Record — the combination of vendor + material + purchasing org. Stores agreed delivery time, minimum quantity, tolerance levels.",
+ keyFields:["MANDT","INFNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EINE",desc:"Org-specific data"},{to:"LFA1",desc:"Vendor"},{to:"MARA",desc:"Material"}]},
+
+{id:"EINE",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchasing Info Record: Org Data",
+ plainEnglish:"Purchasing organisation and plant-specific info record data: price, currency, payment terms. The pricing layer of the vendor-material relationship.",
+ keyFields:["MANDT","INFNR","EKORG","WERKS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EINA",desc:"General data"},{to:"EKKO",desc:"PO reference"}]},
+
+{id:"LFA1",module:"MM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Vendor Master (General Section)",
+ plainEnglish:"The master record for vendors/suppliers: name, address, country, tax number, language. The global view of who you buy from.",
+ keyFields:["MANDT","LIFNR"],
+ s4note:"Still exists in S/4 but is now synchronised FROM Business Partner (BUT000). Always create vendors in BP transaction (not XK01) in S/4.",
+ relations:[{to:"LFB1",desc:"Company code data"},{to:"LFM1",desc:"Purch org data"},{to:"LFBK",desc:"Bank details"},{to:"EKKO",desc:"PO header"},{to:"BUT000",desc:"S/4 Business Partner"}]},
+
+{id:"LFB1",module:"MM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Vendor Master (Company Code Data)",
+ plainEnglish:"Company-code-specific vendor data: payment terms, payment method, reconciliation account, withholding tax. One row per vendor per company code.",
+ keyFields:["MANDT","LIFNR","BUKRS"],
+ s4note:"Managed via BP sync in S/4.",
+ relations:[{to:"LFA1",desc:"General data"},{to:"T001",desc:"Company code"}]},
+
+{id:"LFM1",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Vendor Master (Purchasing Org)",
+ plainEnglish:"Purchasing-organisation-specific vendor data: order currency, payment terms for purchasing, minimum order value, incoterms.",
+ keyFields:["MANDT","LIFNR","EKORG"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LFA1",desc:"General data"},{to:"EKKO",desc:"PO reference"}]},
+
+{id:"T001W",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Plants / Branches",
+ plainEnglish:"Master list of plants: manufacturing sites, warehouses, distribution centres, retail stores. Every material movement, production order, and delivery references a plant.",
+ keyFields:["MANDT","WERKS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARC",desc:"Material at plant"},{to:"MARD",desc:"Storage locations"},{to:"T001",desc:"Company code"},{to:"T001L",desc:"Storage locations"}]},
+
+{id:"T001L",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Storage Locations",
+ plainEnglish:"The sub-divisions of a plant for stock purposes — shelves, rooms, areas, zones. Each storage location belongs to exactly one plant.",
+ keyFields:["MANDT","WERKS","LGORT"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T001W",desc:"Plant"},{to:"MARD",desc:"Stock quantities"}]},
+
+{id:"T024",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchasing Groups",
+ plainEnglish:"Buyer groups responsible for procurement. Referenced on every purchase order — tells you which buying team is responsible.",
+ keyFields:["MANDT","EKGRP"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKKO",desc:"Purchase orders"}]},
+
+{id:"T156",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Movement Types",
+ plainEnglish:"The configuration table for movement types — the codes that tell SAP what kind of stock movement is happening. 101=GR for PO, 261=Goods issue for order, 311=Transfer between storage locations, 601=Goods issue for delivery.",
+ keyFields:["MANDT","BWART"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MSEG",desc:"Material doc items"},{to:"MATDOC",desc:"S/4 material docs"}]},
+
+// ─── SD: SALES & DISTRIBUTION ───────────────────────────────────────────────
+{id:"VBAK",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Header",
+ plainEnglish:"Header of all sales documents: orders, quotations, contracts, returns. Customer, sales org, distribution channel, document type, net value, overall delivery/billing status.",
+ keyFields:["MANDT","VBELN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAP",desc:"Line items"},{to:"KNA1",desc:"Customer"},{to:"VBFA",desc:"Doc flow"},{to:"VBKD",desc:"Business data"},{to:"VBUK",desc:"Header status"}]},
+
+{id:"VBAP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Item",
+ plainEnglish:"The lines of sales orders. What product, how many, at what price, requested delivery date, item category. The detail behind every sales order line.",
+ keyFields:["MANDT","VBELN","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Header"},{to:"MARA",desc:"Material"},{to:"VBEP",desc:"Schedule lines"},{to:"VBUP",desc:"Item status"},{to:"KONV",desc:"Pricing conditions"}]},
+
+{id:"VBKD",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Business Data",
+ plainEnglish:"Business-related data on sales documents: payment terms, incoterms, billing block, pricing date. Complements VBAK with commercial terms.",
+ keyFields:["MANDT","VBELN","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Sales header"},{to:"VBAP",desc:"Sales items"}]},
+
+{id:"VBUK",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Header Status",
+ plainEnglish:"Overall status fields for sales documents: delivery status, billing status, rejection status. A quick way to check 'is this order fully delivered and billed?' without calculating from items.",
+ keyFields:["MANDT","VBELN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Sales header"},{to:"VBUP",desc:"Item status"}]},
+
+{id:"VBUP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Item Status",
+ plainEnglish:"Item-level status fields: delivery status, billing status, rejection. Lets you see which individual lines of a sales order are open, partially delivered, or complete.",
+ keyFields:["MANDT","VBELN","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAP",desc:"Sales item"},{to:"VBUK",desc:"Header status"}]},
+
+{id:"VBEP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Schedule Lines",
+ plainEnglish:"Confirmed delivery dates for each sales order line. A single order line can have multiple delivery batches (partial deliveries). Each scheduled date is one row.",
+ keyFields:["MANDT","VBELN","POSNR","ETENR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAP",desc:"Sales item"},{to:"LIKP",desc:"Delivery link"}]},
+
+{id:"VBFA",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Flow",
+ plainEnglish:"The complete audit trail of SD documents — the chain from quote to order to delivery to invoice. If you want to trace everything that happened from a sales order, VBFA is the breadcrumb trail.",
+ keyFields:["MANDT","VBELV","POSNV","VBELN","POSNN","VBTYP_N"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Source doc"},{to:"LIKP",desc:"Delivery"},{to:"VBRK",desc:"Billing"}]},
+
+{id:"LIKP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Delivery Header",
+ plainEnglish:"Outbound delivery header: ship-to party, shipping point, actual goods issue date, route, delivery status. Created when a sales order is ready to ship.",
+ keyFields:["MANDT","VBELN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LIPS",desc:"Delivery items"},{to:"VBFA",desc:"Doc flow"},{to:"VBAK",desc:"Sales order"}]},
+
+{id:"LIPS",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Delivery Item Data",
+ plainEnglish:"The lines of outbound deliveries: material, quantity picked/packed, batch, storage bin. Join LIKP+LIPS for full delivery reporting.",
+ keyFields:["MANDT","VBELN","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LIKP",desc:"Delivery header"},{to:"MARA",desc:"Material"}]},
+
+{id:"VBRK",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Billing Document Header",
+ plainEnglish:"Invoice and credit/debit note header: customer, billing date, net value, document type, accounting document reference. The originating document for the FI posting.",
+ keyFields:["MANDT","VBELN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBRP",desc:"Billing items"},{to:"KNA1",desc:"Customer"},{to:"VBFA",desc:"Doc flow"},{to:"BKPF",desc:"FI posting"}]},
+
+{id:"VBRP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Billing Document Item",
+ plainEnglish:"The lines of invoices: material billed, quantity, net/gross value, tax amount, G/L account. Join VBRK+VBRP for full revenue reporting.",
+ keyFields:["MANDT","VBELN","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBRK",desc:"Billing header"},{to:"MARA",desc:"Material"},{to:"BSEG",desc:"FI line item"}]},
+
+{id:"KNA1",module:"SD",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Customer Master (General Section)",
+ plainEnglish:"Global master record for customers: name, address, country, tax number, language. The universal view of who buys from you.",
+ keyFields:["MANDT","KUNNR"],
+ s4note:"Still exists but managed via Business Partner (BUT000) in S/4. Create/edit customers using BP transaction.",
+ relations:[{to:"KNB1",desc:"Company code data"},{to:"KNVV",desc:"Sales area data"},{to:"KNBK",desc:"Bank accounts"},{to:"VBAK",desc:"Sales orders"},{to:"BUT000",desc:"S/4 Business Partner"}]},
+
+{id:"KNB1",module:"SD",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Customer Master (Company Code Data)",
+ plainEnglish:"Company-code-specific customer settings: reconciliation account, payment terms, dunning procedure, credit limit. One row per customer per company code.",
+ keyFields:["MANDT","KUNNR","BUKRS"],
+ s4note:"Managed via BP sync in S/4.",
+ relations:[{to:"KNA1",desc:"General data"},{to:"T001",desc:"Company code"}]},
+
+{id:"KNVV",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Customer Master: Sales Area Data",
+ plainEnglish:"Sales-area-specific customer settings: sales org, distribution channel, division, delivery priority, order probability, currency, incoterms. Controls how the customer buys.",
+ keyFields:["MANDT","KUNNR","VKORG","VTWEG","SPART"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KNA1",desc:"Customer"},{to:"VBAK",desc:"Sales orders"}]},
+
+{id:"KNVP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Customer Partner Functions",
+ plainEnglish:"Defines partner roles for customers: who is the sold-to, bill-to, ship-to, payer. A customer can have different partners filling different roles on a transaction.",
+ keyFields:["MANDT","KUNNR","PARVW","PARZA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KNA1",desc:"Customer"},{to:"VBAK",desc:"Sales doc partner"}]},
+
+{id:"KONV",module:"SD",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Pricing Conditions (Document-Level)",
+ plainEnglish:"All pricing condition records per document — discounts, surcharges, freight, taxes. One row per condition type per document line. Often the largest table in an SD-heavy system.",
+ keyFields:["MANDT","KNUMV","KPOSN","STUNR","ZAEHK"],
+ s4note:"Replaced by PRCD_ELEMENTS in S/4HANA.",
+ relations:[{to:"VBAP",desc:"Sales item"},{to:"EKKO",desc:"PO header"},{to:"PRCD_ELEMENTS",desc:"S/4 replacement"}]},
+
+{id:"PRCD_ELEMENTS",module:"SD",ecc:false,s4:true,s4status:"new",
+ shortDesc:"Pricing Condition Elements (S/4HANA)",
+ plainEnglish:"The new unified pricing table in S/4HANA replacing KONV and KONP. Stores all pricing conditions for both SD and MM documents. Cleaner structure, better performance.",
+ keyFields:["MANDT","KNUMV","KPOSN","STUNR","ZAEHK"],
+ s4note:"NEW in S/4. Replaces KONV (document) and KONP (master condition records). Unified pricing data model.",
+ relations:[{to:"KONV",desc:"ECC predecessor"},{to:"VBAK",desc:"Sales orders"},{to:"EKKO",desc:"PO reference"}]},
+
+{id:"NAST",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Message / Output Status",
+ plainEnglish:"Output records — print, email, EDI, PDF — triggered by business documents. When a purchase order is emailed to a vendor, or a delivery note is printed, NAST tracks the output status.",
+ keyFields:["MANDT","KAPPL","OBJKY","KSCHL","SPRAS","PARNR","PARVW","NACHA"],
+ s4note:"Still used in S/4 for classic output. BRF+ and newer output management frameworks are alternatives.",
+ relations:[{to:"EKKO",desc:"PO output"},{to:"VBAK",desc:"Sales doc output"},{to:"VBRK",desc:"Invoice output"}]},
+
+// ─── PP: PRODUCTION PLANNING ─────────────────────────────────────────────────
+{id:"AFKO",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Production Order Header",
+ plainEnglish:"The header of production/process/maintenance orders. What to produce, how many, by when, in which plant. Status, scheduled dates, actual vs planned quantities.",
+ keyFields:["MANDT","AUFNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AFPO",desc:"Order items"},{to:"AUFK",desc:"Order master"},{to:"MARA",desc:"Material produced"},{to:"AFVC",desc:"Operations"}]},
+
+{id:"AFPO",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Production Order Item",
+ plainEnglish:"Item detail of production orders: quantity ordered, confirmed, delivered, settlement rule. One row per item (usually one item per order).",
+ keyFields:["MANDT","AUFNR","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AFKO",desc:"Order header"},{to:"MARA",desc:"Material"}]},
+
+{id:"AFVC",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Operations within Production Order",
+ plainEnglish:"Individual operations/steps of a production order: Mill, Weld, Paint, Inspect. Each step has a work centre, planned time, actual time, and status.",
+ keyFields:["MANDT","AUFPL","APLZL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AFKO",desc:"Order header"},{to:"CRHD",desc:"Work centre"},{to:"AFRU",desc:"Confirmations"}]},
+
+{id:"AFRU",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Order Confirmations",
+ plainEnglish:"Shop floor confirmations — actual times and quantities reported against production order operations. When an operator says 'I finished machining 100 pieces in 2 hours', that goes here.",
+ keyFields:["MANDT","RUECK","RMZHL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AFVC",desc:"Operation confirmed"},{to:"AFKO",desc:"Production order"}]},
+
+{id:"RESB",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Reservations / Component Requirements",
+ plainEnglish:"Component reservations for production orders and manual reservations. When a production order needs 50 bolts, that requirement/reservation is a row here.",
+ keyFields:["MANDT","RSNUM","RSPOS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AFKO",desc:"Production order"},{to:"MARA",desc:"Required material"},{to:"T001W",desc:"Plant"}]},
+
+{id:"MAST",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Material to BOM Link",
+ plainEnglish:"Links materials to their Bills of Materials. 'Material X uses BOM number Y for BOM usage Z'. The routing table that connects a product to its recipe.",
+ keyFields:["MANDT","MATNR","WERKS","STLAN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material"},{to:"STKO",desc:"BOM header"}]},
+
+{id:"STKO",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Bill of Materials Header",
+ plainEnglish:"The header record for Bills of Materials. BOM number, usage (production, sales), validity dates, base quantity. STPO has the actual components.",
+ keyFields:["MANDT","STLNR","STLAL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"STPO",desc:"BOM components"},{to:"MAST",desc:"Material link"}]},
+
+{id:"STPO",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Bill of Materials Items (Components)",
+ plainEnglish:"The components that make up a product — the recipe. Each line is an ingredient: component material, quantity per base unit, scrap factor, item category.",
+ keyFields:["MANDT","STLNR","STLKN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"STKO",desc:"BOM header"},{to:"MARA",desc:"Component material"}]},
+
+{id:"PLKO",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Routing / Task List Header",
+ plainEnglish:"Header for production routings — the sequence of manufacturing steps to produce something. Task list type, plant, group, usage, status.",
+ keyFields:["MANDT","PLNTY","PLNNR","PLNAL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PLPO",desc:"Operations"},{to:"MAPL",desc:"Material assignment"}]},
+
+{id:"PLPO",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Routing Operations",
+ plainEnglish:"Individual operations in a routing: operation number, description, work centre, standard times (setup, machine, labour), control key.",
+ keyFields:["MANDT","PLNTY","PLNNR","PLNAL","VORNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PLKO",desc:"Routing header"},{to:"CRHD",desc:"Work centre"}]},
+
+{id:"MAPL",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Material to Task List Assignment",
+ plainEnglish:"Links materials to their production routings. The map between 'what to make' and 'how to make it'.",
+ keyFields:["MANDT","MATNR","WERKS","PLNTY","PLNNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material"},{to:"PLKO",desc:"Routing"}]},
+
+{id:"CRHD",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Work Centre Header",
+ plainEnglish:"Master data for work centres (machines, assembly lines, teams). The WHERE of production. Each operation in a routing is performed at a work centre.",
+ keyFields:["MANDT","OBJID"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AFVC",desc:"Order operations"},{to:"PLPO",desc:"Routing operations"}]},
+
+// ─── QM: QUALITY MANAGEMENT ──────────────────────────────────────────────────
+{id:"QMEL",module:"QM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Quality Notifications",
+ plainEnglish:"Quality notifications — complaints, defects, improvements. SAP's issue tracking for quality: what went wrong, with which material, in which plant, severity, and resolution status. Note: technically housed in PM-WOC-MN (Plant Maintenance Work Orders/Notifications) in SAP's classification, despite the 'Q' prefix.",
+ keyFields:["MANDT","QMNUM","QMART"],
+ s4note:"Unchanged in S/4. QMART (Notification Type) references config table TQ80.",
+ relations:[{to:"QMFE",desc:"Notification items"},{to:"MARA",desc:"Material"},{to:"T001W",desc:"Plant"},{to:"EQUI",desc:"Equipment ref"}]},
+
+{id:"QMFE",module:"QM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Quality Notification Items",
+ plainEnglish:"The individual defect/issue items within a quality notification. Each defect line has a code, description, quantity affected, and location.",
+ keyFields:["MANDT","QMNUM","FEANR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"QMEL",desc:"Notification header"}]},
+
+// ─── PM: PLANT MAINTENANCE ────────────────────────────────────────────────────
+{id:"EQUI",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Equipment Master",
+ plainEnglish:"Master record for physical equipment to be maintained — machines, vehicles, instruments. Serial number, manufacturer, installation date, location, maintenance plant.",
+ keyFields:["MANDT","EQUNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"IFLOT",desc:"Functional location"},{to:"QMEL",desc:"Quality notifications"},{to:"AUFK",desc:"Maintenance orders"}]},
+
+{id:"IFLOT",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Functional Location",
+ plainEnglish:"Hierarchical structure of where equipment is installed — buildings, floors, production lines, systems. Equipment is installed at a functional location.",
+ keyFields:["MANDT","TPLNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EQUI",desc:"Installed equipment"},{to:"T001W",desc:"Plant"}]},
+
+// ─── HR / HCM ─────────────────────────────────────────────────────────────────
+{id:"PA0000",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0000: Personnel Actions",
+ plainEnglish:"Records of significant HR events for each employee: hiring, promotion, transfer, termination. The audit history of an employee's career at the company.",
+ keyFields:["MANDT","PERNR","SUBTY","OBJPS","SPRPS","ENDDA","BEGDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Org assignment"},{to:"PA0002",desc:"Personal data"}]},
+
+{id:"PA0001",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0001: Org Assignment",
+ plainEnglish:"Where the employee sits in the organisation: company code, personnel area, cost centre, position, org unit. The basic 'who works where and reports to whom'.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0000",desc:"Actions"},{to:"PA0008",desc:"Pay data"},{to:"CSKS",desc:"Cost centre charged"},{to:"HRP1000",desc:"Position/org unit"}]},
+
+{id:"PA0002",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0002: Personal Data",
+ plainEnglish:"Personal details: name, date of birth, nationality, marital status, gender. PII — apply strict access controls. Time-dependent (the record can change over time).",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Org assignment"}]},
+
+{id:"PA0006",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0006: Addresses",
+ plainEnglish:"Employee home address data. Multiple address types possible (permanent, temporary). Used for payslip delivery, emergency contact.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employee"}]},
+
+{id:"PA0007",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0007: Planned Working Time",
+ plainEnglish:"The employee's work schedule — how many hours per day/week, shift pattern, part-time factor. Foundation for time evaluation and payroll.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employee"},{to:"PA0008",desc:"Basic pay"}]},
+
+{id:"PA0008",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0008: Basic Pay",
+ plainEnglish:"The salary details for each employee: pay scale, wage type, amounts. The main record driving payroll calculation. One record per pay period.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Org assignment"},{to:"PA0007",desc:"Work schedule"}]},
+
+{id:"PA0014",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0014: Recurring Deductions",
+ plainEnglish:"Regular deductions from pay: union dues, loan repayments, health insurance. Run each payroll period automatically.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employee"}]},
+
+{id:"PA0015",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Infotype 0015: Additional Payments",
+ plainEnglish:"One-time additional pay: bonuses, allowances, overtime supplements. Added to payroll for the relevant period.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employee"}]},
+
+{id:"PCL2",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"HR Cluster Table 2 (Payroll Results)",
+ plainEnglish:"Payroll results are stored in compressed cluster tables rather than regular transparent tables. PCL2 holds payroll calculation results. Not directly readable like a normal table — need function modules or HR reports to decode it.",
+ keyFields:["MANDT","RELID","SRTFD","SRTF2"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0008",desc:"Pay data source"}]},
+
+{id:"HRP1000",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"OM: Object Descriptions (Positions, Jobs, Org Units)",
+ plainEnglish:"Descriptions for all Org Management objects — positions, jobs, org units, tasks. The HRP tables together form the org chart structure. HRP1000 has the names/descriptions.",
+ keyFields:["MANDT","PLVAR","OTYPE","OBJID","SUBTY","ISTAT","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employee assignment"}]},
+
+// ─── WM: WAREHOUSE MANAGEMENT ────────────────────────────────────────────────
+{id:"LGPLA",module:"WM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Storage Bin Master (WM)",
+ plainEnglish:"Every physical bin/slot in a warehouse in classic WM: aisle, row, shelf, bin number, maximum weight, bin type. The most granular location in the warehouse.",
+ keyFields:["MANDT","LGNUM","LGTYP","LGPLA"],
+ s4note:"In S/4 with EWM, equivalent is VLPLA. Classic WM may still exist in non-EWM scenarios.",
+ relations:[{to:"LQUA",desc:"Quants in bin"},{to:"LTAP",desc:"Transfer orders"}]},
+
+{id:"LQUA",module:"WM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Quants (Stock in Bin)",
+ plainEnglish:"A 'quant' is a homogeneous pile of stock in a storage bin: same material, same batch, same quality status. LQUA tells you exactly what is in each bin.",
+ keyFields:["MANDT","LGNUM","LQNUM"],
+ s4note:"Classic WM. In S/4 EWM, replaced by EWM-specific quant tables.",
+ relations:[{to:"LGPLA",desc:"Storage bin"},{to:"MARA",desc:"Material"}]},
+
+{id:"LTAP",module:"WM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Transfer Order Item (WM)",
+ plainEnglish:"The actual physical movement instruction in the warehouse — move X units of material Y from bin A to bin B. The execution step in classic WM.",
+ keyFields:["MANDT","LGNUM","TANUM","TAPOS"],
+ s4note:"Classic WM. In EWM, warehouse tasks (LGPLA-related) replace this.",
+ relations:[{to:"LGPLA",desc:"Source/dest bin"},{to:"LQUA",desc:"Quant moved"},{to:"MARA",desc:"Material"}]},
+
+// ─── BUSINESS PARTNER (S/4 KEY CHANGE) ──────────────────────────────────────
+{id:"BUT000",module:"BASIS",ecc:false,s4:true,s4status:"new",
+ shortDesc:"Business Partner: General Data",
+ plainEnglish:"The S/4HANA master concept. Instead of separate KNA1 (customer) and LFA1 (vendor) tables, S/4 uses a single Business Partner that can play multiple roles. One entity — many faces. The biggest conceptual change in S/4 master data management.",
+ keyFields:["MANDT","PARTNER"],
+ s4note:"CRITICAL S/4 change. Use transaction BP (not XD01/XK01) to create/edit. KNA1 and LFA1 still exist but are written by the BP sync framework.",
+ relations:[{to:"KNA1",desc:"Customer sync"},{to:"LFA1",desc:"Vendor sync"},{to:"BUT001",desc:"Additional BP data"}]},
+
+{id:"BUT001",module:"BASIS",ecc:false,s4:true,s4status:"new",
+ shortDesc:"Business Partner: Additional General Data",
+ plainEnglish:"Secondary general data for Business Partners — industry, legal form, tax jurisdiction, international addresses. Extends BUT000.",
+ keyFields:["MANDT","PARTNER"],
+ s4note:"NEW in S/4. Extends BUT000.",
+ relations:[{to:"BUT000",desc:"BP general data"}]},
+
+// ─── BASIS / CROSS-MODULE ────────────────────────────────────────────────────
+{id:"T000",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Client Table",
+ plainEnglish:"The apex of the SAP hierarchy. Lists all clients (tenants) in the system. In SAP, a client is like a completely isolated company — separate data, separate users, separate config. Prod/Dev/QA are usually separate clients.",
+ keyFields:["MANDT"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T001",desc:"Company codes"}]},
+
+{id:"DD02L",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Table Definitions (ABAP Dictionary)",
+ plainEnglish:"The catalogue of all database tables in SAP. Every table you see in SE11 has a row here. Meta-data about metadata. Query this to discover what tables exist in the system.",
+ keyFields:["TABNAME","AS4LOCAL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"DD03L",desc:"Field definitions"}]},
+
+{id:"DD03L",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Table Field Definitions",
+ plainEnglish:"Every field of every table: name, data type, length, description, key flag. The data dictionary of SAP's own data model. Used by SE11, SE16, and tools like TabFox.",
+ keyFields:["TABNAME","FIELDNAME","AS4LOCAL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"DD02L",desc:"Table header"}]},
+
+{id:"ADRC",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Business Address Services: Addresses",
+ plainEnglish:"Centralised address storage for all SAP objects. Vendor addresses, customer addresses, plant addresses, user addresses — all roads lead to ADRC. Uses an address handle concept to link to the owning object.",
+ keyFields:["CLIENT","ADDRNUMBER","DATE_FROM","NATION"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LFA1",desc:"Vendor address"},{to:"KNA1",desc:"Customer address"},{to:"T001W",desc:"Plant address"}]},
+
+{id:"TCURR",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Exchange Rates",
+ plainEnglish:"Foreign currency exchange rates used in all financial, MM, and SD transactions. Currency pair, exchange rate type (spot, average, bank buying rate), validity date, and rate.",
+ keyFields:["MANDT","KURST","FCURR","TCURR","GDATU"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"BKPF",desc:"Currency translation"},{to:"VBAK",desc:"SD currency"},{to:"EKKO",desc:"PO currency"}]},
+
+{id:"TCURC",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Currency Codes",
+ plainEnglish:"ISO currency codes and SAP currency codes — USD, EUR, GBP, AUD, JPY. Referenced everywhere money is involved.",
+ keyFields:["MANDT","WAERS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"TCURR",desc:"Exchange rates"},{to:"T001",desc:"Company code currency"}]},
+
+{id:"T005",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Countries",
+ plainEnglish:"ISO country codes and their SAP-specific settings: language, calendar, tax country, address format. Referenced on virtually every master data record.",
+ keyFields:["MANDT","LAND1"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KNA1",desc:"Customer country"},{to:"LFA1",desc:"Vendor country"},{to:"ADRC",desc:"Address country"}]},
+
+{id:"USR02",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Logon Data (User Master)",
+ plainEnglish:"SAP user account data — user ID, password hash, logon language, validity dates, failed logon count. The basis for user authentication.",
+ keyFields:["MANDT","BNAME"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"BKPF",desc:"Posted-by user"},{to:"EKKO",desc:"Created-by user"}]},
+
+// ─── HOUSE BANKS ─────────────────────────────────────────────────────────────
+{id:"T012",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"House Banks",
+ plainEnglish:"Master list of your company's own bank accounts (house banks). Every bank account your company uses for payments and receipts is defined here first. Referenced by the automatic payment program (F110) via REGUH.",
+ keyFields:["MANDT","BUKRS","HBKID"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T012K",desc:"Bank account details"},{to:"T001",desc:"Company code"},{to:"REGUH",desc:"Payment runs"}]},
+
+{id:"T012K",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"House Bank Accounts",
+ plainEnglish:"The specific bank accounts (account IDs) within each house bank. A company might have a EUR account and a USD account at the same bank — each is a row in T012K.",
+ keyFields:["MANDT","BUKRS","HBKID","HKTID"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T012",desc:"House bank"},{to:"BNKA",desc:"Bank master"},{to:"REGUH",desc:"Used in payments"}]},
+
+// ─── SD CONFIG TABLES ─────────────────────────────────────────────────────────
+{id:"TVKO",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Organisations",
+ plainEnglish:"The master list of sales organisations — the top-level SD organisational unit responsible for selling products. Controls what can be sold and in which country. Every sales order is assigned to a sales org.",
+ keyFields:["MANDT","VKORG"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MVKE",desc:"Material sales data"},{to:"VBAK",desc:"Sales orders"},{to:"T001",desc:"Company code"}]},
+
+{id:"TVTW",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Distribution Channels",
+ plainEnglish:"Configuration table for distribution channels — how a product reaches the customer: wholesale, retail, direct, internet. Part of the three-level SD org structure (Sales Org + Dist Channel + Division).",
+ keyFields:["MANDT","VTWEG"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MVKE",desc:"Material sales data"},{to:"VBAK",desc:"Sales orders"},{to:"KNVV",desc:"Customer sales area"}]},
+
+// ─── CO VERSIONS / TRANSACTIONS ───────────────────────────────────────────────
+{id:"TKA09",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"CO Versions",
+ plainEnglish:"Controlling versions — Plan version 0 (actual), version 1 (plan), version 2 (forecast). Versions allow parallel cost planning scenarios. Referenced in COBK, COEP, and planning reports.",
+ keyFields:["MANDT","KOKRS","VERSN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"TKA01",desc:"Controlling area"},{to:"COBK",desc:"CO documents"},{to:"COEP",desc:"CO line items"}]},
+
+// ─── MATERIAL LEDGER (ECC) ───────────────────────────────────────────────────
+{id:"MLHD",module:"MM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Material Ledger Document Header (ECC)",
+ plainEnglish:"Header records for Material Ledger documents in ECC6. When the material ledger is active, every goods movement creates an ML document for actual costing. MLHD is the header.",
+ keyFields:["MANDT","BELNR","GJAHR"],
+ s4note:"Replaced by ACDOCA integration in S/4. The S/4 Universal Journal eliminates the need for a separate Material Ledger document table.",
+ relations:[{to:"MLIT",desc:"ML line items"},{to:"MARA",desc:"Material"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+{id:"MLIT",module:"MM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Material Ledger Document Items (ECC)",
+ plainEnglish:"Line items of Material Ledger documents in ECC6. Contains quantities and values per currency/valuation type for actual costing.",
+ keyFields:["MANDT","BELNR","GJAHR","BWPOS"],
+ s4note:"Deprecated in S/4. Actual costing data flows directly into ACDOCA.",
+ relations:[{to:"MLHD",desc:"ML doc header"},{to:"MARA",desc:"Material"},{to:"ACDOCA",desc:"S/4 replacement"}]},
+
+// ─── FI EXTENDED ──────────────────────────────────────────────────────────────
+{id:"FBCJ",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cash Journal Documents",
+ plainEnglish:"Petty cash transactions. Every time someone opens the office cash tin and records a receipt or payment, it ends up in FBCJ. The FI cash journal (transaction FBCJ) stores every cash receipt and disbursement here — much simpler than a full bank posting.",
+ keyFields:["MANDT","BUKRS","BELNR","GJAHR"],
+ s4note:"Retained in S/4HANA. FBCJ remains the primary petty cash table with posting to ACDOCA.",
+ relations:[{to:"T001",desc:"Company code"},{to:"ACDOCA",desc:"Posts to universal journal"}]},
+
+{id:"T014",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Credit Control Areas",
+ plainEnglish:"Credit control areas group customers for credit limit management. Think of it as 'who's responsible for this customer's credit line?' One company can have multiple credit control areas for different customer segments. KNKK stores the credit master data per customer/credit control area.",
+ keyFields:["KKBER"],
+ s4note:"Unchanged. Still the credit control area config table in S/4.",
+ relations:[{to:"T001",desc:"Assigned company codes"},{to:"KNA1",desc:"Customer credit master"}]},
+
+{id:"KNKK",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Customer Credit Management Master",
+ plainEnglish:"The credit limit and exposure record for each customer in each credit control area. Contains the total credit limit, used credit, and last risk class. SD checks this before releasing a sales order — if the customer is over their limit, the order gets blocked.",
+ keyFields:["MANDT","KUNNR","KKBER"],
+ s4note:"Unchanged in S/4. Feeds into the credit check in FSCM (BAdI-based) or SD credit management.",
+ relations:[{to:"KNA1",desc:"Customer master"},{to:"T014",desc:"Credit control area"},{to:"VBAK",desc:"Sales order blocked by credit"}]},
+
+{id:"BSET",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Tax Line Items in Documents",
+ plainEnglish:"The tax portion of every FI posting. When VAT or sales tax is calculated on an invoice, BSET stores the tax base amount, tax amount, and tax code — one row per tax line. BSEG has the full accounting detail; BSET zooms in on the tax specifics.",
+ keyFields:["MANDT","BUKRS","BELNR","GJAHR","BUZEI"],
+ s4note:"Continues in S/4. Tax line items now also land in ACDOCA (STCEG field group).",
+ relations:[{to:"BSEG",desc:"Parent accounting line"},{to:"BKPF",desc:"Document header"},{to:"ACDOCA",desc:"S/4 universal journal"}]},
+
+{id:"T009",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Fiscal Year Variants",
+ plainEnglish:"Defines the fiscal year calendar — when does the company's financial year start and end? A fiscal year variant says '12 periods, April to March' or '16 periods including special closing periods'. Every company code is assigned one fiscal year variant.",
+ keyFields:["PERIV"],
+ s4note:"Unchanged. Fiscal year variants work the same in S/4.",
+ relations:[{to:"T001",desc:"Used by company code"},{to:"T009B",desc:"Period definition"}]},
+
+{id:"T009B",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Fiscal Year Variant Periods",
+ plainEnglish:"The detailed period definition within a fiscal year variant. For each period number it defines the calendar month start and end. This is what makes period 1 = April in a non-calendar fiscal year.",
+ keyFields:["PERIV","POPER","BUMON"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T009",desc:"Fiscal year variant header"}]},
+
+{id:"ANLC",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Asset Value Fields (Depreciation Areas)",
+ plainEnglish:"Stores the asset values (APC, net book value, depreciation) per depreciation area and year. Think of it as the 'running totals' for each asset across its different valuation views — book depreciation, tax depreciation, IFRS, and so on. There's one row per asset per depreciation area per year.",
+ keyFields:["MANDT","BUKRS","ANLN1","ANLN2","AFABE","GJAHR"],
+ s4note:"Unchanged in S/4. Asset values still stored in ANLC; the ledger view can also be read from ACDOCA.",
+ relations:[{to:"ANLA",desc:"Asset master"},{to:"ACDOCA",desc:"Also reflected in universal journal"}]},
+
+{id:"T095",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Balance Sheet Accounts for Depreciation Areas",
+ plainEnglish:"Maps each asset class/depreciation area combination to its balance sheet reconciliation account. When an asset is capitalised, ANLA/ANLZ hold the master data, but T095 tells the system which G/L account to post to.",
+ keyFields:["MANDT","BUKRS","AFABE","KTANSW"],
+ s4note:"Unchanged. Account determination for asset accounting.",
+ relations:[{to:"SKB1",desc:"G/L reconciliation account"},{to:"ANLA",desc:"Asset master"}]},
+
+// ─── CO EXTENDED ──────────────────────────────────────────────────────────────
+{id:"KEKO",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Product Costing Header",
+ plainEnglish:"The header record for a product cost estimate. When you run a standard cost estimate (CK11N/CK40N) for a material, KEKO records the run — costing date, lot size, status, and the total standard cost. Think of it as the 'cover page' for the estimate.",
+ keyFields:["MANDT","MATNR","BWKEY","KKRSEL","KADKY","TVERS","VERSN","BWVAR"],
+ s4note:"Unchanged in S/4. Still the header for product cost estimates.",
+ relations:[{to:"MARA",desc:"Material"},{to:"MBEW",desc:"Material valuation — receives standard price"},{to:"CKIS",desc:"Cost itemization lines"}]},
+
+{id:"CKIS",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cost Estimate Itemization",
+ plainEnglish:"The line-by-line breakdown of what goes into a product's standard cost estimate. One line for raw material A (pulled from BOM), one line for machine time B (pulled from routing), one line for overhead C. This is the drill-down detail behind the single KEKO header number.",
+ keyFields:["MANDT","BZOBJ","BELNR","EBELN","EBELP","KALKA","TVERS","VERSN"],
+ s4note:"Unchanged in S/4. CKIS remains the cost itemization table.",
+ relations:[{to:"KEKO",desc:"Cost estimate header"},{to:"CSKA",desc:"Cost element"},{to:"MARA",desc:"Material component"}]},
+
+{id:"KEPH",module:"CO",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cost Components for Cost of Goods Manufactured",
+ plainEnglish:"Stores cost by cost component (material, labour, overhead, etc.) per cost estimate. While CKIS has every individual item, KEPH rolls them up into the cost components defined in your costing variant — so you can see 'raw materials = €50, labour = €20, overhead = €10' at a glance.",
+ keyFields:["MANDT","BZOBJ","BELNR","EBELN","EBELP","KALKA","TVERS","VERSN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KEKO",desc:"Cost estimate header"},{to:"CKIS",desc:"Itemization detail"}]},
+
+{id:"COSS",module:"CO",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"CO Object Totals (Statistical)",
+ plainEnglish:"Totals table for CO postings — similar to COSP but for statistical key figures and plan/actual cost totals by period. Used heavily in cost centre reporting to show month-by-month cost accumulation. COEP has the individual line items; COSS rolls them up.",
+ keyFields:["MANDT","OBJNR","GJAHR","WRTTP","VERSN","KSTAR","KOSTL"],
+ s4note:"Partially superseded by ACDOCA in S/4. CO totals are now readable via ACDOCA but COSS still exists for compatibility.",
+ relations:[{to:"COBK",desc:"CO document header"},{to:"CSKS",desc:"Cost centre"},{to:"ACDOCA",desc:"S/4 replacement for new postings"}]},
+
+// ─── MM EXTENDED ──────────────────────────────────────────────────────────────
+{id:"MCHA",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Batch Master (Client Level)",
+ plainEnglish:"The master record for a batch (lot) of material. Every pharmaceutical tablet, every chemical batch, every food lot gets a MCHA record. Stores the batch number, shelf life, status, and classification data at the client level.",
+ keyFields:["MANDT","MATNR","WERKS","CHARG"],
+ s4note:"Unchanged in S/4. Batch management remains in MCHA/MCHB.",
+ relations:[{to:"MARA",desc:"Material master"},{to:"MCHB",desc:"Batch stock levels"},{to:"CHVW",desc:"Batch where-used"}]},
+
+{id:"MCHB",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Batch Stocks",
+ plainEnglish:"Stock quantities split by batch (lot), plant, and storage location. Where MARD gives total stock per plant/storage location, MCHB drills down to the individual batch level. Pharmaceutical and food companies live in this table.",
+ keyFields:["MANDT","MATNR","WERKS","LGORT","CHARG"],
+ s4note:"Unchanged in S/4. Still the primary batch-level stock table.",
+ relations:[{to:"MCHA",desc:"Batch master header"},{to:"MARD",desc:"Plant/storage stock totals"},{to:"MARC",desc:"Plant data"}]},
+
+{id:"CHVW",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Batch Where-Used Log",
+ plainEnglish:"Tracks which goods movements consumed which batch. If batch X12345 was used in production order 9000001, CHVW records that link. Essential for batch traceability audits — think pharmaceutical recalls or food safety investigations.",
+ keyFields:["MANDT","MATNR","CHARG","WERKS","LGORT","AUFNR","BWART","BELNR","GJAHR","ZEILE"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MCHA",desc:"Batch master"},{to:"MSEG",desc:"Goods movement line item (ECC)"},{to:"MATDOC",desc:"Goods movement (S/4)"}]},
+
+{id:"EORD",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchasing Source List",
+ plainEnglish:"The approved vendor list for a material — which suppliers are allowed to supply which materials to which plants. If EORD says only Vendor A can supply Material X to Plant 1000, the system blocks purchase orders to any other vendor. MRP also uses this when auto-generating purchase reqs.",
+ keyFields:["MANDT","MATNR","WERKS","ZENUM"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material"},{to:"LFA1",desc:"Vendor"},{to:"EINA",desc:"Purchasing info record"},{to:"MARC",desc:"Plant data"}]},
+
+{id:"MVER",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Material Consumption",
+ plainEnglish:"Stores historical consumption data for materials by plant and period. MRP uses this to calculate forecast demand — if a material has been consumed steadily for 12 months, this table feeds the forecast engine. Also used for reorder point planning.",
+ keyFields:["MANDT","MATNR","WERKS","PERKZ","SPMON"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MARA",desc:"Material master"},{to:"MARC",desc:"Plant data"},{to:"MKPF",desc:"Goods issue documents (ECC)"}]},
+
+{id:"MIGO",module:"MM",ecc:false,s4:true,s4status:"new",
+ shortDesc:"Goods Movement Staging (S/4 MIGO)",
+ plainEnglish:"In S/4HANA, MIGO is actually a transaction (not a single table), but it writes to MATDOC as its primary output. MIGO_HEADER and MIGO_ITEM are the staging structures. Think of it as the 'inbox' that validates before committing to MATDOC/ACDOCA.",
+ keyFields:["MANDT","MBLNR","MJAHR"],
+ s4note:"S/4 specific. Replaces MKPF+MSEG with MATDOC as the persistent output.",
+ relations:[{to:"MATDOC",desc:"Persistent goods movement"},{to:"ACDOCA",desc:"FI posting"},{to:"MARA",desc:"Material"}]},
+
+// ─── SD EXTENDED ──────────────────────────────────────────────────────────────
+{id:"TVAK",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Types",
+ plainEnglish:"Configuration table defining the types of sales orders your system allows — 'OR' is the standard sales order, 'RE' is a returns order, 'CS' is a cash sales document. Every VBAK record has a AUART field that points here. Think of it as the 'types of paperwork' available in SD.",
+ keyFields:["MANDT","AUART"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Sales order header"},{to:"TVAP",desc:"Allowed item categories"}]},
+
+{id:"TVAP",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Item Category Config",
+ plainEnglish:"Configuration for line item categories in sales documents — TAN (standard item), TAX (text item), TAD (service item), etc. Each item category controls whether the item is relevant for delivery, billing, pricing, and so on. A sales order header (TVAK) is paired with item categories (TVAP) to define the full sales process.",
+ keyFields:["MANDT","PSTYV"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAP",desc:"Sales order items use this category"},{to:"TVAK",desc:"Header document type"}]},
+
+{id:"A304",module:"SD",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Condition Records — Material Price (ECC)",
+ plainEnglish:"ECC pricing condition table for material-level prices (condition type PR00). When you set a price for a specific material and sold-to party combination, it lands in A304. The SD pricing engine reads these A-tables at order creation time to determine the selling price.",
+ keyFields:["MANDT","KAPPL","KSCHL","VKORG","VTWEG","KUNNR","MATNR","DATBI"],
+ s4note:"Deprecated in S/4. Pricing conditions migrate to PRCD_ELEMENTS. The A304 structure still exists for legacy access but new records go to PRCD_ELEMENTS.",
+ relations:[{to:"PRCD_ELEMENTS",desc:"S/4 replacement"},{to:"KNA1",desc:"Customer"},{to:"MARA",desc:"Material"},{to:"KONV",desc:"Condition values on documents (ECC)"}]},
+
+{id:"A305",module:"SD",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Condition Records — Customer/Material (ECC)",
+ plainEnglish:"ECC pricing conditions at the customer+material level (customer-specific price override). More specific than A304 — if a price is set here for customer C + material M, it overrides the A304 price. The condition technique access sequence works through A-tables from most-specific to least-specific.",
+ keyFields:["MANDT","KAPPL","KSCHL","VKORG","VTWEG","KUNNR","MATNR","DATBI"],
+ s4note:"Deprecated in S/4. Migrates to PRCD_ELEMENTS.",
+ relations:[{to:"PRCD_ELEMENTS",desc:"S/4 replacement"},{to:"A304",desc:"Less specific price fallback"},{to:"KNA1",desc:"Customer"}]},
+
+{id:"VBCO",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Connection Objects",
+ plainEnglish:"Links sales documents to partner objects — for example, linking a sales order to a project WBS element (cross-module integration). Used when a sale is project-related or when document flow spans modules.",
+ keyFields:["MANDT","VBELN","POSNR","OBJNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Sales order"},{to:"PRPS",desc:"WBS element (project)"}]},
+
+// ─── PM / PLANT MAINTENANCE EXTENDED ──────────────────────────────────────────
+{id:"OBJK",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Plant Maintenance Object Links",
+ plainEnglish:"Links PM objects (equipment, functional locations) to other SAP objects — like linking a maintenance notification to a specific piece of equipment in a specific location. The bridge table that ties together the PM object hierarchy.",
+ keyFields:["MANDT","OBJNR","OBJTY","TPLNR","EQUNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EQUI",desc:"Equipment"},{to:"IFLOT",desc:"Functional location"},{to:"QMEL",desc:"Quality notification"}]},
+
+{id:"JEST",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Individual Object Status",
+ plainEnglish:"Stores the system and user status of SAP objects — whether an order is 'Released', 'Technically Completed', 'Closed', etc. JEST has one row per object-status combination. The status controls what transactions you can still perform (e.g., you can't post to a 'Closed' order).",
+ keyFields:["MANDT","OBJNR","STAT"],
+ s4note:"Unchanged in S/4. Status management works the same.",
+ relations:[{to:"AUFK",desc:"Order master"},{to:"TJ30",desc:"User status definition"},{to:"EQUI",desc:"Equipment status"}]},
+
+{id:"TJ30",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"User Status Profile",
+ plainEnglish:"Defines the user-defined status values for orders, notifications, and other objects. Unlike system statuses (REL, TECO, CLSD) which are hardcoded by SAP, user statuses are customer-configured here — for example 'WAIT' for 'Waiting for spare part'. Each status in TJ30 can activate/deactivate transactions.",
+ keyFields:["MANDT","STSMA","ESTAT"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"JEST",desc:"Object's current status"},{to:"AUFK",desc:"Orders using this status"}]},
+
+{id:"ILOA",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"PM Object Location & Account",
+ plainEnglish:"Links PM objects (orders, notifications) to their location and cost assignment — plant, location, cost centre, WBS element. Every maintenance order gets an ILOA record that determines where the cost lands in CO. Think of it as the 'address label' for a maintenance job.",
+ keyFields:["MANDT","ILOAN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AUFK",desc:"Maintenance order"},{to:"IFLOT",desc:"Functional location"},{to:"CSKS",desc:"Cost centre assignment"}]},
+
+// ─── WM EXTENDED ──────────────────────────────────────────────────────────────
+{id:"LTBK",module:"WM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Transfer Order Header (WM Classic)",
+ plainEnglish:"Header of a warehouse transfer order in classic WM. When the warehouse management system moves stock from one bin to another (LGPLA records), it creates a transfer order — LTBK is the header that groups the movement, and LTAP is the individual lines.",
+ keyFields:["MANDT","LGNUM","TANUM"],
+ s4note:"Deprecated in S/4HANA Warehouse Management (EWM). The EWM equivalent is ORDIM_C (warehouse order) and ORDIM_O (open task).",
+ relations:[{to:"LTAP",desc:"Transfer order items"},{to:"LGPLA",desc:"Storage bins involved"},{to:"LQUA",desc:"Quant (stock in bin)"}]},
+
+{id:"LTAK",module:"WM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Transfer Order Items (WM Classic)",
+ plainEnglish:"Line items of a warehouse transfer order. Each LTAK record says 'move this quant (LQUA) from source bin X to destination bin Y'. Together with LTBK, these are the core WM movement tables in ECC. In S/4 with EWM this is replaced by ORDIM_O/ORDIM_C.",
+ keyFields:["MANDT","LGNUM","TANUM","TAPOS"],
+ s4note:"Deprecated with EWM adoption in S/4. Use ORDIM_O (open) and ORDIM_C (confirmed) instead.",
+ relations:[{to:"LTBK",desc:"Transfer order header"},{to:"LQUA",desc:"Quant being moved"},{to:"LGPLA",desc:"Source/destination bin"}]},
+
+// ─── QM EXTENDED ──────────────────────────────────────────────────────────────
+{id:"QMMA",module:"QM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Notification Actions",
+ plainEnglish:"Records the corrective actions defined in a quality notification — for example 'retrain operator' or 'update quality plan'. Each action in QMMA can be assigned to a person, given a planned date, and tracked to completion. It's the 'action item' table linked to a notification header in QMEL.",
+ keyFields:["MANDT","QMNUM","MAPOS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"QMEL",desc:"Notification header"},{to:"QMFE",desc:"Notification defect items"}]},
+
+{id:"QAVE",module:"QM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Inspection Operation Results",
+ plainEnglish:"Stores the inspection results at the operation level — the summary valuation of whether an operation passed or failed. While individual measurement readings land in QAMR, QAVE stores the usage decision outcome: 'Accepted', 'Rejected', 'Rework required'.",
+ keyFields:["MANDT","PRUEFLOS","VORGLFNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"QMEL",desc:"Quality notification if defect found"},{to:"MARA",desc:"Material inspected"}]},
+
+// ─── PS EXTENDED ──────────────────────────────────────────────────────────────
+{id:"PRHI",module:"PS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"WBS Element Hierarchy",
+ plainEnglish:"Defines the parent-child hierarchy between WBS elements in a project. A project's WBS is a tree structure — PRHI stores the edges (parent-child relationships) of that tree. This is how project reporting rolls up from sub-tasks to phases to the project summary level.",
+ keyFields:["MANDT","UP","OBJNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PRPS",desc:"WBS elements (nodes)"},{to:"PROJ",desc:"Project header"}]},
+
+{id:"PLWP",module:"PS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Maintenance Item for Project",
+ plainEnglish:"Links work packages (WBS elements or networks) to the project planning board. Used in project scheduling to define milestones, dependencies, and start/end dates for project activities.",
+ keyFields:["MANDT","PSPNR","POSNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PRPS",desc:"WBS element"},{to:"PROJ",desc:"Project header"}]},
+
+// ─── HR EXTENDED ──────────────────────────────────────────────────────────────
+{id:"PA0041",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"HR Infotype 0041 — Date Specifications",
+ plainEnglish:"Stores important employee dates beyond hire date — trial period end, notice period end, original hire date, anniversary dates. Each date has a type (like 'U1' for trial period end) defined in configuration. Payroll and HR reporting frequently reads these dates.",
+ keyFields:["MANDT","PERNR","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Org assignment"},{to:"PA0000",desc:"Actions"}]},
+
+{id:"PA0105",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"HR Infotype 0105 — Communication",
+ plainEnglish:"Employee communication data — email addresses, phone numbers, system user IDs. PA0105 subtype 0001 is the corporate email, subtype 0010 is often the SAP user ID. This is how HR links employees to their SY-UNAME for authorisation and self-service scenarios.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4. Still the primary table linking employees to their system user IDs.",
+ relations:[{to:"PA0001",desc:"Org assignment"},{to:"USR02",desc:"SAP user account"}]},
+
+{id:"T549A",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Payroll Areas",
+ plainEnglish:"Defines payroll areas — the groupings used to run payroll. A company might have area '01' for monthly-paid staff and area '02' for weekly-paid staff. The payroll area determines the payroll period dates and controls which employees are processed in each payroll run.",
+ keyFields:["MANDT","ABKRS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employees assigned to payroll area"},{to:"T001",desc:"Company code"}]},
+
+// ─── BASIS EXTENDED ──────────────────────────────────────────────────────────────
+{id:"E071",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Change & Transport Objects",
+ plainEnglish:"Lists every SAP object that belongs to a transport request (task). When a developer makes a change, the affected program, table, or configuration object is recorded in E071. This is the 'manifest' of a transport — what exactly will move to production.",
+ keyFields:["MANDT","TRKORR","AS4POS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"E070",desc:"Transport request header"},{to:"DD02L",desc:"Tables transported"}]},
+
+{id:"E070",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Transport Request Header",
+ plainEnglish:"The header of a change request or transport task. Stores the request number, type (workbench vs customising), owner, status (modifiable/released), and description. Think of it as the 'waybill' for changes moving between SAP systems — DEV → QA → PROD.",
+ keyFields:["MANDT","TRKORR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"E071",desc:"Objects in request"},{to:"USR02",desc:"Transport owner"}]},
+
+{id:"TVARVC",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Table Variables for Selection Criteria",
+ plainEnglish:"A simple key-value store for parameters used in ABAP reports and batch jobs — things like 'CURRENT_FISCAL_YEAR = 2025' or 'DEFAULT_COMPANY = 1000'. Programs read TVARVC at runtime so you can change parameters without transport, just by editing the table in SE16.",
+ keyFields:["NAME","TYPE"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T000",desc:"Client-specific values"}]},
+
+{id:"RSPCCHAIN",module:"BASIS",ecc:false,s4:true,s4status:"new",
+ shortDesc:"BW Process Chain Links",
+ plainEnglish:"In SAP BW (Business Warehouse), process chains automate data loading sequences. RSPCCHAIN defines the order of steps — 'load InfoSource A, then activate it, then load InfoCube B'. This is the backbone of BW's batch processing scheduler.",
+ keyFields:["CHAIN_ID","INSTANCE","VARIANTE"],
+ s4note:"Part of BW/4HANA. In S/4 embedded analytics, this still exists for BW process orchestration.",
+ relations:[{to:"T000",desc:"Client context"}]},
+
+// ─── FI-AA EXTENDED ──────────────────────────────────────────────────────────────
+{id:"ANKT",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Asset Classes (Text)",
+ plainEnglish:"The text/description table for SAP asset classes — one row per language per asset class. Asset classes group assets together (e.g., '3000 = Vehicles', '4000 = Furniture') and control the G/L accounts and depreciation rules that apply. ANKT just holds the readable name.",
+ keyFields:["MANDT","ANLKL","SPRAS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"ANLA",desc:"Assets belonging to this class"},{to:"T095",desc:"Account determination"}]},
+
+// ─── FI: PAYMENT & CLEARING ──────────────────────────────────────────────────
+{id:"FBRA",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Payment Document Reset Data",
+ plainEnglish:"When a cleared payment document is reset (FBRA transaction), this table stores the link between the original payment and the cleared items so you can re-open them. Think of it as the 'undo trail' for FI clearing runs.",
+ keyFields:["MANDT","AUGDT","AUGBL","BUKRS","GJAHR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"BKPF",desc:"Payment document"},{to:"BSEG",desc:"Cleared line items"}]},
+
+{id:"PAYR",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Payment Medium Data (Cheques / BACS)",
+ plainEnglish:"Records each individual payment medium — cheque number, bank transfer reference, or BACS entry — generated by the payment run (F110). Links back to REGUH (payment document header) and contains the amount, payee, and bank data for each physical payment.",
+ keyFields:["MANDT","ZBUKR","HBKID","HKTID","RZAWE","CHECT"],
+ s4note:"Unchanged in S/4. Works alongside REGUH/REGUP.",
+ relations:[{to:"REGUH",desc:"Payment run document"},{to:"BNKA",desc:"House bank"}]},
+
+{id:"T059A",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Withholding Tax Types",
+ plainEnglish:"Configuration table defining the withholding tax types used — for example Extended WHT type W1 = 'Income Tax (extended)'. Controls whether WHT is posted at payment or invoice, and which posting rules apply. Most countries running extended WHT use these.",
+ keyFields:["MANDT","BUKRS","WITHT"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LFA1",desc:"Vendor WHT data"},{to:"KNA1",desc:"Customer WHT data"},{to:"BSEG",desc:"WHT posted on document"}]},
+
+// ─── FI-GL: SPECIAL PURPOSE LEDGER ────────────────────────────────────────────
+{id:"GLFUNCT",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Functional Area Master (ECC SL)",
+ plainEnglish:"ECC Special Purpose Ledger table that stored functional area allocations for segment reporting. In S/4HANA, functional area is a dimension directly on ACDOCA, making GLFUNCT obsolete.",
+ keyFields:["MANDT","FKBER"],
+ s4note:"Deprecated. Functional area is now a native dimension in ACDOCA.",
+ relations:[{to:"ACDOCA",desc:"S/4 replacement"},{to:"FAGLFLEXA",desc:"ECC SL actual line items"}]},
+
+// ─── MM: PURCHASING HISTORY ────────────────────────────────────────────────────
+{id:"EKBE",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Purchase Order History",
+ plainEnglish:"Every goods receipt, invoice receipt, and delivery cost posting against a purchase order is recorded here. EKBE is how you see what's happened to a PO after it was created — how much has been received (GR), how much has been invoiced (IR), and what's still outstanding.",
+ keyFields:["MANDT","EBELN","EBELP","ZEKKN","VGABE","GJAHR","BELNR","BUZEI"],
+ s4note:"Unchanged in S/4. EKBE still tracks PO history.",
+ relations:[{to:"EKKO",desc:"PO header"},{to:"EKPO",desc:"PO line item"},{to:"MATDOC",desc:"Goods receipt doc (S/4)"},{to:"MKPF",desc:"Goods receipt doc (ECC)"}]},
+
+{id:"EKBZ",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"PO Delivery Costs History",
+ plainEnglish:"Like EKBE but specifically for planned delivery costs (freight, customs, insurance) on purchase orders. Tracks what's been invoiced against the planned delivery costs set in EKPO. Used in Logistics Invoice Verification to match expected vs actual freight charges.",
+ keyFields:["MANDT","EBELN","EBELP","ZEKKN","VGABE","GJAHR","BELNR","BUZEI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKPO",desc:"PO item with delivery costs"},{to:"EKBE",desc:"Main PO history"}]},
+
+{id:"EKPA",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Partner Roles for Purchasing Documents",
+ plainEnglish:"Stores the partner functions on purchasing documents — the vendor, the invoicing party, the goods supplier if different from the vendor, the forwarding agent. Analogous to VBPA in SD but for purchasing. Needed when invoicing party ≠ vendor.",
+ keyFields:["MANDT","EBELN","EBELP","PARVW","PARZA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKKO",desc:"PO header"},{to:"LFA1",desc:"Partner (vendor)"}]},
+
+{id:"ESLL",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Service Lines (MM-SRV)",
+ plainEnglish:"Line items for service-based purchase orders — instead of ordering a quantity of material, you order a service (e.g., 100 hours of consulting). ESLL holds each service line: the service number, quantity, unit price. The service entry sheet (ESSR) references ESLL for acceptance.",
+ keyFields:["MANDT","PACKNO","INTROW"],
+ s4note:"Unchanged in S/4. Service procurement is still ESLL/ESSR based.",
+ relations:[{to:"EKPO",desc:"Service PO item"},{to:"ESSR",desc:"Service entry sheet"}]},
+
+{id:"ESSR",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Service Entry Sheet Header",
+ plainEnglish:"When services are delivered, the vendor submits a service entry sheet (SES) recording what was done. ESSR is the header — who submitted it, which PO it's against, the total value. The services themselves are in ESLL. The SES must be accepted (ML81N) before invoice payment can proceed.",
+ keyFields:["MANDT","LBLNI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EKKO",desc:"Service PO header"},{to:"ESLL",desc:"Service lines"}]},
+
+// ─── SD: PARTNERS, TEXTS & OUTPUTS ──────────────────────────────────────────
+{id:"VBPA",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Document Partners",
+ plainEnglish:"Partner functions on sales documents — sold-to party, ship-to party, bill-to party, payer. One VBPA row per partner function per document/item. This is why the invoice can go to a different address than where the goods are shipped, and payment can be collected from a completely different entity.",
+ keyFields:["MANDT","VBELN","POSNR","PARVW"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAK",desc:"Sales order header"},{to:"KNA1",desc:"Customer partner"}]},
+
+{id:"VBSS",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Sales Order Schedules (Collective)",
+ plainEnglish:"Groups sales schedule lines for collective deliveries — used in make-to-stock and blanket orders. VBSS aggregates VBEP lines so the delivery planning can batch them together efficiently.",
+ keyFields:["MANDT","VBELN","POSNR","LGNUM"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"VBAP",desc:"Sales item"},{to:"VBEP",desc:"Schedule lines"}]},
+
+// ─── CO-PA: PROFITABILITY ANALYSIS ────────────────────────────────────────────
+{id:"CE11000",module:"CO",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"CO-PA Actual Line Items (Client 1000)",
+ plainEnglish:"Profitability Analysis (CO-PA) actual line items table. The name is client-specific — in client 1000 it's CE11000, in client 2000 it'd be CE12000. Every billing document, overhead settlement, and COPA allocation creates lines here with revenue, cost, and margin by customer/product/region. The classic revenue and margin analysis table.",
+ keyFields:["MANDT","PAOBJNR","LNR"],
+ s4note:"Deprecated in S/4 if using ACDOCA-based COPA. In S/4 the Universal Journal stores COPA characteristics inline in ACDOCA. CE1xxxx still exists in compatibility mode.",
+ relations:[{to:"ACDOCA",desc:"S/4 replacement (account-based COPA)"},{to:"VBRK",desc:"Source billing document"}]},
+
+// ─── PP: PRODUCTION EXTENDED ──────────────────────────────────────────────────
+{id:"PLMZ",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Task List — Component Allocation",
+ plainEnglish:"Links BOM components (from STPO) to specific operations (from PLPO) in a routing. Without PLMZ, a component is just 'needed for this order'. With PLMZ, it's assigned to a specific operation, enabling back-flushing at operation confirmation and better WIP tracking.",
+ keyFields:["MANDT","PLNNR","PLNTY","PLNKN","ZAEHL","STLAN","STLNR","STLKN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PLPO",desc:"Routing operation"},{to:"STPO",desc:"BOM component"},{to:"AFVC",desc:"Production order operation"}]},
+
+{id:"KAPA",module:"PP",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Capacity of Work Centres",
+ plainEnglish:"Defines the available capacity of a work centre by shift/time period. If CRHD says 'Work Centre W1 exists', KAPA says 'W1 is available 8 hours/day Mon-Fri on shift 1'. Capacity planning (CM01) reads KAPA to calculate overload situations.",
+ keyFields:["MANDT","ARBID","KAPID","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CRHD",desc:"Work centre master"},{to:"AFVC",desc:"Operations needing capacity"}]},
+
+// ─── PM: MAINTENANCE EXTENDED ──────────────────────────────────────────────────
+{id:"MPLA",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Maintenance Plans",
+ plainEnglish:"The master record for a preventive maintenance plan — the 'standing order' for recurring maintenance. Contains the cycle (every 6 months), the next planned date, and which maintenance task list to use. When it's time, the system auto-generates a maintenance order.",
+ keyFields:["MANDT","WARPL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MHIO",desc:"Maintenance items in plan"},{to:"AUFK",desc:"Generated maintenance orders"},{to:"EQUI",desc:"Equipment covered"}]},
+
+{id:"MHIO",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Maintenance Plan Items",
+ plainEnglish:"The items within a maintenance plan — one row per maintenance item, defining which equipment or functional location is covered and which task list should be used. Multiple items can be grouped into one maintenance plan (e.g., all machines on a production line serviced together).",
+ keyFields:["MANDT","WARPL","WAPOS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MPLA",desc:"Maintenance plan header"},{to:"EQUI",desc:"Equipment"},{to:"IFLOT",desc:"Functional location"}]},
+
+{id:"QMEL2",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Maintenance Notification Items",
+ plainEnglish:"Line items within a maintenance notification — each specific fault or problem reported. A notification can have multiple problem items (e.g., 'oil leak at joint A' and 'unusual vibration at coupling B'). QMEL is the header; QMEL2 is the detail.",
+ keyFields:["MANDT","QMNUM","PNPOS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"QMEL",desc:"Notification header"},{to:"EQUI",desc:"Equipment affected"}]},
+
+// ─── WM: EXTENDED ─────────────────────────────────────────────────────────────
+{id:"LENUM",module:"WM",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Storage Unit Number (WM Classic)",
+ plainEnglish:"Identifies storage units (pallets, containers) in classic WM. Each storage unit has a number stored in LENUM and tracks which quants (LQUA) are loaded on it. Used in pallet management when multiple materials share one physical carrier unit.",
+ keyFields:["MANDT","LGNUM","LENUM"],
+ s4note:"Deprecated in S/4 EWM. EWM uses Handling Units (VEKP) instead.",
+ relations:[{to:"LQUA",desc:"Quants on the storage unit"},{to:"LGPLA",desc:"Bin location"},{to:"VEKP",desc:"S/4 EWM replacement (handling unit)"}]},
+
+{id:"VEKP",module:"WM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Handling Unit Header",
+ plainEnglish:"The master record for a handling unit — a physical packaging unit (pallet, carton, container). Handling units group materials together for warehouse and logistics management. In S/4 EWM, VEKP is the central object for physical unit tracking, replacing LENUM from classic WM.",
+ keyFields:["MANDT","VENUM"],
+ s4note:"Enhanced in S/4 EWM. VEKP is the core handling unit object in S/4 Embedded Extended Warehouse Management.",
+ relations:[{to:"VEPO",desc:"Handling unit items"},{to:"LENUM",desc:"Classic WM predecessor"},{to:"LIKP",desc:"Delivery packing"}]},
+
+{id:"VEPO",module:"WM",ecc:true,s4:true,s4status:"modified",
+ shortDesc:"Handling Unit Items",
+ plainEnglish:"The contents of a handling unit — which materials, batches, and serial numbers are packed inside. VEPO links the VEKP (handling unit header) to the actual materials. Used in packing (VL02N packing function) to track what's on each pallet or in each box.",
+ keyFields:["MANDT","VENUM","VEPOS"],
+ s4note:"Enhanced in S/4 EWM.",
+ relations:[{to:"VEKP",desc:"Handling unit header"},{to:"LIPS",desc:"Delivery item packed"},{to:"MARA",desc:"Material"}]},
+
+// ─── HR: PAYROLL & ORG ────────────────────────────────────────────────────────
+{id:"PA0016",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"HR Infotype 0016 — Contract Data",
+ plainEnglish:"Employee contract type information — whether they're permanent, fixed-term, part-time. Stores the contract end date for fixed-term employees (essential for termination workflows), notice period, and contract type. HR compliance and legal entity reporting depends heavily on this.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Org assignment"},{to:"PA0000",desc:"Actions"}]},
+
+{id:"PA0021",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"HR Infotype 0021 — Family Members",
+ plainEnglish:"Dependents and family members for each employee — spouse, children, parents. Used for benefit enrolment (health coverage tiers), emergency contacts, and tax calculations in some countries. Contains relationship type, date of birth, and benefit eligibility status.",
+ keyFields:["MANDT","PERNR","SUBTY","BEGDA","ENDDA"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Employee"},{to:"PA0008",desc:"Basic pay affected by dependents in some configs"}]},
+
+{id:"T528B",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Positions",
+ plainEnglish:"Defines all positions in the organisation — a position is a 'seat' in the org chart (e.g., 'Senior Analyst in Finance Dept', position number 50012345). Positions are assigned to jobs (job families) and holders (employees). HRP1000 stores the position as an org object; T528B provides the config.",
+ keyFields:["MANDT","PLANS"],
+ s4note:"Unchanged in S/4. SF SuccessFactors integration in S/4 may sync positions bidirectionally.",
+ relations:[{to:"HRP1000",desc:"Org hierarchy object"},{to:"PA0001",desc:"Employee occupying position"}]},
+
+{id:"T501",module:"HR",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Employee Groups",
+ plainEnglish:"Defines employee groups — the highest-level HR classification (e.g., 'Active', 'Pensioner', 'External'). Employee group and subgroup together control which payroll schema runs, which time management rules apply, and what HR authorisations are needed.",
+ keyFields:["MANDT","PERSG"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"PA0001",desc:"Org assignment uses employee group"}]},
+
+// ─── BASIS: SECURITY & DEVELOPMENT ────────────────────────────────────────────
+{id:"AGR_USERS",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Role User Assignments",
+ plainEnglish:"Maps SAP roles (authorisation profiles) to user IDs. When you assign a role in SU01 or PFCG, the assignment lands here. One row per user+role combination. The authorisation check at runtime traverses AGR_USERS to find what roles a user has, then reads AGR_1251 for the actual auth values.",
+ keyFields:["MANDT","AGR_NAME","UNAME"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"USR02",desc:"User account"},{to:"AGR_1251",desc:"Role authorisation values"}]},
+
+{id:"AGR_1251",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Role Authorisation Values",
+ plainEnglish:"The actual authorisation values granted by a role — which activity (read/write/delete), which organisational levels (company code, plant), and which field values are allowed. If you want to know exactly what a role permits, join AGR_USERS + AGR_1251. The heart of SAP security.",
+ keyFields:["MANDT","AGR_NAME","COUNTER"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"AGR_USERS",desc:"Role-user assignment"},{to:"USR02",desc:"User who has this role"}]},
+
+{id:"TADIR",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"ABAP Object Directory",
+ plainEnglish:"Every piece of ABAP development — programs, function modules, classes, tables, data elements — is registered here. TADIR is the catalogue of all custom and SAP-delivered objects in the system, with their development package and responsible owner. The TMS (Transport Management System) references TADIR to know which objects to move.",
+ keyFields:["PGMID","OBJECT","OBJ_NAME"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"E070",desc:"Objects transported via this"},{to:"DD02L",desc:"Tables listed in TADIR"}]},
+
+{id:"ENLFDIR",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Additional Attributes for Function Modules",
+ plainEnglish:"Stores metadata for ABAP function modules — whether they're RFC-enabled, the processing type (normal, remote-enabled, update module), and the associated function group. Essential for understanding which functions can be called remotely via RFC or SOAP.",
+ keyFields:["MANDT","FUNCNAME"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"TADIR",desc:"Object directory entry"}]},
+
+{id:"TOJTB",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Workflow Task Catalogue",
+ plainEnglish:"Lists all workflow tasks defined in the SAP system — standard tasks, customer tasks, and workflow templates. Each task has an object type and method it triggers. When an approval workflow fires, TOJTB defines what task to execute (e.g., 'approve purchase order', 'review credit limit change').",
+ keyFields:["MANDT","TOBJ"],
+ s4note:"Unchanged in S/4. SAP Business Workflow (SWF) is still used alongside newer options like SAP Build Process Automation.",
+ relations:[{to:"T000",desc:"Client context"}]},
+
+// ─── CROSS-MODULE: CLASSIFICATION & CHARACTERISTICS ────────────────────────────
+{id:"KLAH",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Classification: Class Header",
+ plainEnglish:"Master data for a classification class — a class groups characteristics together. For example, class 'VEHICLE_TYPE' might have characteristics 'Engine Size', 'Fuel Type', 'Seats'. KLAH stores the class name, class type (material class = type 001, document class = 017), and status.",
+ keyFields:["MANDT","CLASS","KLART","ZAEHL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CABN",desc:"Characteristics in class"},{to:"AUSP",desc:"Characteristic values on objects"}]},
+
+{id:"CABN",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Characteristic Definitions",
+ plainEnglish:"Defines individual characteristics used in classification — things like 'Colour' (text, allowed values: Red/Blue/Green), 'Weight_KG' (numeric, 0.001 to 99999). CABN stores the characteristic name, data type, and format. Used across MM (material classes), QM (inspection characteristics), and PM.",
+ keyFields:["MANDT","ATINN"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KLAH",desc:"Class that uses this characteristic"},{to:"AUSP",desc:"Values of this characteristic on objects"}]},
+
+{id:"AUSP",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Characteristic Values on Objects",
+ plainEnglish:"The actual values assigned to objects via classification. When you say 'this material is Colour=Red, Size=Large', the Red and Large values go into AUSP. One row per object+characteristic combination. Used to search for materials by specification — the 'find me all red XL items' query hits AUSP.",
+ keyFields:["MANDT","OBJEK","KLART","ATINN","ATZHL","MAFID"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CABN",desc:"Characteristic definition"},{to:"KLAH",desc:"Class context"},{to:"MARA",desc:"Material being classified"}]},
+
+// ─── FINANCE: BANK & TREASURY ────────────────────────────────────────────────
+{id:"FDFD",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Cash Management Line Items (ECC)",
+ plainEnglish:"Treasury/Cash Management planning line items — each incoming or outgoing cash flow that cash management is tracking. Fed from FI documents, sales orders, purchase orders, and manual planning. Gives the cash manager a view of liquidity across all inflows and outflows.",
+ keyFields:["MANDT","FDSID","FDLVL","HBKID","HKTID"],
+ s4note:"In S/4HANA, replaced by the SAP Cash Management (powered by SAP HANA) data model with real-time ACDOCA integration.",
+ relations:[{to:"T012",desc:"House bank"},{to:"ACDOCA",desc:"S/4 cash management source"}]},
+
+// ─── SD: PRICING CONFIGURATION ────────────────────────────────────────────────
+{id:"T682",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Pricing Procedures",
+ plainEnglish:"The configuration that defines which condition types appear in pricing and in which order — this is the pricing procedure. T682 stores the procedure code; the steps within it (which condition types, which sub-totals, which account keys) are in T683. Every sales order uses a pricing procedure to calculate the final price.",
+ keyFields:["MANDT","KAPPL","KALSM"],
+ s4note:"Unchanged in S/4. Pricing procedures still configured in T682/T683.",
+ relations:[{to:"T683",desc:"Pricing procedure steps"},{to:"KONV",desc:"Conditions on orders (ECC)"},{to:"PRCD_ELEMENTS",desc:"Conditions on orders (S/4)"}]},
+
+{id:"T683",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Pricing Procedure Steps",
+ plainEnglish:"The individual steps within a pricing procedure — each row is one line in the pricing procedure configurator (SPRO). Defines condition type, step number, from/to (for sub-total calculation), requirement routine, and account key. This is the 'recipe' that the pricing engine follows.",
+ keyFields:["MANDT","KAPPL","KALSM","STUNR","ZAEHK"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T682",desc:"Pricing procedure header"},{to:"T685",desc:"Condition types"}]},
+
+{id:"T685",module:"SD",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Condition Types",
+ plainEnglish:"Defines every condition type used in pricing — PR00 (base price), K004 (material discount), MWST (output tax), VPRS (cost condition), and hundreds more. Each condition type has settings controlling its calculation base, whether it's statistical, and how it posts to accounts.",
+ keyFields:["MANDT","KAPPL","KSCHL"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"T682",desc:"Used in pricing procedures"},{to:"PRCD_ELEMENTS",desc:"Condition records"}]},
+
+// ─── PP/QM: INSPECTION LOTS ───────────────────────────────────────────────────
+{id:"QALS",module:"QM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Inspection Lot",
+ plainEnglish:"The header record for a quality inspection lot — created automatically at goods receipt (if the material has an active inspection plan) or manually. Contains the material, quantity to inspect, inspection type, plant, and status. Think of it as the 'work order' for quality control.",
+ keyFields:["MANDT","PRUEFLOS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"QAVE",desc:"Inspection results"},{to:"MARA",desc:"Material inspected"},{to:"EKPO",desc:"Goods receipt triggering inspection"},{to:"QMEL",desc:"Defect notifications raised"}]},
+
+// ─── LOGISTICS: SERIAL NUMBERS ────────────────────────────────────────────────
+{id:"EQUZ",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Equipment Time-Line (Serial Number Periods)",
+ plainEnglish:"Tracks the time-based history of equipment assignments — what plant, functional location, and cost centre the equipment was assigned to, and when. If a machine moved from Hamburg to Berlin in 2022, EQUZ records the before and after. Essential for maintenance history by location.",
+ keyFields:["MANDT","EQUNR","DATBI"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EQUI",desc:"Equipment master"},{to:"IFLOT",desc:"Functional location assigned to"}]},
+
+{id:"SER01",module:"PM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Serial Numbers per Delivery",
+ plainEnglish:"Links serial numbers to delivery items — when you ship 10 laptops each with a unique serial number, SER01 records that serial number 001-010 went out on delivery 80000001, item 10. Enables traceability from sales order through delivery to end customer.",
+ keyFields:["MANDT","LNRLS","MATNR","SERNR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"EQUI",desc:"Equipment with this serial number"},{to:"LIPS",desc:"Delivery item"}]},
+
+// ─── GENERAL: CHANGE DOCUMENTS ────────────────────────────────────────────────
+{id:"CDHDR",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Change Document Headers",
+ plainEnglish:"Every time a master data record is changed in SAP (material master, customer master, vendor, etc.), a change document is written. CDHDR is the header — who changed what, when. CDPOS has the before/after values. This is your audit trail for master data changes.",
+ keyFields:["MANDANT","OBJECTCLAS","OBJECTID","CHANGENR"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CDPOS",desc:"Change document line items"},{to:"USR02",desc:"User who made the change"}]},
+
+{id:"CDPOS",module:"BASIS",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Change Document Items",
+ plainEnglish:"The 'before and after' for each field changed in a master data record. CDHDR says 'user JSMITH changed vendor V123 at 14:32', and CDPOS says 'field Payment Terms changed from Z030 to Z045'. Essential for compliance audits and migration delta tracking.",
+ keyFields:["MANDANT","OBJECTCLAS","OBJECTID","CHANGENR","TABNAME","FNAME"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"CDHDR",desc:"Change document header"}]},
+
+// ─── FI: NEW GL EXTENDED (research-verified) ──────────────────────────────────
+{id:"FAGL_SPLINFO",module:"FI",ecc:true,s4:false,s4status:"deprecated",
+ shortDesc:"Document Splitting Information (New GL)",
+ plainEnglish:"When SAP New GL document splitting is active (typical with segment reporting or IFRS compliance), each accounting line can be split across multiple segments or profit centres. FAGL_SPLINFO records how each line item was split — the 'before and after' of the splitting logic. Essential for troubleshooting segment reporting in ECC New GL.",
+ keyFields:["MANDT","BELNR","GJAHR","BUKRS","BUZEI","SPL_NO"],
+ s4note:"Deprecated in S/4HANA. Document splitting is a native capability of ACDOCA — the segment (SEGMENT) and profit centre (PRCTR) fields are stored directly on each ACDOCA line without a separate splitting table.",
+ relations:[{to:"FAGLFLEXA",desc:"New GL line items (ECC)"},{to:"BSEG",desc:"Original accounting line"},{to:"ACDOCA",desc:"S/4 replacement (native splitting)"}]},
+
+{id:"T030",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Automatic Account Determination",
+ plainEnglish:"The lookup table that maps business transactions to G/L accounts automatically. When you post a goods receipt in MM, SAP doesn't ask 'which stock account?' — it uses T030 (via BSX transaction key) to find the right account automatically. The 'behind the scenes' account assignment for every automatic FI posting.",
+ keyFields:["MANDT","KTOPL","KTOSL","BKLAS","HKONT"],
+ s4note:"Unchanged in S/4. Still the automatic account determination config table. Accessed via transaction OBYC (MM) or OBD (SD).",
+ relations:[{to:"SKA1",desc:"G/L account assigned"},{to:"T001",desc:"Company code using this"}]},
+
+{id:"MCH1",module:"MM",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Batches (Cross-Plant)",
+ plainEnglish:"Cross-plant batch data — one row per material+batch combination regardless of plant. While MCHA stores batch data at the plant level, MCH1 exists when 'batch unique at client level' or 'cross-plant' batch numbering is active. Used in industries where a batch must be uniquely identified globally across plants (pharmaceuticals, chemicals).",
+ keyFields:["MANDT","MATNR","CHARG"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"MCHA",desc:"Plant-level batch record"},{to:"MCHB",desc:"Batch stock"}]},
+
+// ─── FI: ACCOUNTS PAYABLE/RECEIVABLE EXTRA ────────────────────────────────────
+{id:"LFB5",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Vendor Dunning Data per Company Code",
+ plainEnglish:"The dunning configuration for a vendor per company code — mostly relevant when you owe the vendor a credit and need to track reminders. More commonly used on the customer side (KNB5) but vendors can also have dunning data if they're also customers.",
+ keyFields:["MANDT","LIFNR","BUKRS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"LFA1",desc:"Vendor general data"},{to:"LFB1",desc:"Vendor company code data"}]},
+
+{id:"KNB5",module:"FI",ecc:true,s4:true,s4status:"unchanged",
+ shortDesc:"Customer Dunning Data per Company Code",
+ plainEnglish:"Controls how a customer is dunned (chased for overdue payment). Stores dunning area, last dunning date, dunning level reached, and whether the customer is blocked from dunning. The F150 dunning program reads KNB5 to decide whether and how to chase each customer.",
+ keyFields:["MANDT","KUNNR","BUKRS"],
+ s4note:"Unchanged in S/4.",
+ relations:[{to:"KNA1",desc:"Customer general data"},{to:"KNB1",desc:"Customer company code data"},{to:"BSID",desc:"Open receivables being dunned"}]},
+];
+
+// ─── LINKS ─────────────────────────────────────────────────────────────────
+const LINKS_RAW=[
+// FI core
+["BKPF","BSEG"],["BKPF","T001"],["BKPF","T003"],["BKPF","ACDOCA"],
+["BSEG","SKB1"],["BSEG","KNA1"],["BSEG","LFA1"],["BSEG","ACDOCA"],["BSEG","BSEC"],
+["FAGLFLEXA","BKPF"],["FAGLFLEXA","ACDOCA"],
+["FAGLFLEXT","FAGLFLEXA"],["FAGLFLEXT","SKB1"],
+["GLT0","SKB1"],["GLT0","T001"],["GLT0","ACDOCA"],
+["BSIS","BSEG"],["BSIS","SKB1"],["BSAS","BSEG"],["BSAS","BSIS"],
+["BSID","KNA1"],["BSID","BSEG"],["BSAD","KNA1"],["BSAD","BSID"],
+["BSIK","LFA1"],["BSIK","BSEG"],["BSAK","LFA1"],["BSAK","BSIK"],
+["BSEC","BSEG"],["BSEC","BKPF"],
+["REGUH","REGUP"],["REGUH","LFA1"],["REGUH","KNA1"],["REGUH","BNKA"],
+["REGUP","BSEG"],["REGUP","LFA1"],
+// FI master data
+["SKA1","SKB1"],["SKA1","T004"],["SKA1","SKAT"],["SKB1","T001"],
+["T001","T004"],["T001","T001W"],["T001","TKA01"],
+["T003","BKPF"],["T003","EKKO"],
+["BNKA","LFBK"],["BNKA","KNBK"],["BNKA","REGUH"],
+["LFBK","LFA1"],["KNBK","KNA1"],
+// Assets
+["ANLA","ANLZ"],["ANLA","ANEP"],["ANLA","ACDOCA"],["ANLA","T001"],
+["ANLZ","CSKS"],["ANEP","ACDOCA"],
+// CO
+["COEP","CSKS"],["COEP","AUFK"],["COEP","PRPS"],["COEP","ACDOCA"],
+["COSP","CSKS"],["COSP","COEP"],
+["COBK","COEP"],["COBK","ACDOCA"],
+["CSKS","CSKT"],["CSKS","ACDOCA"],["CSKS","TKA01"],
+["CSKA","CSKU"],["CSKA","SKA1"],["CSKA","TKA01"],
+["TKA01","CSKS"],["TKA01","CEPC"],["TKA01","T001"],
+["AUFK","CSKS"],["AUFK","AFKO"],["AUFK","ACDOCA"],
+["CEPC","CEPCT"],["CEPC","TKA01"],["CEPC","ACDOCA"],
+["GLPCA","CEPC"],["GLPCA","BKPF"],["GLPCA","ACDOCA"],
+["PRPS","PROJ"],["PRPS","COEP"],["PRPS","ACDOCA"],
+// MM material master
+["MARA","MARC"],["MARA","MAKT"],["MARA","MBEW"],["MARA","MARD"],
+["MARA","MARM"],["MARA","MVKE"],["MARA","MLAN"],
+["MARC","MARD"],["MARC","T001W"],
+["MARD","T001L"],["T001L","T001W"],
+["MBEW","MARA"],["MBEW","ACDOCA"],
+// MM goods movement
+["MKPF","MSEG"],["MSEG","MARA"],["MSEG","EKPO"],["MSEG","MATDOC"],
+["MKPF","MATDOC"],["MATDOC","MARA"],["MATDOC","ACDOCA"],
+// MM purchasing
+["EKKO","EKPO"],["EKKO","LFA1"],["EKKO","T024"],["EKKO","T003"],
+["EKKO","EKES"],["EKPO","MARA"],["EKPO","T001W"],["EKPO","EKET"],
+["EKET","EKPO"],["EKET","MSEG"],["EKES","EKKO"],["EKES","EKPO"],
+["EBAN","EKPO"],["EBAN","MARA"],["EBAN","T001W"],
+["EINA","EINE"],["EINA","LFA1"],["EINA","MARA"],["EINE","EKKO"],
+// MM vendor master
+["LFA1","LFB1"],["LFA1","LFM1"],["LFA1","LFBK"],["LFA1","BUT000"],
+["LFB1","T001"],["LFM1","EKKO"],
+// SD customer master
+["KNA1","KNB1"],["KNA1","KNVV"],["KNA1","KNVP"],["KNA1","KNBK"],["KNA1","BUT000"],
+["KNB1","T001"],["KNVV","VBAK"],["KNVP","VBAK"],
+// SD sales docs
+["VBAK","VBAP"],["VBAK","KNA1"],["VBAK","VBFA"],["VBAK","VBKD"],["VBAK","VBUK"],
+["VBAP","MARA"],["VBAP","VBEP"],["VBAP","VBUP"],["VBAP","KONV"],["VBAP","MVKE"],
+["VBKD","VBAK"],["VBKD","VBAP"],
+["VBUK","VBAK"],["VBUK","VBUP"],
+// SD delivery & billing
+["LIKP","LIPS"],["LIKP","VBFA"],["LIPS","MARA"],
+["VBRK","VBRP"],["VBRK","KNA1"],["VBRK","VBFA"],["VBRK","BKPF"],
+["VBRP","MARA"],["VBRP","BSEG"],
+["VBFA","VBAK"],["VBFA","LIKP"],["VBFA","VBRK"],
+// SD pricing
+["KONV","VBAP"],["KONV","EKKO"],["KONV","PRCD_ELEMENTS"],
+["PRCD_ELEMENTS","VBAK"],["PRCD_ELEMENTS","EKKO"],
+// SD output
+["NAST","EKKO"],["NAST","VBAK"],["NAST","VBRK"],
+// Shared master
+["BUT000","KNA1"],["BUT000","LFA1"],["BUT001","BUT000"],
+["ADRC","LFA1"],["ADRC","KNA1"],["ADRC","T001W"],
+["TCURR","BKPF"],["TCURR","VBAK"],["TCURR","EKKO"],
+["TCURC","TCURR"],["TCURC","T001"],
+["T005","KNA1"],["T005","LFA1"],["T005","ADRC"],
+["USR02","BKPF"],["USR02","EKKO"],
+// PP
+["AFKO","AFPO"],["AFKO","AUFK"],["AFKO","MARA"],["AFKO","AFVC"],
+["AFVC","CRHD"],["AFVC","AFRU"],["AFRU","AFKO"],
+["RESB","AFKO"],["RESB","MARA"],["RESB","T001W"],
+["MAST","MARA"],["MAST","STKO"],["STKO","STPO"],["STPO","MARA"],
+["PLKO","PLPO"],["PLKO","MAPL"],["PLPO","CRHD"],["MAPL","MARA"],["MAPL","PLKO"],
+// QM
+["QMEL","QMFE"],["QMEL","MARA"],["QMEL","T001W"],
+// PM
+["EQUI","IFLOT"],["EQUI","QMEL"],["EQUI","AUFK"],["IFLOT","T001W"],
+// HR
+["PA0000","PA0001"],["PA0001","PA0008"],["PA0001","CSKS"],["PA0001","HRP1000"],
+["PA0002","PA0001"],["PA0006","PA0001"],["PA0007","PA0001"],
+["PA0007","PA0008"],["PA0014","PA0001"],["PA0015","PA0001"],["PCL2","PA0008"],
+// WM
+["LGPLA","LQUA"],["LGPLA","LTAP"],["LQUA","MARA"],["LTAP","MARA"],
+// BASIS
+["T000","T001"],["DD02L","DD03L"],["T001W","T001"],["T024","EKKO"],
+["BNKA","REGUH"],
+// House banks
+["T012","T012K"],["T012","T001"],["T012","REGUH"],["T012K","BNKA"],["T012K","REGUH"],
+// SD config
+["TVKO","MVKE"],["TVKO","VBAK"],["TVKO","T001"],
+["TVTW","MVKE"],["TVTW","VBAK"],["TVTW","KNVV"],
+// CO versions
+["TKA09","TKA01"],["TKA09","COBK"],["TKA09","COEP"],
+// Material Ledger
+["MLHD","MLIT"],["MLHD","MARA"],["MLHD","ACDOCA"],
+["MLIT","MLHD"],["MLIT","MARA"],["MLIT","ACDOCA"],
+// MVKE corrected links
+["MVKE","TVKO"],["MVKE","TVTW"],
+// QMEL extra link
+["QMEL","EQUI"],
+// FI Payment
+["FBRA","BKPF"],["FBRA","BSEG"],
+["PAYR","REGUH"],["PAYR","BNKA"],
+["T059A","LFA1"],["T059A","KNA1"],
+// MM Purchasing History
+["EKBE","EKKO"],["EKBE","EKPO"],["EKBE","MATDOC"],["EKBE","MKPF"],
+["EKBZ","EKPO"],["EKBZ","EKBE"],
+["EKPA","EKKO"],["EKPA","LFA1"],
+["ESLL","EKPO"],["ESLL","ESSR"],
+["ESSR","EKKO"],["ESSR","ESLL"],
+// SD Partners & Items
+["VBPA","VBAK"],["VBPA","KNA1"],
+["VBSS","VBAP"],["VBSS","VBEP"],
+["LIPS","LIKP"],["LIPS","VBAP"],["LIPS","MATDOC"],
+// PP Extended
+["PLMZ","PLPO"],["PLMZ","STPO"],["PLMZ","AFVC"],
+["KAPA","CRHD"],["KAPA","AFVC"],
+// PM Extended
+["MPLA","MHIO"],["MPLA","AUFK"],["MPLA","EQUI"],
+["MHIO","MPLA"],["MHIO","EQUI"],["MHIO","IFLOT"],
+["QMEL2","QMEL"],["QMEL2","EQUI"],
+// WM Extended
+["LENUM","LQUA"],["LENUM","LGPLA"],["LENUM","VEKP"],
+["VEKP","VEPO"],["VEKP","LIKP"],
+["VEPO","VEKP"],["VEPO","LIPS"],["VEPO","MARA"],
+// HR Extended
+["PA0016","PA0001"],["PA0016","PA0000"],
+["PA0021","PA0001"],
+["T528B","HRP1000"],["T528B","PA0001"],
+["T501","PA0001"],
+// Basis Security
+["AGR_USERS","USR02"],["AGR_USERS","AGR_1251"],
+["AGR_1251","AGR_USERS"],["AGR_1251","USR02"],
+["TADIR","E070"],["TADIR","DD02L"],
+["ENLFDIR","TADIR"],
+// Classification
+["KLAH","CABN"],["KLAH","AUSP"],
+["CABN","KLAH"],["CABN","AUSP"],
+["AUSP","CABN"],["AUSP","KLAH"],["AUSP","MARA"],
+// Finance Treasury
+["FDFD","T012"],["FDFD","ACDOCA"],
+["T012","T012K"],["T012","REGUH"],["T012","BNKA"],
+// SD Pricing config
+["T682","T683"],["T682","KONV"],["T682","PRCD_ELEMENTS"],
+["T683","T682"],["T683","T685"],
+["T685","T682"],["T685","PRCD_ELEMENTS"],
+// QM
+["QALS","QAVE"],["QALS","MARA"],["QALS","QMEL"],["QALS","EKPO"],
+// Serial Numbers
+["EQUZ","EQUI"],["EQUZ","IFLOT"],
+["SER01","EQUI"],["SER01","LIPS"],
+// Change Documents
+["CDHDR","CDPOS"],["CDHDR","USR02"],
+["CDPOS","CDHDR"],
+// FI AR/AP Extra
+["LFB5","LFA1"],["LFB5","LFB1"],
+["KNB5","KNA1"],["KNB5","KNB1"],["KNB5","BSID"],
+// CE1 COPA
+["CE11000","ACDOCA"],["CE11000","VBRK"],
+// CO Coss
+["COSS","COBK"],["COSS","CSKS"],["COSS","ACDOCA"],
+// GLFUNCT
+["GLFUNCT","ACDOCA"],["GLFUNCT","FAGLFLEXA"],
+// FI Withholding
+["T059A","BSEG"],
+// FAGL_SPLINFO
+["FAGL_SPLINFO","FAGLFLEXA"],["FAGL_SPLINFO","BSEG"],["FAGL_SPLINFO","ACDOCA"],
+// T030
+["T030","SKA1"],["T030","T001"],
+// MCH1
+["MCH1","MCHA"],["MCH1","MCHB"],
+// ACDOCA predecessors (explicit reverse links)
+["FAGLFLEXA","ACDOCA"],["COEP","ACDOCA"],["GLT0","ACDOCA"],
+// FI Extended
+["FBCJ","T001"],["FBCJ","ACDOCA"],
+["T014","T001"],["KNKK","KNA1"],["KNKK","T014"],["KNKK","VBAK"],
+["BSET","BSEG"],["BSET","BKPF"],["BSET","ACDOCA"],
+["T009","T001"],["T009","T009B"],["T009B","T009"],
+["ANLC","ANLA"],["ANLC","ACDOCA"],["T095","SKB1"],["T095","ANLA"],
+["ANKT","ANLA"],["ANKT","T095"],
+// CO Extended
+["KEKO","MARA"],["KEKO","MBEW"],["KEKO","CKIS"],["KEKO","KEPH"],
+["CKIS","KEKO"],["CKIS","CSKA"],["CKIS","MARA"],
+["KEPH","KEKO"],["KEPH","CKIS"],
+["COSS","COBK"],["COSS","CSKS"],["COSS","ACDOCA"],
+// MM Extended
+["MCHA","MARA"],["MCHA","MCHB"],["MCHA","CHVW"],
+["MCHB","MCHA"],["MCHB","MARD"],["MCHB","MARC"],
+["CHVW","MCHA"],["CHVW","MSEG"],["CHVW","MATDOC"],
+["EORD","MARA"],["EORD","LFA1"],["EORD","EINA"],["EORD","MARC"],
+["MVER","MARA"],["MVER","MARC"],["MVER","MKPF"],
+["MIGO","MATDOC"],["MIGO","ACDOCA"],["MIGO","MARA"],
+// SD Extended
+["TVAK","VBAK"],["TVAK","TVAP"],
+["TVAP","VBAP"],["TVAP","TVAK"],
+["A304","PRCD_ELEMENTS"],["A304","KNA1"],["A304","MARA"],["A304","KONV"],
+["A305","PRCD_ELEMENTS"],["A305","A304"],["A305","KNA1"],
+["VBCO","VBAK"],["VBCO","PRPS"],
+// PM Extended
+["OBJK","EQUI"],["OBJK","IFLOT"],["OBJK","QMEL"],
+["JEST","AUFK"],["JEST","TJ30"],["JEST","EQUI"],
+["TJ30","JEST"],["TJ30","AUFK"],
+["ILOA","AUFK"],["ILOA","IFLOT"],["ILOA","CSKS"],
+// WM Extended
+["LTBK","LTAP"],["LTBK","LGPLA"],["LTBK","LQUA"],
+["LTAK","LTBK"],["LTAK","LQUA"],["LTAK","LGPLA"],
+// QM Extended
+["QMMA","QMEL"],["QMMA","QMFE"],
+["QAVE","QMEL"],["QAVE","MARA"],
+// PS Extended
+["PRHI","PRPS"],["PRHI","PROJ"],
+["PLWP","PRPS"],["PLWP","PROJ"],
+// HR Extended
+["PA0041","PA0001"],["PA0041","PA0000"],
+["PA0105","PA0001"],["PA0105","USR02"],
+["T549A","PA0001"],["T549A","T001"],
+// Basis Extended
+["E071","E070"],["E071","DD02L"],
+["E070","E071"],["E070","USR02"],
+["RSPCCHAIN","T000"],
+];
+
+// ─── APP STATE ───────────────────────────────────────────────────────────────
+let currentView='both', activeModules=new Set(Object.keys(MODULE_COLORS));
+let selectedNode=null, searchQuery='', simulation, svg, g, link, node, zoomBehavior;
+let focusMode=false, focusCenter=null;
+
+// Lifecycle of a link: based on the status of both endpoint tables
+function linkLifecycle(aId, bId){
+  const a=TABLES.find(t=>t.id===aId), b=TABLES.find(t=>t.id===bId);
+  if(!a||!b) return 'retained';
+  if(a.s4status==='new'||b.s4status==='new') return 'new_s4';
+  if(a.s4status==='deprecated'||b.s4status==='deprecated') return 'ecc_only';
+  return 'retained';
+}
+const LINK_COLORS={new_s4:'#22c55e', ecc_only:'#ef4444', retained:'#4a5568'};
+
+// Return center + all 1-hop neighbours from LINKS_RAW
+function getFocusNeighbours(centerId){
+  const set=new Set([centerId]);
+  LINKS_RAW.forEach(([a,b])=>{if(a===centerId)set.add(b);if(b===centerId)set.add(a);});
+  return set;
+}
+
+function enterFocus(id){
+  focusMode=true; focusCenter=id;
+  const nb=getFocusNeighbours(id);
+  const banner=document.getElementById('focus-banner');
+  document.getElementById('focus-banner-text').textContent=`🎯 ${id} ± 1 hop — ${nb.size} tables`;
+  banner.classList.add('active');
+  buildGraph();
+  const t=TABLES.find(x=>x.id===id);
+  if(t){const ids=new Set(getVisibleTables().map(x=>x.id));selectTable(t,getVisibleLinks(ids),getVisibleTables());node.classed('selected',n=>n.id===id);}
+}
+
+function exitFocus(){
+  focusMode=false; focusCenter=null;
+  document.getElementById('focus-banner').classList.remove('active');
+  buildGraph();
+  if(selectedNode){const t=TABLES.find(x=>x.id===selectedNode);if(t){const ids=new Set(getVisibleTables().map(x=>x.id));selectTable(t,getVisibleLinks(ids),getVisibleTables());node.classed('selected',n=>n.id===selectedNode);}}
+}
+
+function init(){
+  buildModuleFilters(); buildLegend(); buildGraph();
+  document.getElementById('search').addEventListener('input',e=>{
+    searchQuery=e.target.value.toLowerCase();
+    document.getElementById('search-clear').classList.toggle('visible',searchQuery.length>0);
+    document.getElementById('search-icon').textContent=searchQuery.length>0?'⭐':'🔭';
+    updateGraph();
+  });
+}
+
+function setView(v){
+  currentView=v;
+  ['ecc','s4','both'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',v===x));
+  updateGraph();
+}
+
+function buildModuleFilters(){
+  const el=document.getElementById('module-filters');
+  Object.entries(MODULE_COLORS).forEach(([mod,color])=>{
+    const chip=document.createElement('div');
+    chip.className='mod-chip active';
+    chip.style.color=color; chip.style.background=color+'18';
+    chip.textContent=MODULE_EMOJIS[mod]+' '+mod;
+    chip.onclick=()=>toggleModule(mod,chip);
+    el.appendChild(chip);
+  });
+}
+
+function toggleModule(mod,chip){
+  if(activeModules.has(mod)){activeModules.delete(mod);chip.classList.remove('active');}
+  else{activeModules.add(mod);chip.classList.add('active');}
+  updateGraph();
+}
+
+function buildLegend(){
+  const el=document.getElementById('legend');
+  el.innerHTML='<div class="legend-title">Modules</div>';
+  Object.entries(MODULE_COLORS).forEach(([m,c])=>{
+    el.innerHTML+=`<div class="legend-item"><div class="legend-dot" style="background:${c}"></div>${MODULE_EMOJIS[m]} ${m}</div>`;
+  });
+  el.innerHTML+='<div class="legend-title" style="margin-top:8px">Node Status</div>';
+  [['#22c55e','New in S/4'],['#f59e0b','Modified'],['#ef4444','Deprecated'],['#64748b','Unchanged']].forEach(([c,l])=>{
+    el.innerHTML+=`<div class="legend-item"><div class="legend-dot" style="background:${c}"></div>${l}</div>`;
+  });
+  el.innerHTML+='<div class="legend-title" style="margin-top:8px">Link Lifecycle</div>';
+  el.innerHTML+=`<div class="legend-item"><div style="width:22px;height:2px;background:#22c55e;display:inline-block;margin-right:5px;vertical-align:middle;border-radius:1px"></div>New in S/4</div>`;
+  el.innerHTML+=`<div class="legend-item"><div style="width:22px;height:0;border-top:2px dashed #ef4444;display:inline-block;margin-right:5px;vertical-align:middle"></div>ECC only</div>`;
+  el.innerHTML+=`<div class="legend-item"><div style="width:22px;height:2px;background:#4a5568;display:inline-block;margin-right:5px;vertical-align:middle;border-radius:1px"></div>Retained</div>`;
+}
+
+function getVisibleTables(){
+  // In focus mode: show full 1-hop neighbourhood regardless of ECC/S4 view filter
+  // (so that S/4-only replacements like ACDOCA are always visible when you focus BSEG)
+  const focusNb=(focusMode&&focusCenter)?getFocusNeighbours(focusCenter):null;
+
+  // When a node is selected during search, also show its neighbourhood
+  const selNb=(!focusMode&&selectedNode&&searchQuery)?getFocusNeighbours(selectedNode):null;
+
+  let base=TABLES.filter(t=>{
+    if(!activeModules.has(t.module)) return false;
+
+    // In focus mode, bypass ECC/S4 filter for neighbourhood members
+    if(focusNb&&focusNb.has(t.id)) return true;
+    if(selNb&&selNb.has(t.id)) return true;
+
+    if(currentView==='ecc'&&!t.ecc) return false;
+    if(currentView==='s4'&&!t.s4) return false;
+
+    if(searchQuery){
+      const q=searchQuery;
+      // Check all text fields including s4note so "BSEG" matches ACDOCA's s4note
+      return t.id.toLowerCase().includes(q)||t.shortDesc.toLowerCase().includes(q)||
+             t.module.toLowerCase().includes(q)||
+             (t.plainEnglish&&t.plainEnglish.toLowerCase().includes(q))||
+             (t.s4note&&t.s4note.toLowerCase().includes(q));
+    }
+    return true;
+  });
+  return base;
+}
+
+function getVisibleLinks(ids){
+  return LINKS_RAW.filter(([a,b])=>ids.has(a)&&ids.has(b)).map(([a,b])=>({source:a,target:b}));
+}
+
+function buildGraph(){
+  const container=document.getElementById('graph-container');
+  const w=container.clientWidth, h=container.clientHeight;
+  svg=d3.select('#graph-svg'); svg.selectAll('*').remove();
+  zoomBehavior=d3.zoom().scaleExtent([0.05,4]).on('zoom',e=>g.attr('transform',e.transform));
+  svg.call(zoomBehavior);
+  g=svg.append('g');
+
+  const defs=svg.append('defs');
+  [{id:'arrow',color:'#4a5568'},{id:'arrow-new',color:'#22c55e'},{id:'arrow-ecc',color:'#ef4444'}].forEach(({id,color})=>{
+    defs.append('marker').attr('id',id).attr('viewBox','0 -4 8 8').attr('refX',20).attr('refY',0)
+      .attr('markerWidth',5).attr('markerHeight',5).attr('orient','auto')
+      .append('path').attr('d','M0,-4L8,0L0,4').attr('fill',color);
+  });
+
+  const tables=getVisibleTables();
+  const ids=new Set(tables.map(t=>t.id));
+  const links=getVisibleLinks(ids);
+  const connCount={};
+  tables.forEach(t=>connCount[t.id]=0);
+  links.forEach(l=>{connCount[l.source]=(connCount[l.source]||0)+1;connCount[l.target]=(connCount[l.target]||0)+1;});
+
+  simulation=d3.forceSimulation(tables)
+    .force('link',d3.forceLink(links).id(d=>d.id).distance(80).strength(0.4))
+    .force('charge',d3.forceManyBody().strength(-250))
+    .force('center',d3.forceCenter(w/2,h/2))
+    .force('collision',d3.forceCollide().radius(d=>nodeR(connCount[d.id])+8));
+
+  link=g.append('g').selectAll('line').data(links).join('line')
+    .attr('class','link')
+    .attr('stroke',l=>{const lc=linkLifecycle(typeof l.source==='object'?l.source.id:l.source,typeof l.target==='object'?l.target.id:l.target);return LINK_COLORS[lc];})
+    .attr('stroke-width',l=>{const lc=linkLifecycle(typeof l.source==='object'?l.source.id:l.source,typeof l.target==='object'?l.target.id:l.target);return lc==='retained'?1:1.6;})
+    .attr('stroke-dasharray',l=>{const lc=linkLifecycle(typeof l.source==='object'?l.source.id:l.source,typeof l.target==='object'?l.target.id:l.target);return lc==='ecc_only'?'4,3':'none';})
+    .attr('stroke-opacity',0.55)
+    .attr('marker-end',l=>{const lc=linkLifecycle(typeof l.source==='object'?l.source.id:l.source,typeof l.target==='object'?l.target.id:l.target);return lc==='new_s4'?'url(#arrow-new)':lc==='ecc_only'?'url(#arrow-ecc)':'url(#arrow)';});
+
+  node=g.append('g').selectAll('g.node').data(tables).join('g')
+    .attr('class','node').style('cursor','pointer')
+    .call(d3.drag().on('start',dragStart).on('drag',dragged).on('end',dragEnd))
+    .on('click',(e,d)=>{e.stopPropagation();selectTable(d,links,tables);})
+    .on('mouseover',showTooltip).on('mousemove',moveTooltip).on('mouseout',hideTooltip);
+
+  node.append('circle')
+    .attr('r',d=>nodeR(connCount[d.id]))
+    .attr('fill',d=>MODULE_COLORS[d.module]+'2a')
+    .attr('stroke',d=>statusColor(d)).attr('stroke-width',d=>d.s4status==='unchanged'?1.5:2.5)
+    .style('filter',d=>`drop-shadow(0 0 ${connCount[d.id]>3?6:3}px ${MODULE_COLORS[d.module]}66)`);
+
+  node.append('text').text(d=>d.id)
+    .attr('text-anchor','middle').attr('dy','0.35em')
+    .attr('font-size',d=>nodeR(connCount[d.id])>11?'8.5px':'7px')
+    .attr('font-family','Courier New,monospace').attr('font-weight','700')
+    .attr('fill',d=>MODULE_COLORS[d.module]).style('pointer-events','none').style('user-select','none');
+
+  simulation.on('tick',()=>{
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+        .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform',d=>`translate(${d.x},${d.y})`);
+  });
+
+  document.getElementById('count-badge').textContent=`${tables.length} tables · ${links.length} relationships`;
+
+  svg.on('click',()=>{
+    selectedNode=null; node.classed('selected',false);
+    link.classed('highlighted',false)
+      .attr('stroke',l=>{const lc=linkLifecycle(typeof l.source==='object'?l.source.id:l.source,typeof l.target==='object'?l.target.id:l.target);return LINK_COLORS[lc];})
+      .attr('stroke-opacity',0.4);
+    showWelcome();
+  });
+}
+
+function statusColor(d){
+  if(d.s4status==='new') return '#22c55e';
+  if(d.s4status==='modified') return '#f59e0b';
+  if(d.s4status==='deprecated') return '#ef4444';
+  return MODULE_COLORS[d.module];
+}
+function nodeR(c){return Math.max(7,Math.min(20,7+c*1.3));}
+function updateGraph(){buildGraph();if(selectedNode){const t=TABLES.find(x=>x.id===selectedNode);if(t){const ids=new Set(getVisibleTables().map(x=>x.id));selectTable(t,getVisibleLinks(ids),getVisibleTables());}}}
+
+function dragStart(e,d){if(!e.active)simulation.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}
+function dragged(e,d){d.fx=e.x;d.fy=e.y;}
+function dragEnd(e,d){if(!e.active)simulation.alphaTarget(0);d.fx=null;d.fy=null;}
+
+function selectTable(d,links,tables){
+  selectedNode=d.id;
+  node.classed('selected',n=>n.id===d.id);
+  const src=l=>typeof l.source==='object'?l.source.id:l.source;
+  const tgt=l=>typeof l.target==='object'?l.target.id:l.target;
+  link.classed('highlighted',l=>src(l)===d.id||tgt(l)===d.id)
+    .attr('stroke',l=>(src(l)===d.id||tgt(l)===d.id)?MODULE_COLORS[d.module]:LINK_COLORS[linkLifecycle(src(l),tgt(l))])
+    .attr('stroke-dasharray',l=>{if(src(l)===d.id||tgt(l)===d.id)return 'none';const lc=linkLifecycle(src(l),tgt(l));return lc==='ecc_only'?'4,3':'none';})
+    .attr('stroke-opacity',l=>(src(l)===d.id||tgt(l)===d.id)?.9:.12);
+  renderDetail(d);
+  // On mobile, open the overlay panel
+  if(window.innerWidth<=700){openMobilePanel(d.id);}
+}
+
+function buildDetailHTML(d){
+  const color=MODULE_COLORS[d.module];
+  const sl={new:'badge-new',modified:'badge-modified',deprecated:'badge-deprecated',unchanged:'badge-unchanged'}[d.s4status];
+  const st={new:'New in S/4',modified:'Modified in S/4',deprecated:'Deprecated in S/4',unchanged:'Unchanged'}[d.s4status];
+  const av=d.ecc&&d.s4?'ECC6 + S/4':d.ecc?'ECC6 only':'S/4HANA only';
+  const tcodes=(TCODE_MAP[d.id]||[]).map(t=>tcodeLabel(t)).join('');
+
+  const rels=(d.relations||[]).map(r=>{
+    const rt=TABLES.find(t=>t.id===r.to);
+    const rc=rt?MODULE_COLORS[rt.module]:'#888';
+    const lc=linkLifecycle(d.id,r.to);
+    const lcLabel={new_s4:'🟢 S/4 new',ecc_only:'🔴 ECC only',retained:'⚪ retained'}[lc];
+    const lcStyle={new_s4:'color:#22c55e',ecc_only:'color:#ef4444',retained:'color:#64748b'}[lc];
+    return `<li onclick="jumpTo('${r.to}')" style="cursor:pointer">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="color:${rc};font-size:.9rem">→</span>
+        <span class="rel-table" style="color:${rc}">${r.to}</span>
+        <span style="font-size:.6rem;font-weight:600;${lcStyle}">${lcLabel}</span>
+      </div>
+      <span class="rel-desc">${r.desc}</span></li>`;
+  }).join('');
+
+  const keys=(d.keyFields||[]).map(f=>`<div class="key-field-chip">${fieldLabel(f)}</div>`).join('');
+
+  // Build ECC→S/4 journey flow diagram
+  const buildJourney=()=>{
+    // Find S/4 replacements for this table in both directions
+    const replacements=(d.relations||[])
+      .filter(r=>r.desc.toLowerCase().includes('replac')||r.desc.toLowerCase().includes('s/4'))
+      .map(r=>TABLES.find(t=>t.id===r.to)).filter(Boolean)
+      .filter(rt=>rt.s4status==='new'||rt.s4status==='modified');
+
+    // Also find ECC predecessors that led to this table
+    const predecessors=(d.s4status==='new'||d.s4status==='modified')
+      ? (d.relations||[]).filter(r=>{
+          const rt=TABLES.find(t=>t.id===r.to);
+          return rt&&(rt.s4status==='deprecated'||rt.s4status==='unchanged')&&
+                 (r.desc.toLowerCase().includes('predecessor')||r.desc.toLowerCase().includes('ecc')||r.desc.toLowerCase().includes('replac'));
+        }).map(r=>TABLES.find(t=>t.id===r.to)).filter(Boolean)
+      : [];
+
+    if(!replacements.length&&!predecessors.length) return '';
+
+    const eccTables=predecessors.length?predecessors:[d];
+    const s4Tables=replacements.length?replacements:[d];
+
+    const eccNodes=eccTables.map(t=>`
+      <div class="journey-node journey-ecc" onclick="jumpTo('${t.id}')" title="${t.shortDesc}">
+        <div class="jn-label">ECC6</div>
+        <div class="jn-id">${t.id}</div>
+        <div class="jn-desc">${t.shortDesc.substring(0,30)}${t.shortDesc.length>30?'…':''}</div>
+      </div>`).join('');
+
+    const s4Nodes=s4Tables.map(t=>`
+      <div class="journey-node journey-s4" onclick="jumpTo('${t.id}')" title="${t.shortDesc}">
+        <div class="jn-label">S/4HANA</div>
+        <div class="jn-id">${t.id}</div>
+        <div class="jn-desc">${t.shortDesc.substring(0,30)}${t.shortDesc.length>30?'…':''}</div>
+      </div>`).join('');
+
+    const currentNode=`
+      <div class="journey-node journey-current" style="border-color:${color}">
+        <div class="jn-label" style="color:${color}">${d.s4status==='deprecated'?'ECC6':d.s4status==='new'?'S/4HANA':'ECC6+S/4'}</div>
+        <div class="jn-id" style="color:${color}">${d.id}</div>
+        <div class="jn-desc">${d.shortDesc.substring(0,30)}${d.shortDesc.length>30?'…':''}</div>
+      </div>`;
+
+    if(d.s4status==='deprecated'&&replacements.length){
+      return `<div class="section-title">🗺️ Migration Journey</div>
+        <div class="journey-flow">
+          ${currentNode}
+          <div class="journey-arrow">→</div>
+          <div class="journey-col">${s4Nodes}</div>
+        </div>`;
+    }
+    if((d.s4status==='new'||d.s4status==='modified')&&predecessors.length){
+      return `<div class="section-title">🗺️ Migration Journey</div>
+        <div class="journey-flow">
+          <div class="journey-col">${eccNodes}</div>
+          <div class="journey-arrow">→</div>
+          ${currentNode}
+        </div>`;
+    }
+    return '';
+  };
+  const journeySection=buildJourney();
+
+  const focusIsCenter=focusMode&&focusCenter===d.id;
+  const focusBtn=`<button class="focus-btn${focusIsCenter?' exit':''}" onclick="${focusIsCenter?'exitFocus()':'enterFocus(\''+d.id+'\')'}">
+    ${focusIsCenter?'⊙ Exit 1-hop focus':'🎯 Focus: 1-hop neighbourhood'}
+  </button>`;
+
+  const headerHtml=`<div style="display:flex;align-items:center;gap:9px">
+      <div style="width:4px;height:38px;background:${color};border-radius:2px;flex-shrink:0"></div>
+      <div>
+        <div class="table-name" style="color:${color}">${d.id}</div>
+        <div class="table-desc">${d.shortDesc}</div>
+      </div>
+    </div>
+    <div style="margin-top:7px">
+      <span class="badge badge-module" style="background:${color}22;color:${color}">${MODULE_EMOJIS[d.module]} ${d.module}</span>
+      <span class="badge ${sl}">${st}</span>
+      <span class="badge badge-unchanged">${av}</span>
+    </div>`;
+
+  const bodyHtml=`
+    ${journeySection}
+    <div class="section-title">🧠 Plain English</div>
+    <div class="plain-english">${d.plainEnglish}</div>
+    <div class="section-title">🔑 Primary Key Fields</div>
+    <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
+    ${tcodes?`<div class="section-title">⌨️ Key Transactions</div><div class="tcode-list">${tcodes}</div>`:''}
+    ${d.s4note?`<div class="section-title">🔄 ECC6 → S/4HANA</div><div class="migration-box">${d.ecc&&d.s4?`<div class="migration-arrow"><span class="ecc-label">ECC6</span><span class="arrow">──►</span><span class="s4-label">S/4HANA</span></div>`:''} ${d.s4note}</div>`:''}
+    ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
+    ${focusBtn}
+    <div style="height:16px"></div>`;
+
+  return {headerHtml, bodyHtml, color, id:d.id, shortDesc:d.shortDesc};
+}
+
+function renderDetail(d){
+  const {headerHtml, bodyHtml}=buildDetailHTML(d);
+  document.getElementById('sidebar-header').innerHTML=headerHtml;
+  document.getElementById('sidebar-content').innerHTML=bodyHtml;
+}
+
+let mobilePanelOpen=false;
+function openMobilePanel(tableId){
+  mobilePanelOpen=true;
+  if(tableId){
+    const t=TABLES.find(x=>x.id===tableId);
+    if(t){
+      const {headerHtml,bodyHtml,color,id,shortDesc}=buildDetailHTML(t);
+      document.getElementById('mobile-panel-title').innerHTML=`<span style="color:${color};font-family:monospace;font-weight:700">${id}</span> <span style="color:var(--text-muted);font-size:.72rem">${shortDesc}</span>`;
+      document.getElementById('mobile-panel-body').innerHTML=bodyHtml;
+    }
+  }
+  document.getElementById('mobile-panel').classList.add('active');
+  document.getElementById('overlay-backdrop').classList.add('active');
+}
+function closeMobilePanel(){
+  mobilePanelOpen=false;
+  document.getElementById('mobile-panel').classList.remove('active');
+  document.getElementById('overlay-backdrop').classList.remove('active');
+}
+
+function clearSearch(){
+  document.getElementById('search').value='';
+  searchQuery='';
+  document.getElementById('search-clear').classList.remove('visible');
+  updateGraph();
+}
+
+function jumpTo(id){
+  const t=TABLES.find(x=>x.id===id); if(!t) return;
+  if(!activeModules.has(t.module)){
+    activeModules.add(t.module);
+    document.querySelectorAll('.mod-chip').forEach(c=>{if(c.textContent.includes(t.module))c.classList.add('active');});
+    buildGraph();
+  }
+  selectedNode=id;
+  const ids=new Set(getVisibleTables().map(x=>x.id));
+  selectTable(t,getVisibleLinks(ids),getVisibleTables());
+  node.classed('selected',n=>n.id===id);
+}
+
+function showWelcome(){
+  document.getElementById('sidebar-header').innerHTML=`
+    <div style="font-weight:600;font-size:.88rem;background:linear-gradient(135deg,#4f9cf9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">🌌 SAP Galaxy</div>
+    <div style="font-size:.73rem;color:var(--text-muted);margin-top:2px;">Tap any planet to explore</div>`;
+  document.getElementById('sidebar-content').innerHTML=`
+    <div class="welcome">
+      <div style="font-size:2.5rem;animation:pulse 3s ease-in-out infinite">🌌</div>
+      <h2 style="font-size:.9rem;color:var(--text-muted)">Tap a table node to explore it</h2>
+      <p style="font-size:.75rem;color:var(--text-muted)">Primary keys · Transactions · Relationships · Migration notes</p>
+    </div>`;
+}
+
+function showTooltip(e,d){
+  const tt=document.getElementById('tooltip');
+  document.getElementById('tt-name').textContent=d.id;
+  document.getElementById('tt-desc').textContent=d.shortDesc;
+  tt.classList.add('visible'); moveTooltip(e);
+}
+function moveTooltip(e){
+  const tt=document.getElementById('tooltip');
+  const r=document.getElementById('graph-container').getBoundingClientRect();
+  let x=e.clientX-r.left+12, y=e.clientY-r.top-10;
+  if(x+210>r.width) x=e.clientX-r.left-215;
+  tt.style.left=x+'px'; tt.style.top=y+'px';
+}
+function hideTooltip(){document.getElementById('tooltip').classList.remove('visible');}
+function zoomIn(){svg.transition().duration(300).call(zoomBehavior.scaleBy,1.35);}
+function zoomOut(){svg.transition().duration(300).call(zoomBehavior.scaleBy,0.74);}
+function resetZoom(){svg.transition().duration(500).call(zoomBehavior.transform,d3.zoomIdentity);}
+window.addEventListener('load',init);
+window.addEventListener('resize',()=>buildGraph());
+</script>
+</body>
+</html>
