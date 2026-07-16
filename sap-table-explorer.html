@@ -46,6 +46,9 @@
   .cx-top{display:flex;align-items:center;gap:8px;}
   .cx-id{font-family:monospace;font-weight:700;font-size:.82rem;color:var(--text);}
   .cx-mod{font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:10px;}
+  .fav-btn{margin-left:auto;background:none;border:none;color:var(--text-muted);font-size:1.05rem;
+    cursor:pointer;padding:2px 6px;line-height:1;font-family:inherit;}
+  .fav-btn.on{color:#fbbf24;}
   .cx-desc{font-size:.7rem;color:var(--text-muted);margin-top:2px;line-height:1.35;}
   /* "What happens in S/4" verdict box — evidence-backed, sourced. */
   .lc-box{border-radius:10px;padding:11px 12px;margin:10px 0 14px;border:1px solid var(--border);background:var(--surface2);}
@@ -62,6 +65,14 @@
   .lc-same{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.07);}
   .lc-unknown{opacity:.85;}
   .lc-new{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.09);}
+  .legend-block{display:none;border-top:1px solid var(--border);padding-top:12px;}
+  .lg-title{font-weight:700;font-size:.9rem;margin-bottom:8px;}
+  .lg-sub{font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin:10px 0 5px;}
+  .lg-row{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--text-muted);padding:2px 0;}
+  .lg-dot{width:14px;height:14px;border-radius:50%;border:2px solid;flex-shrink:0;}
+  .lg-ring{width:14px;height:14px;border-radius:50%;border:2.5px solid;background:transparent;flex-shrink:0;}
+  .lg-line{width:22px;height:2px;flex-shrink:0;border-radius:2px;}
+  .lg-dash{background:repeating-linear-gradient(90deg,#ef4444 0 4px,transparent 4px 7px)!important;}
   .depth-control{display:none;}
   .depth-control label{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--text-muted);}
   .depth-value{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
@@ -185,6 +196,7 @@
     .toggle-group{width:100%;}
     .toggle-btn{flex:1;padding:11px 8px;font-size:.82rem;}
     .depth-control{display:block;padding-bottom:2px;border-bottom:1px solid var(--border);}
+    .legend-block{display:block;}
     /* Drawer has vertical room: give each module its full name. */
     .module-filters{display:flex!important;flex-direction:column;gap:6px;overflow:visible;}
     .mod-chip{display:flex;flex-direction:column;gap:1px;width:100%;border-radius:8px;
@@ -262,6 +274,24 @@
       <div class="depth-hint" id="depth-hint">Tap a table first, then widen the ring.</div>
     </div>
     <div class="module-filters" id="module-filters"></div>
+    <div class="legend-block" id="legend-block">
+      <div class="lg-title">Legend</div>
+      <div class="lg-sub">Planet fill — migration fate</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#22c55e88;border-color:#22c55e"></span> New in S/4HANA</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#ef444488;border-color:#ef4444"></span> Disappears — ECC6 only</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#4f9cf92a;border-color:#4f9cf9"></span> Carries over (tinted by module)</div>
+      <div class="lg-sub">Ring — S/4 status</div>
+      <div class="lg-row"><span class="lg-ring" style="border-color:#22c55e"></span> New</div>
+      <div class="lg-row"><span class="lg-ring" style="border-color:#f59e0b"></span> Modified</div>
+      <div class="lg-row"><span class="lg-ring" style="border-color:#ef4444"></span> Deprecated</div>
+      <div class="lg-row"><span class="lg-ring" style="border-color:#64748b;border-width:1.5px"></span> Unchanged</div>
+      <div class="lg-sub">Links</div>
+      <div class="lg-row"><span class="lg-line" style="background:#22c55e"></span> New in S/4HANA</div>
+      <div class="lg-row"><span class="lg-line lg-dash" style="background:#ef4444"></span> ECC6 only / deprecated</div>
+      <div class="lg-row"><span class="lg-line" style="background:#4a5568"></span> Retained in both</div>
+      <div class="lg-sub">Size</div>
+      <div class="lg-row"><span class="lg-dot" style="width:8px;height:8px;background:#94a3b8"></span><span class="lg-dot" style="background:#94a3b8"></span> Bigger = more connections</div>
+    </div>
   </div>
   <div class="tools-backdrop" id="tools-backdrop" onclick="toggleTools(false)"></div>
   <div class="codex-results" id="codex-results"></div>
@@ -319,8 +349,8 @@
   </div>
 </div>
 <script>
-const MODULE_COLORS={FI:"#4f9cf9",CO:"#a78bfa",MM:"#34d399",SD:"#fb923c",PP:"#fbbf24",HR:"#f472b6",WM:"#2dd4bf",PM:"#f87171",QM:"#a3e635",PS:"#818cf8",BASIS:"#94a3b8"};
-const MODULE_EMOJIS={FI:"💰",CO:"📊",MM:"📦",SD:"🛒",PP:"🏭",HR:"👥",WM:"🏗️",PM:"🔧",QM:"✅",PS:"📋",BASIS:"⚙️"};
+const MODULE_COLORS={FI:"#4f9cf9",CO:"#a78bfa",MM:"#34d399",SD:"#fb923c",PP:"#fbbf24",HR:"#f472b6",WM:"#2dd4bf",PM:"#f87171",QM:"#a3e635",PS:"#818cf8",BASIS:"#94a3b8",EHS:"#14b8a6",FM:"#c084fc"};
+const MODULE_EMOJIS={FI:"💰",CO:"📊",MM:"📦",SD:"🛒",PP:"🏭",HR:"👥",WM:"🏗️",PM:"🔧",QM:"✅",PS:"📋",BASIS:"⚙️",EHS:"🧪",FM:"🏛️"};
 const MODULE_NAMES={
   FI:"Financial Accounting", CO:"Controlling", MM:"Materials Management",
   SD:"Sales & Distribution", PP:"Production Planning", HR:"Human Resources (HCM)",
@@ -2451,6 +2481,53 @@ function setFocusDepth(v){
   updateGraph();
 }
 
+// ── Favourites ─────────────────────────────────────────────────────────────
+// Persisted in localStorage so they survive app restarts.
+let FAVS=[];
+try{ FAVS=JSON.parse(localStorage.getItem('erpgalaxy.favs')||'[]'); }catch(e){ FAVS=[]; }
+function saveFavs(){ try{ localStorage.setItem('erpgalaxy.favs',JSON.stringify(FAVS)); }catch(e){} }
+function isFav(id){ return FAVS.includes(id); }
+function toggleFav(id,ev){
+  if(ev) ev.stopPropagation();
+  const i=FAVS.indexOf(id);
+  if(i>=0) FAVS.splice(i,1); else FAVS.unshift(id);
+  saveFavs();
+  if(window.webkit?.messageHandlers?.hapticFeedback){
+    window.webkit.messageHandlers.hapticFeedback.postMessage({style:'light'});
+  }
+  document.querySelectorAll(`[data-fav="${id}"]`).forEach(b=>{
+    b.textContent=isFav(id)?'★':'☆'; b.classList.toggle('on',isFav(id));
+  });
+  if(!searchQuery) renderFavs();
+}
+function favBtn(id){
+  return `<button class="fav-btn ${isFav(id)?'on':''}" data-fav="${id}" title="Favourite"
+    onclick="toggleFav('${id}',event)">${isFav(id)?'★':'☆'}</button>`;
+}
+// Tapping the empty search box surfaces your favourites.
+function renderFavs(){
+  const box=document.getElementById('codex-results');
+  if(!box) return;
+  if(!FAVS.length){ box.classList.remove('visible'); box.innerHTML=''; return; }
+  const rows=FAVS.map(id=>{
+    const g=TABLES.find(t=>t.id===id);
+    const mod=g?g.module:(CODEX[id]?CODEX[id][0]:null);
+    if(!mod) return '';
+    const desc=g?g.shortDesc:(CODEX[id][1]||'');
+    const col=MODULE_COLORS[mod]||'#94a3b8';
+    const open=g?`jumpTo('${id}');renderFavs.hide()`:`openCodex('${id}');renderFavs.hide()`;
+    return `<div class="cx-row" onclick="${open}">
+        <div class="cx-top"><span class="cx-id">${id}</span>
+          <span class="cx-mod" style="background:${col}22;color:${col}">${MODULE_EMOJIS[mod]||''} ${mod}</span>
+          ${favBtn(id)}</div>
+        <div class="cx-desc">${desc}</div>
+      </div>`;
+  }).join('');
+  box.innerHTML=`<div class="cx-head">★ Favourites</div>${rows}`;
+  box.classList.add('visible');
+}
+renderFavs.hide=()=>{ const b=document.getElementById('codex-results'); if(b){b.classList.remove('visible');b.innerHTML='';} };
+
 // ── Codex ──────────────────────────────────────────────────────────────────
 // 1,816 tables that exist in the index but not the graph: we have their
 // description and keys, but no curated relationships, so they can't be nodes.
@@ -2486,7 +2563,8 @@ function renderCodexResults(q){
     const col=MODULE_COLORS[mod]||'#94a3b8';
     return `<div class="cx-row" onclick="openCodex('${id}')">
         <div class="cx-top"><span class="cx-id">${id}</span>
-        <span class="cx-mod" style="background:${col}22;color:${col}">${MODULE_EMOJIS[mod]||''} ${mod}</span></div>
+        <span class="cx-mod" style="background:${col}22;color:${col}">${MODULE_EMOJIS[mod]||''} ${mod}</span>
+        ${favBtn(id)}</div>
         <div class="cx-desc">${desc||'<span style="opacity:.6">No description</span>'}</div>
       </div>`;
   }).join('');
@@ -2559,6 +2637,7 @@ function exitFocus(){
 
 function init(){
   buildModuleFilters(); buildLegend(); buildGraph(); initSheetSwipe();
+  document.getElementById('search').addEventListener('focus',()=>{ if(!searchQuery) renderFavs(); });
   document.getElementById('search').addEventListener('input',e=>{
     searchQuery=e.target.value.toLowerCase();
     document.getElementById('search-clear').classList.toggle('visible',searchQuery.length>0);
@@ -2568,7 +2647,7 @@ function init(){
     const exact=TABLES.find(t=>t.id.toLowerCase()===searchQuery);
     selectedNode = exact ? exact.id : null;
     updateGraph();
-    renderCodexResults(searchQuery);
+    if(searchQuery) renderCodexResults(searchQuery); else renderFavs();
     if(exact){
       setFocusDepth(focusDepth);           // refresh the Levels hint for the new anchor
       // Let the force sim settle a beat, then put the table you typed on screen.
@@ -2703,7 +2782,7 @@ function buildGraph(){
 
   node.append('circle')
     .attr('r',d=>nodeR(connCount[d.id]))
-    .attr('fill',d=>MODULE_COLORS[d.module]+'2a')
+    .attr('fill',d=>nodeFill(d))
     .attr('stroke',d=>statusColor(d)).attr('stroke-width',d=>d.s4status==='unchanged'?1.5:2.5)
     .style('filter',d=>`drop-shadow(0 0 ${connCount[d.id]>3?6:3}px ${MODULE_COLORS[d.module]}66)`);
 
@@ -2728,6 +2807,14 @@ function buildGraph(){
       .attr('stroke-opacity',0.4);
     showWelcome();
   });
+}
+
+// Fill carries the migration signal at a glance: red = disappearing,
+// green = new in S/4. Everything else keeps its faint module tint.
+function nodeFill(d){
+  if(d.s4status==='deprecated' || (d.ecc && !d.s4)) return '#ef444488';   // going away
+  if(d.s4status==='new' || (!d.ecc && d.s4))       return '#22c55e88';   // new in S/4
+  return MODULE_COLORS[d.module]+'2a';
 }
 
 function statusColor(d){
@@ -2858,6 +2945,7 @@ function buildDetailHTML(d){
     </div>
     <div style="margin-top:7px">
       <span class="badge badge-module" style="background:${color}22;color:${color}" title="${MODULE_NAMES[d.module]||d.module}">${MODULE_EMOJIS[d.module]} ${d.module}${MODULE_NAMES[d.module]?` · ${MODULE_NAMES[d.module]}`:''}</span>
+      ${favBtn(d.id)}
       <span class="badge ${sl}">${st}</span>
       <span class="badge badge-unchanged">${av}</span>
     </div>`;
@@ -2869,10 +2957,10 @@ function buildDetailHTML(d){
     ${journeySection}
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${d.plainEnglish}</div>
+    ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
     ${tcodes?`<div class="section-title">⌨️ Key Transactions</div><div class="tcode-list">${tcodes}</div>`:''}
-    ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
     ${focusBtn}
     <div style="height:16px"></div>`;
 
