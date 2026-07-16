@@ -1,4 +1,4 @@
-name: SAPGalaxy
+name: ERPGalaxy
 options:
   bundleIdPrefix: com.daviddef
   deploymentTarget:
@@ -13,21 +13,21 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
 
 targets:
-  SAPGalaxy:
+  ERPGalaxy:
     type: application
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: SAPGalaxy/Sources
+      - path: ERPGalaxy/Sources
       # Folder reference (not a group): preserves Web/vendor/d3.min.js so the
       # HTML's relative <script src="vendor/d3.min.js"> resolves inside the bundle.
-      - path: SAPGalaxy/Resources/Web
+      - path: ERPGalaxy/Resources/Web
         type: folder
-      - path: SAPGalaxy/Resources/Assets.xcassets
+      - path: ERPGalaxy/Resources/Assets.xcassets
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.daviddef.sapgalaxy
-        INFOPLIST_FILE: SAPGalaxy/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.daviddef.erpgalaxy
+        INFOPLIST_FILE: ERPGalaxy/Info.plist
         TARGETED_DEVICE_FAMILY: "1,2"   # iPhone + iPad
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor

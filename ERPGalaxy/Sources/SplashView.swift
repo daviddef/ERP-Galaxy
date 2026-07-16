@@ -11,7 +11,7 @@ struct SplashView: View {
                 .font(.system(size: 56))
                 .scaleEffect(pulse ? 1.06 : 0.94)
                 .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: pulse)
-            Text("SAP Galaxy")
+            Text("ERP Galaxy")
                 .font(.title2.weight(.bold))
                 .foregroundStyle(
                     LinearGradient(colors: [Color(red: 0.31, green: 0.61, blue: 0.98),

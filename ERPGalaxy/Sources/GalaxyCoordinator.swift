@@ -48,7 +48,7 @@ final class GalaxyCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHa
 
     private func shareTable(tableId: String, desc: String) {
         guard !tableId.isEmpty else { return }
-        let text = "SAP Table \(tableId): \(desc)\n\nExplored via SAP Galaxy 🌌"
+        let text = "SAP Table \(tableId): \(desc)\n\nExplored via ERP Galaxy 🌌"
         let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
 
         // Resolve the *key* window of the active scene. `windows.first` on an

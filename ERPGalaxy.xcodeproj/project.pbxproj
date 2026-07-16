@@ -7,157 +7,157 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A003788F4A20949D549487D /* Web in Resources */ = {isa = PBXBuildFile; fileRef = 51A177120859F887E4118A23 /* Web */; };
-		403CE7E86F4EB1589F69BD2B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973A54547736812707E746FD /* ContentView.swift */; };
-		4CDF5B028ADAA6DB6C36DA52 /* GalaxyWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65848EDBC7AA1F889494F018 /* GalaxyWebView.swift */; };
-		7662A75E92D18A08CE12515B /* SAPGalaxyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5130E3B02018A7F682AF6D5E /* SAPGalaxyApp.swift */; };
-		957A9FE4CCD4FA2357BD2C17 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA7552B2154623D1E3631C /* SplashView.swift */; };
-		BE5D8DC253C909E7ED7AFA09 /* GalaxyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48F323D9F389D45346B1545 /* GalaxyCoordinator.swift */; };
-		CA5CE570BA92A12088410441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71A0272CBE981F945E3F91D4 /* Assets.xcassets */; };
+		315A02BCB47CE78F910D6D6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333C889F1B30FC8D13A26D3 /* ContentView.swift */; };
+		32C5C8709AC8AD672DD20B83 /* GalaxyWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A4D5EC1260BCC74E5F779 /* GalaxyWebView.swift */; };
+		37682F9D2C802AF15871704F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69F91FC4D01A4114A642BDE3 /* Assets.xcassets */; };
+		5806EC65339BB95F27AE815E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA88511E70477C58391983 /* SplashView.swift */; };
+		7D390B4A61282FD026F157F5 /* GalaxyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B8376D39DC6FC1DFDEBFD /* GalaxyCoordinator.swift */; };
+		84FE4DD6605761E082121CF3 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = 00FBA5DD6719B37A4482E8C4 /* Web */; };
+		CABF0B23EEE71EB5BB6EA768 /* ERPGalaxyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61555EBC6F26F643717BD185 /* ERPGalaxyApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5130E3B02018A7F682AF6D5E /* SAPGalaxyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAPGalaxyApp.swift; sourceTree = "<group>"; };
-		51A177120859F887E4118A23 /* Web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Web; path = SAPGalaxy/Resources/Web; sourceTree = SOURCE_ROOT; };
-		65848EDBC7AA1F889494F018 /* GalaxyWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyWebView.swift; sourceTree = "<group>"; };
-		71A0272CBE981F945E3F91D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		973A54547736812707E746FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		CEBB1675A5F2D94FF6941425 /* SAPGalaxy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SAPGalaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E48F323D9F389D45346B1545 /* GalaxyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyCoordinator.swift; sourceTree = "<group>"; };
-		E9DA7552B2154623D1E3631C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		00FBA5DD6719B37A4482E8C4 /* Web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Web; path = ERPGalaxy/Resources/Web; sourceTree = SOURCE_ROOT; };
+		61555EBC6F26F643717BD185 /* ERPGalaxyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERPGalaxyApp.swift; sourceTree = "<group>"; };
+		69F91FC4D01A4114A642BDE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		85DA88511E70477C58391983 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		AE6A4D5EC1260BCC74E5F779 /* GalaxyWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyWebView.swift; sourceTree = "<group>"; };
+		B333C889F1B30FC8D13A26D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B35B8376D39DC6FC1DFDEBFD /* GalaxyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyCoordinator.swift; sourceTree = "<group>"; };
+		B8E70A10F840707D2F8AB297 /* ERPGalaxy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ERPGalaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		2092A6631E1D17697E8D3FD2 /* Sources */ = {
+		16169BE407BBC22497B60102 = {
 			isa = PBXGroup;
 			children = (
-				973A54547736812707E746FD /* ContentView.swift */,
-				E48F323D9F389D45346B1545 /* GalaxyCoordinator.swift */,
-				65848EDBC7AA1F889494F018 /* GalaxyWebView.swift */,
-				5130E3B02018A7F682AF6D5E /* SAPGalaxyApp.swift */,
-				E9DA7552B2154623D1E3631C /* SplashView.swift */,
+				CC1E1EC9B14A1A6312427693 /* ERPGalaxy */,
+				DE7D241E9845AD26D8748F69 /* Products */,
 			);
-			path = Sources;
 			sourceTree = "<group>";
 		};
-		27F1A6A953D76B73F83B53A9 /* Resources */ = {
+		5062FC8D0453BEFB56DCFF73 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				71A0272CBE981F945E3F91D4 /* Assets.xcassets */,
-				51A177120859F887E4118A23 /* Web */,
+				69F91FC4D01A4114A642BDE3 /* Assets.xcassets */,
+				00FBA5DD6719B37A4482E8C4 /* Web */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		770DF26E85D18DAEFD461D3D /* Products */ = {
+		CC1E1EC9B14A1A6312427693 /* ERPGalaxy */ = {
 			isa = PBXGroup;
 			children = (
-				CEBB1675A5F2D94FF6941425 /* SAPGalaxy.app */,
+				5062FC8D0453BEFB56DCFF73 /* Resources */,
+				CFA7BFB88B5B025F25B60469 /* Sources */,
+			);
+			path = ERPGalaxy;
+			sourceTree = "<group>";
+		};
+		CFA7BFB88B5B025F25B60469 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B333C889F1B30FC8D13A26D3 /* ContentView.swift */,
+				61555EBC6F26F643717BD185 /* ERPGalaxyApp.swift */,
+				B35B8376D39DC6FC1DFDEBFD /* GalaxyCoordinator.swift */,
+				AE6A4D5EC1260BCC74E5F779 /* GalaxyWebView.swift */,
+				85DA88511E70477C58391983 /* SplashView.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		DE7D241E9845AD26D8748F69 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B8E70A10F840707D2F8AB297 /* ERPGalaxy.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B4DAC9E0341C4611587720B6 /* SAPGalaxy */ = {
-			isa = PBXGroup;
-			children = (
-				27F1A6A953D76B73F83B53A9 /* Resources */,
-				2092A6631E1D17697E8D3FD2 /* Sources */,
-			);
-			path = SAPGalaxy;
-			sourceTree = "<group>";
-		};
-		C71FC1F670447D626C9C6534 = {
-			isa = PBXGroup;
-			children = (
-				B4DAC9E0341C4611587720B6 /* SAPGalaxy */,
-				770DF26E85D18DAEFD461D3D /* Products */,
-			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		802F3BEE998BE5E6F867A054 /* SAPGalaxy */ = {
+		E21F90959151BA14CE7944EB /* ERPGalaxy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55D8E9F5BEACB8D4DC795FAA /* Build configuration list for PBXNativeTarget "SAPGalaxy" */;
+			buildConfigurationList = 6C6977F811E74FDB212DC59D /* Build configuration list for PBXNativeTarget "ERPGalaxy" */;
 			buildPhases = (
-				766D875DBE834DFB3BF79E02 /* Sources */,
-				F47D2552FFA306614F0E9526 /* Resources */,
+				0BE3C32943C8168B8BFCEEE3 /* Sources */,
+				3A29D0DDF2A639A4C9448B75 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SAPGalaxy;
+			name = ERPGalaxy;
 			packageProductDependencies = (
 			);
-			productName = SAPGalaxy;
-			productReference = CEBB1675A5F2D94FF6941425 /* SAPGalaxy.app */;
+			productName = ERPGalaxy;
+			productReference = B8E70A10F840707D2F8AB297 /* ERPGalaxy.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		308C92549E7F1B206595E6A6 /* Project object */ = {
+		034415F885FFD0F76E4AB151 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					802F3BEE998BE5E6F867A054 = {
+					E21F90959151BA14CE7944EB = {
 						DevelopmentTeam = L9SAXP2E2W;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = B1A09E2C4BA352CD0C2C87F3 /* Build configuration list for PBXProject "SAPGalaxy" */;
+			buildConfigurationList = 5E3221519AD9D979174947B6 /* Build configuration list for PBXProject "ERPGalaxy" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
 				en,
 			);
-			mainGroup = C71FC1F670447D626C9C6534;
+			mainGroup = 16169BE407BBC22497B60102;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 770DF26E85D18DAEFD461D3D /* Products */;
+			productRefGroup = DE7D241E9845AD26D8748F69 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				802F3BEE998BE5E6F867A054 /* SAPGalaxy */,
+				E21F90959151BA14CE7944EB /* ERPGalaxy */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F47D2552FFA306614F0E9526 /* Resources */ = {
+		3A29D0DDF2A639A4C9448B75 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA5CE570BA92A12088410441 /* Assets.xcassets in Resources */,
-				0A003788F4A20949D549487D /* Web in Resources */,
+				37682F9D2C802AF15871704F /* Assets.xcassets in Resources */,
+				84FE4DD6605761E082121CF3 /* Web in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		766D875DBE834DFB3BF79E02 /* Sources */ = {
+		0BE3C32943C8168B8BFCEEE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				403CE7E86F4EB1589F69BD2B /* ContentView.swift in Sources */,
-				BE5D8DC253C909E7ED7AFA09 /* GalaxyCoordinator.swift in Sources */,
-				4CDF5B028ADAA6DB6C36DA52 /* GalaxyWebView.swift in Sources */,
-				7662A75E92D18A08CE12515B /* SAPGalaxyApp.swift in Sources */,
-				957A9FE4CCD4FA2357BD2C17 /* SplashView.swift in Sources */,
+				315A02BCB47CE78F910D6D6B /* ContentView.swift in Sources */,
+				CABF0B23EEE71EB5BB6EA768 /* ERPGalaxyApp.swift in Sources */,
+				7D390B4A61282FD026F157F5 /* GalaxyCoordinator.swift in Sources */,
+				32C5C8709AC8AD672DD20B83 /* GalaxyWebView.swift in Sources */,
+				5806EC65339BB95F27AE815E /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		047A379F70CED1618217BAFC /* Release */ = {
+		2172E3967E967FA58E0EA357 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -165,13 +165,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				INFOPLIST_FILE = SAPGalaxy/Info.plist;
+				INFOPLIST_FILE = ERPGalaxy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.daviddef.sapgalaxy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daviddef.erpgalaxy;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -179,7 +179,29 @@
 			};
 			name = Release;
 		};
-		6D86B45524306B7783917378 /* Debug */ = {
+		239F9ADAB3CD6739657E78D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				INFOPLIST_FILE = ERPGalaxy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.daviddef.erpgalaxy;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		24F99F06CEBF59B19A92CD7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -245,7 +267,7 @@
 			};
 			name = Debug;
 		};
-		7B6ADFE88D2C60CAD0667F31 /* Release */ = {
+		C80D0FB8A81792410C5DD803 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -304,50 +326,28 @@
 			};
 			name = Release;
 		};
-		7EA872A20CDA5DB2A8C8BE7D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				INFOPLIST_FILE = SAPGalaxy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.daviddef.sapgalaxy;
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		55D8E9F5BEACB8D4DC795FAA /* Build configuration list for PBXNativeTarget "SAPGalaxy" */ = {
+		5E3221519AD9D979174947B6 /* Build configuration list for PBXProject "ERPGalaxy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7EA872A20CDA5DB2A8C8BE7D /* Debug */,
-				047A379F70CED1618217BAFC /* Release */,
+				24F99F06CEBF59B19A92CD7F /* Debug */,
+				C80D0FB8A81792410C5DD803 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		B1A09E2C4BA352CD0C2C87F3 /* Build configuration list for PBXProject "SAPGalaxy" */ = {
+		6C6977F811E74FDB212DC59D /* Build configuration list for PBXNativeTarget "ERPGalaxy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6D86B45524306B7783917378 /* Debug */,
-				7B6ADFE88D2C60CAD0667F31 /* Release */,
+				239F9ADAB3CD6739657E78D0 /* Debug */,
+				2172E3967E967FA58E0EA357 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 308C92549E7F1B206595E6A6 /* Project object */;
+	rootObject = 034415F885FFD0F76E4AB151 /* Project object */;
 }

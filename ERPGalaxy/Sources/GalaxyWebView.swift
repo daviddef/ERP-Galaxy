@@ -34,10 +34,10 @@ struct GalaxyWebView: UIViewRepresentable {
 
         // loadFileURL(_:allowingReadAccessTo:) with the *directory* is what lets
         // the page reach vendor/d3.min.js under file://.
-        if let url = Bundle.main.url(forResource: "sap-galaxy", withExtension: "html", subdirectory: "Web") {
+        if let url = Bundle.main.url(forResource: "erp-galaxy", withExtension: "html", subdirectory: "Web") {
             webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         } else {
-            assertionFailure("sap-galaxy.html missing from bundle — check the Web folder reference")
+            assertionFailure("erp-galaxy.html missing from bundle — check the Web folder reference")
         }
 
         context.coordinator.webView = webView

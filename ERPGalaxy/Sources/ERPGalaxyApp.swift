@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct SAPGalaxyApp: App {
+struct ERPGalaxyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
