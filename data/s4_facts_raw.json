@@ -1,0 +1,3278 @@
+[
+ {
+  "item": "38.14",
+  "table": "MMPUR_ANA_E",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "CI Include Conflicts in Table MMPUR_ANA_E"
+ },
+ {
+  "item": "38.14",
+  "table": "VBFA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "VBFA - Indirect Docflow Relationships"
+ },
+ {
+  "item": "38.14",
+  "table": "BPID001",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "FSBP Table Additional Partner Numbers (BPID001) obsolete"
+ },
+ {
+  "item": "2.17",
+  "table": "CDCLS",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "example table pool is ATAB; example table cluster is CDCLS) are removed"
+ },
+ {
+  "item": "2.17",
+  "table": "RFBLG",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "pool tables and cluster tables are no longer supported"
+ },
+ {
+  "item": "2.17",
+  "table": "DOKCLU",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "pool tables and cluster tables are no longer supported"
+ },
+ {
+  "item": "2.17",
+  "table": "ATAB",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "example table pool is ATAB; example table cluster is CDCLS) are removed"
+ },
+ {
+  "item": "2.17",
+  "table": "CDPOS",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion"
+ },
+ {
+  "item": "2.17",
+  "table": "BSEG",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion"
+ },
+ {
+  "item": "2.17",
+  "table": "DOKTL",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion"
+ },
+ {
+  "item": "2.17",
+  "table": "INDX",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Export/import tables are still supported in 1809."
+ },
+ {
+  "item": "2.17",
+  "table": "STXL",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Export/import tables are still supported in 1809."
+ },
+ {
+  "item": "2.17",
+  "table": "DD06L",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "as those tables and views do no longer exist in release 1809"
+ },
+ {
+  "item": "2.17",
+  "table": "DD06T",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "as those tables and views do no longer exist in release 1809"
+ },
+ {
+  "item": "2.17",
+  "table": "DD16S",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "as those tables and views do no longer exist in release 1809"
+ },
+ {
+  "item": "2.17",
+  "table": "TADIR",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "can be found in the table TADIR"
+ },
+ {
+  "item": "2.17",
+  "table": "WBCROSSGT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "cross-reference table WBCROSSGT to find all coding places"
+ },
+ {
+  "item": "2.32",
+  "table": "T77S0",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "HCM Integration Switch (System Table T77S0)"
+ },
+ {
+  "item": "2.32",
+  "table": "USER_ADDR",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "the database view USER_ADDR can no longer be used in SAP S/4HANA"
+ },
+ {
+  "item": "2.32",
+  "table": "MOM052",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Workplace address (table MOM052) attributes such as phone number or email address"
+ },
+ {
+  "item": "2.32",
+  "table": "HRP1001",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "user linkage via table HRP1001 from BP-CP-US are automatically converted to business users"
+ },
+ {
+  "item": "2.32",
+  "table": "BP001",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "user linkage via table BP001 are automatically converted to business users"
+ },
+ {
+  "item": "2.33",
+  "table": "T000",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "which officially exists in the system (in table T000)"
+ },
+ {
+  "item": "2.33",
+  "table": "USR02",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the check is only looking for usr02 (user master data) records"
+ },
+ {
+  "item": "2.33",
+  "table": "MARA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for tables like MARA, BSEG, VBAK, EKKO, MARC, MARD"
+ },
+ {
+  "item": "2.33",
+  "table": "BSEG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for tables like MARA, BSEG, VBAK, EKKO, MARC, MARD"
+ },
+ {
+  "item": "2.33",
+  "table": "VBAK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for tables like MARA, BSEG, VBAK, EKKO, MARC, MARD"
+ },
+ {
+  "item": "2.33",
+  "table": "EKKO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for tables like MARA, BSEG, VBAK, EKKO, MARC, MARD"
+ },
+ {
+  "item": "2.33",
+  "table": "MARC",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for tables like MARA, BSEG, VBAK, EKKO, MARC, MARD"
+ },
+ {
+  "item": "2.33",
+  "table": "MARD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for tables like MARA, BSEG, VBAK, EKKO, MARC, MARD"
+ },
+ {
+  "item": "2.33",
+  "table": "TNIW5",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Check for inconsistent entries in tables TNIW5 / TNIW5W"
+ },
+ {
+  "item": "2.33",
+  "table": "TNIW5W",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Check for inconsistent entries in tables TNIW5 / TNIW5W"
+ },
+ {
+  "item": "2.33",
+  "table": "TBP2B",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Check for inconsistent entries in tables TBP2B / TFB03T"
+ },
+ {
+  "item": "2.33",
+  "table": "TFB03T",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Check for inconsistent entries in tables TBP2B / TFB03T"
+ },
+ {
+  "item": "2.36",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "all JVA processing is based on the ACDOCA table"
+ },
+ {
+  "item": "2.41",
+  "table": "CATSDB",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "CAT2 and CATSDB related transactions (Fiori and WebDynpro ABAP) will continue to be supported as per SAP S/4HANA timelines."
+ },
+ {
+  "item": "3.9",
+  "table": "BUT000",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Time dependency has been disabled at the header level of BUT000 in SAP S/4HANA"
+ },
+ {
+  "item": "3.9",
+  "table": "BUT000_TD",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "switching OFF the table BUT000_TD converts the time dependent entries to time independent entries"
+ },
+ {
+  "item": "3.13",
+  "table": "J_1IMOCUST",
+  "status": "replaced",
+  "replacedBy": "KNA1",
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system."
+ },
+ {
+  "item": "3.13",
+  "table": "J_1IMOVEND",
+  "status": "replaced",
+  "replacedBy": "LFA1",
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system."
+ },
+ {
+  "item": "3.13",
+  "table": "KNA1",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system."
+ },
+ {
+  "item": "3.13",
+  "table": "LFA1",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system."
+ },
+ {
+  "item": "3.17",
+  "table": "BUT000",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "a new field GENDER has been introduced in Business Partner main table BUT000"
+ },
+ {
+  "item": "3.17",
+  "table": "TB995",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "BU_SEXID Female, Male and Unknown TB995"
+ },
+ {
+  "item": "3.17",
+  "table": "TSAD15",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "AD_SEX Female, Male and Unknown TSAD15"
+ },
+ {
+  "item": "3.20",
+  "table": "BUTADRSEARCH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Fields BIRTHDT, AUGR, XDELE, XBLCK, TYPE, and REGION in table BUTADRSEARCH is no longer requried"
+ },
+ {
+  "item": "3.20",
+  "table": "TB300",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "updated in BUTADRSEARCH if the indexing was activated in TB300 table"
+ },
+ {
+  "item": "3.20",
+  "table": "BUT000",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "BUT000-BIRTHDT"
+ },
+ {
+  "item": "3.20",
+  "table": "ADRC",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "ADRC-REGION"
+ },
+ {
+  "item": "3.24",
+  "table": "MARC",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "should be deleted in the post-conversion phase before release of SAP S/4HANA to users"
+ },
+ {
+  "item": "3.25",
+  "table": "MARC",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "the backend database fields for these \"omitted functionality\" remains existing in the system"
+ },
+ {
+  "item": "3.25",
+  "table": "MARD",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "the backend database fields for these \"omitted functionality\" remains existing in the system"
+ },
+ {
+  "item": "8.2",
+  "table": "BSAD",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "BSAK",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "BSAS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "BSID",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "BSIK",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "BSIS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "FAGLBSAS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "FAGLBSIS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "GLT0",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "KNC1",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "KNC3",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "LFC1",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "LFC3",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "COSP",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "COSS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "FAGLFLEXT",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views"
+ },
+ {
+  "item": "8.2",
+  "table": "ANEA",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "ANEK",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "ANEP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "ANLC",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "ANLP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "BSIM",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "COEP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "FAGLFLEXA",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "T012K",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "T012T",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "FMGLFLEXA",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "FMGLFLEXT",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "PSGLFLEXA",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "PSGLFLEXT",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "JVGLFLEXA",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "JVGLFLEXT",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)"
+ },
+ {
+  "item": "8.2",
+  "table": "CKMI1",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore"
+ },
+ {
+  "item": "8.2",
+  "table": "MLCD",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore"
+ },
+ {
+  "item": "8.2",
+  "table": "MLCR",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore"
+ },
+ {
+  "item": "8.2",
+  "table": "MLHD",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore"
+ },
+ {
+  "item": "8.2",
+  "table": "MLIT",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore"
+ },
+ {
+  "item": "8.2",
+  "table": "MLPP",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore"
+ },
+ {
+  "item": "8.5",
+  "table": "FAGLFLEXT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "enter the table FAGLFLEXT as the totals table"
+ },
+ {
+  "item": "8.5",
+  "table": "T881",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "create entries in obsolete tables T881 and T882G"
+ },
+ {
+  "item": "8.5",
+  "table": "T882G",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "create entries in obsolete tables T881 and T882G"
+ },
+ {
+  "item": "8.5",
+  "table": "GLT0_BCK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the planning data which existed already before migration is copied to table GLT0_BCK"
+ },
+ {
+  "item": "8.8",
+  "table": "GLFUNCT",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "the contents of the cost of sales ledger and all special ledgers created in table GLFUNCT are included in the Universal Journal (table ACDOCA)"
+ },
+ {
+  "item": "10.1",
+  "table": "ANEA",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The Asset Accounting tables ANEA, ANEP, ANEK, ANLC and ANLP are no longer updated in SAP S/4HANA"
+ },
+ {
+  "item": "10.1",
+  "table": "ANEP",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The Asset Accounting tables ANEA, ANEP, ANEK, ANLC and ANLP are no longer updated in SAP S/4HANA"
+ },
+ {
+  "item": "10.1",
+  "table": "ANEK",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The Asset Accounting tables ANEA, ANEP, ANEK, ANLC and ANLP are no longer updated in SAP S/4HANA"
+ },
+ {
+  "item": "10.1",
+  "table": "ANLC",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The Asset Accounting tables ANEA, ANEP, ANEK, ANLC and ANLP are no longer updated in SAP S/4HANA"
+ },
+ {
+  "item": "10.1",
+  "table": "ANLP",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The Asset Accounting tables ANEA, ANEP, ANEK, ANLC and ANLP are no longer updated in SAP S/4HANA"
+ },
+ {
+  "item": "10.1",
+  "table": "BSEG",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Postings are still made to the table BSEG"
+ },
+ {
+  "item": "10.1",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Actual values from tables ANEP, ANEA, ANLP, ANLC are saved in table ACDOCA"
+ },
+ {
+  "item": "10.1",
+  "table": "FAAT_DOC_IT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "are saved in new Asset Accounting in table FAAT_DOC_IT"
+ },
+ {
+  "item": "10.1",
+  "table": "FAAT_PLAN_VALUES",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Planned values from tables ANLP and ANLC are saved in table FAAT_PLAN_VALUES"
+ },
+ {
+  "item": "10.2",
+  "table": "TABWA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "transaction types that are restricted to depreciation areas (table TABWA or view cluster V_TABWA), this is rejected by the system"
+ },
+ {
+  "item": "10.2",
+  "table": "TABWV",
+  "status": "replaced",
+  "replacedBy": "TABWD",
+  "evidence": "no longer defined in Customizing activity Determine Transaction Types for Internal Transactions (table TABWV) as previously the case"
+ },
+ {
+  "item": "10.2",
+  "table": "TABWD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "now defined in Customizing activity Specify Default Transaction Types (table TABWD)"
+ },
+ {
+  "item": "10.2",
+  "table": "BSEG",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "the BSEG table will no longer be updated with the depreciation run"
+ },
+ {
+  "item": "11.3",
+  "table": "T012K",
+  "status": "replaced",
+  "replacedBy": null,
+  "evidence": "Database table T012K is redirected to the new BAM tables."
+ },
+ {
+  "item": "12.2",
+  "table": "COSP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "object numbers beginning with VD in tables COSP and COSS"
+ },
+ {
+  "item": "12.2",
+  "table": "COSS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "object numbers beginning with VD in tables COSP and COSS"
+ },
+ {
+  "item": "12.4",
+  "table": "T001W",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Technically this setting can be verified via database table T001W, field MGVUPD."
+ },
+ {
+  "item": "12.4",
+  "table": "MLHD",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLIT",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLPP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLPPF",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLCR",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLCRF",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLKEPH",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLPP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLCR",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "MLCD",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLMV003",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLMV004",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLMV004WIP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLPPWIP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLCRWIP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLLAPPWIP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLLACRWIP",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLKEPH",
+  "status": "replaced",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables"
+ },
+ {
+  "item": "12.4",
+  "table": "CKLMLCR",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Standard Price. Periodic Unit Price and Price Control are still managed in table CKLMLCR"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLPRKEKO",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Cost Component Split for Prices is still managed in tables CKMLPRKEKO and CKMLPRKEPH"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLPRKEPH",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Cost Component Split for Prices is still managed in tables CKMLPRKEKO and CKMLPRKEPH"
+ },
+ {
+  "item": "12.4",
+  "table": "MLDOC",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Technically, data is retrieved from table MLDOC, MLDOCCCS and MLDOC_EXTRACT and MLDOCCCS_EXTRACT"
+ },
+ {
+  "item": "12.4",
+  "table": "MLDOCCCS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Technically, data is retrieved from table MLDOC, MLDOCCCS and MLDOC_EXTRACT and MLDOCCCS_EXTRACT"
+ },
+ {
+  "item": "12.4",
+  "table": "MLDOC_EXTRACT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The table MLDOC_EXTRACT holds information about quantity and valuation changes."
+ },
+ {
+  "item": "12.4",
+  "table": "MLDOCCCS_EXTRACT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "table MLDOCCCS_EXTRACT which has been designed for holding cost component information"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLMV011",
+  "status": "replaced",
+  "replacedBy": "MLRUNLIST",
+  "evidence": "Table MLRUNLIST replaces the former table CKMLMV011 (Object List for Costing Run)"
+ },
+ {
+  "item": "12.4",
+  "table": "MLRUNLIST",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Table MLRUNLIST replaces the former table CKMLMV011 (Object List for Costing Run), but has some additional functions"
+ },
+ {
+  "item": "12.4",
+  "table": "CKMLPR_EB",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Static external valuation (for ending inventory or cumulated inventory) based on table CKMLPR_EB is available"
+ },
+ {
+  "item": "12.6",
+  "table": "GLPCP",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Profit Center Planning based on table GLPCP is in compatibility scope and must not be used beyond they expiry date"
+ },
+ {
+  "item": "12.6",
+  "table": "GLPCA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards"
+ },
+ {
+  "item": "12.6",
+  "table": "GLPCT",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards"
+ },
+ {
+  "item": "12.6",
+  "table": "TKA00",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "field PCRCH for the corresponding controlling area in the table TKA00 is set to '2'"
+ },
+ {
+  "item": "12.8",
+  "table": "GLPCA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "using GLPCA and GLPCT, have been adopted to S/4HANA product standards and, therefore, are available as part of perpetual scope"
+ },
+ {
+  "item": "12.8",
+  "table": "GLPCT",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "using GLPCA and GLPCT, have been adopted to S/4HANA product standards and, therefore, are available as part of perpetual scope"
+ },
+ {
+  "item": "12.8",
+  "table": "GLPCP",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Profit Center Planning based on table GLPCP is in compatibility scope and must not be used beyond they expiry date"
+ },
+ {
+  "item": "12.8",
+  "table": "TKA00",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "field PCRCH for the corresponding controlling area in the table TKA00 is set to '2'"
+ },
+ {
+  "item": "12.9",
+  "table": "COEP",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The former tables COEP, COSP, and COSS are replaced by views of the same name, so-called compatibility views"
+ },
+ {
+  "item": "12.9",
+  "table": "COSP",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The former tables COEP, COSP, and COSS are replaced by views of the same name, so-called compatibility views"
+ },
+ {
+  "item": "12.9",
+  "table": "COSS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The former tables COEP, COSP, and COSS are replaced by views of the same name, so-called compatibility views"
+ },
+ {
+  "item": "12.9",
+  "table": "COVP",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "Compatibility views COSP, COSS, COEP, COVP: How do you optimize their use."
+ },
+ {
+  "item": "12.9",
+  "table": "COSP_BAK",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Value types other than \u201804\u2019 and \u201811\u2019 are still stored in COEP, COSP_BAK, COSS_BAK."
+ },
+ {
+  "item": "12.9",
+  "table": "COSS_BAK",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Value types other than \u201804\u2019 and \u201811\u2019 are still stored in COEP, COSP_BAK, COSS_BAK."
+ },
+ {
+  "item": "12.9",
+  "table": "COBK",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Currently, COBK is written as before."
+ },
+ {
+  "item": "12.9",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Actual data of COEP (WRTTP = \u201804\u2019) is now stored in ACDOCA."
+ },
+ {
+  "item": "12.9",
+  "table": "GLPCP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Classic Profit Center Planning is used if entries exist in Table GLPCP (check with SE16)."
+ },
+ {
+  "item": "12.9",
+  "table": "COEJ",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "CO-OM Planning is used if entries exist in Table COEJ (check with SE16)."
+ },
+ {
+  "item": "12.9",
+  "table": "ACDOCP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "No changes to existing tables, but table ACDOCP offered in addition from 1610."
+ },
+ {
+  "item": "12.9",
+  "table": "CKIS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the planned costs (as in CKIS), the standard costs adjusted for the order lot size"
+ },
+ {
+  "item": "12.9",
+  "table": "TKA00",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "use transaction SE16 to check whether table TKA00 (controlling areas) contains at least one entry"
+ },
+ {
+  "item": "12.9",
+  "table": "TKA09",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "use transaction SE16 to check whether table TKA09 (CO versions) contains at least one entry"
+ },
+ {
+  "item": "15.2",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the line items are stored in the new database table ACDOCA, optimized to SAP HANA"
+ },
+ {
+  "item": "15.2",
+  "table": "FAGLFLEXT",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "reports in Financial Accounting will show only the fields formerly available in FAGLFLEXT"
+ },
+ {
+  "item": "15.2",
+  "table": "COSP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "reports in Controlling will show only the fields formerly available in COSP/COSS"
+ },
+ {
+  "item": "15.2",
+  "table": "COSS",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "reports in Controlling will show only the fields formerly available in COSP/COSS"
+ },
+ {
+  "item": "15.2",
+  "table": "BSEG",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "The incompatible changes refer to the usage of summary and index tables and the update of table BSEG"
+ },
+ {
+  "item": "15.5",
+  "table": "T001A",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "up to 3 parallel currencies in FI (table T001A / tx OB22)"
+ },
+ {
+  "item": "15.5",
+  "table": "TKA01",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "2 parallel currencies in CO (TKA01 / tx OKKP)"
+ },
+ {
+  "item": "15.5",
+  "table": "T882G",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The currencies of non leading ledgers in NewGL (T882G) were a subset of the currencies"
+ },
+ {
+  "item": "15.5",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the common line item table ACDOCA for FI and CO"
+ },
+ {
+  "item": "15.5",
+  "table": "BSEG",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "Table BSEG is not (and will not be) extended and still contains only 3 parallel currencies"
+ },
+ {
+  "item": "15.6",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the original document of the accrual postings is now contained in the Universal Journal Entry, table ACDOCA"
+ },
+ {
+  "item": "15.6",
+  "table": "ACEPSOIT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The transactional data consist of Accrual Engine postings (table ACEPSOIT) and accrual object data"
+ },
+ {
+  "item": "15.6",
+  "table": "ACEOBJ",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "If the database table ACEOBJ contains entries that fullfill the condition COMP = 'ACAC'"
+ },
+ {
+  "item": "16.1",
+  "table": "MARC",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "non initial values in field STAWN of table MARC"
+ },
+ {
+  "item": "16.3",
+  "table": "T605Z",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "The following tables and fields become obsolete in release 1709:"
+ },
+ {
+  "item": "16.3",
+  "table": "T616Z",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "The following tables and fields become obsolete in release 1709:"
+ },
+ {
+  "item": "16.3",
+  "table": "T605U",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "The following tables and fields become obsolete in release 1709:"
+ },
+ {
+  "item": "16.3",
+  "table": "T616U",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "The following tables and fields become obsolete in release 1709:"
+ },
+ {
+  "item": "16.3",
+  "table": "T161W",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Field T161W-EXPRF: Procedure in customizing table T161W: Order Types for Stock Transfer"
+ },
+ {
+  "item": "18.1",
+  "table": "KNKK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "credit account master data (this data is stored in table KNKK & KNKA)"
+ },
+ {
+  "item": "18.1",
+  "table": "KNKA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "credit account master data (this data is stored in table KNKK & KNKA)"
+ },
+ {
+  "item": "18.1",
+  "table": "S066",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Exposure data is stored and updated continuously in database tables S066 and S067"
+ },
+ {
+  "item": "18.1",
+  "table": "S067",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Exposure data is stored and updated continuously in database tables S066 and S067"
+ },
+ {
+  "item": "18.1",
+  "table": "UKMBP_CMS_SGM",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "credit account master data (this data is stored in table UKMBP_CMS_SGM & UKMBP_CMS)"
+ },
+ {
+  "item": "18.1",
+  "table": "UKMBP_CMS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "credit account master data (this data is stored in table UKMBP_CMS_SGM & UKMBP_CMS)"
+ },
+ {
+  "item": "18.2",
+  "table": "CKMLPP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "CKMLCR",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLHD",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLIT",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLPP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLPPF",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLCR",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLCRF",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLCRP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLMST",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLKEPH",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLPRKEKO",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "MLPRKEPH",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements."
+ },
+ {
+  "item": "18.2",
+  "table": "CKMI1",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Obsolete, no further access possible"
+ },
+ {
+  "item": "18.2",
+  "table": "MLXXV",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Obsolete database views: MLXXV, MLREPORT, MLREADST"
+ },
+ {
+  "item": "18.2",
+  "table": "MLREPORT",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Obsolete database views: MLXXV, MLREPORT, MLREADST"
+ },
+ {
+  "item": "18.2",
+  "table": "MLREADST",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Obsolete database views: MLXXV, MLREPORT, MLREADST"
+ },
+ {
+  "item": "18.2",
+  "table": "ACDOCA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "The content of most of the former Material Ledger database tables is now stored in table ACDOCA"
+ },
+ {
+  "item": "18.5",
+  "table": "CKMLHD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The activity creates material ledger master data (tables: CKMLHD, CKMLPR, CKMLPP and CKMLCR)"
+ },
+ {
+  "item": "18.5",
+  "table": "CKMLPR",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The activity creates material ledger master data (tables: CKMLHD, CKMLPR, CKMLPP and CKMLCR)"
+ },
+ {
+  "item": "18.5",
+  "table": "CKMLPP",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "existing material ledger records (tables CKMLPP and CKMLCR) are transferred into ACDOCA and ACDOCA_M_EXTRACT with all existing currency information"
+ },
+ {
+  "item": "18.5",
+  "table": "CKMLCR",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "existing material ledger records (tables CKMLPP and CKMLCR) are transferred into ACDOCA and ACDOCA_M_EXTRACT with all existing currency information"
+ },
+ {
+  "item": "18.5",
+  "table": "MBEW",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)"
+ },
+ {
+  "item": "18.5",
+  "table": "EBEW",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)"
+ },
+ {
+  "item": "18.5",
+  "table": "QBEW",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)"
+ },
+ {
+  "item": "18.5",
+  "table": "OBEW",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)"
+ },
+ {
+  "item": "18.5",
+  "table": "MBEWH",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA"
+ },
+ {
+  "item": "18.5",
+  "table": "EBEWH",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA"
+ },
+ {
+  "item": "18.5",
+  "table": "QBEWH",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA"
+ },
+ {
+  "item": "18.5",
+  "table": "OBEWH",
+  "status": "replaced",
+  "replacedBy": "ACDOCA",
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA"
+ },
+ {
+  "item": "18.5",
+  "table": "ACDOCA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "During migration, balance carryforward records (fields: BSTAT = \u2018C\u2019 and MIG_SOURCE = \u2018N\u2019) are created in ACDOCA"
+ },
+ {
+  "item": "18.5",
+  "table": "ACDOCA_M_EXTRACT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the new universal journal entry table ACDOCA and ACDOCA_M_EXTRACT"
+ },
+ {
+  "item": "18.5",
+  "table": "MARV",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the relevant periods are determined via table MARV (fields VVJGJ, VVJMO, LFGJA, LFMON)"
+ },
+ {
+  "item": "19.1",
+  "table": "PA0380",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "relevant if you have entries in tables PA0380 or PA0381"
+ },
+ {
+  "item": "19.1",
+  "table": "PA0381",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "relevant if you have entries in tables PA0380 or PA0381"
+ },
+ {
+  "item": "19.2",
+  "table": "T77KD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "relevant if you have entries in tables T77KD or HRP1015"
+ },
+ {
+  "item": "19.2",
+  "table": "HRP1015",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "relevant if you have entries in tables T77KD or HRP1015"
+ },
+ {
+  "item": "19.6",
+  "table": "HRP1500",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "relevant if you have entries in table HRP1500 where BSTAT is filled and BUTGR = '01'"
+ },
+ {
+  "item": "19.9",
+  "table": "PB4000",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "relevant if you have entries in the table PB4000 or recruiting transactions starting with PB*"
+ },
+ {
+  "item": "26.1",
+  "table": "/IAM/D_I_ROOT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "table /IAM/D_I_ROOT has 20 or more entries for APPLICATION 'MOC'"
+ },
+ {
+  "item": "26.1",
+  "table": "BUT000",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Business User Management supports only\n       business partners of category Person (BUT000-TYPE = 1)"
+ },
+ {
+  "item": "27.2",
+  "table": "KNB1",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "database table KNB1"
+ },
+ {
+  "item": "27.2",
+  "table": "LFB1",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "database table LFB1"
+ },
+ {
+  "item": "27.2",
+  "table": "ISEG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "MKOL",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "MSEG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "MSKU",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "MSLB",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "MSSL",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "RESB",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "RKPF",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "T001W",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "T001L",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the following database tables: ISEG, MKOL, MSEG,\n       MSKU, MSLB, MSSL, RESB, RKPF, T001W and T001L"
+ },
+ {
+  "item": "27.2",
+  "table": "MCSD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MCSS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSCD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSCS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSFD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSFS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSID",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSIS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSRD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "MSRS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "addition: MCSD, MCSS, MSCD, MSCS, MSFD, MSFS, MSID, MSIS, MSRD\n         and MSRS"
+ },
+ {
+  "item": "27.2",
+  "table": "B082",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "tables B082 (\"Supplier/CoCode\") and B083 (\"Supplier\")"
+ },
+ {
+  "item": "27.2",
+  "table": "B083",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "tables B082 (\"Supplier/CoCode\") and B083 (\"Supplier\")"
+ },
+ {
+  "item": "27.2",
+  "table": "T159A",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "filtering the database table T159A by the plant (field WERKS) and by the\n       supplier"
+ },
+ {
+  "item": "27.2",
+  "table": "MARI",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "filtering\n       the database table MARI by the plant (field WERKS) and by the supplier"
+ },
+ {
+  "item": "27.2",
+  "table": "MMINKON_UP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "filtering the database table MMINKON_UP by the plant (field WERKS) and by\n       the customer or supplier"
+ },
+ {
+  "item": "27.2",
+  "table": "NSDM_AGING_CHECK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "filtering the database table NSDM_AGING_CHECK by the plant\n       (field WERKS) and by the customer or supplier"
+ },
+ {
+  "item": "27.3",
+  "table": "TVSHP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Check table field TVSHP-SPE_INB_VL_MM via"
+ },
+ {
+  "item": "27.3",
+  "table": "MSEG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Check table MSEG for entries with VGART_MKPF = \"WE\", TCODE2_MKPF =\nMIGO_GR"
+ },
+ {
+  "item": "27.5",
+  "table": "MKPF",
+  "status": "replaced",
+  "replacedBy": "MATDOC",
+  "evidence": "Material document data will be stored in\nMATDOC only and not anymore in MKPF and MSEG"
+ },
+ {
+  "item": "27.5",
+  "table": "MSEG",
+  "status": "replaced",
+  "replacedBy": "MATDOC",
+  "evidence": "Material document data will be stored in\nMATDOC only and not anymore in MKPF and MSEG"
+ },
+ {
+  "item": "27.5",
+  "table": "MARC",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MARD",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MCHB",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MKOL",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSLB",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSKA",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSSA",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSPR",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSSL",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSSQ",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSKU",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSTB",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSTE",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSTQ",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MCSD",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MCSS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSCD",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSCS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSFD",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSFS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSID",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSIS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSRD",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSRS",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MARCH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MARDH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MCHBH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MKOLH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSLBH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSKAH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSSAH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSPRH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSSQH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSKUH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSTBH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSTEH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSTQH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MCSDH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MCSSH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSCDH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSFDH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSIDH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "MSRDH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables"
+ },
+ {
+  "item": "27.5",
+  "table": "T156",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the tables T156x (T156, T156SY, T156M, T156F) - which controls in the\ncore functionality the mapping between a posting and a stock type"
+ },
+ {
+  "item": "27.5",
+  "table": "T156SY",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the tables T156x (T156, T156SY, T156M, T156F) - which controls in the\ncore functionality the mapping between a posting and a stock type"
+ },
+ {
+  "item": "27.5",
+  "table": "T156M",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the tables T156x (T156, T156SY, T156M, T156F) - which controls in the\ncore functionality the mapping between a posting and a stock type"
+ },
+ {
+  "item": "27.5",
+  "table": "T156F",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the tables T156x (T156, T156SY, T156M, T156F) - which controls in the\ncore functionality the mapping between a posting and a stock type"
+ },
+ {
+  "item": "27.5",
+  "table": "DD02L",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "searching via transaction SE16N in table DD02L with TABCLASS = VIEW and VIEWREF <>"
+ },
+ {
+  "item": "27.7",
+  "table": "EBEW",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "EBEWH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "MBEW",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "MBEWH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "OBEW",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "OBEWH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "QBEW",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "QBEWH",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy\nobjects to all those tables"
+ },
+ {
+  "item": "27.7",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the Universal\nJournal Entry Line Items table ACDOCA and the Material Ledger table"
+ },
+ {
+  "item": "27.8",
+  "table": "MBEW",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "In table MBEW, EBEW, OBEW, QBEW the fields SALKV and VERPR are\n                not updated anymore for materials with price control"
+ },
+ {
+  "item": "27.8",
+  "table": "EBEW",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "In table MBEW, EBEW, OBEW, QBEW the fields SALKV and VERPR are\n                not updated anymore for materials with price control"
+ },
+ {
+  "item": "27.8",
+  "table": "OBEW",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "In table MBEW, EBEW, OBEW, QBEW the fields SALKV and VERPR are\n                not updated anymore for materials with price control"
+ },
+ {
+  "item": "27.8",
+  "table": "QBEW",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "In table MBEW, EBEW, OBEW, QBEW the fields SALKV and VERPR are\n                not updated anymore for materials with price control"
+ },
+ {
+  "item": "27.8",
+  "table": "MBEWH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "same applies to the history tables MBEWH, EBEWH, OBEWH and\n                QBEWH"
+ },
+ {
+  "item": "27.8",
+  "table": "EBEWH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "same applies to the history tables MBEWH, EBEWH, OBEWH and\n                QBEWH"
+ },
+ {
+  "item": "27.8",
+  "table": "OBEWH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "same applies to the history tables MBEWH, EBEWH, OBEWH and\n                QBEWH"
+ },
+ {
+  "item": "27.8",
+  "table": "QBEWH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "same applies to the history tables MBEWH, EBEWH, OBEWH and\n                QBEWH"
+ },
+ {
+  "item": "27.8",
+  "table": "CKMLCR",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "In table CKMLCR the fields PVPRS and SALKV are not updated anymore\n                for materials with price control"
+ },
+ {
+  "item": "27.8",
+  "table": "MLCR",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "In table MLCR the fields SALKV, SALKV_OLD and PVPRS_OLD are not\n                updated anymore for materials with price co"
+ },
+ {
+  "item": "27.8",
+  "table": "TCURM",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "As changes in customizing table\n        TCURM are not recorded in a cust"
+ },
+ {
+  "item": "28.7",
+  "table": "STPO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the latest Valid From Date in\nthe BOM tables (STPO, STAS)"
+ },
+ {
+  "item": "28.7",
+  "table": "STAS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the latest Valid From Date in\nthe BOM tables (STPO, STAS)"
+ },
+ {
+  "item": "29.1",
+  "table": "OBJK",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "extend the object list numbers (table OBJK, domain OBJKN, data element\nOBJKNR) from the data format INT4 to the data format INT8."
+ },
+ {
+  "item": "30.2",
+  "table": "MDKP",
+  "status": "replaced",
+  "replacedBy": "MARC",
+  "evidence": "controlling    MDKP         Table MARC"
+ },
+ {
+  "item": "30.2",
+  "table": "MDTB",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "MRP list       MDTB         module MD_MDPSX_READ_API"
+ },
+ {
+  "item": "30.2",
+  "table": "DBVM",
+  "status": "replaced",
+  "replacedBy": "PPH_DBVM",
+  "evidence": "classic MRP was writing data into the following tables, which are no longer populated by"
+ },
+ {
+  "item": "30.2",
+  "table": "MDVM",
+  "status": "replaced",
+  "replacedBy": "PPH_DBVM",
+  "evidence": "classic MRP was writing data into the following tables, which are no longer populated by"
+ },
+ {
+  "item": "30.2",
+  "table": "MONI",
+  "status": "replaced",
+  "replacedBy": "PPHMRPLOGITEM",
+  "evidence": "MONI           Table PPHMRPLOGITEM"
+ },
+ {
+  "item": "30.4",
+  "table": "RQIT",
+  "status": "replaced",
+  "replacedBy": "RESB",
+  "evidence": "Custom code reading one of the tables RQIT, RQHD, or\n                                MDRI will no longer work. Read table RESB instead."
+ },
+ {
+  "item": "30.4",
+  "table": "RQHD",
+  "status": "replaced",
+  "replacedBy": "RESB",
+  "evidence": "Custom code reading one of the tables RQIT, RQHD, or\n                                MDRI will no longer work. Read table RESB instead."
+ },
+ {
+  "item": "30.4",
+  "table": "MDRI",
+  "status": "replaced",
+  "replacedBy": "RESB",
+  "evidence": "Custom code reading one of the tables RQIT, RQHD, or\n                                MDRI will no longer work. Read table RESB instead."
+ },
+ {
+  "item": "30.9",
+  "table": "DBTABLOG",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "No changes to business processes; no changes to entries of database table DBTABLOG"
+ },
+ {
+  "item": "30.9",
+  "table": "MCHP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "MCHP Batch Record for a Batch"
+ },
+ {
+  "item": "30.9",
+  "table": "MCHPV",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "MCHPV Batch Record: Versions"
+ },
+ {
+  "item": "30.9",
+  "table": "MCHPVS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "MCHPVS Batch Record: Shadow Table for Link to Archive"
+ },
+ {
+  "item": "30.9",
+  "table": "MCHPVT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "MCHPVT Batch Record: Long Text for Version"
+ },
+ {
+  "item": "30.9",
+  "table": "VBP_APPR_DS_META",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "VBP_APPR_DS_META Approval Batch Record: Meta Data (DS Tool)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUT_ARCH_HIST",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUT_STXL",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUT_STXH_ARCH",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUT_STXL_ARCH",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUTDELTTXID",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUTDTELLOG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUTDTELLOGT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUTTABLOG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUTTABLOGT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "30.9",
+  "table": "AUTTRANSLOG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Database tables (no save of data through custom code)"
+ },
+ {
+  "item": "33.2",
+  "table": "EBAN",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "EKKO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "EKPO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "EKET",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "MKPF",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "MSEG",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "VBEP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "VBPA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "AUFK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "AFKO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "AFPO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "PLAF",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "RESB",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the system reads logistics data from the following tables"
+ },
+ {
+  "item": "33.2",
+  "table": "VBAK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "corresponding header and item tables (VBAK, VBAP, LIKP and LIPS)."
+ },
+ {
+  "item": "33.2",
+  "table": "VBAP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "corresponding header and item tables (VBAK, VBAP, LIKP and LIPS)."
+ },
+ {
+  "item": "33.2",
+  "table": "LIKP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "corresponding header and item tables (VBAK, VBAP, LIKP and LIPS)."
+ },
+ {
+  "item": "33.2",
+  "table": "LIPS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "corresponding header and item tables (VBAK, VBAP, LIKP and LIPS)."
+ },
+ {
+  "item": "33.2",
+  "table": "VBUK",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "VBUK and VBUP are no longer supported in this Customizing activity."
+ },
+ {
+  "item": "33.2",
+  "table": "VBUP",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "VBUK and VBUP are no longer supported in this Customizing activity."
+ },
+ {
+  "item": "38.9",
+  "table": "T169P",
+  "status": "replaced",
+  "replacedBy": "FMLC_ERD",
+  "evidence": "configuration was saved in table T169P"
+ },
+ {
+  "item": "38.9",
+  "table": "FMLC_ERD",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "configuration is saved in table FMLC_ERD"
+ },
+ {
+  "item": "38.9",
+  "table": "EKKO",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "which is contained in EKKO table"
+ },
+ {
+  "item": "38.9",
+  "table": "EKPO",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "which is contained in EKPO table"
+ },
+ {
+  "item": "38.9",
+  "table": "MMPUR_ANA_EKET",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Upgrade issue in MMPUR_ANA_EKET table from OP2022: CI Include"
+ },
+ {
+  "item": "38.9",
+  "table": "MLREPEKPO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "table MLREPEKPO does not exist"
+ },
+ {
+  "item": "39.4",
+  "table": "NAST",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "old NAST technique is set as default."
+ },
+ {
+  "item": "39.8",
+  "table": "VBUK",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Elimination of status tables VBUK, VBUP: Status fields have been moved to the"
+ },
+ {
+  "item": "39.8",
+  "table": "VBUP",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Elimination of status tables VBUK, VBUP: Status fields have been moved to the"
+ },
+ {
+  "item": "39.8",
+  "table": "VBAK",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,"
+ },
+ {
+  "item": "39.8",
+  "table": "VBAP",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,"
+ },
+ {
+  "item": "39.8",
+  "table": "LIKP",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents."
+ },
+ {
+  "item": "39.8",
+  "table": "LIPS",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents."
+ },
+ {
+  "item": "39.8",
+  "table": "VBRK",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents."
+ },
+ {
+  "item": "39.8",
+  "table": "VBFA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "Simplification of document flow table VBFA"
+ },
+ {
+  "item": "39.8",
+  "table": "VAKPA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,"
+ },
+ {
+  "item": "39.8",
+  "table": "VAPMA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,"
+ },
+ {
+  "item": "39.8",
+  "table": "VLKPA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,"
+ },
+ {
+  "item": "39.8",
+  "table": "VLPMA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "VLPMA, VRKPA, VRPMA"
+ },
+ {
+  "item": "39.8",
+  "table": "VRKPA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "VLPMA, VRKPA, VRPMA"
+ },
+ {
+  "item": "39.8",
+  "table": "VRPMA",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "VLPMA, VRKPA, VRPMA"
+ },
+ {
+  "item": "39.8",
+  "table": "VBOX",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "Rebate index table VBOX: See simplification item \"SD Rebate Processing"
+ },
+ {
+  "item": "39.8",
+  "table": "S066",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP"
+ },
+ {
+  "item": "39.8",
+  "table": "S067",
+  "status": "deprecated",
+  "replacedBy": null,
+  "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP"
+ },
+ {
+  "item": "39.9",
+  "table": "VBFA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "The table VBFA and its content changes incompatibly."
+ },
+ {
+  "item": "39.9",
+  "table": "KONV",
+  "status": "replaced",
+  "replacedBy": "PRCD_ELEMENTS",
+  "evidence": "table KONV has been replaced in its data persistency role by the"
+ },
+ {
+  "item": "39.9",
+  "table": "PRCD_ELEMENTS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "such as database tables PRCD_ELEMENTS and\n        PRCD_ELEM_DRAFT, for example."
+ },
+ {
+  "item": "39.9",
+  "table": "PRCD_ELEM_DRAFT",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "such as database tables PRCD_ELEMENTS and\n        PRCD_ELEM_DRAFT, for example."
+ },
+ {
+  "item": "39.9",
+  "table": "KONH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "been removed from all condition header tables, including KONH"
+ },
+ {
+  "item": "39.9",
+  "table": "NACH",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "(pricing), NACH (output determination), KOND3 (campaign"
+ },
+ {
+  "item": "39.9",
+  "table": "KOND3",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "(pricing), NACH (output determination), KOND3 (campaign"
+ },
+ {
+  "item": "39.9",
+  "table": "KONDN",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "determination), KONDN (free goods determination), KONHM"
+ },
+ {
+  "item": "39.9",
+  "table": "KONHM",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "determination), KONDN (free goods determination), KONHM"
+ },
+ {
+  "item": "39.9",
+  "table": "J_3GPRLHD",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "(portfolio determination), J_3GPRLHD (CEM price list"
+ },
+ {
+  "item": "39.9",
+  "table": "WIND",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "determination), and WIND (document index). The concatenated"
+ },
+ {
+  "item": "45.1",
+  "table": "BP001",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "The fields BP001-XUBNAME and BP001-PERS_NR are not available any more in"
+ },
+ {
+  "item": "45.1",
+  "table": "BUT000",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "For each business partner found in BP001 an entry in the header table BUT000 must"
+ },
+ {
+  "item": "45.1",
+  "table": "TB003",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "\"Employee\" (role category BUP003 in table TB003 - can be maintained via view"
+ },
+ {
+  "item": "45.1",
+  "table": "USR21",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "In case there is an entry in table USR21 for the user name from BP001-XUBNAME,"
+ },
+ {
+  "item": "45.1",
+  "table": "HRP1001",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "number with assigned user name exists in HR table HRP1001 and the user name"
+ },
+ {
+  "item": "45.1",
+  "table": "PA0105",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The central person assigned to the bp needs to have an entry in HR table PA0105 and"
+ },
+ {
+  "item": "45.1",
+  "table": "BUT100",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "for this bp in table\n       BUT100."
+ },
+ {
+  "item": "45.1",
+  "table": "T77S0",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "= '207' and the corresponding plan variant - field PLVAR - from table T77S0 for"
+ },
+ {
+  "item": "48.5",
+  "table": "MARA",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "number will be stored as key (MATNR) in MARA table. Hence conversion exit, which"
+ },
+ {
+  "item": "48.5",
+  "table": "MATERIALID",
+  "status": "deprecated",
+  "replacedBy": "MARA",
+  "evidence": "MATERIALID table should not be used any more in the coding. For more information"
+ },
+ {
+  "item": "49.6",
+  "table": "VBAK",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "There is any entry for the field AUART in the table VBAK with the value TAM"
+ },
+ {
+  "item": "49.9",
+  "table": "ISAUTOSICVENDTAB",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Supplier Workplace users have been assigned to vendors (check for entries in table\n       ISAUTOSICVENDTAB with transaction SE16)"
+ },
+ {
+  "item": "49.9",
+  "table": "ESPPL",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "(check for entries in tables ESPPL and ESPST with transaction SE16), and"
+ },
+ {
+  "item": "49.9",
+  "table": "ESPST",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "(check for entries in tables ESPPL and ESPST with transaction SE16), and"
+ },
+ {
+  "item": "49.9",
+  "table": "EDIDC",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "MESTYP = 'STOACT' in table EDIDC with transaction SE16)"
+ },
+ {
+  "item": "49.9",
+  "table": "T161",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "in transit (check first for entries in table T161 with XLOKZ <> initial with"
+ },
+ {
+  "item": "49.9",
+  "table": "EKKO",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "to check for entries in table\n       EKKO with transaction SE16)"
+ },
+ {
+  "item": "49.9",
+  "table": "VBEP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "table VBEP with transaction SE16)"
+ },
+ {
+  "item": "49.9",
+  "table": "TMCNV",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Material versions have been activated (check TMCNV-MVAKT = 'X' with"
+ },
+ {
+  "item": "49.9",
+  "table": "MATERIALID",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Material versions have been maintained (check for entries in table MATERIALID,"
+ },
+ {
+  "item": "49.9",
+  "table": "BORRTTS",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Route schedules have been maintained (check for entries in table BORRTTS with"
+ },
+ {
+  "item": "49.9",
+  "table": "BORRTFI",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Route schedule determination records have been maintained (check for entries in\n       table BORRTFI with transaction SE16)"
+ },
+ {
+  "item": "52.8",
+  "table": "LFM1",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization\n      data] and KNVV [Customer Master Sales Data], the \u201cNFM Exchange Key\u201c field\n      /NFM/BOESL is still available."
+ },
+ {
+  "item": "52.8",
+  "table": "KNVV",
+  "status": "unchanged",
+  "replacedBy": null,
+  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization\n      data] and KNVV [Customer Master Sales Data], the \u201cNFM Exchange Key\u201c field\n      /NFM/BOESL is still available."
+ },
+ {
+  "item": "55.2",
+  "table": "MARA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Media-specific and custom fields which were stored in an industry-specific append of"
+ },
+ {
+  "item": "56.9",
+  "table": "MKPF",
+  "status": "replaced",
+  "replacedBy": "MATDOC",
+  "evidence": "Material document data will\nbe stored in MATDOC only and not anymore in MKPF and MSEG"
+ },
+ {
+  "item": "56.9",
+  "table": "MSEG",
+  "status": "replaced",
+  "replacedBy": "MATDOC",
+  "evidence": "Material document data will\nbe stored in MATDOC only and not anymore in MKPF and MSEG"
+ },
+ {
+  "item": "56.9",
+  "table": "MSEGO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "MATDOCOIL table has been introduced which contains former MSEGO1 &\nMSEGO2 table data"
+ },
+ {
+  "item": "56.9",
+  "table": "MSEGO2",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "MATDOCOIL table has been introduced which contains former MSEGO1 &\nMSEGO2 table data"
+ },
+ {
+  "item": "56.9",
+  "table": "MARCO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MARDO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MCHBO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MKOLO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSLBO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSKAO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSKUO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSPRO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MARCHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MARDHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MCHABO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MKOLHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSLBHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSKAHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSKUHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "56.9",
+  "table": "MSPRHO1",
+  "status": "replaced",
+  "replacedBy": "MATDOCOIL",
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced\naggregation tables"
+ },
+ {
+  "item": "59.4",
+  "table": "FM01",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "read table FM01 to get the list of all FM areas in the client"
+ },
+ {
+  "item": "59.4",
+  "table": "FMBCSA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "read BCS configuration table FMBCSA for each FM area\n       defined in table FM01"
+ },
+ {
+  "item": "59.4",
+  "table": "FMBH",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "selecting from the BCS budget header table\n               FMBH using transaction code SE16N"
+ },
+ {
+  "item": "59.4",
+  "table": "BPJA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "look for entries in the totals tables BPJA and BPGE"
+ },
+ {
+  "item": "59.4",
+  "table": "BPGE",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "look for entries in the totals tables BPJA and BPGE"
+ },
+ {
+  "item": "59.8",
+  "table": "ACDOCA",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "the Universal Journal (ACDOCA) is the heart of Accounting and\nincludes all master data entities required to support Fund Accounting"
+ },
+ {
+  "item": "59.8",
+  "table": "T881",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "type \u201cT881\u201d into the table field"
+ },
+ {
+  "item": "59.9",
+  "table": "FMBDT",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "A compatibility view is attached as proxy object to the totals table\n       (CDS view V_FMBDT)"
+ },
+ {
+  "item": "59.9",
+  "table": "FMBDP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "corresponding line items, stored in table FMBDP"
+ },
+ {
+  "item": "59.9",
+  "table": "FMRBT",
+  "status": "compat_view",
+  "replacedBy": null,
+  "evidence": "The table FMRBT is\n       no longer update"
+ },
+ {
+  "item": "59.9",
+  "table": "FMRBP",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "fiscal year to populate the line item table, as described"
+ },
+ {
+  "item": "59.9",
+  "table": "FMAVCT",
+  "status": "changed",
+  "replacedBy": null,
+  "evidence": "records will be created from the beginning and the totals table is not updated"
+ },
+ {
+  "item": "59.9",
+  "table": "FMAVCT_RECON_YR",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "The update of the change\n       records for AVC in table FMAVCT_RECON_YR is initiated by executing the re-"
+ },
+ {
+  "item": "60.9",
+  "table": "WTADDI",
+  "status": "mentioned",
+  "replacedBy": null,
+  "evidence": "Enter table WTADDI and check\nwhether there are any entries"
+ }
+]

@@ -1,11 +1,4 @@
 {
- "ACDOCA": {
-  "evidence": "The content of most of the former Material Ledger database tables is now stored in table ACDOCA",
-  "item": "18.2",
-  "replacedBy": null,
-  "s4status": "changed",
-  "source": "simplification-list-2023"
- },
  "ANEP": {
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
@@ -76,13 +69,6 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
- "BUT000": {
-  "evidence": "Time dependency has been disabled at the header level of BUT000 in SAP S/4HANA",
-  "item": "3.9",
-  "replacedBy": null,
-  "s4status": "changed",
-  "source": "simplification-list-2023"
- },
  "CATSDB": {
   "evidence": "CAT2 and CATSDB related transactions (Fiori and WebDynpro ABAP) will continue to be supported as per SAP S/4HANA timelines.",
   "item": "2.41",
@@ -123,6 +109,20 @@
   "item": "15.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "EKKO": {
+  "evidence": "which is contained in EKKO table",
+  "item": "38.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "EKPO": {
+  "evidence": "which is contained in EKPO table",
+  "item": "38.9",
+  "replacedBy": null,
+  "s4status": "changed",
   "source": "simplification-list-2023"
  },
  "FAGLFLEXA": {
@@ -181,6 +181,20 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "KNVV": {
+  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization       data] and KNVV [Customer Master Sales Data], the \u201cNFM Exchange Key\u201c field       /NFM/BOESL is still available.",
+  "item": "52.8",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "KONV": {
+  "evidence": "table KONV has been replaced in its data persistency role by the",
+  "item": "39.9",
+  "replacedBy": "PRCD_ELEMENTS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
  "LFA1": {
   "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.",
   "item": "3.13",
@@ -202,15 +216,43 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "LFM1": {
+  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization       data] and KNVV [Customer Master Sales Data], the \u201cNFM Exchange Key\u201c field       /NFM/BOESL is still available.",
+  "item": "52.8",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "LIKP": {
+  "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents.",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "LIPS": {
+  "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents.",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "MARA": {
+  "evidence": "number will be stored as key (MATNR) in MARA table. Hence conversion exit, which",
+  "item": "48.5",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
  "MARC": {
-  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
  "MARD": {
-  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
@@ -224,14 +266,14 @@
   "source": "simplification-list-2023"
  },
  "MCHB": {
-  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
  "MKPF": {
-  "evidence": "Material document data will be stored in\nMATDOC only and not anymore in MKPF and MSEG",
+  "evidence": "Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG",
   "item": "27.5",
   "replacedBy": "MATDOC",
   "s4status": "replaced",
@@ -252,24 +294,38 @@
   "source": "simplification-list-2023"
  },
  "MSEG": {
-  "evidence": "Material document data will be stored in\nMATDOC only and not anymore in MKPF and MSEG",
+  "evidence": "Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG",
   "item": "27.5",
   "replacedBy": "MATDOC",
   "s4status": "replaced",
   "source": "simplification-list-2023"
  },
  "MSTB": {
-  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
  "MSTE": {
-  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "NAST": {
+  "evidence": "old NAST technique is set as default.",
+  "item": "39.4",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "OBJK": {
+  "evidence": "extend the object list numbers (table OBJK, domain OBJKN, data element OBJKNR) from the data format INT4 to the data format INT8.",
+  "item": "29.1",
+  "replacedBy": null,
+  "s4status": "changed",
   "source": "simplification-list-2023"
  },
  "RFBLG": {
@@ -298,6 +354,62 @@
   "item": "16.3",
   "replacedBy": null,
   "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "VBAK": {
+  "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "VBAP": {
+  "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "VBFA": {
+  "evidence": "Simplification of document flow table VBFA",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "VBRK": {
+  "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents.",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "VBUK": {
+  "evidence": "VBUK and VBUP are no longer supported in this Customizing activity.",
+  "item": "33.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "VBUP": {
+  "evidence": "VBUK and VBUP are no longer supported in this Customizing activity.",
+  "item": "33.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "VRKPA": {
+  "evidence": "VLPMA, VRKPA, VRPMA",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "VRPMA": {
+  "evidence": "VLPMA, VRKPA, VRPMA",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
   "source": "simplification-list-2023"
  }
 }
