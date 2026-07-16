@@ -129,6 +129,52 @@ Tier 2 into **SwiftData** as a native SwiftUI list — `searchable()`, module fi
 Icon, screenshots, bundle ID, signing, TestFlight.
 *Requires your Apple Developer account — credential/submission steps are yours, not mine.*
 
+---
+
+## 7. Getting to TestFlight (decided 2026-07-16)
+
+### Device strategy: iPad/Mac first, iPhone via the Codex
+
+David's read is correct — the galaxy is a big-screen experience and the iPhone is tight. But **the answer isn't cutting iPhone, it's giving it a different front door.**
+
+| Device | Primary UI | Why |
+|---|---|---|
+| **iPad** | Galaxy graph | 217 nodes at 1024pt+ is genuinely comfortable. The hero experience. |
+| **Mac** | Galaxy graph | Free via "Designed for iPad" — see below. Biggest canvas of all. |
+| **iPhone** | **Codex (search/list)** | A 390pt force graph is a hairball. But a *searchable list* is perfect on a phone — that's what phones are for. Graph stays reachable, secondary. |
+
+This is what the Tier 1 / Tier 2 split was already for. The Codex isn't a post-launch nice-to-have — **it is the iPhone's reason to exist**, and its `desc` data is being authored now. Phone users mostly want "what is LFA1" answered in 3 seconds, not an exploration canvas.
+
+**Consequence: the Codex (was Phase 4) moves ahead of native-feel polish (Phase 3) if iPhone parity matters at v1.** If it doesn't, ship iPad/Mac-first and let iPhone be tight for one build.
+
+### Mac is nearly free
+"Designed for iPad" runs the iPad build on Apple Silicon Macs — **no Mac Catalyst work**. TestFlight supports it, toggleable per tester group in App Store Connect. Caveats: no menu bar, limited window chrome. Fine for v1; a real Catalyst app is a later call. (Known Apple issue: some "Designed for iPad" builds appear in TestFlight on macOS but fail to install with *"This app can only be tested on an iOS device."* Budget an hour for this to misbehave.)
+
+### ⚠️ The real risk: App Store Guideline 4.2 (Minimum Functionality)
+
+**A WKWebView wrapper around a website is the textbook 4.2 rejection.** This is the single biggest threat to shipping, and it is architectural — not something to discover at submission.
+
+Mitigations, roughly in order of weight:
+1. **Fully offline** — no network at all. Already true as of Phase 0. This is the strongest argument: it is demonstrably not a web page.
+2. **Native Codex** — a real SwiftUI/SwiftData screen, not web content. Doubles as the iPhone answer.
+3. **Spotlight indexing, widget, Siri Shortcuts** — system integration a website cannot do.
+4. Haptics + share sheet — necessary, not sufficient on their own.
+
+The app is also **not** a repackaged public website: the data is curated and the HTML is a bundled asset, not a hosted URL. That helps, but the reviewer sees a web view first.
+
+### Fastest honest path to a build on your device
+
+**Internal TestFlight skips Beta App Review.** Up to 100 App Store Connect users, no review, minutes not days. External testers *do* require Beta App Review — which applies the same 4.2 guideline.
+
+So:
+1. **Internal TestFlight ASAP** — Phase 2 shell (~1 day). Universal. iPhone tight, and that's fine: you learn *how* tight from the real device.
+2. **De-risk 4.2 before external/public** — land the native Codex first (it's also the iPhone fix). One change, two problems.
+
+### 🔴 Blocker — yours, not mine
+**Apple Developer Program membership ($99/yr)** is required for any TestFlight build. It needs payment details and Apple ID authentication, so **you must set it up** — I can't enter credentials or complete the purchase. Everything else (project, signing config, icon, build) I can do.
+
+Once you have the Team ID, I can scaffold the Xcode project and configure signing.
+
 ### Phase 6+ — Post-launch
 Spotlight indexing (Codex makes this near-free) → "Table of the Day" widget → Siri Shortcuts → extract detail sheet & search to native → curate Tier 2 → Tier 1 over time.
 
@@ -182,7 +228,12 @@ Parser notes: EHS is a ranked 4-column layout with wrapped descriptions; HR Info
 1. **Truncated descriptions (465 affected).** Bullet descriptions wrap across blank-line-separated continuation lines; the first parser captured only the first line. `ACCTCR` read *"Compressed data from"* instead of *"Compressed data from FI/CO document - currencies"*. Fixed by block-joining on bullet boundaries. The `( Category : X )` strip also failed where the source omits the closing paren (`T049B`).
 2. **EHS rows dropped (285 affected).** EHS puts the *type* on the first line while the description wraps *below* it, so block-joining corrupted it (`"Structure for Printing DG Structure Data"`). Needs line-wise parsing with continuation. A further 285 rows used an undeclared type, `General View Structure`.
 
-**Lesson: validate extraction against a ground-truth count before scaling any authoring on top of it.** The EHS rank column made this checkable; docs without one are validated by spot-check.
+3. **EHS descriptions truncated (~1,660 affected) — found *after* the row-count check passed.** The fix for bug 2 keyed continuation lines off a fixed `' '*40` indent. But the description column *shifts across pages*, so that rule captured **67 of 2,682** continuation lines. `/TDAG/CPC_DECL` read *"CP: Definition of"* instead of *"CP: Definition of declaration types"*. Fixed by anchoring continuations to each row's own description column, taken from the head match's start offset — which also rejects page artifacts (a stray `RUCT` fragment) and the document's trailing table-of-contents (which the last row had absorbed wholesale).
+
+**Lessons:**
+- **Validate extraction against ground truth before scaling authoring on top of it.** The EHS rank column made row *count* checkable.
+- **A row-count check does not prove content integrity.** Bug 3 passed the 2,362-row check while silently amputating ~1,660 descriptions. Count and completeness are different assertions — test both.
+- **The authoring pass found bug 3, not the parser tests.** A pilot batch returned 14% `null` ("cannot describe this"), far above the predicted 1–3%. The agent was correctly refusing to describe truncated text. **Treat a downstream quality anomaly as an upstream data signal.**
 
 ### Data hygiene flags
 - **23 new tables have source descriptions too thin to paraphrase** (`"obsolete"`, `"Language dependent"`). Rewriting these means inventing. Ship names-only.
