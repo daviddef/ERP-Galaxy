@@ -2751,13 +2751,19 @@ function renderDetail(d){
 let mobilePanelOpen=false;
 function openMobilePanel(tableId){
   mobilePanelOpen=true;
-  if(tableId){
-    const t=TABLES.find(x=>x.id===tableId);
-    if(t){
-      const {headerHtml,bodyHtml,color,id,shortDesc}=buildDetailHTML(t);
-      document.getElementById('mobile-panel-title').innerHTML=`<span style="color:${color};font-family:monospace;font-weight:700">${id}</span> <span style="color:var(--text-muted);font-size:.72rem">${shortDesc}</span>`;
-      document.getElementById('mobile-panel-body').innerHTML=bodyHtml;
-    }
+  // The FAB passes nothing, so fall back to whatever is currently selected.
+  // Without this it opened on a stale placeholder even with a table selected.
+  const id = tableId || selectedNode;
+  const t = id ? TABLES.find(x=>x.id===id) : null;
+  if(t){
+    const {bodyHtml,color,shortDesc}=buildDetailHTML(t);
+    document.getElementById('mobile-panel-title').innerHTML=`<span style="color:${color};font-family:monospace;font-weight:700">${t.id}</span> <span style="color:var(--text-muted);font-size:.72rem">${shortDesc}</span>`;
+    document.getElementById('mobile-panel-body').innerHTML=bodyHtml;
+  }else{
+    // Nothing selected: show the same guide the desktop sidebar shows,
+    // not a bare "tap a node" placeholder.
+    document.getElementById('mobile-panel-title').innerHTML=`<span style="font-weight:700">Table Detail</span>`;
+    document.getElementById('mobile-panel-body').innerHTML=welcomeHTML();
   }
   document.getElementById('mobile-panel').classList.add('active');
   document.getElementById('overlay-backdrop').classList.add('active');
@@ -2788,16 +2794,31 @@ function jumpTo(id){
   node.classed('selected',n=>n.id===id);
 }
 
+// One guide, used by the desktop sidebar AND the mobile sheet. Previously the
+// legend was static markup that showWelcome() overwrote with a thinner version,
+// so the guide vanished after your first tap — and mobile never had it at all.
+function welcomeHTML(){
+  return `
+    <div class="welcome">
+      <div class="welcome-icon" style="font-size:2.6rem;animation:pulse 3s ease-in-out infinite">🌌</div>
+      <h2 style="background:linear-gradient(135deg,#4f9cf9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.05rem">ERP Galaxy</h2>
+      <p style="color:var(--text-muted);font-size:.78rem;line-height:1.6">Tap any planet (table node) to explore it — plain-English description, primary keys, transactions, and what happens to it in S/4HANA.</p>
+      <div style="text-align:left;font-size:.72rem;color:var(--text-muted);background:var(--surface2);padding:11px;border-radius:8px;line-height:1.9;width:100%">
+        🔵 <strong style="color:var(--text)">Bigger planet</strong> = more connections<br>
+        🟢 <strong style="color:#22c55e">Green link</strong> = new in S/4HANA<br>
+        🔴 <strong style="color:#ef4444">Red dashed</strong> = ECC6 only / deprecated<br>
+        🟢🟡🔴 <strong style="color:var(--text)">Ring colour</strong> = node migration status<br>
+        🔍 <strong style="color:var(--text)">Search</strong> by table, keyword or module<br>
+        🎯 <strong style="color:var(--fi)">Focus</strong> = neighbourhood view (set depth with <strong>Levels</strong> in the menu)
+      </div>
+    </div>`;
+}
+
 function showWelcome(){
   document.getElementById('sidebar-header').innerHTML=`
     <div style="font-weight:600;font-size:.88rem;background:linear-gradient(135deg,#4f9cf9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">🌌 ERP Galaxy</div>
     <div style="font-size:.73rem;color:var(--text-muted);margin-top:2px;">Tap any planet to explore</div>`;
-  document.getElementById('sidebar-content').innerHTML=`
-    <div class="welcome">
-      <div style="font-size:2.5rem;animation:pulse 3s ease-in-out infinite">🌌</div>
-      <h2 style="font-size:.9rem;color:var(--text-muted)">Tap a table node to explore it</h2>
-      <p style="font-size:.75rem;color:var(--text-muted)">Primary keys · Transactions · Relationships · Migration notes</p>
-    </div>`;
+  document.getElementById('sidebar-content').innerHTML=welcomeHTML();
 }
 
 function showTooltip(e,d){
