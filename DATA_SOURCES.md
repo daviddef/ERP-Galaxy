@@ -53,8 +53,10 @@ This session has already proven the point three times: the source PDFs had trunc
 
 ## 4. The real sources, ranked
 
+> **UPDATE 2026-07-16 — David has no SAP system access. Options re-researched below (§7). The DDIC path is ruled out; public reference sites are viable and verified.**
+
 ### 🥇 A live SAP system's DDIC — authoritative, exhaustive, free
-This is the answer for `keyFields`, and **you almost certainly have access.** SAP's own data dictionary describes every table in the system:
+This is the answer for `keyFields`, **if you have access.** SAP's own data dictionary describes every table in the system:
 
 | Table | Gives us |
 |---|---|
@@ -111,4 +113,53 @@ I can write the ABAP report or the SE16 steps — say which you'd prefer.
 
 The Codex ships **fine today** on `desc` alone — "1,985 SAP tables, offline, searchable" is a real product, and the honest one. Keys and lifecycle make it *much* better, but they are an enrichment pass, not a prerequisite. Nothing here blocks TestFlight.
 
-Sources: [Simplification List for SAP S/4HANA 2023](https://help.sap.com/doc/c34b5ef72430484cb4d8895d5edd12af/2023/en-US/SIMPL_OP2023.pdf) · [SAP Help Portal — Simplification Lists](https://help.sap.com/docs/search?q=sap+simplification+list&locale=en-US&format=pdf&product=SAP_S4HANA_ON-PREMISE) · [DD03L — Table Fields](https://www.sapdatasheet.org/abap/tabl/dd03l.html) · [DD02L — SAP Tables](https://www.tcodesearch.com/sap-tables/DD02L)
+---
+
+## 7. Round 2 research — no SAP access (2026-07-16)
+
+### ❌ Free local SAP system — ruled out, definitively
+The **ABAP Platform Trial / ABAP Cloud Developer Trial** Docker image is free and runs locally, and looks like the obvious answer. It isn't:
+
+> *"The trial is covering NetWeaver, and tables like MARA are not included because they belong to the applications (like Business Suite)."*
+> *"It is an ABAP platform, not a business suite — you are not supposed to have standard tables there."*
+
+It ships only the flight model (`SCARR`, `SPFLI`) and the EPM demo model (`SNWD_*`). **Not one of our 1,985 tables exists in it.** No `BKPF`, no `LFA1`, no `PA0147`. Dead end — and worth recording so nobody burns a weekend on a 32 GB Docker image discovering this.
+
+A real ECC/S4 system (S/4HANA Fully-Activated Appliance via Cloud Appliance Library) needs a paid licence plus cloud hosting. Not viable.
+
+### ❌ Bulk dataset — does not exist
+No public machine-readable DDIC dump found. sapdatasheet.org publishes 557 sitemap files, but they are URL indexes only — no data export. It's per-page or nothing.
+
+### ✅ Public reference sites — viable, and verified against known truth
+Spot-checked three tables spanning the full difficulty range. **3/3 returned complete, correct key fields:**
+
+| Table | Source | Keys returned | Verdict |
+|---|---|---|---|
+| `BKPF` | leanx.eu | MANDT, BUKRS, BELNR, GJAHR | ✅ matches our curated Tier 1 exactly |
+| `PA0147` | leanx.eu | MANDT, PERNR, SUBTY, OBJPS, SPRPS, ENDDA, BEGDA, SEQNR | ✅ correct standard PA infotype key |
+| `/TDAG/CPT_EXEMLI` | sapdatasheet.org | MANDT, SUBIDPS, MATCLASS, REGLIST, EXEMPTION | ✅ **even the obscure add-on namespace is covered** |
+
+That `/TDAG/` hit is the important one — it's the hardest case in the catalogue, and the coverage held.
+
+**`robots.txt` permits it on all three:**
+- `sapdatasheet.org` — `Disallow: /download/` only; table pages allowed.
+- `leanx.eu` — `Disallow: /wp-admin/` only.
+- `tcodesearch.com` — **explicitly allows `Anthropic-ai` and `GPTBot`**, while blocking `CCBot`/`Omgili`.
+
+**Caveats:**
+- **Volume:** ~1,768 fetches. Must be politely rate-limited (~1 req/sec ≈ 30 min) — these are small sites, not CDNs.
+- **Staleness:** sapdatasheet's sitemaps show `lastmod 2020-09-27`. Fine for `keyFields` (primary keys are stable across releases) but **not** a source of truth for current S/4 status.
+- **Licensing:** field *names* are facts (`BKPF`'s key is `MANDT, BUKRS, BELNR, GJAHR` — a fact about SAP, not creative expression). Same reasoning that cleared the descriptions. We take the fact, never the prose.
+- **Accuracy:** these sites are themselves derived from a real DDIC. Verified 3/3, but this is second-hand data — mark provenance `source: "public-reference"`, not `"ddic"`, so a future reader knows it wasn't read from a system.
+
+### Verdict
+
+| Field | Path | Coverage | Status |
+|---|---|---|---|
+| `desc` | PDFs (done) | 98.3% | ✅ shipped |
+| `keyFields` | public reference sites | ~high, verified 3/3 | needs go-ahead (outward-facing) |
+| `s4status` | SAP Simplification List PDFs | partial by design | ✅ legitimate, do first |
+| table→T-code | **nothing** | 0% | curation only, famous tables |
+| `relations` | **nothing** | 0% | curation only |
+
+Sources: [Simplification List for SAP S/4HANA 2023](https://help.sap.com/doc/c34b5ef72430484cb4d8895d5edd12af/2023/en-US/SIMPL_OP2023.pdf) · [SAP Help Portal — Simplification Lists](https://help.sap.com/docs/search?q=sap+simplification+list&locale=en-US&format=pdf&product=SAP_S4HANA_ON-PREMISE) · [ABAP Platform Trial image docs](https://github.com/SAP-docs/abap-platform-trial-image) · [SAP Community — trial has no standard tables](https://community.sap.com/t5/application-development-discussions/abap-trial-trial-version-do-not-have-standard-tables/td-p/12064151) · [DD03L — Table Fields](https://www.sapdatasheet.org/abap/tabl/dd03l.html)
