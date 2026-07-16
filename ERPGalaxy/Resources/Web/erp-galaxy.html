@@ -23,6 +23,16 @@
   .subtitle{font-size:0.7rem;color:var(--text-muted);margin-top:1px;}
   .search-box{flex:1;max-width:320px;position:relative;}
   .search-box input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 10px 7px 32px;color:var(--text);font-size:0.85rem;outline:none;transition:border-color 0.2s;}
+  /* Desktop: tools sit inline in the header. Mobile turns this into a drawer. */
+  .header-tools{display:contents;}
+  .tools-head,.tools-close{display:none;}
+  .burger{display:none;flex-direction:column;justify-content:center;gap:4px;width:40px;height:40px;flex-shrink:0;
+    background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;padding:0 10px;}
+  .burger span{display:block;height:2px;width:100%;background:var(--text);border-radius:2px;transition:transform .22s,opacity .22s;}
+  .burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+  .tools-backdrop{display:none;}
   .search-box input:focus{border-color:var(--fi);}
   .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;}
   .toggle-group{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;}
@@ -115,13 +125,33 @@
   /* Responsive */
   @media (max-width:700px){
     .sidebar{display:none;}
-    .module-filters{display:none;}
-    header{gap:8px;padding:8px 10px;}
-    .logo{font-size:1.1rem;}
-    .subtitle{font-size:.6rem;}
-    .toggle-group{font-size:.7rem;}
-    .toggle-btn{padding:5px 10px;font-size:.7rem;}
-    .search-box{flex:1;max-width:none;}
+    /* Header is search + burger. Nothing else. */
+    header{gap:8px;padding:8px 10px;flex-wrap:nowrap;}
+    .brand{display:none;}
+    .burger{display:flex;}
+    .search-box{flex:1;max-width:none;min-width:0;}
+    /* 16px min stops iOS zooming the page when the field is focused. */
+    .search-box input{font-size:16px;padding:11px 34px 11px 38px;border-radius:10px;}
+    .search-icon{left:12px;font-size:15px;}
+    .search-clear{right:10px;font-size:15px;padding:6px;}
+
+    /* Drawer */
+    .header-tools{display:flex;flex-direction:column;gap:14px;
+      position:fixed;top:0;right:0;bottom:0;width:min(82vw,320px);z-index:300;
+      background:var(--surface);border-left:1px solid var(--border);
+      padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 16px);
+      transform:translateX(100%);transition:transform .26s ease;overflow-y:auto;
+      box-shadow:-8px 0 30px rgba(0,0,0,.45);}
+    .header-tools.open{transform:translateX(0);}
+    .tools-head{display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:.95rem;}
+    .tools-close{display:block;background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:4px 8px;}
+    .toggle-group{width:100%;}
+    .toggle-btn{flex:1;padding:11px 8px;font-size:.82rem;}
+    .module-filters{display:flex!important;flex-wrap:wrap;gap:8px;overflow:visible;}
+    .tools-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:299;
+      opacity:0;pointer-events:none;transition:opacity .26s;}
+    .tools-backdrop.open{opacity:1;pointer-events:auto;}
+
     .count-badge{top:6px;right:6px;font-size:.6rem;}
     .legend{display:none;}
     .mobile-fab{display:flex!important;}
@@ -149,21 +179,32 @@
 </head>
 <body>
 <header>
-  <div>
+  <div class="brand">
     <div class="logo">🌌 ERP Galaxy</div>
-    <div class="subtitle">Table Universe · ECC6 → S/4HANA · 175+ Tables · Tap to Explore</div>
+    <div class="subtitle">Table Universe · ECC6 → S/4HANA · Tap to Explore</div>
   </div>
   <div class="search-box">
     <span class="search-icon" id="search-icon">🔭</span>
-    <input type="text" id="search" placeholder="Search the galaxy… BKPF, vendor, invoice…" autocomplete="off" autocorrect="off" spellcheck="false"/>
+    <input type="text" id="search" placeholder="Search tables, modules, T-codes…" autocomplete="off" autocorrect="off" spellcheck="false"/>
     <span class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear">✕</span>
   </div>
-  <div class="toggle-group">
-    <button class="toggle-btn active" id="btn-ecc" onclick="setView('ecc')">ECC6</button>
-    <button class="toggle-btn s4" id="btn-s4" onclick="setView('s4')">S/4HANA</button>
-    <button class="toggle-btn both" id="btn-both" onclick="setView('both')">Both</button>
+  <button class="burger" id="burger" onclick="toggleTools()" aria-label="Filters and view options" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <!-- Same DOM on every size: inline toolbar on desktop, slide-in drawer on mobile. -->
+  <div class="header-tools" id="header-tools">
+    <div class="tools-head">
+      <span>Filters &amp; View</span>
+      <button class="tools-close" onclick="toggleTools(false)" aria-label="Close">✕</button>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" id="btn-ecc" onclick="setView('ecc')">ECC6</button>
+      <button class="toggle-btn s4" id="btn-s4" onclick="setView('s4')">S/4HANA</button>
+      <button class="toggle-btn both" id="btn-both" onclick="setView('both')">Both</button>
+    </div>
+    <div class="module-filters" id="module-filters"></div>
   </div>
-  <div class="module-filters" id="module-filters"></div>
+  <div class="tools-backdrop" id="tools-backdrop" onclick="toggleTools(false)"></div>
 </header>
 <div class="main">
   <div id="graph-container">
@@ -2261,6 +2302,19 @@ function getFocusNeighbours(centerId){
   return set;
 }
 
+function toggleTools(force){
+  const t=document.getElementById('header-tools');
+  const b=document.getElementById('tools-backdrop');
+  const k=document.getElementById('burger');
+  const open = (force===undefined) ? !t.classList.contains('open') : !!force;
+  t.classList.toggle('open', open);
+  b.classList.toggle('open', open);
+  k.classList.toggle('open', open);
+  k.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if(window.webkit?.messageHandlers?.hapticFeedback){
+    window.webkit.messageHandlers.hapticFeedback.postMessage({style:'light'});
+  }
+}
 function enterFocus(id){
   focusMode=true; focusCenter=id;
   const nb=getFocusNeighbours(id);
