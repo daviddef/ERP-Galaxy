@@ -1,0 +1,38 @@
+name: SAPGalaxy
+options:
+  bundleIdPrefix: com.daviddef
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: L9SAXP2E2W
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  SAPGalaxy:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: SAPGalaxy/Sources
+      # Folder reference (not a group): preserves Web/vendor/d3.min.js so the
+      # HTML's relative <script src="vendor/d3.min.js"> resolves inside the bundle.
+      - path: SAPGalaxy/Resources/Web
+        type: folder
+      - path: SAPGalaxy/Resources/Assets.xcassets
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.daviddef.sapgalaxy
+        INFOPLIST_FILE: SAPGalaxy/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"   # iPhone + iPad
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_STYLE: Automatic
+        SUPPORTS_MACCATALYST: false
+        # "Designed for iPad" on Apple Silicon Macs -- no Catalyst work required.
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: true
+        ENABLE_USER_SCRIPT_SANDBOXING: true

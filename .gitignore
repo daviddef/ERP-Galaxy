@@ -2,3 +2,20 @@
 scratchpad/
 txt/
 data/raw_*.json
+
+# --- secrets: this repo is PUBLIC ---
+# App Store Connect API key material must never be committed.
+*.p8
+AuthKey_*
+Secrets.local.sh
+.env
+*.mobileprovision
+*.p12
+*.cer
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
