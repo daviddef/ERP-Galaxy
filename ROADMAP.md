@@ -141,8 +141,29 @@ Spotlight indexing (Codex makes this near-free) → "Table of the Day" widget �
 1. ~~**Licensing**~~ **Resolved:** rewrite all upfront in our own words. Raw scraped text stays gitignored. *Residual:* Tier C `desc` sits close to source by necessity — see the caveat in [VOICE.md](VOICE.md).
 2. ~~**Scope of "fun and savvy"**~~ **Resolved (2026-07-16):** fun tone in the copy, stored as a separate `lore` field with a UI toggle. Adds a small Phase 3 item (the toggle control + fallback).
 3. **Tier 1 promotion criteria** — which of the 1,951 deserve curated relationships first? Suggest: by module coverage gaps + practitioner frequency (LFA1, EKKO, MKPF etc. are obvious candidates).
-5. **`/TDAG/*` (278 tables)** — include as Tier C with `lore: null`, or exclude as non-core? *Still open.*
-6. **`d3.min.js` vendoring** — needs a ~280 KB download from cdnjs to close Phase 0. *Still open.*
+4. ~~**`/TDAG/*` (278 tables)**~~ **Resolved:** keep, tagged as an add-on so they can be filtered. Search-gated, so they cost nothing until someone looks for them.
+5. ~~**`d3.min.js` vendoring**~~ ✅ **Done** — vendored to `vendor/d3.min.js`, verified rendering 217 nodes / 467 links from `file://` with no network.
+
+---
+
+## 6. What `/TDAG/` Actually Is
+
+Worth recording, because my first characterisation ("third-party, not core SAP") was **wrong** and would have shipped as a wrong description.
+
+- `/XXX/` is an **SAP-reserved namespace** allocated to a partner. Objects inside it are add-on deliverables, not part of the ECC/S4 core.
+- **TDAG = TechniData AG**, the German partner that originally *built* SAP's EH&S module under contract.
+- **SAP acquired TechniData in 2010.** So `/TDAG/` is now **SAP's own software** — it just kept the legacy namespace. Calling it "third-party" is out of date by 16 years.
+- `/TDAG/CP` = **Compliance for Products**, now part of SAP EHS Management (Product Compliance); covers EU RoHS, REACH and customer declarations. Entry point is the Compliance Workbench (`/TDAG/CPM00`).
+- **Who cares:** chemical, pharma, and discrete manufacturing clients running Product/REACH Compliance. Niche, but real — and an EHS consultant would be pleased to find these.
+
+**Namespace breakdown of the 1,285 `/TDAG/` entries** (only 278 are real tables; the rest are structures/views):
+
+| Prefix | Entries | Meaning |
+|---|---|---|
+| `CPS` / `CPC` / `CPV` / `CPT` | 819 | Compliance for Products — **confirmed** |
+| `RCSS` / `RCSC` / `RCSV` / `RCSA` | 427 | Regulatory content (`RCSC_LEGSL` = "Legislation"). Likely tied to SAP Product and REACH Compliance — **not confirmed; do not assert in a description until verified.** |
+
+Sources: [SAP to Acquire TechniData AG](https://www.prnewswire.com/news-releases/sap-to-acquire-technidata-ag-91681344.html) · [SAP ABAP Package /TDAG/CP](https://www.sapdatasheet.org/abap/devc//tdag/cp.html) · [History of SAP Product Compliance Solutions](https://www.opesus.com/en/history-sap-product-compliance-solutions)
 4. ~~**Public repo** — intentional?~~ **Confirmed OK (2026-07-16).** Note this raises the stakes on decision 1: a public repo is the more exposed venue for the scraped descriptions, and git history is permanent — a later `git rm` does not remove them from earlier commits.
 
 ---
@@ -165,6 +186,6 @@ Parser notes: EHS is a ranked 4-column layout with wrapped descriptions; HR Info
 
 ### Data hygiene flags
 - **23 new tables have source descriptions too thin to paraphrase** (`"obsolete"`, `"Language dependent"`). Rewriting these means inventing. Ship names-only.
-- **278 new tables are `/TDAG/*`** — TechniData third-party EHS add-on, not core SAP. Most consultants will never see them. Candidate for exclusion or a separate flag.
+- **278 new tables are `/TDAG/*`** — SAP EHS Management Product Compliance, in a legacy partner namespace. **Keep, but tag `addon:"EHS-CP"`.** See "What `/TDAG/` actually is" below.
 - **The EHS source contains untranslated German** (`"Generierte Tabelle zu"`). The rewrite must handle or flag these.
 - **Raw scraped descriptions are gitignored** (`data/raw_*.json`, `txt/`) and must never be committed — see decision 1. Only rewritten prose enters the public repo.

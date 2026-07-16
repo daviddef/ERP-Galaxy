@@ -54,7 +54,7 @@ Note: even here, "Someone set these once and everyone forgot" is a *characterisa
 We do not know these tables. Trying to be fun here produces **confident nonsense** — the exact failure mode that makes a reference tool worthless. Honest options:
 
 > **/TDAG/CPT_EXEMLI**
-> Exemption limits for Compliance for Products (CP). Part of the TechniData EHS add-on, not core SAP.
+> Exemption limits in Compliance for Products (CP), part of SAP EHS Management. Ships in the legacy `/TDAG/` add-on namespace — you'll only have this table if Product Compliance is installed.
 
 Flat, factual, short. **Recommended: name + literal source, no personality.** A dry-but-correct entry is a working reference. A witty-but-wrong one is a liability — and at 300 tables, nobody notices the errors until a consultant does, in front of a client.
 
