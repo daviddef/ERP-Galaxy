@@ -1,0 +1,303 @@
+{
+ "ACDOCA": {
+  "evidence": "The content of most of the former Material Ledger database tables is now stored in table ACDOCA",
+  "item": "18.2",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "ANEP": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "ANLC": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "BSAD": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "BSAK": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "BSAS": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "BSEG": {
+  "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "BSID": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "BSIK": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "BSIM": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "BSIS": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "BUT000": {
+  "evidence": "Time dependency has been disabled at the header level of BUT000 in SAP S/4HANA",
+  "item": "3.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "CATSDB": {
+  "evidence": "CAT2 and CATSDB related transactions (Fiori and WebDynpro ABAP) will continue to be supported as per SAP S/4HANA timelines.",
+  "item": "2.41",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "CDPOS": {
+  "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "COBK": {
+  "evidence": "Currently, COBK is written as before.",
+  "item": "12.9",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "COEP": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "COSP": {
+  "evidence": "reports in Controlling will show only the fields formerly available in COSP/COSS",
+  "item": "15.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "COSS": {
+  "evidence": "reports in Controlling will show only the fields formerly available in COSP/COSS",
+  "item": "15.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "FAGLFLEXA": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "FAGLFLEXT": {
+  "evidence": "reports in Financial Accounting will show only the fields formerly available in FAGLFLEXT",
+  "item": "15.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "GLFUNCT": {
+  "evidence": "the contents of the cost of sales ledger and all special ledgers created in table GLFUNCT are included in the Universal Journal (table ACDOCA)",
+  "item": "8.8",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "GLPCA": {
+  "evidence": "Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards",
+  "item": "12.6",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "GLT0": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "KNA1": {
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.",
+  "item": "3.13",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "KNC1": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "KNC3": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "LFA1": {
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.",
+  "item": "3.13",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "LFC1": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "LFC3": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MARC": {
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MARD": {
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MBEW": {
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MCHB": {
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MKPF": {
+  "evidence": "Material document data will be stored in\nMATDOC only and not anymore in MKPF and MSEG",
+  "item": "27.5",
+  "replacedBy": "MATDOC",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLHD": {
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MLIT": {
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MSEG": {
+  "evidence": "Material document data will be stored in\nMATDOC only and not anymore in MKPF and MSEG",
+  "item": "27.5",
+  "replacedBy": "MATDOC",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSTB": {
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSTE": {
+  "evidence": "there are Core Data Service (CDS)\nViews assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "RFBLG": {
+  "evidence": "pool tables and cluster tables are no longer supported",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "T012K": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "T012T": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "T161W": {
+  "evidence": "Field T161W-EXPRF: Procedure in customizing table T161W: Order Types for Stock Transfer",
+  "item": "16.3",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ }
+}

@@ -152,6 +152,55 @@ That `/TDAG/` hit is the important one — it's the hardest case in the catalogu
 - **Licensing:** field *names* are facts (`BKPF`'s key is `MANDT, BUKRS, BELNR, GJAHR` — a fact about SAP, not creative expression). Same reasoning that cleared the descriptions. We take the fact, never the prose.
 - **Accuracy:** these sites are themselves derived from a real DDIC. Verified 3/3, but this is second-hand data — mark provenance `source: "public-reference"`, not `"ddic"`, so a future reader knows it wasn't read from a system.
 
+---
+
+## 8. Execution results (2026-07-16) — and a serious finding
+
+### 🔴 The curated Tier 1 `keyFields` do not survive verification
+
+I harvested all **217 curated tables** from sapdatasheet.org and compared to the hand-authored keys in the HTML. This was meant to validate the *scraper*. It ended up impeaching the *curated data*.
+
+| Result | Count |
+|---|---|
+| Exact match | **99 (45.6%)** |
+| Mismatch | 106 |
+| No keys returned | 12 |
+
+Anatomy of the 106 mismatches:
+
+| Pattern | Count | Reading |
+|---|---|---|
+| Scraped is a strict **superset** of curated | 49 | curated looks **abridged** |
+| Genuinely divergent | 46 | one side is wrong |
+| Scraped is a subset | 8 | scraper may be wrong |
+| Same fields, different **order** | 3 | key order matters — one is wrong |
+
+**Spot-checks point at the curated data, not the scraper:**
+
+- `BSAD` curated `[MANDT,BUKRS,KUNNR,GJAHR,BELNR,BUZEI]` vs scraped `[…,UMSKS,UMSKZ,AUGDT,AUGBL,ZUONR,…]`. BSAD is a *cleared-items* index — the clearing fields **are** in its real key. Curated looks like a hand-written "logical" key, not the DDIC key. Same story for `BSAK`, `BSID`, `BSAS`.
+- `ANKT` curated `[MANDT,ANLKL,SPRAS]` vs scraped `[MANDT,SPRAS,ANLKL]` — **order differs**, and order is part of a primary key.
+- `BUT000` curated `MANDT` vs scraped `CLIENT` — likely an ECC-vs-S/4 release difference, i.e. *both* right for their release. Which means **release matters and neither dataset records it.**
+
+**This is unresolved.** I could not obtain the independent second source (leanx.eu) needed to adjudicate — the session hit its limit. **Do not treat either key set as trustworthy until a tiebreak is run.** The plan (`§7`) assumed the curated 217 were ground truth; that assumption is now dead.
+
+### ⚠️ Simplification List coverage is far lower than hoped
+
+Parsed the official 1,482-page S/4HANA 2023 Simplification List → 441 items → **6 of 8 batches extracted** (2 failed on the session limit) → 364 raw facts across 264 distinct tables.
+
+**But only 43 of those tables are in our catalogue** (32 Tier 1, 11 Tier 2) — about **2%** of 1,985.
+
+| Status | Count |
+|---|---|
+| compat_view | 16 |
+| replaced | 14 |
+| changed | 8 |
+| deprecated | 3 |
+| unchanged | 2 |
+
+The extractions themselves are good and evidence-backed (`MKPF`/`MSEG` → replaced by `MATDOC`; `GLFUNCT` → `ACDOCA`; `COEP` → `ACDOCA`). But the reach is small, because the Simplification List discusses the big process-level tables, and our Tier 2 is mostly HR/EHS config tables that SAP never wrote a simplification item about.
+
+**Honest conclusion:** `s4status` will be populated for a few dozen tables, not for 1,985. Everything else stays `unknown` — which is the truthful answer, since "no simplification item exists" genuinely is *not* the same as "unchanged".
+
 ### Verdict
 
 | Field | Path | Coverage | Status |
