@@ -39,12 +39,15 @@ The 30 PDFs were parsed (`pdftotext -layout` + per-format parsers). Results:
 
 | Metric | Count |
 |---|---|
-| Raw table names extracted | 3,596 |
-| — of which **Structures** (no data, not real tables) | 1,576 |
-| — of which **real tables** (Transparent/Pooled/Cluster/Append) | 2,020 |
+| Total entries extracted | 3,879 |
+| — **Structures** (no data, not real tables) | 1,574 |
+| — **General View Structures** (views, not tables) | 285 |
+| — **real tables** (Transparent/Pooled/Cluster/Append) | **2,020** |
 | Already in our dataset | 69 |
 | **Genuinely new real tables** | **1,951** |
 | In our dataset but **absent from all PDFs** | 148 |
+
+*Parser validated against ground truth:* the EHS doc's own rank column runs to 2,362, and the parser now accounts for all 2,362 rows. Two extraction bugs were found and fixed during a pilot — see §5.
 
 **This is a ~10x expansion, and it cannot be done as a straight merge.** Four reasons:
 
@@ -147,3 +150,16 @@ for f in *.pdf; do pdftotext -layout "$f" "${f%.pdf}.txt"; done
 python3 tools/parse_pdfs.py   # → data/tables.json, data/tcodes.json
 ```
 Parser notes: EHS is a ranked 4-column layout with wrapped descriptions; HR Infotypes is flat `NAME description`; the other 28 are `• NAME : description` bullets, some with a `( Category : X )` prefix to strip. T-code docs are routed by filename (case-insensitive match on `transaction`/`tcode`).
+
+**Two bugs found during the rewrite pilot — both would have silently poisoned the dataset:**
+
+1. **Truncated descriptions (465 affected).** Bullet descriptions wrap across blank-line-separated continuation lines; the first parser captured only the first line. `ACCTCR` read *"Compressed data from"* instead of *"Compressed data from FI/CO document - currencies"*. Fixed by block-joining on bullet boundaries. The `( Category : X )` strip also failed where the source omits the closing paren (`T049B`).
+2. **EHS rows dropped (285 affected).** EHS puts the *type* on the first line while the description wraps *below* it, so block-joining corrupted it (`"Structure for Printing DG Structure Data"`). Needs line-wise parsing with continuation. A further 285 rows used an undeclared type, `General View Structure`.
+
+**Lesson: validate extraction against a ground-truth count before scaling any authoring on top of it.** The EHS rank column made this checkable; docs without one are validated by spot-check.
+
+### Data hygiene flags
+- **23 new tables have source descriptions too thin to paraphrase** (`"obsolete"`, `"Language dependent"`). Rewriting these means inventing. Ship names-only.
+- **278 new tables are `/TDAG/*`** — TechniData third-party EHS add-on, not core SAP. Most consultants will never see them. Candidate for exclusion or a separate flag.
+- **The EHS source contains untranslated German** (`"Generierte Tabelle zu"`). The rewrite must handle or flag these.
+- **Raw scraped descriptions are gitignored** (`data/raw_*.json`, `txt/`) and must never be committed — see decision 1. Only rewritten prose enters the public repo.
