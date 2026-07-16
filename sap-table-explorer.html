@@ -33,6 +33,12 @@
   .burger.open span:nth-child(2){opacity:0;}
   .burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
   .tools-backdrop{display:none;}
+  .depth-control{display:none;}
+  .depth-control label{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--text-muted);}
+  .depth-value{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
+    background:var(--fi);color:#fff;border-radius:6px;font-size:.78rem;font-weight:700;}
+  .depth-control input[type=range]{width:100%;margin:10px 0 6px;accent-color:var(--fi);height:28px;}
+  .depth-hint{font-size:.7rem;color:var(--text-muted);line-height:1.35;}
   .search-box input:focus{border-color:var(--fi);}
   .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;}
   .toggle-group{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;}
@@ -147,6 +153,7 @@
     .tools-close{display:block;background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:4px 8px;}
     .toggle-group{width:100%;}
     .toggle-btn{flex:1;padding:11px 8px;font-size:.82rem;}
+    .depth-control{display:block;padding-bottom:2px;border-bottom:1px solid var(--border);}
     .module-filters{display:flex!important;flex-wrap:wrap;gap:8px;overflow:visible;}
     .tools-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:299;
       opacity:0;pointer-events:none;transition:opacity .26s;}
@@ -201,6 +208,12 @@
       <button class="toggle-btn active" id="btn-ecc" onclick="setView('ecc')">ECC6</button>
       <button class="toggle-btn s4" id="btn-s4" onclick="setView('s4')">S/4HANA</button>
       <button class="toggle-btn both" id="btn-both" onclick="setView('both')">Both</button>
+    </div>
+    <div class="depth-control">
+      <label for="depth">Levels <span class="depth-value" id="depth-value">1</span></label>
+      <input type="range" id="depth" min="1" max="4" step="1" value="1"
+             oninput="setFocusDepth(this.value)"/>
+      <div class="depth-hint" id="depth-hint">Tap a table first, then widen the ring.</div>
     </div>
     <div class="module-filters" id="module-filters"></div>
   </div>
@@ -2283,7 +2296,7 @@ const LINKS_RAW=[
 // ─── APP STATE ───────────────────────────────────────────────────────────────
 let currentView='both', activeModules=new Set(Object.keys(MODULE_COLORS));
 let selectedNode=null, searchQuery='', simulation, svg, g, link, node, zoomBehavior;
-let focusMode=false, focusCenter=null;
+let focusMode=false, focusCenter=null, focusDepth=1;
 
 // Lifecycle of a link: based on the status of both endpoint tables
 function linkLifecycle(aId, bId){
@@ -2296,10 +2309,35 @@ function linkLifecycle(aId, bId){
 const LINK_COLORS={new_s4:'#22c55e', ecc_only:'#ef4444', retained:'#4a5568'};
 
 // Return center + all 1-hop neighbours from LINKS_RAW
-function getFocusNeighbours(centerId){
+// Breadth-first out to `depth` hops. Links are undirected here on purpose:
+// the graph models "references", not a parent/child tree, so one hop already
+// reaches both the tables that point at you and the ones you point at.
+function getFocusNeighbours(centerId, depth){
+  const d = depth || focusDepth || 1;
   const set=new Set([centerId]);
-  LINKS_RAW.forEach(([a,b])=>{if(a===centerId)set.add(b);if(b===centerId)set.add(a);});
+  let frontier=[centerId];
+  for(let i=0;i<d;i++){
+    const next=[];
+    LINKS_RAW.forEach(([a,b])=>{
+      if(frontier.includes(a) && !set.has(b)){set.add(b);next.push(b);}
+      if(frontier.includes(b) && !set.has(a)){set.add(a);next.push(a);}
+    });
+    if(!next.length) break;
+    frontier=next;
+  }
   return set;
+}
+
+function setFocusDepth(v){
+  focusDepth=+v;
+  const centre = focusMode ? focusCenter : selectedNode;
+  const n = centre ? getFocusNeighbours(centre).size : 0;
+  document.getElementById('depth-value').textContent=focusDepth;
+  const hint=document.getElementById('depth-hint');
+  hint.textContent = !centre
+    ? 'Tap a table first, then widen the ring.'
+    : `${n} tables within ${focusDepth} hop${focusDepth>1?'s':''} of ${centre}`;
+  updateGraph();
 }
 
 function toggleTools(force){
@@ -2319,7 +2357,7 @@ function enterFocus(id){
   focusMode=true; focusCenter=id;
   const nb=getFocusNeighbours(id);
   const banner=document.getElementById('focus-banner');
-  document.getElementById('focus-banner-text').textContent=`🎯 ${id} ± 1 hop — ${nb.size} tables`;
+  document.getElementById('focus-banner-text').textContent=`🎯 ${id} · ${focusDepth} hop${focusDepth>1?'s':''} — ${nb.size} tables`;
   banner.classList.add('active');
   buildGraph();
   const t=TABLES.find(x=>x.id===id);
