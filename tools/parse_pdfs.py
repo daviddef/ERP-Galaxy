@@ -45,7 +45,13 @@ for path in sorted(glob.glob(f"{TXT}/*.txt")):
     if base=="SAP HR Infotypes":
         for line in raw.splitlines():
             m=re.match(r'^([A-Z][A-Z0-9_/]{1,29})\s+(\S.*)$', line.strip())
-            if m: add(m.group(1), m.group(2), "Transparent Table", base, bucket)
+            if not m: continue
+            name, d = m.group(1), m.group(2)
+            # "SAP HR TABLES & INFOTYPES" is the document title, not a table
+            if name=="SAP": continue
+            # XXXX/YYYY are the doc's own placeholders, not real table ids
+            if re.search(r'(XXXX|YYYY)', name+d): continue
+            add(name, d, "Transparent Table", base, bucket)
         continue
 
     r=re.sub(r'\n\s*\n','\n',raw)
@@ -54,7 +60,7 @@ for path in sorted(glob.glob(f"{TXT}/*.txt")):
         m=re.match(r'^([A-Z0-9_/]{2,30})\s*:\s*(.*)$', p)
         if not m: continue
         d=re.sub(r'^\(\s*Category\s*:\s*([A-Z0-9\-]+)\s*\)?\s*','',m.group(2))
-        d=re.sub(r'^(?:This (?:table|transaction)\s*)?(?:contains?|contain|stores the data of|is used to)\s*','',d,flags=re.I)
+        d=re.sub(r'^(?:This (?:tables?|transactions?)\s*)?(?:contains?|contain|stores the data of|is used to)\s*','',d,flags=re.I)
         add(m.group(1), d, "Transparent Table", base, bucket)
 
 for b,n in ((tables,"tables"),(tcodes,"tcodes")):

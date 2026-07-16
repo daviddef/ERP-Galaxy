@@ -1,4 +1,9 @@
 import json, re
+
+# DDIC-generated tables behind maintenance views, plus retired tables.
+# Typed "Transparent Table" in source but not real business tables -- a consultant
+# never queries V023_E. Excluded from the dataset entirely.
+NOISE = re.compile(r"^(generated table for view|generierte tabelle zu|table no longer in use)", re.I)
 SRC_MODULE = {
  "SAP Accounts Payable Tables List":            ("FI","FI-AP"),
  "SAP Accounts Receivable tables List":         ("FI","FI-AR"),
@@ -29,6 +34,8 @@ for tid, v in pdf.items():
     if v["type"] not in REAL:      # drop Structures + General View Structures
         continue
     if tid in existing:            # curated Tier 1 wins — never overwrite
+        continue
+    if NOISE.match(v["desc"]):
         continue
     mods = [SRC_MODULE[s] for s in v["sources"] if s in SRC_MODULE]
     if not mods: continue
