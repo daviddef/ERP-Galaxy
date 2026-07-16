@@ -2345,14 +2345,14 @@ const S4_LABEL={
   changed:{icon:"⚠️",text:"Still there, but changed",cls:"lc-changed"},
   unchanged:{icon:"✅",text:"Unchanged in S/4HANA",cls:"lc-same"}
 };
-function buildLifecycle(d){
+function buildLifecycle(d, hideChips){
   // The table's own ECC/S4 flags are authoritative and beat anything inferred
   // from prose. ACDOCA was showing "changed" because an item said other tables'
   // data now lives IN it -- the extractor tagged the destination, not the
   // subject. A table that never existed in ECC cannot have "changed".
   if(!d.ecc && d.s4){
     const feeds=Object.entries(S4_LIFECYCLE).filter(([k,v])=>v[1]===d.id).map(([k])=>k);
-    const feedHtml = feeds.length
+    const feedHtml = (feeds.length && !hideChips)
       ? `<div class="lc-by">Data from ${feeds.map(f=>`<button class="lc-jump" onclick="jumpTo('${f}')">${f}</button>`).join(' ')} now lives here.</div>`
       : '';
     return `<div class="lc-box lc-new">
@@ -2377,7 +2377,7 @@ function buildLifecycle(d){
     </div>`;
   const [status,by,ev,item]=e;
   const L=S4_LABEL[status]||S4_LABEL.changed;
-  const byChip = by ? `<div class="lc-by">Data now lives in <button class="lc-jump" onclick="jumpTo('${by}')">${by}</button></div>` : '';
+  const byChip = (by && !hideChips) ? `<div class="lc-by">Data now lives in <button class="lc-jump" onclick="jumpTo('${by}')">${by}</button></div>` : '';
   const detail = {
     deprecated:"This table does not exist in S/4HANA. Code reading it will break.",
     replaced:"The table may still exist, but it is no longer the system of record.",
@@ -2771,15 +2771,15 @@ function buildDetailHTML(d){
     </div>`;
 
   const bodyHtml=`
-    <div class="section-title">🧭 What happens in S/4HANA</div>
-    ${buildLifecycle(d)}
+    <div class="section-title">🧭 ECC6 → S/4HANA</div>
+    ${buildLifecycle(d, !!journeySection)}
+    ${d.s4note?`<div class="migration-box">${d.s4note}</div>`:''}
     ${journeySection}
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${d.plainEnglish}</div>
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
     ${tcodes?`<div class="section-title">⌨️ Key Transactions</div><div class="tcode-list">${tcodes}</div>`:''}
-    ${d.s4note?`<div class="section-title">🔄 ECC6 → S/4HANA</div><div class="migration-box">${d.ecc&&d.s4?`<div class="migration-arrow"><span class="ecc-label">ECC6</span><span class="arrow">──►</span><span class="s4-label">S/4HANA</span></div>`:''} ${d.s4note}</div>`:''}
     ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
     ${focusBtn}
     <div style="height:16px"></div>`;
