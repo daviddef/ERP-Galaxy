@@ -2436,7 +2436,12 @@ function init(){
     searchQuery=e.target.value.toLowerCase();
     document.getElementById('search-clear').classList.toggle('visible',searchQuery.length>0);
     document.getElementById('search-icon').textContent=searchQuery.length>0?'⭐':'🔍';
+    // Anchor the neighbourhood to what you actually typed. Without this the
+    // previous selection sticks, so typing "bseg" kept showing ACDOCA's ring.
+    const exact=TABLES.find(t=>t.id.toLowerCase()===searchQuery);
+    selectedNode = exact ? exact.id : null;
     updateGraph();
+    if(exact) setFocusDepth(focusDepth);   // refresh the Levels hint for the new anchor
   });
 }
 
@@ -2481,8 +2486,6 @@ function buildLegend(){
 }
 
 function getVisibleTables(){
-  // In focus mode: show full 1-hop neighbourhood regardless of ECC/S4 view filter
-  // (so that S/4-only replacements like ACDOCA are always visible when you focus BSEG)
   const focusNb=(focusMode&&focusCenter)?getFocusNeighbours(focusCenter):null;
 
   // When a node is selected during search, also show its neighbourhood
@@ -2491,12 +2494,16 @@ function getVisibleTables(){
   let base=TABLES.filter(t=>{
     if(!activeModules.has(t.module)) return false;
 
-    // In focus mode, bypass ECC/S4 filter for neighbourhood members
-    if(focusNb&&focusNb.has(t.id)) return true;
-    if(selNb&&selNb.has(t.id)) return true;
-
+    // The ECC/S4 toggle is a filter and must always win. This used to be
+    // bypassed for neighbourhood members so S/4 successors stayed visible,
+    // which meant ECC6 view still showed ACDOCA. The "What happens in S/4HANA"
+    // panel now names the successor explicitly, so the graph needn't smuggle
+    // it in against an explicit filter.
     if(currentView==='ecc'&&!t.ecc) return false;
     if(currentView==='s4'&&!t.s4) return false;
+
+    if(focusNb&&focusNb.has(t.id)) return true;
+    if(selNb&&selNb.has(t.id)) return true;
 
     if(searchQuery){
       const q=searchQuery;
