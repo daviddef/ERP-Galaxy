@@ -2951,13 +2951,13 @@ function buildDetailHTML(d){
     </div>`;
 
   const bodyHtml=`
+    <div class="section-title">🧠 Plain English</div>
+    <div class="plain-english">${d.plainEnglish}</div>
+    ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
     ${d.s4note?`<div class="migration-box">${d.s4note}</div>`:''}
     ${journeySection}
-    <div class="section-title">🧠 Plain English</div>
-    <div class="plain-english">${d.plainEnglish}</div>
-    ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
     ${tcodes?`<div class="section-title">⌨️ Key Transactions</div><div class="tcode-list">${tcodes}</div>`:''}
