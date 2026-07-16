@@ -76,6 +76,40 @@ The app still *reads* fun, because Tier A is what people actually look up — LF
 
 ---
 
-## Open question for David
+## Resolved: store both, toggle in the UI (2026-07-16)
 
-Does Tier C get **flat prose** (recommended), or should those ~300 be **excluded** from the Codex entirely so every table you see has real personality? Smaller, better dataset vs. bigger, patchier one.
+Rather than choosing one register, store two fields and let the reader pick.
+
+```js
+{ id:"MKPF", module:"MM", tier:"A",
+  desc: "Header record for material documents — one row per stock movement.",
+  lore: "Every time stock physically moves, SAP writes a material document. This is its header. The what-and-how-much is in MSEG. Think of MKPF as the receipt, MSEG as the line items on it."
+}
+{ id:"/TDAG/CPT_EXEMLI", module:"EHS", tier:"C",
+  desc: "Exemption limits for Compliance for Products (CP). TechniData EHS add-on, not core SAP.",
+  lore: null    // we don't know this table — no invention
+}
+```
+
+- **`desc`** — factual, one line, **always present** for all 2,020. Our words, not scraped verbatim.
+- **`lore`** — the fun voice. **Optional.** Present for Tier A/B, `null` for Tier C.
+- **UI:** a "Fun mode" toggle, on by default. Where `lore` is `null`, it falls back to `desc` silently.
+
+### Why this is better than picking one
+
+1. **No invention.** The toggle doesn't manufacture knowledge — Tier C simply has no `lore`, and the fallback is invisible to the reader.
+2. **It's a real feature.** Fun mode for learning; straight mode when you're screen-sharing with a client and don't want "everyone forgot about this table" on the projector. On-brand *and* professional on demand.
+3. **It unblocks shipping.** The two passes decouple:
+   - **Pass 1 — `desc` for all 2,020.** Short, factual, mechanical. Completes the Codex. **Ship on this alone.**
+   - **Pass 2 — `lore`, incrementally.** Start with Tier A (~150) where it sings. Tier B grows over time. Never blocks a release.
+
+   This matches the existing plan: the Codex is the backlog for the Galaxy. Same idea, applied to prose.
+4. **Graceful under honesty.** A table with no `lore` isn't a gap — it's a table we haven't got to yet, and it still works perfectly as a reference.
+
+### ⚠️ One caveat worth knowing
+
+For Tier C, `desc` is necessarily close to the source (*"CP: Exemption Limits"* → *"Exemption limits for Compliance for Products"*), which partly reintroduces the licensing concern the rewrite was meant to solve. Facts aren't copyrightable and short factual restatements are the least protectable form of expression, so the risk is low — but it is not zero, and it can't be paraphrased away without inventing. If that matters, Tier C ships **names + module only, no description at all**. That is the fully safe option.
+
+### Tier C: superseded question
+
+Excluding Tier C is no longer necessary — with the toggle, they're just tables with `lore: null`. Keep them.

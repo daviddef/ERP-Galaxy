@@ -99,13 +99,16 @@ The PDFs are scraped from **tcodesearch.com**, and the descriptions are largely 
 **Exit:** a genuinely self-contained artifact under version control.
 
 ### Phase 1 — Data pipeline (1–2 days)
-- Commit `tools/parse_pdfs.py` + `data/tables.json` (reproducible, reviewable).
-- Split Tier 1 / Tier 2; drop Structures from the graph.
+- ✅ `tools/parse_pdfs.py` committed, validated against EHS ground truth.
+- Split Tier 1 / Tier 2; drop Structures and General View Structures from the graph.
 - Assign modules; extend colour/emoji maps.
 - Reconcile the 148 HTML-only tables (PDFs are **not** a superset — merge, never replace).
-- Resolve the licensing decision above.
+- **Pass 1: author `desc` for all 2,020** (factual, our words). Ship-critical. See [VOICE.md](VOICE.md).
 
-**Exit:** one clean dataset, provenance tracked per table.
+**Exit:** one clean dataset, provenance tracked per table, Codex-ready.
+
+### Phase 1b — `lore` pass (ongoing, never blocks a release)
+The fun voice, written incrementally: Tier A (~150) first, Tier B over time, Tier C never (`lore: null` → UI falls back to `desc`). Decoupled from shipping by design.
 
 ### Phase 2 — Xcode shell (1 day)
 Project scaffold, four Swift files per handover §4 (with the deprecation fixes), HTML + `d3.min.js` in Resources, dark-only Info.plist, iOS 17 target.
@@ -135,9 +138,11 @@ Spotlight indexing (Codex makes this near-free) → "Table of the Day" widget �
 
 ## 4. Open Decisions
 
-1. **Licensing** — rewrite descriptions, names-only, or clearance? *Blocks Phase 1 data commit.*
-2. **Scope of "fun and savvy"** — the brief says "idiot's guide accessible, not enterprise-dry," but the HTML is a fairly straight reference tool. Does this mean personality in the copy, or achievements/table-of-the-day? *Changes Phase 3 scope; cheaper to decide before the bridge is built.*
+1. ~~**Licensing**~~ **Resolved:** rewrite all upfront in our own words. Raw scraped text stays gitignored. *Residual:* Tier C `desc` sits close to source by necessity — see the caveat in [VOICE.md](VOICE.md).
+2. ~~**Scope of "fun and savvy"**~~ **Resolved (2026-07-16):** fun tone in the copy, stored as a separate `lore` field with a UI toggle. Adds a small Phase 3 item (the toggle control + fallback).
 3. **Tier 1 promotion criteria** — which of the 1,951 deserve curated relationships first? Suggest: by module coverage gaps + practitioner frequency (LFA1, EKKO, MKPF etc. are obvious candidates).
+5. **`/TDAG/*` (278 tables)** — include as Tier C with `lore: null`, or exclude as non-core? *Still open.*
+6. **`d3.min.js` vendoring** — needs a ~280 KB download from cdnjs to close Phase 0. *Still open.*
 4. ~~**Public repo** — intentional?~~ **Confirmed OK (2026-07-16).** Note this raises the stakes on decision 1: a public repo is the more exposed venue for the scraped descriptions, and git history is permanent — a later `git rm` does not remove them from earlier commits.
 
 ---
