@@ -2431,7 +2431,7 @@ function exitFocus(){
 }
 
 function init(){
-  buildModuleFilters(); buildLegend(); buildGraph();
+  buildModuleFilters(); buildLegend(); buildGraph(); initSheetSwipe();
   document.getElementById('search').addEventListener('input',e=>{
     searchQuery=e.target.value.toLowerCase();
     document.getElementById('search-clear').classList.toggle('visible',searchQuery.length>0);
@@ -2768,6 +2768,44 @@ function openMobilePanel(tableId){
   document.getElementById('mobile-panel').classList.add('active');
   document.getElementById('overlay-backdrop').classList.add('active');
 }
+// Swipe the sheet down to dismiss. The grab handle implied this worked; it didn't.
+function initSheetSwipe(){
+  const panel=document.getElementById('mobile-panel');
+  const body=document.getElementById('mobile-panel-body');
+  if(!panel) return;
+  let y0=null, dy=0, dragging=false;
+  const start=e=>{
+    // Only start a dismiss drag from the top of the sheet, otherwise this
+    // would hijack scrolling inside the detail body.
+    if(body && body.scrollTop>0) return;
+    y0=e.touches[0].clientY; dy=0; dragging=true;
+    panel.style.transition='none';
+  };
+  const move=e=>{
+    if(!dragging||y0===null) return;
+    dy=e.touches[0].clientY-y0;
+    if(dy<0) dy=0;                       // downward only
+    if(dy>0){ e.preventDefault(); panel.style.transform=`translateY(${dy}px)`; }
+  };
+  const end=()=>{
+    if(!dragging) return;
+    dragging=false;
+    panel.style.transition='';
+    panel.style.transform='';
+    if(dy>110){                          // past the threshold = dismiss
+      if(window.webkit?.messageHandlers?.hapticFeedback){
+        window.webkit.messageHandlers.hapticFeedback.postMessage({style:'light'});
+      }
+      closeMobilePanel();
+    }
+    y0=null; dy=0;
+  };
+  panel.addEventListener('touchstart',start,{passive:true});
+  panel.addEventListener('touchmove',move,{passive:false});
+  panel.addEventListener('touchend',end);
+  panel.addEventListener('touchcancel',end);
+}
+
 function closeMobilePanel(){
   mobilePanelOpen=false;
   document.getElementById('mobile-panel').classList.remove('active');

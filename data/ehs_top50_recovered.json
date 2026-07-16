@@ -1,0 +1,302 @@
+{
+ "CCIHT_AM01": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Customer Analysis Method 01",
+  "rank": 43,
+  "type": "Transparent Table"
+ },
+ "CCIHT_AM02": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Customer Analysis Method 02",
+  "rank": 44,
+  "type": "Transparent Table"
+ },
+ "CCIHT_AM03": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Customer Analysis Method 03",
+  "rank": 45,
+  "type": "Transparent Table"
+ },
+ "CCIHT_ANQS": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Analysis Method Questionnaire",
+  "rank": 46,
+  "type": "Transparent Table"
+ },
+ "CCIHT_ERAI": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Exposure Log - Additional Information",
+  "rank": 47,
+  "type": "Transparent Table"
+ },
+ "CCIHT_ERH": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Risk Assessment - Header",
+  "rank": 30,
+  "type": "Transparent Table"
+ },
+ "CCIHT_FAL": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Injury/Illness Log",
+  "rank": 42,
+  "type": "Transparent Table"
+ },
+ "CCIHT_IAL": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Incident/Accident Log - Header",
+  "rank": 28,
+  "type": "Transparent Table"
+ },
+ "CCIHT_IHVA": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Value Assignment Data Records for Classific. System",
+  "rank": 23,
+  "type": "Transparent Table"
+ },
+ "CCIHT_IP": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: List of Persons Involved",
+  "rank": 29,
+  "type": "Transparent Table"
+ },
+ "CCIHT_IPEVA": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Inc./Acc. Log - Data for Person Affected (Event)",
+  "rank": 24,
+  "type": "Transparent Table"
+ },
+ "CCIHT_IPEVINJ": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Injuries to Person Affected",
+  "rank": 36,
+  "type": "Transparent Table"
+ },
+ "CCIHT_IPVA": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Obsolete -IAL, Person Aff. - Addit. Info. (Class. Sys.)",
+  "rank": 48,
+  "type": "Transparent Table"
+ },
+ "CCIHT_WAAD": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Language- Dependent Description of Accident Location",
+  "rank": 38,
+  "type": "Transparent Table"
+ },
+ "CCIHT_WADO": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Work Area - Links to Info Objects",
+  "rank": 32,
+  "type": "Transparent Table"
+ },
+ "CCIHT_WAH": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Work Area - Header",
+  "rank": 20,
+  "type": "Transparent Table"
+ },
+ "CCIHT_WALD": {
+  "app": "Environment, Health and Safety - Industrial Hygiene and Safety",
+  "desc": "EHS: Language- Dependent Name and Descr. of Work Area",
+  "rank": 40,
+  "type": "Transparent Table"
+ },
+ "CVDDH": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Report shipping orders",
+  "rank": 16,
+  "type": "Transparent Table"
+ },
+ "CVDDP": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Parameter Values for Report Shipping",
+  "rank": 2,
+  "type": "Transparent Table"
+ },
+ "DGTPK": {
+  "app": "Environment, Health and Safety - Environment, Health and Safety",
+  "desc": "DG: Packing Requirement",
+  "rank": 8,
+  "type": "Transparent Table"
+ },
+ "EHSBT_APPL_SCOPE": {
+  "app": "Environment, Health and Safety - Environment, Health and Safety",
+  "desc": "EHS: General Scope of Application",
+  "rank": 25,
+  "type": "Transparent Table"
+ },
+ "EHSWAT000": {
+  "app": "Environment, Health and Safety - Waste Management",
+  "desc": "MD (BDT): Master Table for the Waste Management Master Data",
+  "rank": 50,
+  "type": "Transparent Table"
+ },
+ "EHSWAT003": {
+  "app": "Environment, Health and Safety - Waste Management",
+  "desc": "MD (BDT): Disposal Channel",
+  "rank": 39,
+  "type": "Transparent Table"
+ },
+ "EST07": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Dangerous Goods Management - Transport Approval",
+  "rank": 11,
+  "type": "Transparent Table"
+ },
+ "EST0B": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Dangerous Goods Management - Packaging Code Approval",
+  "rank": 13,
+  "type": "Transparent Table"
+ },
+ "EST0D": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Dangerous Goods Management - Risk Classification",
+  "rank": 12,
+  "type": "Transparent Table"
+ },
+ "EST0F": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Dangerous Goods Management - Transport Classification",
+  "rank": 7,
+  "type": "Transparent Table"
+ },
+ "ESTALE": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: ALE - reference to originals",
+  "rank": 34,
+  "type": "Transparent Table"
+ },
+ "ESTDF": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "Additional Information - User- Defined Text",
+  "rank": 5,
+  "type": "Transparent Table"
+ },
+ "ESTDH": {
+  "app": null,
+  "desc": "EHS: Report Header Environment, Health and Safety - Product Safety",
+  "rank": 22,
+  "type": "Transparent Table"
+ },
+ "ESTDJ": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Assignment of Specifications to Reports",
+  "rank": 37,
+  "type": "Transparent Table"
+ },
+ "ESTDO": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Report application objects",
+  "rank": 26,
+  "type": "Transparent Table"
+ },
+ "ESTDR": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Additional Information: Value Assignment Assessment",
+  "rank": 10,
+  "type": "Transparent Table"
+ },
+ "ESTDS": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Additional Information: Value Assignment Source",
+  "rank": 9,
+  "type": "Transparent Table"
+ },
+ "ESTDU": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Additional Information: Value Assignment Usage",
+  "rank": 6,
+  "type": "Transparent Table"
+ },
+ "ESTMJ": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Specification- Material Assignment",
+  "rank": 27,
+  "type": "Transparent Table"
+ },
+ "ESTRH": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Specification Header",
+  "rank": 4,
+  "type": "Transparent Table"
+ },
+ "ESTRI": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Identifier (Numbers, Names, Chemical Formulas)",
+  "rank": 1,
+  "type": "Transparent Table"
+ },
+ "ESTRL": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Identifier - Regulatory List Assignment",
+  "rank": 31,
+  "type": "Transparent Table"
+ },
+ "ESTRR": {
+  "app": null,
+  "desc": "EHS: Reference Environment, Health and Safety - Product Safety",
+  "rank": 35,
+  "type": "Transparent Table"
+ },
+ "ESTVA": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Value Assignment",
+  "rank": 17,
+  "type": "Transparent Table"
+ },
+ "ESTVH": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Specification - Value Assignment Type Assignment",
+  "rank": 49,
+  "type": "Transparent Table"
+ },
+ "ESTVP": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Value Assignment Item",
+  "rank": 3,
+  "type": "Transparent Table"
+ },
+ "RCGFILETR": {
+  "app": null,
+  "desc": "EHS: File Transfer Application Server <=> Frontend EHS - Product Safety Structure",
+  "rank": 41,
+  "type": "Transparent Table"
+ },
+ "RCGSDDOC": {
+  "app": null,
+  "desc": "EHS: Document information EHS - Product Safety Structure",
+  "rank": 15,
+  "type": "Transparent Table"
+ },
+ "RDGPRINT": {
+  "app": null,
+  "desc": "Structure for Printing DG Data EHS - Environment, Health and Safety",
+  "rank": 19,
+  "type": "Structure"
+ },
+ "TCG46": {
+  "app": null,
+  "desc": "EHS: Source Environment, Health and Safety - Product Safety",
+  "rank": 14,
+  "type": "Transparent Table"
+ },
+ "TCG53": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Property Tree - Value Assignment Type Assignment",
+  "rank": 18,
+  "type": "Transparent Table"
+ },
+ "TCGA7": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Language- Dependent Description for Report Symbol",
+  "rank": 21,
+  "type": "Transparent Table"
+ },
+ "V000": {
+  "app": "Environment, Health and Safety - Product Safety",
+  "desc": "EHS: Conditions for Variant Matching",
+  "rank": 33,
+  "type": "Transparent Table"
+ }
+}
