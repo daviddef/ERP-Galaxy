@@ -151,12 +151,53 @@ Ideas that fit the tone without becoming gimmicks:
 
 ---
 
-## 6. Next
+## 6. Market test — the honest version
 
-1. **Beta App Review** for external TestFlight — the real 4.2 test. *Do this before adding ads.*
-2. **Fill `lore`** for the ~150 famous tables — the fun mode is designed, specced, and empty.
-3. **Widget + Spotlight** — cheap, high-impact, strong 4.2 defence.
-4. **Decide monetisation** — recommendation: IAP over ads.
-5. **Platform #2** — pending the Dynamics CC-BY answer.
+### The App Store is empty. That cuts both ways.
+Querying the iTunes Search API directly (not web search): **there is no credible SAP table/tcode reference app on iOS.** The nearest hit is "ABAP" by Pavel Lezama — **3.0 stars from 2 ratings**. On Android, the closest analog ("SAP TCODE Buddy") has **500+ installs total**.
+
+The optimistic read: a vacant category. **The pessimistic read is stronger and you should hear it.**
+
+### 🔴 The strongest argument against this product
+**The market has already spoken, twice.**
+
+1. Five mature, free websites (tcodesearch, sapdatasheet, leanx, se80, erpexplorer) have served the "look up a table" job for **over a decade**. They have the data, the audience, and years of runway. **None of them built a serious native app.** That's not an oversight — it's revealed preference.
+2. The handful who *did* try mobile got **hundreds of installs, not thousands.**
+
+The likely reason: **the job is desk-bound by nature.** A consultant in a migration workshop has two monitors and SAP GUI open. They will type into Google or a bookmarked tab. That is *faster* than picking up a phone. Our "offline mobile" advantage is real only in narrow cases — locked-down client sites, plant/warehouse floors, flights, or as the only SAP-adjacent thing a security-conscious employer will allow on a phone.
+
+**Ad-supported is the weakest part of the plan.** This independently confirms §3: small install base, corporate-managed devices, task-focused sessions. A consultant checking one table mid-call is a bad ad impression at any volume.
+
+### The wedge — stop competing on lookup
+Lookup is desk-bound and the websites win it. **They cannot answer "what happens to my tables?"**
+
+That's a different job with a **hard external deadline**: ECC 6.0 mainstream maintenance ends **31 Dec 2027**, extended to 2030 at a 9–12% premium, and SAP confirmed in Jan 2025 there's no further extension. One estimate puts **17,000 companies** still un-migrated. That is a real, dated, funded wave running straight through this product's window.
+
+**Reposition from reference tool to migration-assessment tool.** Lock your 5 tables → *"3 of these die in S/4, 1 becomes a compatibility view, here's the successor and SAP's own words for it."* Nobody — web or mobile — does this. It's the one thing that:
+- requires **judgment against the Simplification List**, not a schema dump;
+- **can't be scraped**, so a competitor can't bolt it on next quarter;
+- has someone's **deadline and budget** attached.
+
+The lockable board shipped today is the skeleton of exactly this.
+
+### Trademark: clear
+SAP's own guidance permits descriptive use ("for SAP", "built for SAP data") and forbids "SAP" *in* a product name. **"ERP Galaxy" is correctly positioned** — which retroactively justifies the rename. Every surviving competitor uses the same register.
+
+### Who actually buys
+Not "SAP practitioners" — too broad. It's **consultants and migration staff scoping ECC→S/4 in 2026–27**. Narrow, real, dated, and *funded* — their employers already pay ~$1,488/yr for SAP Learning Hub. Which is the argument for **IAP over ads**: this audience doesn't click ads, but their employer expenses tools.
+
+---
+
+## 7. Next
+
+Ordered by the market read, not by what's fun to build:
+
+1. **Lean into migration assessment.** The board exists; add the **Migration Impact score** ("3 of your 5 tables die in S/4"). This is the only defensible differentiator and the only one with a deadline attached. *Highest value, days of work.*
+2. **Widen S/4 verdict coverage** — 43 tables is thin for the thing the product now hangs on. Parse more Simplification List releases (1909→2023) and lift coverage across the curated 217 first.
+3. **Beta App Review** for external TestFlight — the real Guideline 4.2 test. *Before ads.*
+4. **Fill `lore`** for the ~150 famous tables — fun mode is designed, specced, and empty.
+5. **Widget + Spotlight** — cheap, strong 4.2 defence, and makes "offline mobile" concrete rather than theoretical.
+6. **Monetisation: IAP, not ads.** The audience doesn't click ads; their employers expense tools.
+7. **Platform #2: Dynamics 365** — CC-BY, relationships included. But only *after* the migration wedge is proven on SAP; adding cheap-to-copy data doesn't deepen the moat.
 
 *Open: 12 tables where the two key sources disagree (left curated, not guessed). 68 Codex tables without keys. `lore` at 0. No Fiori data — no source exists in what we have.*
