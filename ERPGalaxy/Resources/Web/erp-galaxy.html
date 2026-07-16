@@ -47,6 +47,7 @@
   .lc-changed{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.06);}
   .lc-same{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.07);}
   .lc-unknown{opacity:.85;}
+  .lc-new{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.09);}
   .depth-control{display:none;}
   .depth-control label{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--text-muted);}
   .depth-value{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
@@ -2345,6 +2346,29 @@ const S4_LABEL={
   unchanged:{icon:"✅",text:"Unchanged in S/4HANA",cls:"lc-same"}
 };
 function buildLifecycle(d){
+  // The table's own ECC/S4 flags are authoritative and beat anything inferred
+  // from prose. ACDOCA was showing "changed" because an item said other tables'
+  // data now lives IN it -- the extractor tagged the destination, not the
+  // subject. A table that never existed in ECC cannot have "changed".
+  if(!d.ecc && d.s4){
+    const feeds=Object.entries(S4_LIFECYCLE).filter(([k,v])=>v[1]===d.id).map(([k])=>k);
+    const feedHtml = feeds.length
+      ? `<div class="lc-by">Data from ${feeds.map(f=>`<button class="lc-jump" onclick="jumpTo('${f}')">${f}</button>`).join(' ')} now lives here.</div>`
+      : '';
+    return `<div class="lc-box lc-new">
+        <div class="lc-head">🆕 <strong>New in S/4HANA</strong></div>
+        <div class="lc-body">This table does not exist in ECC6 — it was introduced with S/4HANA. Nothing to migrate away from; it is a migration destination.</div>
+        ${feedHtml}
+        <div class="lc-src">From this table's ECC/S4 availability flags</div>
+      </div>`;
+  }
+  if(d.ecc && !d.s4){
+    return `<div class="lc-box lc-gone">
+        <div class="lc-head">❌ <strong>ECC6 only — not in S/4HANA</strong></div>
+        <div class="lc-body">This table is not available in S/4HANA. Anything reading it will need reworking.</div>
+        <div class="lc-src">From this table's ECC/S4 availability flags</div>
+      </div>`;
+  }
   const e=S4_LIFECYCLE[d.id];
   if(!e) return `<div class="lc-box lc-unknown">
       <div class="lc-head">❓ <strong>Not in the Simplification List</strong></div>
@@ -2453,7 +2477,12 @@ function init(){
     const exact=TABLES.find(t=>t.id.toLowerCase()===searchQuery);
     selectedNode = exact ? exact.id : null;
     updateGraph();
-    if(exact) setFocusDepth(focusDepth);   // refresh the Levels hint for the new anchor
+    if(exact){
+      setFocusDepth(focusDepth);           // refresh the Levels hint for the new anchor
+      // Let the force sim settle a beat, then put the table you typed on screen.
+      clearTimeout(window.__centerT);
+      window.__centerT=setTimeout(()=>centerOn(exact.id),450);
+    }
   });
 }
 
@@ -2835,6 +2864,22 @@ function clearSearch(){
   updateGraph();
 }
 
+// Pan/zoom so a table is actually under your eyes. Searching used to select a
+// node without moving the viewport, so "bseg" left you staring at whatever
+// happened to be centred (usually ACDOCA, the biggest node).
+function centerOn(id){
+  if(!svg||!zoomBehavior||!node) return;
+  const n=node.data().find(x=>x.id===id);
+  if(!n||n.x==null) return;
+  const c=document.getElementById('graph-container');
+  const w=c.clientWidth, h=c.clientHeight;
+  const k=1.5;
+  svg.transition().duration(600).call(
+    zoomBehavior.transform,
+    d3.zoomIdentity.translate(w/2-n.x*k, h/2-n.y*k).scale(k)
+  );
+}
+
 function jumpTo(id){
   const t=TABLES.find(x=>x.id===id); if(!t) return;
   if(!activeModules.has(t.module)){
@@ -2846,6 +2891,7 @@ function jumpTo(id){
   const ids=new Set(getVisibleTables().map(x=>x.id));
   selectTable(t,getVisibleLinks(ids),getVisibleTables());
   node.classed('selected',n=>n.id===id);
+  centerOn(id);
 }
 
 // One guide, used by the desktop sidebar AND the mobile sheet. Previously the
