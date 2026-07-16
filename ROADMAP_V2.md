@@ -1,0 +1,126 @@
+# ERP Galaxy — Roadmap v2
+
+**Status (2026-07-16):** Build 1 **live on TestFlight**, VALID. 217-table curated galaxy + 1,816-table Codex, 98.7% with primary keys, 3,220 foreign-key edges, 43 evidence-backed S/4 migration verdicts. Fully offline. ~30 commits, public repo.
+
+---
+
+## 1. The breakthrough we just had
+
+**SAP's public reference pages carry declared foreign keys** — the "Check table" column. I had told David these sources gave us *no* relationships and that every edge had to be hand-curated. That was wrong: the data sat in 2,033 pages already on disk, in a column I never parsed.
+
+| | |
+|---|---|
+| Raw FK links extracted | 12,594 |
+| Edges after dropping noise (`T000`/`T002`/`T006`) | **3,220** |
+| Tables that gained relationships | **1,588** |
+| Previously "unmapped" Codex tables now mapped | **1,601** |
+
+**The subtle part — FKs are not a substitute for curation.** Only **39%** of the 411 hand-curated edges are declared FKs. The two capture different things:
+
+- **Curated edges** = *business flow*. `BKPF → BSEG` (header→items) is not a foreign key. It's meaning.
+- **FK edges** = *config/lookup*. `BKPF.BUKRS → T001`, `CCIHT_WAH → T001W`.
+
+Dump FKs into the galaxy and `PA0003` (456 edges) drowns it. So FKs surface **on Codex detail sheets**, not in the curated graph. **This is the moat**: anyone can scrape names; the 411 hand-authored business edges are the thing that can't be harvested.
+
+---
+
+## 2. Extending beyond SAP — research verdicts
+
+### SAP SuccessFactors — **PARTIAL / VIABLE**
+- **Model:** OData entities (Employee Central, MDF Generic Objects, per-module services).
+- **Source:** no free tenant, and `$metadata` needs paid-tenant auth — **but SAP publishes static OData reference PDFs openly on help.sap.com** (`SF_EC_OData_API_REF.pdf` et al, 800+ pages).
+- **Relationships:** ✅ Navigation Properties are documented, plus a dedicated EC entity-relationships page.
+- **Licensing:** identical posture to what we already navigated — SAP doc copyright; take **facts**, author our own prose.
+- **Verdict:** *the same playbook we already ran.* Parse public PDFs → own descriptions. Wrinkle: MDF objects are tenant-configurable, so a chunk of the model is un-documentable by nature (SAP's version of Z-tables).
+
+### ServiceNow — **PARTIAL, leaning BLOCKED** ⚠️
+- **Model:** literal Glide tables; `sys_db_object` + `sys_dictionary` are self-describing. Reference fields are clean FKs. ~4,000–6,000 OOB tables, ~150K fields.
+- **The trap:** a **free Personal Developer Instance** gives full admin access to all of it. Technically the best schema source of any platform researched — better than SAP's.
+- **Why we won't:** the Website ToU and PDI Agreement contain **explicit anti-scraping clauses** — *"use any robot, spider... to scrape, mine, retrieve, cache, analyze, or index"* — and PDIs are licensed *"solely for your own internal use to evaluate the ServiceNow Products."* That is far more specific than SAP's generic doc copyright, and it names exactly the mechanism we'd use.
+- **Legitimate slice:** the public **CMDB CI class reference** on docs.servicenow.com is fair game to parse.
+- **Verdict:** take the CMDB-only path or none. **Do not harvest a PDI.** The easiest data here is the most explicitly forbidden — and the reason to decline is that the prohibition is real, not that it's risky to get caught.
+
+### Oracle Fusion Cloud + Dynamics 365 — *research in flight*
+The live question: does **Microsoft's F&O/Dataverse table reference live in a CC-BY-licensed docs repo**? If so, that's a *stronger licensing position than anything we have for SAP* — and would make Dynamics the natural second platform, ahead of SuccessFactors.
+
+### The strategic read
+Every platform has the same shape: **names and fields are gettable; relationships are semi-gettable; meaning is not.** Our differentiator was never the table list — it's the curated business edges, the plain-English voice, and the migration verdicts. That doesn't come from a scraper on any platform, which is exactly why it's defensible.
+
+**Scaling model:** one schema (`id, module, desc, keys, fks, lifecycle, tier`) with a `platform` discriminator. The pipeline (parse → author → gate → merge) is already platform-agnostic — it's in `tools/`. What doesn't scale is curation, and that's the point.
+
+---
+
+## 3. AdMob — how and where
+
+**Verified requirements** (full detail in research notes):
+
+| Required | Detail |
+|---|---|
+| SPM package | `github.com/googleads/swift-package-manager-google-mobile-ads` (SDK 13.6, iOS 13+) |
+| `GADApplicationIdentifier` | Info.plist — SDK crashes without it |
+| `SKAdNetworkItems` | Google's boilerplate list |
+| **Privacy label change** | **Device ID, Advertising Data, IP Address, Crash/Performance, Product Interaction** |
+| UMP/CMP | Mandatory for personalised ads in EEA/UK/CH |
+| `NSUserTrackingUsageDescription` | Only if we call ATT |
+
+### 🔴 Confirmed: no AdSense inside the WebView
+Injecting `<ins class="adsbygoogle">` into our bundled HTML is a **policy violation risking account suspension** — not a grey area. AdSense-in-app is only sanctioned via "WebView API for Ads", which is for wrapping a **live website**; our HTML is local and offline, so it doesn't apply. **Native `BannerView` only.**
+
+### Placement
+Anchored **adaptive banner at the bottom**, as a native SwiftUI view **outside** the WebView, with the WebView's bottom anchor constrained to the banner's top. Do *not* z-order it under the WebView (invisible and untappable). Reserve layout space instead.
+
+**Not interstitials.** Apple **2.5.18** requires clear labelling and an easy close control, and **3.2.2(iii)** rejects apps "designed predominantly for the display of ads." A graph you pan continuously has no natural break point — an interstitial mid-exploration is exactly the "interferes with usability" pattern.
+
+### ⚠️ The strategic cost — read before deciding
+The app today collects **nothing**. That is:
+1. A genuine selling point for consultants on **corporate devices** — and the audience most likely to notice.
+2. **My strongest argument against a Guideline 4.2 rejection.** "It's fully offline with a 1,816-table index" is what makes it not-a-repackaged-website.
+
+AdMob trades both away for what is likely **very low revenue** — a niche B2B audience, on managed devices, many with ad blocking, during working hours.
+
+**Recommendation: don't ship ads in v1.** Get external TestFlight through Beta App Review with the offline story intact. If you want monetisation, the honest options are:
+- **One-off "Pro" IAP** — no data collection, no ATT, no CMP, no privacy-label change, and consultants *do* expense tools.
+- **Free with a paid tier** for the curated galaxy + migration verdicts (the expensive, defensible part), Codex free forever.
+
+If you still want ads: test ad unit IDs work in TestFlight today (`ca-app-pub-3940256099942544/2435281174`), so we can prototype the layout without an AdMob account and decide with it in front of us.
+
+---
+
+## 4. Making it fun, not consulting
+
+Shipped already: the galaxy metaphor, module colours, migration fill (red = dying, green = new), haptics, plain-English voice.
+
+Ideas that fit the tone without becoming gimmicks:
+
+1. **Table of the Day** widget — one table, one plain-English explainer. Home-screen presence, near-zero cost, and it's the single best 4.2 defence (a widget is not a website).
+2. **"Explain like I'm new"** toggle — the `lore` field we designed and never filled. `desc` for the client meeting, `lore` for learning. **This is the "fun mode" already in the schema.**
+3. **Migration Impact score** — for a locked board, "3 of your 5 tables die in S/4." Turns a reference tool into an *assessment* tool. Genuinely novel; nobody's doing it.
+4. **Share a board as an image** — a consultant screenshotting *your* graph into a client deck is free distribution with your name on it.
+5. **Spotlight indexing** — type "BSEG" in iOS search, get the answer. This is the "offline mobile" advantage made real.
+6. ~~Achievements/streaks~~ — **no.** Wrong audience. A data architect does not want a badge.
+
+**The unifying idea:** the websites answer *"what is this table?"* We should answer *"what happens to my tables?"* That's the question with a deadline attached.
+
+---
+
+## 5. Scalability
+
+**Data:** 576 KB HTML with everything embedded. Fine today; at ~4 platforms it's ~2 MB of JS parsed at launch. **Trigger point:** move the Codex to **SwiftData** when we add platform #2 — which also unlocks Spotlight, widgets, and Siri.
+
+**Graph:** 217 nodes is near the mobile ceiling. **Never** put 1,816 in the force sim. The lockable board is the answer — and it's built.
+
+**Pipeline:** already platform-agnostic (`tools/`: parse → build → author → gate → merge). Adding a platform is a parser + a module map.
+
+**The real bottleneck is curation.** 411 edges are hand-made. That doesn't parallelise — but it's also the moat, so the constraint and the differentiator are the same thing.
+
+---
+
+## 6. Next
+
+1. **Beta App Review** for external TestFlight — the real 4.2 test. *Do this before adding ads.*
+2. **Fill `lore`** for the ~150 famous tables — the fun mode is designed, specced, and empty.
+3. **Widget + Spotlight** — cheap, high-impact, strong 4.2 defence.
+4. **Decide monetisation** — recommendation: IAP over ads.
+5. **Platform #2** — pending the Dynamics CC-BY answer.
+
+*Open: 12 tables where the two key sources disagree (left curated, not guessed). 68 Codex tables without keys. `lore` at 0. No Fiori data — no source exists in what we have.*
