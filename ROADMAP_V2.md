@@ -40,11 +40,47 @@ Dump FKs into the galaxy and `PA0003` (456 edges) drowns it. So FKs surface **on
 - **Legitimate slice:** the public **CMDB CI class reference** on docs.servicenow.com is fair game to parse.
 - **Verdict:** take the CMDB-only path or none. **Do not harvest a PDI.** The easiest data here is the most explicitly forbidden — and the reason to decline is that the prohibition is real, not that it's risky to get caught.
 
-### Oracle Fusion Cloud + Dynamics 365 — *research in flight*
-The live question: does **Microsoft's F&O/Dataverse table reference live in a CC-BY-licensed docs repo**? If so, that's a *stronger licensing position than anything we have for SAP* — and would make Dynamics the natural second platform, ahead of SuccessFactors.
+### Microsoft Dynamics 365 — **VIABLE. The standout finding.** ⭐
+The hunch paid off, and I verified the two load-bearing claims by hand rather than trusting the research:
+
+```
+microsoft/CDM            LICENSE → "Attribution 4.0 International"   ✅ CC-BY-4.0
+MicrosoftDocs/powerapps-docs  LICENSE → "Attribution 4.0 International"   ✅ CC-BY-4.0
+
+CustTable Main.manifest.cdm.json → relationships: 473 explicit edges
+   CustTable -> CustBankAccount         via Relationship_BankAccountsRelationshipId
+   CustTable -> BankCentralBankPurpose  via Relationship_BankCentralBankPurposeRelationshipId
+   CustTable -> CashDisc                via Relationship_CashDiscRelationshipId
+```
+
+| | SAP (what we did) | Dynamics 365 (what we'd do) |
+|---|---|---|
+| Format | 30 PDFs, 3 layouts, 4 parser bugs | **structured JSON** |
+| Relationships | **none** — 411 hand-curated | **included**: `fromEntity`/`toEntity`/`attribute` |
+| Licence | SAP copyright — facts only, rewrite all prose | **CC-BY-4.0 — redistributable with attribution** |
+| Scale | 1,816 | ~1,684 (F&O/CDM) + 593 (Dataverse) |
+
+**Every constraint that made SAP hard is absent here.** No PDF archaeology, no truncated columns, no form-feed page breaks, no licensing tightrope, no hand-curated edges. The graph builds itself. Dynamics is a **better second platform than SAP was a first**, and it's the clear next move.
+
+### Oracle Fusion Cloud — **PARTIAL / VIABLE**
+- **Publishes foreign keys per table, in both directions** — `AP_INVOICES_ALL` lists ~40 FK rows. Structurally better than SAP.
+- Clean static HTML on docs.oracle.com, no login. Likely several thousand tables across seven guides.
+- **Catch:** standard Oracle all-rights-reserved notice, no redistribution grant. Same posture as SAP — structural facts are fine, Oracle's prose is not. Workable, just not free of the rewrite tax.
+
+### Ranked
+| Platform | Verdict | Licence | Relationships | Move |
+|---|---|---|---|---|
+| **Dynamics 365** | ⭐ **VIABLE** | **CC-BY-4.0** | **included** | **do this next** |
+| Oracle Fusion | VIABLE | proprietary | published FKs | strong third |
+| SuccessFactors | PARTIAL | SAP copyright | nav properties | same playbook as SAP |
+| ServiceNow | **leaning BLOCKED** | ToU forbids scraping | clean FKs | CMDB docs only |
 
 ### The strategic read
-Every platform has the same shape: **names and fields are gettable; relationships are semi-gettable; meaning is not.** Our differentiator was never the table list — it's the curated business edges, the plain-English voice, and the migration verdicts. That doesn't come from a scraper on any platform, which is exactly why it's defensible.
+Every platform has the same shape: **names and fields are gettable; relationships are sometimes gettable; meaning never is.** Our differentiator was never the table list — it's the curated business edges, the plain-English voice, and the migration verdicts.
+
+Note the irony worth sitting with: **SAP was the hardest possible starting point** — PDFs, no relationships, hostile licensing. We did the difficult one first. Everything after this is easier, and the pipeline in `tools/` already generalises.
+
+But note the flip side too. If Microsoft hands you 1,684 tables *with* edges under CC-BY, then **so can any competitor, in a weekend.** The SAP corpus is defensible *because* it was miserable to build. Dynamics is cheap to add and cheap to copy — so the moat there has to be the curation and the migration story, not the data.
 
 **Scaling model:** one schema (`id, module, desc, keys, fks, lifecycle, tier`) with a `platform` discriminator. The pipeline (parse → author → gate → merge) is already platform-agnostic — it's in `tools/`. What doesn't scale is curation, and that's the point.
 
