@@ -162,8 +162,19 @@
     .count-badge{top:6px;right:6px;font-size:.6rem;}
     .legend{display:none;}
     .mobile-fab{display:flex!important;}
+    /* Sit the zoom column directly above the FAB, centres aligned.
+       FAB is 56px tall at 16px up, so clear 16+56+12 = 84px.
+       44px buttons meet the HIG minimum tap target (was 30px). */
+    .graph-controls{bottom:84px;right:22px;gap:8px;}
+    .ctrl-btn{width:44px;height:44px;font-size:1.1rem;}
   }
-  .mobile-fab{display:none;position:fixed;bottom:80px;right:16px;width:48px;height:48px;background:linear-gradient(135deg,var(--fi),var(--co));border-radius:50%;border:none;color:#fff;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;z-index:100;box-shadow:0 4px 20px rgba(79,156,249,.4);}
+  /* Fixed = viewport coords, so it must own its safe-area offset. The zoom
+     controls are absolute inside the already-padded container; keeping the two
+     in one column below is what stops them colliding. */
+  .mobile-fab{display:none;position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);
+    width:56px;height:56px;background:linear-gradient(135deg,var(--fi),var(--co));border-radius:50%;border:none;
+    color:#fff;font-size:1.4rem;cursor:pointer;align-items:center;justify-content:center;z-index:100;
+    box-shadow:0 4px 20px rgba(79,156,249,.4);}
   /* Fun search glow */
   .search-box input:focus{border-color:var(--fi);box-shadow:0 0 0 2px rgba(79,156,249,.15);}
   @keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
