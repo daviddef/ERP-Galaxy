@@ -181,7 +181,40 @@ Anatomy of the 106 mismatches:
 - `ANKT` curated `[MANDT,ANLKL,SPRAS]` vs scraped `[MANDT,SPRAS,ANLKL]` — **order differs**, and order is part of a primary key.
 - `BUT000` curated `MANDT` vs scraped `CLIENT` — likely an ECC-vs-S/4 release difference, i.e. *both* right for their release. Which means **release matters and neither dataset records it.**
 
-**This is unresolved.** I could not obtain the independent second source (leanx.eu) needed to adjudicate — the session hit its limit. **Do not treat either key set as trustworthy until a tiebreak is run.** The plan (`§7`) assumed the curated 217 were ground truth; that assumption is now dead.
+### ✅ RESOLVED (2026-07-16) — the curated keys are wrong, the scrapers are right
+
+Ran the tiebreak: harvested the same 217 tables from **leanx.eu**, an independent site with a different owner, different layout, and a different parser. Three-way comparison over the tables where both sources returned keys:
+
+| Comparison | Result |
+|---|---|
+| **sapdatasheet vs leanx agree with each other** | **165 / 165 — 100.0%, zero disagreements** |
+| Curated matches them | 70 (42.4%) |
+| **Curated disagrees** | **95 (57.6%)** |
+
+Two independently-built sources agreeing perfectly on 165 tables, while the hand-authored data disagrees with both on 58% of them, admits only one reading: **the curated `keyFields` in `sap-table-explorer.html` are wrong more often than they are right.**
+
+Severity of the 95 errors:
+
+| Error type | Count | Consequence |
+|---|---|---|
+| **Curated is missing key fields** | **45** | **a join written from this data returns wrong rows** |
+| Other divergence (wrong fields entirely) | 47 | wrong keys |
+| Key order wrong only | 3 | order is part of the key |
+
+Examples where both sources overrule the curated data:
+
+| Table | Curated | Both sources |
+|---|---|---|
+| `ANEP` | MANDT, BUKRS, ANLN1, ANLN2, GJAHR, LNRAN | + **AFABE, ZUJHR, ZUCOD** |
+| `AGR_USERS` | MANDT, AGR_NAME, UNAME | + **FROM_DAT, TO_DAT** |
+| `ANKT` | MANDT, ANLKL, SPRAS | **MANDT, SPRAS, ANLKL** (order) |
+| `A304` | …, KUNNR, MATNR, DATBI | …, MATNR, **KFRST**, DATBI |
+
+**Implication — this reverses the original plan.** The scrape was meant to *extend* the dataset to Tier 2. It turns out it also **repairs Tier 1**. The 217 curated tables are the app's flagship content — the tables a consultant actually looks up — and their primary keys are majority-wrong today. Shipping that to TestFlight would put a wrong `ANEP` key in front of a client.
+
+**Action:** overwrite curated `keyFields` from the harvest, keeping the hand-written `plainEnglish` prose (which was never in question). Preserve the originals in git history for audit.
+
+**Residual caveat:** `BUT000` returns `MANDT` (curated) vs `CLIENT` (both sources) — an ECC-vs-S/4 release difference where each is right for its release. **Neither dataset records which release it describes.** The schema needs a `release` marker; until it has one, a handful of client/field-rename cases will look like errors when they are not.
 
 ### ⚠️ Simplification List coverage is far lower than hoped
 
