@@ -1,0 +1,143 @@
+# App Store submission — metadata
+
+**App:** `6791550922` · `com.daviddef.erpgalaxy` · v1.0 · primary locale **en-AU**
+
+---
+
+## Name & subtitle
+
+| Field | Value | Limit |
+|---|---|---|
+| Name | `ERP Galaxy` | 30 |
+| Subtitle | `Offline SAP table reference` | 30 (27 used) |
+
+**⚠️ Trademark judgement call.** SAP's guidance forbids "SAP" *in a product name* but permits
+descriptive use ("for SAP", "SAP-compatible"). The **name is clean**. The **subtitle uses SAP
+descriptively** — which is the standard nominative-fair-use register every competing site uses,
+but it sits directly under the app name where Apple's metadata review sometimes asks for proof
+of trademark rights.
+
+If Apple pushes back, the fix is one field: drop the subtitle to `ECC to S/4HANA table atlas`
+or `Offline table reference` and keep SAP in the description and keywords only, where it is
+plainly descriptive. Not worth pre-emptively crippling discovery — but worth knowing which
+field to change.
+
+---
+
+## Keywords (100 char limit)
+
+```
+SAP,ABAP,table,tcode,S4HANA,ECC,BSEG,ACDOCA,migration,consultant,dictionary,SE16,ERP,fields
+```
+90 characters. Notes:
+- Do **not** repeat words already in the name/subtitle — Apple indexes those anyway, so
+  repeating them wastes the budget.
+- Real table names (`BSEG`, `ACDOCA`) are in because that is literally what people search.
+- Comma-separated, no spaces — spaces waste characters.
+
+---
+
+## Promotional text (170, editable without a new build)
+
+```
+The ECC deadline is 2027. Lock your tables to a board and see which ones survive S/4HANA —
+which disappear, which become compatibility views, and where the data moved.
+```
+
+---
+
+## Description
+
+See `metadata/description.txt` (applied via API). Structure:
+1. One-line what-it-is
+2. The migration hook (the differentiator the market test identified)
+3. Feature list
+4. The offline/privacy promise
+5. Honest limits
+6. Trademark disclaimer
+
+---
+
+## URLs
+
+| Field | Value |
+|---|---|
+| Privacy Policy | `https://daviddef.github.io/ERP-Galaxy/privacy.html` ✅ live |
+| Support | `https://github.com/daviddef/ERP-Galaxy/issues` |
+| Marketing | `https://github.com/daviddef/ERP-Galaxy` |
+
+Privacy policy is served by GitHub Pages from `/docs` on the public repo. **Apple checks this
+URL** — if the repo ever goes private, the link dies and the next review fails.
+
+---
+
+## Categories
+
+| | | Why |
+|---|---|---|
+| Primary | `DEVELOPER_TOOLS` | The audience is ABAP devs, data architects, consultants. Small category — easier to be visible. |
+| Secondary | `REFERENCE` | Literally what it is. |
+
+Alternative: `BUSINESS` primary. It's a bigger, more crowded category, so I chose the
+narrower one. Easy to change.
+
+---
+
+## Age rating
+
+All questions answered **NONE** — no violence, no profanity, no gambling, no user content,
+no unrestricted web access. The app is an offline reference tool. Expected rating: **4+**.
+
+Note `unrestrictedWebAccess: false` is honest here precisely *because* the WKWebView loads
+bundled local HTML and the app makes no network requests. If ads were added this would need
+revisiting.
+
+---
+
+## App Privacy (nutrition label)
+
+**Nothing collected.** No data types, no tracking. This is genuinely true today:
+no analytics, no ads, no network calls.
+
+**This is also the strongest asset the listing has** — and AdMob would destroy it. Adding ads
+forces Device ID, Advertising Data and IP Address onto the label, requires an ATT prompt, and
+undermines the Guideline 4.2 defence that the app is not a repackaged web page.
+
+---
+
+## Screenshots
+
+Required: 6.7" iPhone. Since the app is Universal (`TARGETED_DEVICE_FAMILY: 1,2`), iPad
+13" is required too.
+
+| Display type | Size | Source |
+|---|---|---|
+| `APP_IPHONE_67` | 1290×2796 | iPhone 17 Pro Max simulator |
+| `APP_IPAD_PRO_3GEN_129` | 2048×2732 | iPad Pro simulator |
+
+---
+
+## Review notes
+
+Same substance as the TestFlight notes — they pre-empt Guideline 4.2, which remains the
+single biggest risk to this listing:
+
+- No login. No demo account needed.
+- Not a web wrapper: 2,033 records bundled, no hosted URL, **zero network calls**, runs in
+  Airplane Mode. D3 is a bundled local renderer.
+- Native: Spotlight index, WidgetKit extension, haptics, share sheet.
+- 30-second path: search `BSEG` → tap → burger menu → lock tables → Impact.
+
+---
+
+## Status
+
+- [x] Privacy policy hosted and verified live
+- [ ] Name/subtitle/URLs written
+- [ ] Description/keywords/promo written
+- [ ] Categories set
+- [ ] Age rating declared
+- [ ] Screenshots captured and uploaded
+- [ ] Build attached (currently **build 1** — must be updated)
+- [ ] App Privacy declared *(web UI only — API cannot do this)*
+- [ ] **Submit** — requires David's explicit go-ahead: this creates a public listing

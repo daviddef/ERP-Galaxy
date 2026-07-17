@@ -1,0 +1,43 @@
+An offline reference for the SAP table universe — built for functional consultants, data architects, ABAP developers and ECC to S/4HANA migration teams.
+
+WHAT HAPPENS TO MY TABLES?
+
+Every reference site can tell you what a table is. ERP Galaxy tells you what happens to it in S/4HANA.
+
+Lock the tables you actually care about to a board, tap Impact, and get a verdict on each one:
+
+• Disappears — not in S/4HANA, and anything reading it needs reworking
+• Data moves — still there, but no longer the system of record
+• Read-only view — survives as a compatibility view; reads work, writes don't
+• Changes — different structure or semantics
+• Carries over — no simplification item
+
+Verdicts are backed by a quote from SAP's own Simplification List, with the item number, so you can cite it rather than trust us.
+
+EXPLORE THE GALAXY
+
+217 core tables rendered as an interactive force-directed graph with hand-mapped business relationships — the header-to-item links, the master-data joins, the ones a schema dump can't tell you about. Planet colour shows migration fate at a glance: red disappears, green is new, orange changes, slate carries over.
+
+SEARCH 2,033 TABLES
+
+Plain-English descriptions, primary key fields and declared foreign keys. Covers FI, CO, MM, SD, PP, HR, WM, PM, QM, PS, EHS, FM and Basis. Type BSEG into iOS Spotlight and get the answer without opening the app.
+
+TWO WAYS TO READ
+
+Fun mode explains tables the way a good colleague would — with analogies, and the warning that matters ("always filter RLDNR"). It's also the accessible mode: larger, bolder, higher contrast. Classic mode gives you the flat one-liner, for when you're screen-sharing with a client.
+
+TABLE OF THE DAY
+
+A home-screen widget with one table and one plain-English explanation. A quiet way to learn the model.
+
+COMPLETELY OFFLINE
+
+No account. No sign-up. No network requests of any kind — the entire catalogue ships inside the app. It works in Airplane Mode, on a locked-down client laptop, or on a plant floor with no signal. Nothing you do is transmitted, because nothing can be.
+
+No ads. No tracking. No analytics. No data collection of any kind.
+
+HONEST ABOUT ITS LIMITS
+
+The 217-table galaxy has curated relationships; the wider 2,033-table index has descriptions, keys and foreign keys but not hand-mapped business links — and the app tells you which is which rather than pretending. Migration verdicts exist where SAP published a simplification item; where they didn't, it says so instead of guessing.
+
+ERP Galaxy is an independent reference tool. It is not affiliated with, authorised by, endorsed by or sponsored by SAP SE. SAP, ECC and S/4HANA are trademarks of SAP SE, used here only to describe the software this app is a reference for.
