@@ -110,10 +110,26 @@ undermines the Guideline 4.2 defence that the app is not a repackaged web page.
 Required: 6.7" iPhone. Since the app is Universal (`TARGETED_DEVICE_FAMILY: 1,2`), iPad
 13" is required too.
 
-| Display type | Size | Source |
+✅ **Uploaded and accepted (all COMPLETE, no errors):**
+
+| Display type | Size | Shots |
 |---|---|---|
-| `APP_IPHONE_67` | 1290×2796 | iPhone 17 Pro Max simulator |
-| `APP_IPAD_PRO_3GEN_129` | 2048×2732 | iPad Pro simulator |
+| `APP_IPHONE_67` | 1320×2868 | galaxy · BSEG detail · migration impact |
+| `APP_IPAD_PRO_3GEN_129` | 2064×2752 | galaxy + sidebar · BSEG detail |
+
+Apple accepted the 6.9" size (1320×2868) into the 6.7" slot, and the 13" iPad size
+(2064×2752) into the 12.9" slot — no resizing needed.
+
+**How they were taken.** The simulator can't be tapped from the CLI (`simctl` has no input
+injection), so `tools/screenshot_harness.py` injects a one-shot state change into a throwaway
+copy of the HTML — one state per build, held permanently. Timed multi-state harnesses don't
+work: each `simctl io screenshot` takes ~60s, so a 6-second window is unhittable.
+
+Two traps worth remembering:
+- **`localStorage` survives reinstall.** The board from the impact shot persisted into the
+  graph shot. `simctl uninstall` first, or clear it in the harness.
+- **Never commit the harness.** It goes into `ERPGalaxy/Resources/Web/erp-galaxy.html`, which
+  is a *copy* of the source. Always `cp sap-table-explorer.html` back afterwards and verify.
 
 ---
 
@@ -133,11 +149,11 @@ single biggest risk to this listing:
 ## Status
 
 - [x] Privacy policy hosted and verified live
-- [ ] Name/subtitle/URLs written
-- [ ] Description/keywords/promo written
-- [ ] Categories set
-- [ ] Age rating declared
-- [ ] Screenshots captured and uploaded
+- [x] Name/subtitle/URLs written
+- [x] Description/keywords/promo written
+- [x] Categories set (DEVELOPER_TOOLS + REFERENCE)
+- [x] Age rating declared (all 21 answers → 4+)
+- [x] Screenshots captured and uploaded (5, all COMPLETE)
 - [ ] Build attached (currently **build 1** — must be updated)
 - [ ] App Privacy declared *(web UI only — API cannot do this)*
 - [ ] **Submit** — requires David's explicit go-ahead: this creates a public listing
