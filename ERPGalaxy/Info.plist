@@ -27,6 +27,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key><string>com.daviddef.erpgalaxy</string>
+			<key>CFBundleURLSchemes</key><array><string>erpgalaxy</string></array>
+		</dict>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key><false/>
 </dict>
 </plist>

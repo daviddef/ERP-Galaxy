@@ -18,6 +18,12 @@ struct ERPGalaxyApp: App {
                         router.pending = id
                     }
                 }
+                // Widget tap: erpgalaxy://table/BSEG
+                .onOpenURL { url in
+                    guard url.scheme == "erpgalaxy", url.host == "table" else { return }
+                    let id = url.lastPathComponent
+                    if !id.isEmpty { router.pending = id }
+                }
         }
     }
 }

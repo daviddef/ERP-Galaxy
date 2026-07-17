@@ -88,6 +88,7 @@
   .fav-btn.on{color:#fbbf24;}
   .rel-dir{display:inline-block;width:14px;color:var(--text-muted);}
   .rel-via{font-size:.62rem;color:var(--text-muted);margin-left:6px;}
+  .cx-in{font-size:.72rem;}
   .cx-desc{font-size:.7rem;color:var(--text-muted);margin-top:2px;line-height:1.35;}
   /* "What happens in S/4" verdict box — evidence-backed, sourced. */
   .lc-box{border-radius:10px;padding:11px 12px;margin:10px 0 14px;border:1px solid var(--border);background:var(--surface2);}
@@ -2737,7 +2738,7 @@ function renderFavs(){
   box.innerHTML=`<div class="cx-head">★ Favourites</div>${rows}`;
   box.classList.add('visible');
 }
-renderFavs.hide=()=>{ const b=document.getElementById('codex-results'); if(b){b.classList.remove('visible');b.innerHTML='';} };
+renderFavs.hide=hideResults;
 
 // ── Codex ──────────────────────────────────────────────────────────────────
 // 1,816 tables that exist in the index but not the graph: we have their
@@ -2745,23 +2746,34 @@ renderFavs.hide=()=>{ const b=document.getElementById('codex-results'); if(b){b.
 // They surface as a results list instead.
 function codexSearch(q){
   if(!q || q.length<2) return [];
-  const inGraph=new Set(TABLES.map(t=>t.id));
-  const out=[];
+  // Search the galaxy AND the index. Graph tables used to be skipped entirely,
+  // so typing "bseg" returned every Codex table whose description mentioned
+  // BSEG — but never BSEG itself.
+  const inGraph=new Map(TABLES.map(t=>[t.id,t]));
+  const hits=[];
+  const score=(id,desc,mod)=>{
+    const l=id.toLowerCase();
+    if(l===q) return 0;                       // exact id
+    if(l.startsWith(q)) return 1;             // id prefix
+    if(l.includes(q)) return 2;               // id contains
+    if(mod.toLowerCase()===q) return 3;       // whole module
+    if(desc&&desc.toLowerCase().includes(q)) return 4;  // mentioned in prose
+    return -1;
+  };
+  for(const [id,t] of inGraph){
+    const sc=score(id, t.shortDesc||'', t.module);
+    if(sc>=0) hits.push({id, sc, graph:true});
+  }
   for(const id in CODEX){
     if(inGraph.has(id)) continue;
     const [mod,desc]=CODEX[id];
-    if(id.toLowerCase().includes(q) || (desc&&desc.toLowerCase().includes(q)) || mod.toLowerCase()===q){
-      out.push(id);
-      if(out.length>=60) break;
-    }
+    const sc=score(id, desc||'', mod);
+    if(sc>=0) hits.push({id, sc, graph:false});
   }
-  // exact/prefix matches first
-  out.sort((a,b)=>{
-    const ax=a.toLowerCase()===q?0:a.toLowerCase().startsWith(q)?1:2;
-    const bx=b.toLowerCase()===q?0:b.toLowerCase().startsWith(q)?1:2;
-    return ax-bx || a.localeCompare(b);
-  });
-  return out;
+  // Rank BEFORE truncating — the old code capped at 60 first, so an exact
+  // match could be discarded before sorting ever saw it.
+  hits.sort((a,b)=> a.sc-b.sc || (a.graph===b.graph?0:a.graph?-1:1) || a.id.localeCompare(b.id));
+  return hits.slice(0,60);
 }
 
 function renderCodexResults(q){
@@ -2769,18 +2781,49 @@ function renderCodexResults(q){
   if(!box) return;
   const hits=codexSearch(q);
   if(!hits.length){ box.classList.remove('visible'); box.innerHTML=''; return; }
-  const rows=hits.map(id=>{
-    const [mod,desc]=CODEX[id];
+  const rows=hits.map(h=>{
+    const t=h.graph?TABLES.find(x=>x.id===h.id):null;
+    const mod=t?t.module:CODEX[h.id][0];
+    const desc=t?(t.shortDesc||''):(CODEX[h.id][1]||'');
     const col=MODULE_COLORS[mod]||'#94a3b8';
-    return `<div class="cx-row" onclick="openCodex('${id}')">
-        <div class="cx-top"><span class="cx-id">${id}</span>
+    const open=h.graph?`jumpTo('${h.id}');hideResults()`:`openCodex('${h.id}');hideResults()`;
+    const tag=h.graph?`<span class="cx-in" title="Mapped in the galaxy">🌌</span>`:'';
+    return `<div class="cx-row" onclick="${open}">
+        <div class="cx-top"><span class="cx-id">${h.id}</span>${tag}
         <span class="cx-mod" style="background:${col}22;color:${col}">${MODULE_EMOJIS[mod]||''} ${mod}</span>
-        ${favBtn(id)}${lockBtn(id)}</div>
+        ${favBtn(h.id)}${lockBtn(h.id)}</div>
         <div class="cx-desc">${desc||'<span style="opacity:.6">No description</span>'}</div>
       </div>`;
   }).join('');
-  box.innerHTML=`<div class="cx-head">${hits.length}${hits.length>=60?'+':''} more in the index — not yet mapped in the galaxy</div>${rows}`;
+  const g=hits.filter(h=>h.graph).length;
+  box.innerHTML=`<div class="cx-head">${hits.length}${hits.length>=60?'+':''} match${hits.length===1?'':'es'} · ${g} in the galaxy 🌌</div>${rows}`;
   box.classList.add('visible');
+}
+
+
+// Tap anywhere outside the search box or the results list to dismiss them.
+// Previously the only way out was picking a row or clearing the field.
+function initDismissResults(){
+  const handler=e=>{
+    const box=document.getElementById('codex-results');
+    if(!box || !box.classList.contains('visible')) return;
+    const sb=document.querySelector('.search-box');
+    if(box.contains(e.target) || (sb && sb.contains(e.target))) return;   // inside: ignore
+    hideResults();
+    document.getElementById('search').blur();
+  };
+  // pointerdown fires before the graph's own handlers and covers touch + mouse
+  document.addEventListener('pointerdown', handler, true);
+  // dragging the canvas should dismiss too
+  const gc=document.getElementById('graph-container');
+  if(gc) gc.addEventListener('touchstart', ()=>{ hideResults(); }, {passive:true});
+  // Esc on desktop
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ hideResults(); toggleTools(false); } });
+}
+
+function hideResults(){
+  const b=document.getElementById('codex-results');
+  if(b){ b.classList.remove('visible'); b.innerHTML=''; }
 }
 
 function fkRows(id){
@@ -2875,6 +2918,7 @@ function exitFocus(){
 
 function init(){
   setFunMode(funMode);
+  initDismissResults();
   buildModuleFilters(); buildLegend(); buildGraph(); initSheetSwipe(); renderLockBar();
   document.getElementById('search').addEventListener('focus',()=>{ if(!searchQuery) renderFavs(); });
   document.getElementById('search').addEventListener('input',e=>{
