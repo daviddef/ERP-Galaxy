@@ -82,10 +82,10 @@
   body.fun .migration-box{font-size:.88rem;line-height:1.6;}
   body.fun .mobile-panel-title,body.fun #sidebar-header{font-size:1.05rem;}
   body.fun .im-blurb,body.fun .lc-ev{font-size:.78rem;}
-  .fun-toggle{display:none;width:100%;background:var(--surface2);border:1px solid var(--border);
-    color:var(--text-muted);border-radius:8px;padding:9px;font-size:.78rem;font-weight:700;
-    cursor:pointer;font-family:inherit;}
-  .fun-toggle.on{background:rgba(167,139,250,.16);border-color:#a78bfa;color:#a78bfa;}
+  .mode-label{display:none;font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--text-muted);font-weight:700;}
+  .mode-group{display:none;}
+  .toggle-btn.mode-fun.active{background:#a78bfa;color:#fff;}
   .lock-btn{background:none;border:none;font-size:.95rem;cursor:pointer;padding:2px 4px;line-height:1;
     filter:grayscale(1);opacity:.55;font-family:inherit;}
   .lock-btn.on{filter:none;opacity:1;}
@@ -257,7 +257,8 @@
     .toggle-btn{flex:1;padding:11px 8px;font-size:.82rem;}
     .depth-control{display:block;padding-bottom:2px;border-bottom:1px solid var(--border);}
     .legend-block{display:block;}
-    .fun-toggle{display:block;}
+    .mode-label{display:block;}
+    .mode-group{display:flex;width:100%;}
     /* Drawer has vertical room: give each module its full name. */
     .module-filters{display:flex!important;flex-direction:column;gap:6px;overflow:visible;}
     .mod-chip{display:flex;flex-direction:column;gap:1px;width:100%;border-radius:8px;
@@ -328,7 +329,11 @@
       <button class="toggle-btn s4" id="btn-s4" onclick="setView('s4')">S/4HANA</button>
       <button class="toggle-btn both" id="btn-both" onclick="setView('both')">Both</button>
     </div>
-    <button class="fun-toggle on" id="fun-toggle" onclick="setFunMode(!funMode)">🎭 Fun mode</button>
+    <div class="mode-label">Reading mode</div>
+    <div class="toggle-group mode-group">
+      <button class="toggle-btn" id="btn-classic" onclick="setFunMode(false)">📋 Classic</button>
+      <button class="toggle-btn mode-fun active" id="btn-fun" onclick="setFunMode(true)">🎭 Fun</button>
+    </div>
     <div class="depth-control">
       <label for="depth">Levels <span class="depth-value" id="depth-value">1</span></label>
       <input type="range" id="depth" min="1" max="4" step="1" value="1"
@@ -2559,8 +2564,9 @@ function setFunMode(v){
   funMode=!!v;
   document.body.classList.toggle('fun', funMode);
   try{ localStorage.setItem('erpgalaxy.fun', funMode?'1':'0'); }catch(e){}
-  const b=document.getElementById('fun-toggle');
-  if(b){ b.classList.toggle('on',funMode); b.textContent=funMode?'🎭 Fun mode':'📋 Straight'; }
+  const c=document.getElementById('btn-classic'), f=document.getElementById('btn-fun');
+  if(c) c.classList.toggle('active', !funMode);
+  if(f) f.classList.toggle('active', funMode);
   if(window.webkit?.messageHandlers?.hapticFeedback){
     window.webkit.messageHandlers.hapticFeedback.postMessage({style:'light'});
   }
