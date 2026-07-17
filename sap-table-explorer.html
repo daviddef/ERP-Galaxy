@@ -62,6 +62,26 @@
   .im-blurb{font-size:.66rem;color:var(--text-muted);line-height:1.35;}
   .lk-impact{flex-shrink:0;background:var(--surface2);border:1px solid var(--border);color:var(--text);
     border-radius:14px;padding:4px 9px;font-size:.64rem;font-weight:700;cursor:pointer;font-family:inherit;}
+  /* Fun mode is also the accessible mode: larger, bolder, higher contrast.
+     Scoped to a body class so Straight mode stays compact for client meetings. */
+  body.fun .plain-english{font-size:1.02rem;line-height:1.65;color:var(--text);font-weight:500;
+    background:linear-gradient(135deg,rgba(79,156,249,.10),rgba(167,139,250,.10));
+    border-left:3px solid #a78bfa;padding:12px 14px;border-radius:10px;}
+  body.fun .section-title{font-size:.95rem;font-weight:800;letter-spacing:.01em;
+    background:linear-gradient(135deg,#4f9cf9,#a78bfa);-webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;}
+  body.fun .lc-head{font-size:1.05rem;}
+  body.fun .lc-body{font-size:.88rem;line-height:1.6;color:var(--text);}
+  body.fun .key-field-chip{font-size:.86rem;padding:6px 9px;}
+  body.fun .kf-name{font-weight:800;}
+  body.fun .kf-desc{font-size:.8rem;}
+  body.fun .rel-item{font-size:.88rem;padding:8px 6px;}
+  body.fun .rel-to{font-weight:800;}
+  body.fun .rel-via{font-size:.76rem;}
+  body.fun .tcode-chip{font-size:.82rem;padding:5px 9px;}
+  body.fun .migration-box{font-size:.88rem;line-height:1.6;}
+  body.fun .mobile-panel-title,body.fun #sidebar-header{font-size:1.05rem;}
+  body.fun .im-blurb,body.fun .lc-ev{font-size:.78rem;}
   .fun-toggle{display:none;width:100%;background:var(--surface2);border:1px solid var(--border);
     color:var(--text-muted);border-radius:8px;padding:9px;font-size:.78rem;font-weight:700;
     cursor:pointer;font-family:inherit;}
@@ -319,9 +339,10 @@
     <div class="legend-block" id="legend-block">
       <div class="lg-title">Legend</div>
       <div class="lg-sub">Planet fill — migration fate</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#ef444488;border-color:#ef4444"></span> Disappears — not in S/4HANA</div>
       <div class="lg-row"><span class="lg-dot" style="background:#22c55e88;border-color:#22c55e"></span> New in S/4HANA</div>
-      <div class="lg-row"><span class="lg-dot" style="background:#ef444488;border-color:#ef4444"></span> Disappears — ECC6 only</div>
-      <div class="lg-row"><span class="lg-dot" style="background:#4f9cf92a;border-color:#4f9cf9"></span> Carries over (tinted by module)</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#f59e0b7a;border-color:#f59e0b"></span> Changes, moves, or becomes a read-only view</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#1e2637cc;border-color:#64748b"></span> Carries over unchanged</div>
       <div class="lg-sub">Ring — S/4 status</div>
       <div class="lg-row"><span class="lg-ring" style="border-color:#22c55e"></span> New</div>
       <div class="lg-row"><span class="lg-ring" style="border-color:#f59e0b"></span> Modified</div>
@@ -2536,6 +2557,7 @@ let funMode=true;
 try{ const v=localStorage.getItem('erpgalaxy.fun'); if(v!==null) funMode=(v==='1'); }catch(e){}
 function setFunMode(v){
   funMode=!!v;
+  document.body.classList.toggle('fun', funMode);
   try{ localStorage.setItem('erpgalaxy.fun', funMode?'1':'0'); }catch(e){}
   const b=document.getElementById('fun-toggle');
   if(b){ b.classList.toggle('on',funMode); b.textContent=funMode?'🎭 Fun mode':'📋 Straight'; }
@@ -3097,9 +3119,19 @@ function buildGraph(){
 // Fill carries the migration signal at a glance: red = disappearing,
 // green = new in S/4. Everything else keeps its faint module tint.
 function nodeFill(d){
-  if(d.s4status==='deprecated' || (d.ecc && !d.s4)) return '#ef444488';   // going away
-  if(d.s4status==='new' || (!d.ecc && d.s4))       return '#22c55e88';   // new in S/4
-  return MODULE_COLORS[d.module]+'2a';
+  // Fill = migration fate, one colour language everywhere:
+  //   red    disappears        green  new in S/4
+  //   orange changes / moves / compatibility view
+  //   slate  carries over unchanged
+  // Driven by tableFate() so the graph, the board and the legend can't disagree.
+  switch(tableFate(d.id)){
+    case 'dies':    return '#ef444488';
+    case 'arrives': return '#22c55e88';
+    case 'moves':
+    case 'compat':
+    case 'changes': return '#f59e0b7a';
+    default:        return '#1e2637cc';   // carries over — deliberately quiet
+  }
 }
 
 function statusColor(d){
@@ -3129,6 +3161,38 @@ function selectTable(d,links,tables){
   if(window.innerWidth<=700){openMobilePanel(d.id);}
 }
 
+
+// Every neighbour in the graph, not just the curated outbound list. The panel
+// used to render d.relations only, so a table others point AT under-reported
+// badly — MARA showed 6 while the graph drew 37.
+let _revRel=null;
+function graphRelations(d){
+  if(!_revRel){
+    _revRel={};
+    TABLES.forEach(t=>(t.relations||[]).forEach(r=>{
+      (_revRel[r.to]=_revRel[r.to]||[]).push({from:t.id, desc:r.desc});
+    }));
+  }
+  const out=[];
+  const seen=new Set();
+  (d.relations||[]).forEach(r=>{
+    if(seen.has(r.to)) return;
+    seen.add(r.to); out.push({to:r.to, desc:r.desc, dir:'out'});
+  });
+  // inbound: the curated note lives on the OTHER table, so reuse it
+  (_revRel[d.id]||[]).forEach(r=>{
+    if(seen.has(r.from)) return;
+    seen.add(r.from); out.push({to:r.from, desc:r.desc, dir:'in'});
+  });
+  // any remaining graph edge with no curated note either way
+  LINKS_RAW.forEach(([a,b])=>{
+    const other = a===d.id ? b : (b===d.id ? a : null);
+    if(!other || seen.has(other)) return;
+    seen.add(other); out.push({to:other, desc:null, dir:'link'});
+  });
+  return out;
+}
+
 function buildDetailHTML(d){
   const color=MODULE_COLORS[d.module];
   const sl={new:'badge-new',modified:'badge-modified',deprecated:'badge-deprecated',unchanged:'badge-unchanged'}[d.s4status];
@@ -3136,19 +3200,15 @@ function buildDetailHTML(d){
   const av=d.ecc&&d.s4?'ECC6 + S/4':d.ecc?'ECC6 only':'S/4HANA only';
   const tcodes=(TCODE_MAP[d.id]||[]).map(t=>tcodeLabel(t)).join('');
 
-  const rels=(d.relations||[]).map(r=>{
+  const rels=graphRelations(d).map(r=>{
     const rt=TABLES.find(t=>t.id===r.to);
-    const rc=rt?MODULE_COLORS[rt.module]:'#888';
-    const lc=linkLifecycle(d.id,r.to);
-    const lcLabel={new_s4:'🟢 S/4 new',ecc_only:'🔴 ECC only',retained:'⚪ retained'}[lc];
-    const lcStyle={new_s4:'color:#22c55e',ecc_only:'color:#ef4444',retained:'color:#64748b'}[lc];
-    return `<li onclick="jumpTo('${r.to}')" style="cursor:pointer">
-      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <span style="color:${rc};font-size:.9rem">→</span>
-        <span class="rel-table" style="color:${rc}">${r.to}</span>
-        <span style="font-size:.6rem;font-weight:600;${lcStyle}">${lcLabel}</span>
-      </div>
-      <span class="rel-desc">${r.desc}</span></li>`;
+    const rc=rt?MODULE_COLORS[rt.module]:'#94a3b8';
+    const arrow = r.dir==='in' ? '←' : '→';
+    const note = r.desc || (rt?rt.shortDesc:'') || '';
+    return `<li class="rel-item" onclick="jumpTo('${r.to}')">
+      <span class="rel-dir">${arrow}</span>
+      <span class="rel-to" style="color:${rc}">${r.to}</span>
+      <span class="rel-via">${note}</span></li>`;
   }).join('');
 
   const keys=(d.keyFields||[]).map(f=>`<div class="key-field-chip">${fieldLabel(f)}</div>`).join('');
@@ -3239,7 +3299,7 @@ function buildDetailHTML(d){
   const bodyHtml=`
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${proseFor(d)}</div>
-    ${rels?`<div class="section-title">🔗 Relationships (${(d.relations||[]).length})</div><ul class="relations-list">${rels}</ul>`:''}
+    ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
     ${d.s4note?`<div class="migration-box">${d.s4note}</div>`:''}
