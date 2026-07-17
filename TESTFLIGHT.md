@@ -11,21 +11,22 @@
 | External testing | ⏸️ **READY_FOR_BETA_SUBMISSION** |
 | Export compliance | ✅ answered (`usesNonExemptEncryption: false`, set via `ITSAppUsesNonExemptEncryption` in Info.plist) |
 | Beta localization | ✅ description + feedback email set |
-| Beta review detail | 🔴 **blocked — `contactPhone` required** |
+| Beta review detail | ✅ complete |
+| **Beta App Review** | 🟡 **SUBMITTED — WAITING_FOR_REVIEW** (build 5, 2026-07-16) |
 
 Beta groups already exist: `erp_int` (internal), `erp_ext` (external, public link disabled).
 
-## 🔴 The one blocker
+## Submission log
 
-Apple rejects the review-detail write without a phone number:
+Two things blocked the submit and neither was obvious from the docs:
 
-```
-409 ENTITY_ERROR.ATTRIBUTE.REQUIRED
-"You must provide a value for the attribute 'contactPhone'"
-```
-
-That's David's personal contact detail — not something to invent. Everything else
-(name, email, notes, demo-account-not-required) is staged and ready to write in one call.
+1. **`contactPhone` is required** on `betaAppReviewDetails` (409). Supplied by David;
+   it lives only in App Store Connect and is deliberately **not** in this repo.
+2. **The beta localization must match the app's `primaryLocale`.** The app is **en-AU**
+   (Australia) and the first localization was created as **en-US**, so the submit failed with
+   *"betaAppLocalizations not found for this app"* — a confusing error, since a localization
+   plainly existed. Same trap for the build's "What to Test": an `en-US`
+   `betaBuildLocalization` is not enough. Both now exist in **en-AU**.
 
 ## Beta App Review notes (staged)
 
