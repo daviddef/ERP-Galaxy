@@ -288,9 +288,12 @@
   .search-box input:focus{border-color:var(--fi);box-shadow:0 0 0 2px rgba(79,156,249,.15);}
   @keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
   /* ECC→S/4 Migration Journey diagram */
-  .journey-flow{display:flex;align-items:center;gap:8px;margin:8px 0 12px;flex-wrap:wrap;}
-  .journey-col{display:flex;flex-direction:column;gap:6px;}
-  .journey-node{border:1.5px solid;border-radius:8px;padding:7px 10px;cursor:pointer;transition:all .2s;min-width:110px;}
+  .journey-flow{display:flex;align-items:center;gap:10px;margin:8px 0 12px;flex-wrap:nowrap;}
+  .journey-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
+  /* Cards share the row evenly and wrap their text — descriptions used to be
+     cut at 30 chars AND clipped by a fixed min-width, so they were unreadable. */
+  .journey-node{border:1.5px solid;border-radius:8px;padding:8px 10px;cursor:pointer;transition:all .2s;
+    min-width:0;width:100%;box-sizing:border-box;}
   .journey-node:hover{transform:scale(1.03);}
   .journey-ecc{border-color:#ef4444;background:rgba(239,68,68,.08);}
   .journey-s4{border-color:#22c55e;background:rgba(34,197,94,.08);}
@@ -299,7 +302,8 @@
   .jn-id{font-family:'Courier New',monospace;font-weight:700;font-size:.8rem;}
   .journey-ecc .jn-id{color:#ef4444;}
   .journey-s4 .jn-id{color:#22c55e;}
-  .jn-desc{font-size:.6rem;color:var(--text-muted);line-height:1.3;margin-top:2px;}
+  .jn-desc{font-size:.62rem;color:var(--text-muted);line-height:1.35;margin-top:3px;
+    overflow-wrap:anywhere;white-space:normal;}
   .journey-arrow{font-size:1.4rem;color:var(--text-muted);padding:0 2px;align-self:center;}
   @keyframes flowArrow{0%,100%{opacity:.4;transform:translateX(0);}50%{opacity:1;transform:translateX(3px);}}
 </style>
@@ -2463,6 +2467,7 @@ const S4_LABEL={
   unchanged:{icon:"✅",text:"Unchanged in S/4HANA",cls:"lc-same"}
 };
 function buildLifecycle(d, hideChips){
+  const note=d.s4note||null;   // curated prose beats our generic blurb
   // The table's own ECC/S4 flags are authoritative and beat anything inferred
   // from prose. ACDOCA was showing "changed" because an item said other tables'
   // data now lives IN it -- the extractor tagged the destination, not the
@@ -2474,7 +2479,7 @@ function buildLifecycle(d, hideChips){
       : '';
     return `<div class="lc-box lc-new">
         <div class="lc-head">🆕 <strong>New in S/4HANA</strong></div>
-        <div class="lc-body">This table does not exist in ECC6 — it was introduced with S/4HANA. Nothing to migrate away from; it is a migration destination.</div>
+        <div class="lc-body">${note||'Introduced with S/4HANA — it does not exist in ECC6. A migration destination, not a risk.'}</div>
         ${feedHtml}
         <div class="lc-src">From this table's ECC/S4 availability flags</div>
       </div>`;
@@ -2482,15 +2487,14 @@ function buildLifecycle(d, hideChips){
   if(d.ecc && !d.s4){
     return `<div class="lc-box lc-gone">
         <div class="lc-head">❌ <strong>ECC6 only — not in S/4HANA</strong></div>
-        <div class="lc-body">This table is not available in S/4HANA. Anything reading it will need reworking.</div>
+        <div class="lc-body">${note||'Not available in S/4HANA. Anything reading it will need reworking.'}</div>
         <div class="lc-src">From this table's ECC/S4 availability flags</div>
       </div>`;
   }
   const e=S4_LIFECYCLE[d.id];
   if(!e) return `<div class="lc-box lc-unknown">
       <div class="lc-head">❓ <strong>Not in the Simplification List</strong></div>
-      <div class="lc-body">SAP has not published a simplification item naming this table.
-      That usually means it carries over untouched — but absence of an item is not a promise. Verify before you rely on it.</div>
+      <div class="lc-body">${note||'SAP has not published a simplification item naming this table. That usually means it carries over untouched — but absence of an item is not a promise. Verify before you rely on it.'}</div>
     </div>`;
   const [status,by,ev,item]=e;
   const L=S4_LABEL[status]||S4_LABEL.changed;
@@ -2504,7 +2508,7 @@ function buildLifecycle(d, hideChips){
   }[status]||"";
   return `<div class="lc-box ${L.cls}">
       <div class="lc-head">${L.icon} <strong>${L.text}</strong></div>
-      <div class="lc-body">${detail}</div>
+      <div class="lc-body">${note||detail}</div>
       ${byChip}
       ${ev?`<div class="lc-ev">“${ev}”</div>`:''}
       <div class="lc-src">SAP Simplification List 2023 · item ${item||'—'}</div>
@@ -3012,15 +3016,42 @@ function buildLegend(){
   el.innerHTML+=`<div class="legend-item"><div style="width:22px;height:2px;background:#4a5568;display:inline-block;margin-right:5px;vertical-align:middle;border-radius:1px"></div>Retained</div>`;
 }
 
+
+// The galaxy holds the 217 curated tables — the ones with hand-mapped BUSINESS
+// relationships. The other 1,816 are index entries: real tables, but their only
+// known links are declared foreign keys (config lookups). Rendering all 2,033
+// would be an unreadable hairball (PA0003 alone has 456 FK edges), so the
+// default view stays curated. Locking is the escape hatch: any table can be
+// pulled onto your board, and then we synthesise a node for it.
+function codexNode(id){
+  const c=CODEX[id]; if(!c) return null;
+  const [mod,desc,keys,lore]=c;
+  return {id, module:mod, shortDesc:desc||id, plainEnglish:lore||desc||'',
+          keyFields:keys||[], relations:[], _codex:true};
+}
+function lockedNodes(){
+  return LOCKS.map(id=>TABLES.find(t=>t.id===id) || codexNode(id)).filter(Boolean);
+}
+// FK edges only matter between tables you've actually put on the board.
+function fkLinksAmong(ids){
+  const out=[];
+  ids.forEach(a=>{
+    const e=FK[a]; if(!e) return;
+    Object.keys(e[0]||{}).forEach(b=>{ if(ids.has(b)) out.push({source:a,target:b}); });
+  });
+  return out;
+}
+
 function getVisibleTables(){
   const focusNb=(focusMode&&focusCenter)?getFocusNeighbours(focusCenter):null;
 
   // When a node is selected during search, also show its neighbourhood
   const selNb=(!focusMode&&selectedNode&&searchQuery)?getFocusNeighbours(selectedNode):null;
 
+  // Board mode: show exactly what you locked — curated or index — and nothing else.
+  if(onlyLocked) return lockedNodes();
+
   let base=TABLES.filter(t=>{
-    // The board is an explicit user choice — it outranks every other filter.
-    if(onlyLocked) return LOCKS.includes(t.id);
     if(!activeModules.has(t.module)) return false;
 
     // The ECC/S4 toggle is a filter and must always win. This used to be
@@ -3048,7 +3079,25 @@ function getVisibleTables(){
 }
 
 function getVisibleLinks(ids){
-  return LINKS_RAW.filter(([a,b])=>ids.has(a)&&ids.has(b)).map(([a,b])=>({source:a,target:b}));
+  // LINKS_RAW itself contains a few reciprocal pairs (T001<->T001W), which drew
+  // as two overlapping lines. Dedupe undirected.
+  const ck=new Set(); const curated=[];
+  LINKS_RAW.forEach(([a,b])=>{
+    if(!ids.has(a)||!ids.has(b)) return;
+    const k=[a,b].sort().join('|');
+    if(ck.has(k)) return;
+    ck.add(k); curated.push({source:a,target:b});
+  });
+  // On a board, also draw declared foreign keys between the locked tables —
+  // otherwise index tables would sit there unconnected.
+  if(!onlyLocked) return curated;
+  // Undirected dedupe: A→B and B→A are one relationship, and FK data often
+  // declares both sides.
+  const key=l=>[l.source,l.target].sort().join('|');
+  const seen=new Set(ck);
+  const extra=[];
+  fkLinksAmong(ids).forEach(l=>{ const k=key(l); if(!seen.has(k)){ seen.add(k); extra.push(l); } });
+  return curated.concat(extra);
 }
 
 function buildGraph(){
@@ -3090,7 +3139,7 @@ function buildGraph(){
   node=g.append('g').selectAll('g.node').data(tables).join('g')
     .attr('class','node').style('cursor','pointer')
     .call(d3.drag().on('start',dragStart).on('drag',dragged).on('end',dragEnd))
-    .on('click',(e,d)=>{e.stopPropagation();selectTable(d,links,tables);})
+    .on('click',(e,d)=>{e.stopPropagation(); if(d._codex){openCodex(d.id);} else {selectTable(d,links,tables);}})
     .on('mouseover',showTooltip).on('mousemove',moveTooltip).on('mouseout',hideTooltip);
 
   node.append('circle')
@@ -3245,21 +3294,21 @@ function buildDetailHTML(d){
       <div class="journey-node journey-ecc" onclick="jumpTo('${t.id}')" title="${t.shortDesc}">
         <div class="jn-label">ECC6</div>
         <div class="jn-id">${t.id}</div>
-        <div class="jn-desc">${t.shortDesc.substring(0,30)}${t.shortDesc.length>30?'…':''}</div>
+        <div class="jn-desc">${t.shortDesc}</div>
       </div>`).join('');
 
     const s4Nodes=s4Tables.map(t=>`
       <div class="journey-node journey-s4" onclick="jumpTo('${t.id}')" title="${t.shortDesc}">
         <div class="jn-label">S/4HANA</div>
         <div class="jn-id">${t.id}</div>
-        <div class="jn-desc">${t.shortDesc.substring(0,30)}${t.shortDesc.length>30?'…':''}</div>
+        <div class="jn-desc">${t.shortDesc}</div>
       </div>`).join('');
 
     const currentNode=`
       <div class="journey-node journey-current" style="border-color:${color}">
         <div class="jn-label" style="color:${color}">${d.s4status==='deprecated'?'ECC6':d.s4status==='new'?'S/4HANA':'ECC6+S/4'}</div>
         <div class="jn-id" style="color:${color}">${d.id}</div>
-        <div class="jn-desc">${d.shortDesc.substring(0,30)}${d.shortDesc.length>30?'…':''}</div>
+        <div class="jn-desc">${d.shortDesc}</div>
       </div>`;
 
     if(d.s4status==='deprecated'&&replacements.length){
@@ -3308,7 +3357,6 @@ function buildDetailHTML(d){
     ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
-    ${d.s4note?`<div class="migration-box">${d.s4note}</div>`:''}
     ${journeySection}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
