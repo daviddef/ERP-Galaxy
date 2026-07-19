@@ -1,4 +1,18 @@
 {
+ "ANEA": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "ANEK": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
  "ANEP": {
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
@@ -11,6 +25,34 @@
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "ANLP": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "ATAB": {
+  "evidence": "example table pool is ATAB; example table cluster is CDCLS) are removed",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "BP001": {
+  "evidence": "The fields BP001-XUBNAME and BP001-PERS_NR are not available any more in",
+  "item": "45.1",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "BPID001": {
+  "evidence": "FSBP Table Additional Partner Numbers (BPID001) obsolete",
+  "item": "38.14",
+  "replacedBy": null,
+  "s4status": "deprecated",
   "source": "simplification-list-2023"
  },
  "BSAD": {
@@ -69,6 +111,20 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "BUT000_TD": {
+  "evidence": "switching OFF the table BUT000_TD converts the time dependent entries to time independent entries",
+  "item": "3.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "BUTADRSEARCH": {
+  "evidence": "Fields BIRTHDT, AUGR, XDELE, XBLCK, TYPE, and REGION in table BUTADRSEARCH is no longer requried",
+  "item": "3.20",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
  "CATSDB": {
   "evidence": "CAT2 and CATSDB related transactions (Fiori and WebDynpro ABAP) will continue to be supported as per SAP S/4HANA timelines.",
   "item": "2.41",
@@ -76,11 +132,123 @@
   "s4status": "unchanged",
   "source": "simplification-list-2023"
  },
+ "CDCLS": {
+  "evidence": "example table pool is ATAB; example table cluster is CDCLS) are removed",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
  "CDPOS": {
   "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "CKLMLCR": {
+  "evidence": "Standard Price. Periodic Unit Price and Price Control are still managed in table CKLMLCR",
+  "item": "12.4",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "CKMI1": {
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "CKMLCR": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLCRWIP": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLKEPH": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLLACRWIP": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLLAPPWIP": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLMV003": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLMV004": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLMV004WIP": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLMV011": {
+  "evidence": "Table MLRUNLIST replaces the former table CKMLMV011 (Object List for Costing Run)",
+  "item": "12.4",
+  "replacedBy": "MLRUNLIST",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLPP": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLPPWIP": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "CKMLPRKEKO": {
+  "evidence": "Cost Component Split for Prices is still managed in tables CKMLPRKEKO and CKMLPRKEPH",
+  "item": "12.4",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "CKMLPRKEPH": {
+  "evidence": "Cost Component Split for Prices is still managed in tables CKMLPRKEKO and CKMLPRKEPH",
+  "item": "12.4",
+  "replacedBy": null,
+  "s4status": "unchanged",
   "source": "simplification-list-2023"
  },
  "COBK": {
@@ -104,9 +272,93 @@
   "s4status": "replaced",
   "source": "simplification-list-2023"
  },
+ "COSP_BAK": {
+  "evidence": "Value types other than \u201804\u2019 and \u201811\u2019 are still stored in COEP, COSP_BAK, COSS_BAK.",
+  "item": "12.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
  "COSS": {
   "evidence": "reports in Controlling will show only the fields formerly available in COSP/COSS",
   "item": "15.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "COSS_BAK": {
+  "evidence": "Value types other than \u201804\u2019 and \u201811\u2019 are still stored in COEP, COSP_BAK, COSS_BAK.",
+  "item": "12.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "COVP": {
+  "evidence": "Compatibility views COSP, COSS, COEP, COVP: How do you optimize their use.",
+  "item": "12.9",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "DBTABLOG": {
+  "evidence": "No changes to business processes; no changes to entries of database table DBTABLOG",
+  "item": "30.9",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "DBVM": {
+  "evidence": "classic MRP was writing data into the following tables, which are no longer populated by",
+  "item": "30.2",
+  "replacedBy": "PPH_DBVM",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "DD06L": {
+  "evidence": "as those tables and views do no longer exist in release 1809",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "DD06T": {
+  "evidence": "as those tables and views do no longer exist in release 1809",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "DD16S": {
+  "evidence": "as those tables and views do no longer exist in release 1809",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "DOKCLU": {
+  "evidence": "pool tables and cluster tables are no longer supported",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "DOKTL": {
+  "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "EBEW": {
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "EBEWH": {
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA",
+  "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
   "source": "simplification-list-2023"
@@ -125,6 +377,20 @@
   "s4status": "changed",
   "source": "simplification-list-2023"
  },
+ "FAGLBSAS": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "FAGLBSIS": {
+  "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
  "FAGLFLEXA": {
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
@@ -137,6 +403,41 @@
   "item": "15.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "FMAVCT": {
+  "evidence": "records will be created from the beginning and the totals table is not updated",
+  "item": "59.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "FMBDT": {
+  "evidence": "A compatibility view is attached as proxy object to the totals table        (CDS view V_FMBDT)",
+  "item": "59.9",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "FMGLFLEXA": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "FMGLFLEXT": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "FMRBT": {
+  "evidence": "The table FMRBT is        no longer update",
+  "item": "59.9",
+  "replacedBy": null,
+  "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
  "GLFUNCT": {
@@ -153,11 +454,67 @@
   "s4status": "changed",
   "source": "simplification-list-2023"
  },
+ "GLPCP": {
+  "evidence": "Profit Center Planning based on table GLPCP is in compatibility scope and must not be used beyond they expiry date",
+  "item": "12.6",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "GLPCT": {
+  "evidence": "Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards",
+  "item": "12.6",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
  "GLT0": {
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "INDX": {
+  "evidence": "Export/import tables are still supported in 1809.",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "JVGLFLEXA": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "JVGLFLEXT": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "J_1IMOCUST": {
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.",
+  "item": "3.13",
+  "replacedBy": "KNA1",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "J_1IMOVEND": {
+  "evidence": "Fields from tables J_1IMOCUST and J_1IMOVEND are also migrated into tables KNA1 and LFA1 in S/4HANA system.",
+  "item": "3.13",
+  "replacedBy": "LFA1",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "J_3GPRLHD": {
+  "evidence": "(portfolio determination), J_3GPRLHD (CEM price list",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
   "source": "simplification-list-2023"
  },
  "KNA1": {
@@ -186,6 +543,34 @@
   "item": "52.8",
   "replacedBy": null,
   "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "KOND3": {
+  "evidence": "(pricing), NACH (output determination), KOND3 (campaign",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "KONDN": {
+  "evidence": "determination), KONDN (free goods determination), KONHM",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "KONH": {
+  "evidence": "been removed from all condition header tables, including KONH",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "KONHM": {
+  "evidence": "determination), KONDN (free goods determination), KONHM",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
   "source": "simplification-list-2023"
  },
  "KONV": {
@@ -251,6 +636,27 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "MARCH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MARCHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MARCO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
  "MARD": {
   "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
@@ -258,10 +664,52 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "MARDH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MARDHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MARDO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MATERIALID": {
+  "evidence": "MATERIALID table should not be used any more in the coding. For more information",
+  "item": "48.5",
+  "replacedBy": "MARA",
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
  "MBEW": {
   "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)",
   "item": "18.5",
   "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MBEWH": {
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MCHABO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
   "source": "simplification-list-2023"
  },
@@ -272,10 +720,136 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "MCHBH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MCHBO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MCSD": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MCSDH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MCSS": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MCSSH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MDKP": {
+  "evidence": "controlling    MDKP         Table MARC",
+  "item": "30.2",
+  "replacedBy": "MARC",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MDRI": {
+  "evidence": "Custom code reading one of the tables RQIT, RQHD, or                                 MDRI will no longer work. Read table RESB instead.",
+  "item": "30.4",
+  "replacedBy": "RESB",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MDTB": {
+  "evidence": "MRP list       MDTB         module MD_MDPSX_READ_API",
+  "item": "30.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MDVM": {
+  "evidence": "classic MRP was writing data into the following tables, which are no longer populated by",
+  "item": "30.2",
+  "replacedBy": "PPH_DBVM",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MKOL": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MKOLH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MKOLHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MKOLO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
  "MKPF": {
   "evidence": "Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG",
   "item": "27.5",
   "replacedBy": "MATDOC",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLCD": {
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MLCR": {
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MLCRF": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLCRP": {
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements.",
+  "item": "18.2",
+  "replacedBy": "ACDOCA",
   "s4status": "replaced",
   "source": "simplification-list-2023"
  },
@@ -293,6 +867,97 @@
   "s4status": "deprecated",
   "source": "simplification-list-2023"
  },
+ "MLKEPH": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLMST": {
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements.",
+  "item": "18.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLPP": {
+  "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
+  "item": "8.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MLPPF": {
+  "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
+  "item": "12.4",
+  "replacedBy": "MLDOC, MLDOCCCS",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLPRKEKO": {
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements.",
+  "item": "18.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLPRKEPH": {
+  "evidence": "The former tables are obsolete. Therefore the following tables must not be accessed anymore via SQL statements.",
+  "item": "18.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MLREADST": {
+  "evidence": "Obsolete database views: MLXXV, MLREPORT, MLREADST",
+  "item": "18.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MLREPORT": {
+  "evidence": "Obsolete database views: MLXXV, MLREPORT, MLREADST",
+  "item": "18.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MLXXV": {
+  "evidence": "Obsolete database views: MLXXV, MLREPORT, MLREADST",
+  "item": "18.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "MONI": {
+  "evidence": "MONI           Table PPHMRPLOGITEM",
+  "item": "30.2",
+  "replacedBy": "PPHMRPLOGITEM",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSCD": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSCDH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSCS": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
  "MSEG": {
   "evidence": "Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG",
   "item": "27.5",
@@ -300,7 +965,238 @@
   "s4status": "replaced",
   "source": "simplification-list-2023"
  },
+ "MSEGO1": {
+  "evidence": "MATDOCOIL table has been introduced which contains former MSEGO1 & MSEGO2 table data",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSEGO2": {
+  "evidence": "MATDOCOIL table has been introduced which contains former MSEGO1 & MSEGO2 table data",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSFD": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSFDH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSFS": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSID": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSIDH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSIS": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSKA": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSKAH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSKAHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSKAO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSKU": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSKUH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSKUHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSKUO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSLB": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSLBH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSLBHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSLBO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSPR": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSPRH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSPRHO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSPRO1": {
+  "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
+  "item": "56.9",
+  "replacedBy": "MATDOCOIL",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "MSRD": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSRDH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSRS": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSSA": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSSAH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSSL": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSSQ": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSSQH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
  "MSTB": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSTBH": {
   "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
   "item": "27.5",
   "replacedBy": null,
@@ -314,11 +1210,53 @@
   "s4status": "compat_view",
   "source": "simplification-list-2023"
  },
+ "MSTEH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSTQ": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "MSTQH": {
+  "evidence": "there are Core Data Service (CDS) Views assigned as proxy objects to all those tables",
+  "item": "27.5",
+  "replacedBy": null,
+  "s4status": "compat_view",
+  "source": "simplification-list-2023"
+ },
+ "NACH": {
+  "evidence": "(pricing), NACH (output determination), KOND3 (campaign",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
  "NAST": {
   "evidence": "old NAST technique is set as default.",
   "item": "39.4",
   "replacedBy": null,
   "s4status": "unchanged",
+  "source": "simplification-list-2023"
+ },
+ "OBEW": {
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "OBEWH": {
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
   "source": "simplification-list-2023"
  },
  "OBJK": {
@@ -328,11 +1266,74 @@
   "s4status": "changed",
   "source": "simplification-list-2023"
  },
+ "PSGLFLEXA": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "PSGLFLEXT": {
+  "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
+  "item": "8.2",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "QBEW": {
+  "evidence": "all existing inventory aggregate values (tables MBEW, EBEW, QBEW, OBEW)",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "QBEWH": {
+  "evidence": "and their complete historic data (tables MBEWH EBEWH, QBEWH, OBEWH) are migrated into the new universal journal entry table ACDOCA",
+  "item": "18.5",
+  "replacedBy": "ACDOCA",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
  "RFBLG": {
   "evidence": "pool tables and cluster tables are no longer supported",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "RQHD": {
+  "evidence": "Custom code reading one of the tables RQIT, RQHD, or                                 MDRI will no longer work. Read table RESB instead.",
+  "item": "30.4",
+  "replacedBy": "RESB",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "RQIT": {
+  "evidence": "Custom code reading one of the tables RQIT, RQHD, or                                 MDRI will no longer work. Read table RESB instead.",
+  "item": "30.4",
+  "replacedBy": "RESB",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "S066": {
+  "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "S067": {
+  "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "STXL": {
+  "evidence": "Export/import tables are still supported in 1809.",
+  "item": "2.17",
+  "replacedBy": null,
+  "s4status": "unchanged",
   "source": "simplification-list-2023"
  },
  "T012K": {
@@ -356,6 +1357,90 @@
   "s4status": "changed",
   "source": "simplification-list-2023"
  },
+ "T169P": {
+  "evidence": "configuration was saved in table T169P",
+  "item": "38.9",
+  "replacedBy": "FMLC_ERD",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "T605U": {
+  "evidence": "The following tables and fields become obsolete in release 1709:",
+  "item": "16.3",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "T605Z": {
+  "evidence": "The following tables and fields become obsolete in release 1709:",
+  "item": "16.3",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "T616U": {
+  "evidence": "The following tables and fields become obsolete in release 1709:",
+  "item": "16.3",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "T616Z": {
+  "evidence": "The following tables and fields become obsolete in release 1709:",
+  "item": "16.3",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "T881": {
+  "evidence": "create entries in obsolete tables T881 and T882G",
+  "item": "8.5",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "T882G": {
+  "evidence": "create entries in obsolete tables T881 and T882G",
+  "item": "8.5",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "TABWA": {
+  "evidence": "transaction types that are restricted to depreciation areas (table TABWA or view cluster V_TABWA), this is rejected by the system",
+  "item": "10.2",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "TABWV": {
+  "evidence": "no longer defined in Customizing activity Determine Transaction Types for Internal Transactions (table TABWV) as previously the case",
+  "item": "10.2",
+  "replacedBy": "TABWD",
+  "s4status": "replaced",
+  "source": "simplification-list-2023"
+ },
+ "USER_ADDR": {
+  "evidence": "the database view USER_ADDR can no longer be used in SAP S/4HANA",
+  "item": "2.32",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "VAKPA": {
+  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "VAPMA": {
+  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
  "VBAK": {
   "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,",
   "item": "39.8",
@@ -375,6 +1460,13 @@
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "source": "simplification-list-2023"
+ },
+ "VBOX": {
+  "evidence": "Rebate index table VBOX: See simplification item \"SD Rebate Processing",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
   "source": "simplification-list-2023"
  },
  "VBRK": {
@@ -398,6 +1490,20 @@
   "s4status": "deprecated",
   "source": "simplification-list-2023"
  },
+ "VLKPA": {
+  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "VLPMA": {
+  "evidence": "VLPMA, VRKPA, VRPMA",
+  "item": "39.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
  "VRKPA": {
   "evidence": "VLPMA, VRKPA, VRPMA",
   "item": "39.8",
@@ -410,6 +1516,13 @@
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "source": "simplification-list-2023"
+ },
+ "WIND": {
+  "evidence": "determination), and WIND (document index). The concatenated",
+  "item": "39.9",
+  "replacedBy": null,
+  "s4status": "changed",
   "source": "simplification-list-2023"
  }
 }

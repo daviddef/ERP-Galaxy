@@ -4444,6 +4444,80 @@
   "submodule": "MM-PUR",
   "tier": 2
  },
+ "ANEA": {
+  "desc": "Fixed asset line items recording proportional, partial-period values, one row per asset, fiscal year, and line number.",
+  "id": "ANEA",
+  "keyFields": [
+   "MANDT",
+   "BUKRS",
+   "ANLN1",
+   "ANLN2",
+   "GJAHR",
+   "LNRAN",
+   "AFABE",
+   "ZUJHR",
+   "ZUCOD"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "ANEK": {
+  "desc": "Header data for asset posting documents, one row per company code, asset, fiscal year, and line number.",
+  "id": "ANEK",
+  "keyFields": [
+   "MANDT",
+   "BUKRS",
+   "ANLN1",
+   "ANLN2",
+   "GJAHR",
+   "LNRAN"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "ANLP": {
+  "desc": "Periodic values for fixed assets, such as planned depreciation, one row per company code, asset, and fiscal year period.",
+  "id": "ANLP",
+  "keyFields": [
+   "MANDT",
+   "BUKRS",
+   "GJAHR",
+   "PERAF",
+   "AFBNR",
+   "ANLN1",
+   "ANLN2",
+   "AFABER",
+   "ZUJHR",
+   "ZUCOD"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "ATAB": {
+  "desc": null,
+  "id": "ATAB",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
  "AVIK": {
   "desc": "Header data for payment advices in Financial Accounting.",
   "id": "AVIK",
@@ -4698,6 +4772,21 @@
   "submodule": "FI-GL",
   "tier": 2
  },
+ "BP001": {
+  "desc": "Financial Services industry-specific organizational attributes for a business partner, one row per partner.",
+  "id": "BP001",
+  "keyFields": [
+   "CLIENT",
+   "PARTNER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "BPBK": {
   "desc": "Stores document header data for controlling objects in Funds Management.",
   "id": "BPBK",
@@ -4775,6 +4864,23 @@
   "lore": null,
   "module": "FM",
   "submodule": "FM",
+  "tier": 2
+ },
+ "BPID001": {
+  "desc": "Additional identification numbers assigned to a business partner, one row per partner, ID type, and ID number.",
+  "id": "BPID001",
+  "keyFields": [
+   "CLIENT",
+   "PARTNER",
+   "IDTYPE",
+   "IDNUM"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "BPIJ": {
@@ -4956,6 +5062,38 @@
   "lore": null,
   "module": "FI",
   "submodule": "FI-AR",
+  "tier": 2
+ },
+ "BUT000_TD": {
+  "desc": "Time-dependent shadow copy of general business partner master data, one row per partner and validity end date.",
+  "id": "BUT000_TD",
+  "keyFields": [
+   "CLIENT",
+   "PARTNER",
+   "VALID_TO"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "BUTADRSEARCH": {
+  "desc": "Search-help data for locating business partners by address, one row per partner and address number.",
+  "id": "BUTADRSEARCH",
+  "keyFields": [
+   "CLIENT",
+   "PARTNER",
+   "ADDRNUMBER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "BVOR": {
@@ -5339,6 +5477,16 @@
   "submodule": "EHS",
   "tier": 2
  },
+ "CDCLS": {
+  "desc": null,
+  "id": "CDCLS",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
  "CHVW_IDX": {
   "desc": "Index table used to select data objects in a batch where-used search in Inventory Management.",
   "id": "CHVW_IDX",
@@ -5349,6 +5497,332 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-IM",
+  "tier": 2
+ },
+ "CKLMLCR": {
+  "desc": null,
+  "id": "CKLMLCR",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "CKMI1": {
+  "desc": "Index linking accounting documents to a material's costing record, one row per costing number, fiscal year, and period.",
+  "id": "CKMI1",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "AWTYP",
+   "AWREF",
+   "AWORG"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLCR": {
+  "desc": "Material Ledger period totals for values, one row per costing number, fiscal year, period, and currency type.",
+  "id": "CKMLCR",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLCRWIP": {
+  "desc": "Material Ledger period totals for work-in-process values, one row per costing number, fiscal year, period, and currency type.",
+  "id": "CKMLCRWIP",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLKEPH": {
+  "desc": "Material Ledger cost component split by element, one row per costing number, period, cost element, and currency type.",
+  "id": "CKMLKEPH",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "CATEG",
+   "PTYP",
+   "BVALT",
+   "KEART",
+   "MLCCT",
+   "KKZST",
+   "PATNR",
+   "DIPA",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLLACRWIP": {
+  "desc": "Material Ledger activity type period records for work-in-process values, one row per costing number, period, and currency type.",
+  "id": "CKMLLACRWIP",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLLAPPWIP": {
+  "desc": "Material Ledger activity type period records for work-in-process quantities, one row per costing number and period.",
+  "id": "CKMLLAPPWIP",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLMV003": {
+  "desc": "Material Ledger process model data for goods receipts and mixing strategies, one row per movement group, fiscal year, and period.",
+  "id": "CKMLMV003",
+  "keyFields": [
+   "MANDT",
+   "MGTYP",
+   "GJAHR",
+   "PERIO",
+   "KALNR_IN",
+   "KALNR_BAL",
+   "KALNR_OUT"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLMV004": {
+  "desc": "Material Ledger process model data for material withdrawals, one row per plant, movement group, fiscal year, and period.",
+  "id": "CKMLMV004",
+  "keyFields": [
+   "MANDT",
+   "MGTYP",
+   "GJAHR",
+   "PERIO",
+   "WERKS",
+   "KALNR_INMAT",
+   "KALNR_PRZ"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLMV004WIP": {
+  "desc": "Material Ledger process model data for work-in-process deductions, one row per plant, movement group, and fiscal year.",
+  "id": "CKMLMV004WIP",
+  "keyFields": [
+   "MANDT",
+   "MGTYP",
+   "GJAHR",
+   "PERIO",
+   "WERKS",
+   "KALNR_INMAT",
+   "KALNR_PRZ",
+   "GJAHR_WIP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLMV011": {
+  "desc": "List of costing objects included in a Material Ledger costing run, one row per run ID and costing number.",
+  "id": "CKMLMV011",
+  "keyFields": [
+   "MANDT",
+   "LAUFID",
+   "KALNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLPP": {
+  "desc": "Material Ledger period totals for quantities, one row per costing number, fiscal year, and period.",
+  "id": "CKMLPP",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLPPWIP": {
+  "desc": "Material Ledger period records for work-in-process quantities, one row per costing number, fiscal year, and period.",
+  "id": "CKMLPPWIP",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLPRKEKO": {
+  "desc": "Header data for a Material Ledger cost component split, one row per costing number, period, and price type.",
+  "id": "CKMLPRKEKO",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "PRTYP",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "CKMLPRKEPH": {
+  "desc": "Material Ledger cost component split elements, one row per costing number, period, cost element, and price type.",
+  "id": "CKMLPRKEPH",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "KEART",
+   "PRTYP",
+   "KKZST",
+   "PATNR",
+   "DIPA",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "COSP_BAK": {
+  "desc": null,
+  "id": "COSP_BAK",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "COSS_BAK": {
+  "desc": null,
+  "id": "COSS_BAK",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "COVP": {
+  "desc": null,
+  "id": "COVP",
+  "keyFields": [
+   "MANDT",
+   "KOKRS",
+   "BELNR",
+   "BUZEI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
   "tier": 2
  },
  "CRACC": {
@@ -5421,6 +5895,90 @@
   "module": "EHS",
   "source": "ehs-top50",
   "submodule": "EHS",
+  "tier": 2
+ },
+ "DBTABLOG": {
+  "desc": "Log entries recording changes made to database tables, one row per log date, time, and log ID.",
+  "id": "DBTABLOG",
+  "keyFields": [
+   "LOGDATE",
+   "LOGTIME",
+   "LOGID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "DBVM": {
+  "desc": "MRP planning file entries flagging materials that need requirements planning, one row per MRP area and material.",
+  "id": "DBVM",
+  "keyFields": [
+   "MANDT",
+   "MAFID",
+   "DISST",
+   "MATNR",
+   "BERID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "DD06L": {
+  "desc": "ABAP Dictionary metadata describing pool and cluster table structures, one row per SQL table name and version.",
+  "id": "DD06L",
+  "keyFields": [
+   "SQLTAB",
+   "AS4LOCAL",
+   "AS4VERS"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "DD06T": {
+  "desc": "Language-dependent text descriptions of SQL tables from the ABAP Dictionary, one row per table, language, and version.",
+  "id": "DD06T",
+  "keyFields": [
+   "SQLTAB",
+   "DDLANGUAGE",
+   "AS4LOCAL",
+   "AS4VERS"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "DD16S": {
+  "desc": "ABAP Dictionary metadata for SQL table fields, one row per table, field name, and version.",
+  "id": "DD16S",
+  "keyFields": [
+   "SQLTAB",
+   "FIELDNAME",
+   "AS4LOCAL",
+   "AS4VERS"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
   "tier": 2
  },
  "DGMS2": {
@@ -5546,6 +6104,35 @@
   "submodule": "EHS",
   "tier": 2
  },
+ "DOKCLU": {
+  "desc": null,
+  "id": "DOKCLU",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "DOKTL": {
+  "desc": "Text lines making up SAP documentation content, one row per document, object, language, type, version, and line.",
+  "id": "DOKTL",
+  "keyFields": [
+   "ID",
+   "OBJECT",
+   "LANGU",
+   "TYP",
+   "DOKVERSION",
+   "LINE"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "EBAN_TECH": {
   "desc": "Purchase requisition data used for external sourcing in Purchasing.",
   "id": "EBAN_TECH",
@@ -5558,6 +6145,48 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-PUR",
+  "tier": 2
+ },
+ "EBEW": {
+  "desc": "Valuation data for stock tied to a sales order, one row per material, valuation area, sales order, and item.",
+  "id": "EBEW",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "SOBKZ",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "EBEWH": {
+  "desc": "Historical valuation data for sales-order stock, one row per material, sales order, item, fiscal year, and period.",
+  "id": "EBEWH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "SOBKZ",
+   "VBELN",
+   "POSNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
   "tier": 2
  },
  "EBKN": {
@@ -6594,6 +7223,50 @@
   "submodule": "MM-VE",
   "tier": 2
  },
+ "FAGLBSAS": {
+  "desc": "Secondary index of cleared general ledger account line items, one row per company code, account, and clearing document.",
+  "id": "FAGLBSAS",
+  "keyFields": [
+   "MANDT",
+   "BUKRS",
+   "HKONT",
+   "AUGDT",
+   "AUGBL",
+   "ZUONR",
+   "GJAHR",
+   "BELNR",
+   "BUZEI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "FAGLBSIS": {
+  "desc": "Secondary index of general ledger account line items, one row per company code, account, and document number.",
+  "id": "FAGLBSIS",
+  "keyFields": [
+   "MANDT",
+   "BUKRS",
+   "HKONT",
+   "AUGDT",
+   "AUGBL",
+   "ZUONR",
+   "GJAHR",
+   "BELNR",
+   "BUZEI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "FEBEP": {
   "desc": "Line items from electronic bank statements in Financial Accounting.",
   "id": "FEBEP",
@@ -6689,6 +7362,54 @@
   "submodule": "FI-TV",
   "tier": 2
  },
+ "FMAVCT": {
+  "desc": "Availability control summary data for Funds Management's Budget Control System, one row per fiscal year, object, and currency.",
+  "id": "FMAVCT",
+  "keyFields": [
+   "RCLNT",
+   "RLDNR",
+   "RRCTY",
+   "RVERS",
+   "RYEAR",
+   "ROBJNR",
+   "COBJNR",
+   "SOBJNR",
+   "RTCUR",
+   "DRCRK",
+   "RPMAX"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FM",
+  "tier": 2
+ },
+ "FMBDT": {
+  "desc": "Budget totals for Funds Management, one row per fiscal year, budget object, and currency.",
+  "id": "FMBDT",
+  "keyFields": [
+   "RCLNT",
+   "RLDNR",
+   "RRCTY",
+   "RVERS",
+   "RYEAR",
+   "ROBJNR",
+   "COBJNR",
+   "SOBJNR",
+   "RTCUR",
+   "DRCRK",
+   "RPMAX"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FM",
+  "tier": 2
+ },
  "FMFCTR": {
   "desc": "Master record data for funds centers in Funds Management.",
   "id": "FMFCTR",
@@ -6701,6 +7422,51 @@
   "keySource": "public-reference",
   "lore": "Funds center master data (FICTR) in Funds Management — the budget-holding unit within a financial management area (FIKRS), roughly Funds Management's answer to a cost center. Ties back to company code, country, currency, and business area, inheriting a lot of context from core FI.",
   "module": "FM",
+  "submodule": "FM",
+  "tier": 2
+ },
+ "FMGLFLEXA": {
+  "desc": "Actual general ledger line items, one row per fiscal year, document number, ledger, company code, and line item.",
+  "id": "FMGLFLEXA",
+  "keyFields": [
+   "RCLNT",
+   "RYEAR",
+   "DOCNR",
+   "RLDNR",
+   "RBUKRS",
+   "DOCLN"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FM",
+  "tier": 2
+ },
+ "FMGLFLEXT": {
+  "desc": "Totals for public-sector general ledger accounts, one row per fiscal year and set of account assignment objects.",
+  "id": "FMGLFLEXT",
+  "keyFields": [
+   "RCLNT",
+   "RYEAR",
+   "OBJNR00",
+   "OBJNR01",
+   "OBJNR02",
+   "OBJNR03",
+   "OBJNR04",
+   "OBJNR05",
+   "OBJNR06",
+   "OBJNR07",
+   "OBJNR08",
+   "DRCRK",
+   "RPMAX"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FM",
+  "moduleInferred": true,
+  "source": "simplification-list",
   "submodule": "FM",
   "tier": 2
  },
@@ -6766,6 +7532,30 @@
   "keySource": "public-reference",
   "lore": null,
   "module": "FM",
+  "submodule": "FM",
+  "tier": 2
+ },
+ "FMRBT": {
+  "desc": null,
+  "id": "FMRBT",
+  "keyFields": [
+   "RCLNT",
+   "RLDNR",
+   "RRCTY",
+   "RVERS",
+   "RYEAR",
+   "ROBJNR",
+   "COBJNR",
+   "SOBJNR",
+   "RTCUR",
+   "DRCRK",
+   "RPMAX"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FM",
+  "moduleInferred": true,
+  "source": "simplification-list",
   "submodule": "FM",
   "tier": 2
  },
@@ -6961,6 +7751,46 @@
   "lore": "Alternate versions of a travel plan — same trip, different variant — so a traveler can compare options before booking. Keyed all the way down to PERNR, REINR, PLANNR and a variant number, and tied to FTPT_PLAN and TCURC for currency.",
   "module": "FI",
   "submodule": "FI-TV",
+  "tier": 2
+ },
+ "GLPCP": {
+  "desc": "Planned line items for Profit Center Accounting, one row per client and condition/summary record ID.",
+  "id": "GLPCP",
+  "keyFields": [
+   "RCLNT",
+   "GL_SIRID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "GLPCT": {
+  "desc": "Totals table for Profit Center Accounting, one row per ledger, fiscal year, and account assignment object.",
+  "id": "GLPCT",
+  "keyFields": [
+   "RCLNT",
+   "RLDNR",
+   "RRCTY",
+   "RVERS",
+   "RYEAR",
+   "ROBJNR",
+   "COBJNR",
+   "SOBJNR",
+   "RTCUR",
+   "RUNIT",
+   "DRCRK",
+   "RPMAX"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "GLT3": {
@@ -9385,6 +10215,23 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "INDX": {
+  "desc": null,
+  "id": "INDX",
+  "keyFields": [
+   "MANDT",
+   "RELID",
+   "SRTFD",
+   "SRTF2"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
  "ISEG": {
   "desc": "Line items of physical inventory documents in Inventory Management.",
   "id": "ISEG",
@@ -9414,6 +10261,51 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-IV",
+  "tier": 2
+ },
+ "JVGLFLEXA": {
+  "desc": "General ledger actual line items for Joint Venture Accounting, one row per fiscal year, document number, ledger, and line item.",
+  "id": "JVGLFLEXA",
+  "keyFields": [
+   "RCLNT",
+   "RYEAR",
+   "DOCNR",
+   "RLDNR",
+   "RBUKRS",
+   "DOCLN"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "JVGLFLEXT": {
+  "desc": "General ledger totals for Joint Venture Accounting, one row per fiscal year and account assignment object.",
+  "id": "JVGLFLEXT",
+  "keyFields": [
+   "RCLNT",
+   "RYEAR",
+   "OBJNR00",
+   "OBJNR01",
+   "OBJNR02",
+   "OBJNR03",
+   "OBJNR04",
+   "OBJNR05",
+   "OBJNR06",
+   "OBJNR07",
+   "OBJNR08",
+   "DRCRK",
+   "RPMAX"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "J_1ADOCCL2": {
@@ -9511,6 +10403,51 @@
   "lore": null,
   "module": "SD",
   "submodule": "SD-BIL",
+  "tier": 2
+ },
+ "J_1IMOCUST": {
+  "desc": "India-specific excise duty data attached to a customer master record, one row per customer.",
+  "id": "J_1IMOCUST",
+  "keyFields": [
+   "MANDT",
+   "KUNNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "J_1IMOVEND": {
+  "desc": "India-specific excise duty data attached to a vendor master record, one row per vendor.",
+  "id": "J_1IMOVEND",
+  "keyFields": [
+   "MANDT",
+   "LIFNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "J_3GPRLHD": {
+  "desc": "Header data for CEM price list condition records, one row per client and condition record number.",
+  "id": "J_3GPRLHD",
+  "keyFields": [
+   "MANDT",
+   "KNUMH"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "K003": {
@@ -9777,6 +10714,66 @@
   "submodule": "FI-GL",
   "tier": 2
  },
+ "KOND3": {
+  "desc": "Condition record data used for campaign determination in pricing, one row per client and condition record number.",
+  "id": "KOND3",
+  "keyFields": [
+   "MANDT",
+   "KNUMH"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "KONDN": {
+  "desc": "Condition record data for free-goods pricing determination, one row per client and condition record number.",
+  "id": "KONDN",
+  "keyFields": [
+   "MANDT",
+   "KNUMH"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "KONH": {
+  "desc": "Header data for pricing condition records, one row per client and condition record number.",
+  "id": "KONH",
+  "keyFields": [
+   "MANDT",
+   "KNUMH"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "KONHM": {
+  "desc": "Condition record data used for portfolio determination in pricing, one row per client and condition record number.",
+  "id": "KONHM",
+  "keyFields": [
+   "MANDT",
+   "KNUMH"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "LFAS": {
   "desc": "Vendor master data holding VAT registration numbers, general section.",
   "id": "LFAS",
@@ -9925,6 +10922,117 @@
   "submodule": "FI-GL",
   "tier": 2
  },
+ "MARCH": {
+  "desc": "Historical plant-level material master data, one row per material, plant, fiscal year, and period.",
+  "id": "MARCH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MARCHO1": {
+  "desc": "Additional quantity data appended to the MARCH history table, one row per material, plant, fiscal year, period, and unit of measure.",
+  "id": "MARCHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MARCO1": {
+  "desc": "Additional quantity data at plant level for a material, one row per material, plant, and unit of measure.",
+  "id": "MARCO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MARDH": {
+  "desc": "Historical storage-location-level material master data, one row per material, plant, storage location, fiscal year, and period.",
+  "id": "MARDH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MARDHO1": {
+  "desc": "Additional quantity data appended to the MARDH history table, one row per material, plant, storage location, fiscal year, period, and unit of measure.",
+  "id": "MARDHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MARDO1": {
+  "desc": "Additional quantity data at storage location level for a material, one row per material, plant, storage location, and unit of measure.",
+  "id": "MARDO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
  "MARI": {
   "desc": "Short document data for material movements.",
   "id": "MARI",
@@ -9940,6 +11048,40 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "MATERIALID": {
+  "desc": "Mapping of internal material ID numbers to material master records, one row per internal material ID.",
+  "id": "MATERIALID",
+  "keyFields": [
+   "MANDT",
+   "MATNR_INT"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MBEWH": {
+  "desc": "Historical material valuation data, one row per material, valuation area, valuation type, fiscal year, and period.",
+  "id": "MBEWH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
  "MCDX": {
   "desc": "Consolidation transaction data held in compressed form.",
   "id": "MCDX",
@@ -9953,6 +11095,205 @@
   "lore": null,
   "module": "FI",
   "submodule": "FI-CS",
+  "tier": 2
+ },
+ "MCHABO1": {
+  "desc": null,
+  "id": "MCHABO1",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MCHBH": {
+  "desc": "Historical batch stock quantities, one row per material, plant, storage location, batch, fiscal year, and period.",
+  "id": "MCHBH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MCHBO1": {
+  "desc": "Additional quantity data at batch level for a material, one row per material, plant, storage location, batch, and unit of measure.",
+  "id": "MCHBO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MCSD": {
+  "desc": "Stock of a material held for or by a customer, one row per material, plant, storage location, batch, and customer.",
+  "id": "MCSD",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "KUNNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MCSDH": {
+  "desc": "Historical customer stock quantities, one row per material, plant, storage location, batch, customer, fiscal year, and period.",
+  "id": "MCSDH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "KUNNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MCSS": {
+  "desc": "Total customer stock quantities summarized at plant level, one row per material, plant, and customer.",
+  "id": "MCSS",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "KUNNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MCSSH": {
+  "desc": "Historical totals of customer-supplied stock, one row per material, plant, customer, fiscal year, and period.",
+  "id": "MCSSH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "KUNNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MDKP": {
+  "desc": "Header data for an MRP planning document, one row per document type, material, planning plant, and planning scenario.",
+  "id": "MDKP",
+  "keyFields": [
+   "MANDT",
+   "DTART",
+   "MATNR",
+   "PLWRK",
+   "PLSCN"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MDRI": {
+  "desc": null,
+  "id": "MDRI",
+  "keyFields": [
+   "MANDT",
+   "RQNUM",
+   "BAUGR",
+   "PLWRK",
+   "VERID",
+   "RSART",
+   "RQITM"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MDTB": {
+  "desc": "Line items of an MRP planning document, one row per document number and item position.",
+  "id": "MDTB",
+  "keyFields": [
+   "MANDT",
+   "DTNUM",
+   "DTPOS"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MDVM": {
+  "desc": "Entries in the MRP planning file flagging materials that need requirements planning, one row per planning file ID and key.",
+  "id": "MDVM",
+  "keyFields": [
+   "MANDT",
+   "MAFID",
+   "MDKEY"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "MEPO_BADI_EXAMPL": {
@@ -10120,6 +11461,92 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "MKOL": {
+  "desc": "Special stock of a material held at or by a vendor, one row per material, plant, storage location, batch, and vendor.",
+  "id": "MKOL",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MKOLH": {
+  "desc": "Historical special stock quantities held at or by a vendor, one row per material, plant, storage location, batch, vendor, fiscal year, and period.",
+  "id": "MKOLH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MKOLHO1": {
+  "desc": "Additional quantity data appended to the MKOLH history table, one row per material, plant, storage location, batch, vendor, fiscal year, and unit of measure.",
+  "id": "MKOLHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MKOLO1": {
+  "desc": "Additional quantity data for vendor special stock, one row per material, plant, storage location, batch, vendor, and unit of measure.",
+  "id": "MKOLO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
  "MKPF_ARIDX": {
   "desc": "Index table for accessing individual documents archived from table MM_MATBEL.",
   "id": "MKPF_ARIDX",
@@ -10132,6 +11559,89 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-IM",
+  "tier": 2
+ },
+ "MLCD": {
+  "desc": "Material Ledger summarization records derived from postings, one row per costing number, period, category, and currency type.",
+  "id": "MLCD",
+  "keyFields": [
+   "MANDT",
+   "KALNR",
+   "BDATJ",
+   "POPER",
+   "UNTPER",
+   "CATEG",
+   "PTYP",
+   "BVALT",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MLCR": {
+  "desc": "Currency and value data for a Material Ledger document, one row per document number, fiscal year, item, and currency type.",
+  "id": "MLCR",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "MLCRF": {
+  "desc": "Field-group breakdown of currency amounts for a Material Ledger document, one row per document, period, currency type, and field group.",
+  "id": "MLCRF",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "CURTP",
+   "FELDG"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "MLCRP": {
+  "desc": "Price-change currency and price data for a Material Ledger document, one row per document, fiscal year, item, period, and currency type.",
+  "id": "MLCRP",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
   "tier": 2
  },
  "MLDZ4": {
@@ -10147,6 +11657,193 @@
   "lore": null,
   "module": "FI",
   "submodule": "FI-GL",
+  "tier": 2
+ },
+ "MLKEPH": {
+  "desc": "Cost component split by element for a Material Ledger document, one row per document, period, cost element, and currency type.",
+  "id": "MLKEPH",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "KEART",
+   "MLCCT",
+   "KKZST",
+   "PATNR",
+   "DIPA",
+   "CURTP",
+   "FELDG"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "MLMST": {
+  "desc": "Header data for a Material Ledger costing document, one row per document number and fiscal year.",
+  "id": "MLMST",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MLPP": {
+  "desc": "Posting period and quantity data for a Material Ledger document, one row per document, fiscal year, item, and period.",
+  "id": "MLPP",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "MLPPF": {
+  "desc": "Field-group breakdown of posting period data for a Material Ledger document, one row per document, period, and field group.",
+  "id": "MLPPF",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "FELDG"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "CO",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "CO",
+  "tier": 2
+ },
+ "MLPRKEKO": {
+  "desc": "Header data for the cost component split of a Material Ledger document, one row per document, period, and price type.",
+  "id": "MLPRKEKO",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "PRTYP",
+   "CURTP",
+   "XOLDPRICE"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MLPRKEPH": {
+  "desc": "Cost component split by component for a Material Ledger document, one row per document, period, cost element, and price type.",
+  "id": "MLPRKEPH",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "KEART",
+   "PRTYP",
+   "KKZST",
+   "PATNR",
+   "DIPA",
+   "CURTP",
+   "XOLDPRICE"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MLREADST": {
+  "desc": null,
+  "id": "MLREADST",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MLREPORT": {
+  "desc": null,
+  "id": "MLREPORT",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MLXXV": {
+  "desc": null,
+  "id": "MLXXV",
+  "keyFields": [
+   "MANDT",
+   "BELNR",
+   "KJAHR",
+   "POSNR",
+   "BDATJ",
+   "POPER",
+   "CURTP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "MMIM_PREDOC_ORG": {
@@ -10219,6 +11916,22 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "MONI": {
+  "desc": null,
+  "id": "MONI",
+  "keyFields": [
+   "RELID",
+   "SRTFD",
+   "SRTF2"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "MPNCL1": {
   "desc": "Controls dynamic calls made while processing sub-items.",
   "id": "MPNCL1",
@@ -10231,6 +11944,724 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-PUR",
+  "tier": 2
+ },
+ "MSCD": {
+  "desc": "Customer stock held at a vendor's location, one row per material, plant, batch, vendor, and customer.",
+  "id": "MSCD",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "KUNNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSCDH": {
+  "desc": "Historical quantities of customer stock held at a vendor's location, one row per material, plant, batch, vendor, customer, fiscal year, and period.",
+  "id": "MSCDH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "KUNNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSCS": {
+  "desc": "Total customer stock held at a vendor's location, summarized at plant level, one row per material, plant, vendor, and customer.",
+  "id": "MSCS",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "LIFNR",
+   "KUNNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSEGO1": {
+  "desc": "Quantity conversion parameters for a material document, one row per material document, fiscal year, and line item.",
+  "id": "MSEGO1",
+  "keyFields": [
+   "MANDT",
+   "MBLNR",
+   "MJAHR",
+   "ZEILE"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSEGO2": {
+  "desc": "Material document quantities expressed in an additional unit of measure, one row per material document, line item, and unit.",
+  "id": "MSEGO2",
+  "keyFields": [
+   "MANDT",
+   "MBLNR",
+   "MJAHR",
+   "ZEILE",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSFD": {
+  "desc": "Sales-order stock held at a vendor's location, one row per material, plant, batch, vendor, sales order, and item.",
+  "id": "MSFD",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSFDH": {
+  "desc": "Historical sales-order stock quantities held at a vendor's location, one row per material, plant, batch, vendor, sales order, item, fiscal year, and period.",
+  "id": "MSFDH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "VBELN",
+   "POSNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSFS": {
+  "desc": "Total sales-order stock held at a vendor's location, summarized at plant level, one row per material, plant, vendor, sales order, and item.",
+  "id": "MSFS",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "LIFNR",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSID": {
+  "desc": "Stock owned by a vendor and held at another vendor's location, one row per material, plant, batch, vendor, and owner.",
+  "id": "MSID",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "OWNER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSIDH": {
+  "desc": "Historical quantities of vendor-owned stock held at another vendor's location, one row per material, plant, batch, vendor, owner, fiscal year, and period.",
+  "id": "MSIDH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "OWNER",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSIS": {
+  "desc": "Total vendor-owned stock held at another vendor's location, summarized at plant level, one row per material, plant, vendor, and owner.",
+  "id": "MSIS",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "LIFNR",
+   "OWNER"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSKA": {
+  "desc": "Stock of a material reserved for a specific sales order, one row per material, plant, storage location, batch, sales order, and item.",
+  "id": "MSKA",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKAH": {
+  "desc": "Historical quantities of sales-order stock, one row per material, plant, storage location, batch, sales order, item, fiscal year, and period.",
+  "id": "MSKAH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "VBELN",
+   "POSNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKAHO1": {
+  "desc": "Additional quantity data appended to the MSKAH history table, one row per material, plant, storage location, batch, sales order, item, fiscal year, and unit of measure.",
+  "id": "MSKAHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "VBELN",
+   "POSNR",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKAO1": {
+  "desc": "Additional quantity data for sales-order special stock, one row per material, plant, storage location, batch, sales order, item, and unit of measure.",
+  "id": "MSKAO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "VBELN",
+   "POSNR",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKU": {
+  "desc": "Special stock of a material held for a customer, one row per material, plant, batch, and customer.",
+  "id": "MSKU",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "KUNNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKUH": {
+  "desc": "Historical quantities of special stock held for a customer, one row per material, plant, batch, customer, fiscal year, and period.",
+  "id": "MSKUH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "KUNNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKUHO1": {
+  "desc": "Additional quantity data appended to the MSKUH history table, one row per material, plant, batch, customer, fiscal year, period, and unit of measure.",
+  "id": "MSKUHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "KUNNR",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSKUO1": {
+  "desc": "Additional quantity data for special stock held for a customer, one row per material, plant, batch, customer, and unit of measure.",
+  "id": "MSKUO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "KUNNR",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSLB": {
+  "desc": "Special stock of a material held at a vendor, such as consignment stock, one row per material, plant, batch, and vendor.",
+  "id": "MSLB",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSLBH": {
+  "desc": "Historical quantities of special stock held at a vendor, one row per material, plant, batch, vendor, fiscal year, and period.",
+  "id": "MSLBH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSLBHO1": {
+  "desc": "Additional quantity data appended to the MSLB history table, one row per material, plant, batch, vendor, fiscal year, period, and unit of measure.",
+  "id": "MSLBHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSLBO1": {
+  "desc": "Additional quantity data for special stock held at a vendor, one row per material, plant, batch, vendor, and unit of measure.",
+  "id": "MSLBO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSPR": {
+  "desc": "Stock of a material assigned to a project WBS element, one row per material, plant, storage location, batch, and WBS element.",
+  "id": "MSPR",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "PSPNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSPRH": {
+  "desc": "Historical quantities of project stock, one row per material, plant, storage location, batch, WBS element, fiscal year, and period.",
+  "id": "MSPRH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "PSPNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSPRHO1": {
+  "desc": "Additional quantity data appended to the MSPRH history table, one row per material, plant, storage location, batch, WBS element, fiscal year, and unit of measure.",
+  "id": "MSPRHO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "PSPNR",
+   "LFGJA",
+   "LFMON",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSPRO1": {
+  "desc": "Additional quantity data for project stock, one row per material, plant, storage location, batch, WBS element, and unit of measure.",
+  "id": "MSPRO1",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "LGORT",
+   "CHARG",
+   "SOBKZ",
+   "PSPNR",
+   "MSEHI"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "MSRD": {
+  "desc": "Project stock held at a vendor's location, one row per material, plant, batch, vendor, and WBS element.",
+  "id": "MSRD",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "PSPNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSRDH": {
+  "desc": "Historical quantities of project stock held at a vendor's location, one row per material, plant, batch, vendor, WBS element, fiscal year, and period.",
+  "id": "MSRDH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "LIFNR",
+   "PSPNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSRS": {
+  "desc": "Total project stock held at a vendor's location, summarized at plant level, one row per material, plant, vendor, and WBS element.",
+  "id": "MSRS",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "LIFNR",
+   "PSPNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSSA": {
+  "desc": "Total sales-order stock summarized at plant level, one row per material, plant, sales order, and item.",
+  "id": "MSSA",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSSAH": {
+  "desc": "Historical totals of sales-order stock, one row per material, plant, sales order, item, fiscal year, and period.",
+  "id": "MSSAH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "VBELN",
+   "POSNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSSL": {
+  "desc": "Total special stock held at a vendor, summarized at plant level, one row per material, plant, and vendor.",
+  "id": "MSSL",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "LIFNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSSQ": {
+  "desc": "Total project stock summarized at plant level, one row per material, plant, and WBS element.",
+  "id": "MSSQ",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "PSPNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSSQH": {
+  "desc": "Historical totals of project stock, one row per material, plant, WBS element, fiscal year, and period.",
+  "id": "MSSQH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "SOBKZ",
+   "PSPNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "MSTB": {
@@ -10250,6 +12681,27 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "MSTBH": {
+  "desc": "Historical quantities of stock in transit, one row per material, plant, batch, valuation type, fiscal year, and period.",
+  "id": "MSTBH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "BWTAR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "MSTE": {
   "desc": "Stock in transit linked to a Sales and Distribution document.",
   "id": "MSTE",
@@ -10267,6 +12719,71 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-IM",
+  "tier": 2
+ },
+ "MSTEH": {
+  "desc": "Historical quantities of stock in transit tied to a sales and distribution document, one row per material, plant, sales document, item, fiscal year, and period.",
+  "id": "MSTEH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "VBELN",
+   "POSNR",
+   "BWTAR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSTQ": {
+  "desc": "Stock in transit for a project, one row per material, plant, batch, WBS element, and valuation type.",
+  "id": "MSTQ",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "PSPNR",
+   "BWTAR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "MSTQH": {
+  "desc": "Historical quantities of stock in transit for a project, one row per material, plant, batch, WBS element, valuation type, fiscal year, and period.",
+  "id": "MSTQH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "WERKS",
+   "CHARG",
+   "SOBKZ",
+   "PSPNR",
+   "BWTAR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "MWMKPF": {
@@ -10601,6 +13118,21 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "NACH": {
+  "desc": "Detailed data for an output record, one row per client and record number.",
+  "id": "NACH",
+  "keyFields": [
+   "MANDT",
+   "KNUMH"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "NBNK": {
   "desc": "Number range assignments for banks.",
   "id": "NBNK",
@@ -10637,6 +13169,46 @@
   "lore": null,
   "module": "FI",
   "submodule": "FI-GL",
+  "tier": 2
+ },
+ "OBEW": {
+  "desc": "Valuated stock held at a subcontractor, one row per material, valuation area, valuation type, and vendor.",
+  "id": "OBEW",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "SOBKZ",
+   "LIFNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "OBEWH": {
+  "desc": "Historical valuation of stock held at a subcontractor, one row per material, valuation area, valuation type, vendor, fiscal year, and period.",
+  "id": "OBEWH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "SOBKZ",
+   "LIFNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
   "tier": 2
  },
  "OIUCW_BANK": {
@@ -19150,6 +21722,26 @@
   "submodule": "MM-PUR",
   "tier": 2
  },
+ "PSGLFLEXA": {
+  "desc": null,
+  "id": "PSGLFLEXA",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "PSGLFLEXT": {
+  "desc": null,
+  "id": "PSGLFLEXT",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "PTRV_HEAD": {
   "desc": "General trip data for an employee's business trip in Travel Management.",
   "id": "PTRV_HEAD",
@@ -19243,6 +21835,46 @@
   "lore": null,
   "module": "FI",
   "submodule": "FI-TV",
+  "tier": 2
+ },
+ "QBEW": {
+  "desc": "Valuation data for stock assigned to a project, one row per material, valuation area, valuation type, and WBS element.",
+  "id": "QBEW",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "SOBKZ",
+   "PSPNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
+  "tier": 2
+ },
+ "QBEWH": {
+  "desc": "Historical valuation data for project stock, one row per material, valuation area, valuation type, WBS element, fiscal year, and period.",
+  "id": "QBEWH",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "BWKEY",
+   "BWTAR",
+   "SOBKZ",
+   "PSPNR",
+   "LFGJA",
+   "LFMON"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "MM",
   "tier": 2
  },
  "QSTRE": {
@@ -19819,6 +22451,38 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "RQHD": {
+  "desc": "Header record for a total-requirements record in MRP, one row per requirement number.",
+  "id": "RQHD",
+  "keyFields": [
+   "MANDT",
+   "RQNUM"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "RQIT": {
+  "desc": "Item-level detail for a total-requirements record in MRP, one row per requirement number, record type, and item.",
+  "id": "RQIT",
+  "keyFields": [
+   "MANDT",
+   "RQNUM",
+   "RSART",
+   "RQITM"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "RSEG": {
   "desc": "Line item data for incoming invoice documents, one row per item, in Invoice Verification.",
   "id": "RSEG",
@@ -19832,6 +22496,50 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-IV",
+  "tier": 2
+ },
+ "S066": {
+  "desc": "Open sales order values used for credit management checks, one row per credit control area, customer, and period.",
+  "id": "S066",
+  "keyFields": [
+   "MANDT",
+   "SSOUR",
+   "VRSIO",
+   "KKBER",
+   "KNKLI",
+   "SPMON",
+   "SPTAG",
+   "SPWOC",
+   "SPBUP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "S067": {
+  "desc": "Open delivery and billing document values used for credit management checks, one row per credit control area, customer, and period.",
+  "id": "S067",
+  "keyFields": [
+   "MANDT",
+   "SSOUR",
+   "VRSIO",
+   "KKBER",
+   "KNKLI",
+   "SPMON",
+   "SPTAG",
+   "SPWOC",
+   "SPBUP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "S071": {
@@ -20010,6 +22718,26 @@
   "lore": null,
   "module": "EHS",
   "submodule": "EHS",
+  "tier": 2
+ },
+ "STXL": {
+  "desc": "Lines of SAPscript long-text content, one row per text object, name, ID, language, and line.",
+  "id": "STXL",
+  "keyFields": [
+   "MANDT",
+   "RELID",
+   "TDOBJECT",
+   "TDNAME",
+   "TDID",
+   "TDSPRAS",
+   "SRTF2"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "BASIS",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "BASIS",
   "tier": 2
  },
  "T000CM": {
@@ -24713,6 +27441,21 @@
   "submodule": "MM-IV",
   "tier": 2
  },
+ "T169P": {
+  "desc": "Configuration parameters for Invoice Verification, one row per company code.",
+  "id": "T169P",
+  "keyFields": [
+   "MANDT",
+   "BUKRS"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "T169R": {
   "desc": "Validity period settings for invoice document reorganization.",
   "id": "T169R",
@@ -25559,6 +28302,80 @@
   "lore": null,
   "module": "HR",
   "submodule": "HR",
+  "tier": 2
+ },
+ "T605U": {
+  "desc": "Foreign trade rules converting export and import business transaction types between countries, one row per country pair and transaction type.",
+  "id": "T605U",
+  "keyFields": [
+   "MANDT",
+   "ALAND",
+   "EXART_EXP",
+   "LLAND",
+   "EXART_IMP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "T605Z": {
+  "desc": "Foreign trade default proposals for the business transaction type in export, one row per country, sales organization, distribution channel, and item category.",
+  "id": "T605Z",
+  "keyFields": [
+   "MANDT",
+   "LAND1",
+   "VKORG",
+   "VTWEG",
+   "PSTYV"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "T616U": {
+  "desc": "Foreign trade rules converting import and export procedures between countries, one row per country pair and procedure.",
+  "id": "T616U",
+  "keyFields": [
+   "MANDT",
+   "ALAND",
+   "EXPRF_EXP",
+   "LLAND",
+   "EXPRF_IMP"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "T616Z": {
+  "desc": "Foreign trade default proposals for the procedure used in export, one row per country, sales organization, distribution channel, division, and item category.",
+  "id": "T616Z",
+  "keyFields": [
+   "MANDT",
+   "LAND1",
+   "VKORG",
+   "VTWEG",
+   "SPART",
+   "MTVER",
+   "PSTYV"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "T687": {
@@ -26519,6 +29336,37 @@
   "submodule": "FI-CS",
   "tier": 2
  },
+ "T881": {
+  "desc": "Master data defining a general ledger, one row per ledger.",
+  "id": "T881",
+  "keyFields": [
+   "MANDT",
+   "RLDNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "T882G": {
+  "desc": "Assignment of company codes to general ledgers, one row per company code and ledger.",
+  "id": "T882G",
+  "keyFields": [
+   "MANDT",
+   "RBUKRS",
+   "RLDNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "T8G04": {
   "desc": "Rules for deriving line item categories from general ledger accounts.",
   "id": "T8G04",
@@ -26643,6 +29491,38 @@
   "lore": null,
   "module": "FI",
   "submodule": "FI-GL",
+  "tier": 2
+ },
+ "TABWA": {
+  "desc": "Mapping of asset transaction types to depreciation areas, one row per chart of depreciation, transaction type, and depreciation area.",
+  "id": "TABWA",
+  "keyFields": [
+   "MANDT",
+   "AFAPL",
+   "BWASL",
+   "AFABE"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "TABWV": {
+  "desc": "Default asset transaction types assigned to a business transaction, one row per business transaction.",
+  "id": "TABWV",
+  "keyFields": [
+   "MANDT",
+   "VORGA"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "TAKOF": {
@@ -28485,6 +31365,38 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "USER_ADDR": {
+  "desc": "Address and contact details for system users, such as name, phone extension, department, and room, one row per user.",
+  "id": "USER_ADDR",
+  "keyFields": [
+   "MANDT",
+   "BNAME",
+   "NAME_FIRST",
+   "NAME_LAST",
+   "NAME_TEXTC",
+   "TEL_EXTENS",
+   "KOSTL",
+   "BUILDING",
+   "ROOMNUMBER",
+   "DEPARTMENT",
+   "INHOUSE_ML",
+   "NAME1",
+   "CITY1",
+   "POST_CODE1",
+   "MC_NAMEFIR",
+   "MC_NAMELAS",
+   "MC_NAME1",
+   "MC_CITY1",
+   "COMPANY"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "V000": {
   "desc": "Conditions for Variant Matching.",
   "id": "V000",
@@ -28499,6 +31411,62 @@
   "module": "EHS",
   "source": "ehs-top50",
   "submodule": "EHS",
+  "tier": 2
+ },
+ "VAKPA": {
+  "desc": "Sales document index of orders organized by partner function, one row per customer, partner function, and sales order.",
+  "id": "VAKPA",
+  "keyFields": [
+   "MANDT",
+   "KUNDE",
+   "PARVW",
+   "VKORG",
+   "TRVOG",
+   "AUDAT",
+   "VKBUR",
+   "VKGRP",
+   "VTWEG",
+   "SPART",
+   "AUART",
+   "BSTNK",
+   "KUNNR",
+   "ERNAM",
+   "VBELN"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "VAPMA": {
+  "desc": "Sales document index of order items organized by material, one row per material, sales order, and item.",
+  "id": "VAPMA",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "VKORG",
+   "TRVOG",
+   "AUDAT",
+   "VTWEG",
+   "SPART",
+   "AUART",
+   "KUNNR",
+   "VKBUR",
+   "VKGRP",
+   "BSTNK",
+   "ERNAM",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "VBEPDG": {
@@ -28543,6 +31511,26 @@
   "lore": "The header for a parked posting document — a draft that hasn't posted yet, one step before it becomes a real BKPF/BSEG pair. The four VBSEG* line-item tables hang off it, mirroring how BSEG hangs off BKPF.",
   "module": "FI",
   "submodule": "FI-GL",
+  "tier": 2
+ },
+ "VBOX": {
+  "desc": "Index linking billing documents to rebate condition records, one row per condition table, condition key, billing document, and item.",
+  "id": "VBOX",
+  "keyFields": [
+   "MANDT",
+   "KAPPL",
+   "KOTABNR",
+   "VAKEY",
+   "FBUDA",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "SD",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "SD",
   "tier": 2
  },
  "VBRL": {
@@ -28910,6 +31898,54 @@
   "submodule": "SD-CAS",
   "tier": 2
  },
+ "VLKPA": {
+  "desc": "Sales and distribution index of deliveries organized by partner function, one row per customer, partner function, and delivery.",
+  "id": "VLKPA",
+  "keyFields": [
+   "MANDT",
+   "KUNDE",
+   "PARVW",
+   "VSTEL",
+   "LFDAT",
+   "VKORG",
+   "LFART",
+   "KUNNR",
+   "KUNAG",
+   "ERNAM",
+   "VBELN"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
+ "VLPMA": {
+  "desc": "Sales and distribution index of delivery items organized by material, one row per material, delivery, and item.",
+  "id": "VLPMA",
+  "keyFields": [
+   "MANDT",
+   "MATNR",
+   "VSTEL",
+   "LFDAT",
+   "VKORG",
+   "LFART",
+   "KUNNR",
+   "KUNAG",
+   "ERNAM",
+   "VBELN",
+   "POSNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
+  "tier": 2
+ },
  "VRKPA": {
   "desc": "Index of billing documents organized by partner function.",
   "id": "VRKPA",
@@ -28995,6 +32031,23 @@
   "lore": null,
   "module": "MM",
   "submodule": "MM-PUR",
+  "tier": 2
+ },
+ "WIND": {
+  "desc": "Index of condition records used for automatic document adjustment (mass pricing updates), one row per document type, condition record, and item.",
+  "id": "WIND",
+  "keyFields": [
+   "MANDT",
+   "BLTYP",
+   "KNUMH",
+   "KOPOS"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "source": "simplification-list",
+  "submodule": "FI",
   "tier": 2
  },
  "WITH_CTNCL": {
