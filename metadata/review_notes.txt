@@ -1,0 +1,45 @@
+ERP Galaxy is a fully offline reference tool for SAP data practitioners. NO account, NO login, NO demo credentials, NO purchases, NO network connection. Launch it and every feature is immediately available.
+
+1) SCREEN RECORDING
+Attached separately, captured on a physical iPhone 17 Pro running iOS 26.0. None of the listed flows apply: no registration/login/account deletion, no paid content, no user-generated content, no permission prompts. The app requests no sensitive data or device capabilities, so no permission dialogs ever appear.
+
+2) DEVICES AND OS TESTED
+- iPhone 17 Pro (iPhone18,1), iOS 26.0 - physical device, primary target
+- iPhone 17 Pro Max, iOS 26.5 - Simulator
+- iPad Pro 13-inch (M5), iOS 26.5 - Simulator
+Universal app; both layouts verified. Also distributed via TestFlight for on-device testing.
+
+3) PURPOSE AND TARGET AUDIENCE
+Audience: SAP consultants, data architects, ABAP developers, migration teams.
+
+Problem: SAP systems hold thousands of tables with cryptic names (BSEG, ACDOCA). Practitioners need to know what a table holds, its key fields, and how it relates to others. Separately, SAP ends mainstream maintenance for ECC on 31 December 2027, so teams must work out which tables survive migration to S/4HANA.
+
+Value: the app answers both offline. 217 core tables as an interactive relationship graph, plus a searchable index of 1,816 more with plain-English descriptions, primary keys and foreign keys. Users select the tables they care about and get a migration verdict for each - disappears, replaced, becomes a compatibility view, changes, or carries over - with the supporting quote from SAP's published Simplification List.
+
+4) HOW TO ACCESS THE MAIN FEATURES
+No setup, credentials or sample files needed. From a cold launch:
+- The graph appears immediately. Tap any circle for that table's detail sheet.
+- Type BSEG in the search field, tap the result.
+- Tap the padlock on a table to add it to your board. Add several.
+- Open the menu (top right), tap "Impact" for the migration verdict on your selection.
+- The menu also holds module filters, a Levels slider, a Classic/Fun reading toggle and a legend.
+- Optional: add the "Table of the Day" widget, or search BSEG in iOS Spotlight.
+
+5) EXTERNAL SERVICES, TOOLS OR PLATFORMS
+None. Zero network requests at runtime; it runs identically in Airplane Mode. No data providers, authentication, payment processors, AI services, analytics or advertising SDKs.
+
+All reference data ships inside the app bundle as static files. The relationship graph is drawn by a bundled local copy of D3.js (open source, BSD-3-Clause), loaded from the bundle, not a network, purely as a local drawing library.
+
+Reference content was compiled by us before release from publicly available material, including SAP's published Simplification List. All descriptive text in the app was written by us in our own words.
+
+6) REGIONAL DIFFERENCES
+None. Identical in all regions. English only, no region-locked content, no regional pricing, no geolocation. The same bundled dataset everywhere.
+
+7) REGULATED INDUSTRY / THIRD-PARTY MATERIAL
+Not a regulated industry. It is an educational and professional reference tool. It processes no financial, health or personal data, and never connects to an SAP system.
+
+Third-party material: the app contains no SAP software, source code, logos or branding, and does not reproduce SAP's documentation text. It contains factual table identifiers (e.g. "BSEG") with explanations we wrote ourselves. Migration status derives from SAP's published Simplification List, cited by item number so users can verify it at source.
+
+The product name contains no SAP trademark. "SAP" appears only descriptively, to identify the software the reference material concerns, consistent with nominative fair use. Both the App Store description and the in-app text state: "Not affiliated with, authorised or endorsed by SAP SE. SAP is a trademark of SAP SE."
+
+We claim no affiliation with or endorsement by SAP SE.

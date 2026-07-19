@@ -146,6 +146,40 @@ single biggest risk to this listing:
 
 ---
 
+## Review round 1 — Guideline 2.1, Information Needed (2026-07-17)
+
+**Not a rejection on the merits.** Apple did *not* invoke Guideline 4.2 (minimum
+functionality), which was the standing risk. They asked for information.
+
+**Root cause: my mistake.** The detailed review notes I wrote went into
+`betaAppReviewDetails` — the **TestFlight** resource. App Store review reads a *different*
+resource, `appStoreReviewDetails`, and its `notes` field was **empty**. The reviewer opened
+the submission with no explanation of what the app was, so "we need additional information"
+is exactly the right response. Two similarly-named resources; I populated the wrong one.
+
+**Fixed:** `metadata/review_notes.txt` (3,991 chars) now answers all seven questions and is
+written to `appStoreReviewDetails.notes`. `demoAccountRequired` set to false.
+
+Their seven items:
+
+| # | Item | Status |
+|---|---|---|
+| 1 | Screen recording on a physical device | 🔴 **David** — see `metadata/RECORDING_SCRIPT.md`. `devicectl` has no recording capability and a Simulator capture would not satisfy "physical device". |
+| 2 | Devices/OS tested | ✅ iPhone 17 Pro iOS 26.0 (physical); iPhone 17 Pro Max + iPad Pro 13" M5, iOS 26.5 |
+| 3 | Purpose and audience | ✅ incl. the 2027 ECC deadline as the concrete problem |
+| 4 | Setup and access instructions | ✅ no credentials; exact tap path given |
+| 5 | External services | ✅ **none** — zero network calls; D3.js bundled locally, BSD-3-Clause |
+| 6 | Regional differences | ✅ none — identical everywhere, English only |
+| 7 | Regulated industry / third-party material | ✅ answered directly on SAP: no SAP code/logos/docs text, factual identifiers + our own prose, nominative fair use, explicit non-affiliation |
+
+Build **5** is attached (an earlier note here said build 1 — that was stale), so the
+reviewer did see the current feature set including the widget, Spotlight and the impact board.
+
+Note their boilerplate mentions Guideline 2.3.3 (screenshots must show the app in use, not
+splash art). Ours do — that section is generic advice, not a specific finding.
+
+---
+
 ## Status
 
 - [x] Privacy policy hosted and verified live
@@ -154,6 +188,8 @@ single biggest risk to this listing:
 - [x] Categories set (DEVELOPER_TOOLS + REFERENCE)
 - [x] Age rating declared (all 21 answers → 4+)
 - [x] Screenshots captured and uploaded (5, all COMPLETE)
-- [ ] Build attached (currently **build 1** — must be updated)
+- [x] Build attached (**build 5**)
+- [x] App Review Information notes (all 7 answers, 3,991 chars)
 - [ ] App Privacy declared *(web UI only — API cannot do this)*
-- [ ] **Submit** — requires David's explicit go-ahead: this creates a public listing
+- [ ] Screen recording on a physical device — **David**, see `metadata/RECORDING_SCRIPT.md`
+- [ ] Reply to Apple in App Store Connect with the recording attached
