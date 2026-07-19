@@ -351,10 +351,10 @@
     <div class="legend-block" id="legend-block">
       <div class="lg-title">Legend</div>
       <div class="lg-sub">Planet fill — migration fate</div>
-      <div class="lg-row"><span class="lg-dot" style="background:#ef444488;border-color:#ef4444"></span> Disappears — not in S/4HANA</div>
-      <div class="lg-row"><span class="lg-dot" style="background:#22c55e88;border-color:#22c55e"></span> New in S/4HANA</div>
-      <div class="lg-row"><span class="lg-dot" style="background:#f59e0b7a;border-color:#f59e0b"></span> Changes, moves, or becomes a read-only view</div>
-      <div class="lg-row"><span class="lg-dot" style="background:#1e2637cc;border-color:#64748b"></span> Carries over unchanged</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#ef4444;border-color:#ef4444"></span> Disappears — not in S/4HANA</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#22c55e;border-color:#22c55e"></span> New in S/4HANA</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#f59e0b;border-color:#f59e0b"></span> Changes, moves, or becomes a read-only view</div>
+      <div class="lg-row"><span class="lg-dot" style="background:#1e2637;border-color:#64748b"></span> Carries over unchanged</div>
       <div class="lg-sub">Ring — S/4 status</div>
       <div class="lg-row"><span class="lg-ring" style="border-color:#22c55e"></span> New</div>
       <div class="lg-row"><span class="lg-ring" style="border-color:#f59e0b"></span> Modified</div>
@@ -3227,9 +3227,9 @@ function buildGraph(){
 
   node.append('text').text(d=>d.id)
     .attr('text-anchor','middle').attr('dy','0.35em')
-    .attr('font-size',d=>nodeR(connCount[d.id])>11?'8.5px':'7px')
+    .attr('font-size',d=>nodeR(connCount[d.id])>13?'10px':nodeR(connCount[d.id])>10?'9px':'8px')
     .attr('font-family','Courier New,monospace').attr('font-weight','700')
-    .attr('fill',d=>MODULE_COLORS[d.module]).style('pointer-events','none').style('user-select','none');
+    .attr('fill',d=>nodeLabelFill(d)).style('pointer-events','none').style('user-select','none');
 
   simulation.on('tick',()=>{
     link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
@@ -3255,15 +3255,23 @@ function nodeFill(d){
   //   red    disappears        green  new in S/4
   //   orange changes / moves / compatibility view
   //   slate  carries over unchanged
-  // Driven by tableFate() so the graph, the board and the legend can't disagree.
+  // Solid, not translucent: a semi-transparent fill let the dark background
+  // bleed through and wrecked contrast with the label sitting on top.
   switch(tableFate(d.id)){
-    case 'dies':    return '#ef444488';
-    case 'arrives': return '#22c55e88';
+    case 'dies':    return '#ef4444';
+    case 'arrives': return '#22c55e';
     case 'moves':
     case 'compat':
-    case 'changes': return '#f59e0b7a';
-    default:        return '#1e2637cc';   // carries over — deliberately quiet
+    case 'changes': return '#f59e0b';
+    default:        return '#1e2637';   // carries over — deliberately quiet
   }
+}
+
+// The label has to be readable against whatever the fill is, so it can't also
+// encode the module. On a saturated fate colour we use near-black ink; only the
+// quiet "carries over" fill keeps the module tint.
+function nodeLabelFill(d){
+  return tableFate(d.id)==='safe' ? MODULE_COLORS[d.module] : '#0b1220';
 }
 
 function statusColor(d){
