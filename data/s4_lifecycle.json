@@ -1,44 +1,56 @@
 {
  "ANEA": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "ANEK": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "ANEP": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "ANLC": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "ANLP": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "ATAB": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "example table pool is ATAB; example table cluster is CDCLS) are removed",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "BP001": {
@@ -46,6 +58,7 @@
   "item": "45.1",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2900607",
   "source": "simplification-list-2023"
  },
  "BPID001": {
@@ -53,76 +66,97 @@
   "item": "38.14",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "3004812",
   "source": "simplification-list-2023"
  },
  "BSAD": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BSAK": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BSAS": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BSEG": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "BSID": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BSIK": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BSIM": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BSIS": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "BUT000_TD": {
+  "action": ".",
   "evidence": "switching OFF the table BUT000_TD converts the time dependent entries to time independent entries",
   "item": "3.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2379157",
   "source": "simplification-list-2023"
  },
  "BUTADRSEARCH": {
+  "action": "Be informed that the redundant storage of 'Business Partner' data in BUTADRSEARCH is only kept for compatibility reasons (customers doing a conversion that have already activated this indexing) and must not be activated by new customers.",
   "evidence": "Fields BIRTHDT, AUGR, XDELE, XBLCK, TYPE, and REGION in table BUTADRSEARCH is no longer requried",
   "item": "3.20",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2576961",
   "source": "simplification-list-2023"
  },
  "CATSDB": {
@@ -130,139 +164,178 @@
   "item": "2.41",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "3150537",
   "source": "simplification-list-2023"
  },
  "CDCLS": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "example table pool is ATAB; example table cluster is CDCLS) are removed",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "CDPOS": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "CKLMLCR": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "Standard Price. Periodic Unit Price and Price Control are still managed in table CKLMLCR",
   "item": "12.4",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMI1": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "CKMLCR": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLCRWIP": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLKEPH": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLLACRWIP": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLLAPPWIP": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLMV003": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLMV004": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLMV004WIP": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLMV011": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "Table MLRUNLIST replaces the former table CKMLMV011 (Object List for Costing Run)",
   "item": "12.4",
   "replacedBy": "MLRUNLIST",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLPP": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLPPWIP": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLPRKEKO": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "Cost Component Split for Prices is still managed in tables CKMLPRKEKO and CKMLPRKEPH",
   "item": "12.4",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "CKMLPRKEPH": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "Cost Component Split for Prices is still managed in tables CKMLPRKEKO and CKMLPRKEPH",
   "item": "12.4",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "COBK": {
+  "action": "Please check your customer-specific programs using CO tables. Customer coding should be adapted by replacing the access via compatibility views with direct access to ACDOCA for value types 04 and 11. Details are described in note 2185026.",
   "evidence": "Currently, COBK is written as before.",
   "item": "12.9",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2270404",
   "source": "simplification-list-2023"
  },
  "COEP": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "COSP": {
@@ -273,10 +346,12 @@
   "source": "simplification-list-2023"
  },
  "COSP_BAK": {
-  "evidence": "Value types other than \u201804\u2019 and \u201811\u2019 are still stored in COEP, COSP_BAK, COSS_BAK.",
+  "action": "Please check your customer-specific programs using CO tables. Customer coding should be adapted by replacing the access via compatibility views with direct access to ACDOCA for value types 04 and 11. Details are described in note 2185026.",
+  "evidence": "Value types other than ‘04’ and ‘11’ are still stored in COEP, COSP_BAK, COSS_BAK.",
   "item": "12.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2270404",
   "source": "simplification-list-2023"
  },
  "COSS": {
@@ -287,24 +362,30 @@
   "source": "simplification-list-2023"
  },
  "COSS_BAK": {
-  "evidence": "Value types other than \u201804\u2019 and \u201811\u2019 are still stored in COEP, COSP_BAK, COSS_BAK.",
+  "action": "Please check your customer-specific programs using CO tables. Customer coding should be adapted by replacing the access via compatibility views with direct access to ACDOCA for value types 04 and 11. Details are described in note 2185026.",
+  "evidence": "Value types other than ‘04’ and ‘11’ are still stored in COEP, COSP_BAK, COSS_BAK.",
   "item": "12.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2270404",
   "source": "simplification-list-2023"
  },
  "COVP": {
+  "action": "Please check your customer-specific programs using CO tables. Customer coding should be adapted by replacing the access via compatibility views with direct access to ACDOCA for value types 04 and 11. Details are described in note 2185026.",
   "evidence": "Compatibility views COSP, COSS, COEP, COVP: How do you optimize their use.",
   "item": "12.9",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270404",
   "source": "simplification-list-2023"
  },
  "DBTABLOG": {
+  "action": "Transfer the configuration/customizing settings using SAP report AUT_MIGRATE_ENHAT_DB_DATA in SAP ERP before transforming/migrating to SAP S/4HANA.",
   "evidence": "No changes to business processes; no changes to entries of database table DBTABLOG",
   "item": "30.9",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2268131",
   "source": "simplification-list-2023"
  },
  "DBVM": {
@@ -315,38 +396,48 @@
   "source": "simplification-list-2023"
  },
  "DD06L": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "as those tables and views do no longer exist in release 1809",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "DD06T": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "as those tables and views do no longer exist in release 1809",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "DD16S": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "as those tables and views do no longer exist in release 1809",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "DOKCLU": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "pool tables and cluster tables are no longer supported",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "DOKTL": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "logical tables (pool table or cluster table), which are still existing as transparent tables after the conversion",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "EBEW": {
@@ -354,6 +445,7 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "EBEWH": {
@@ -361,6 +453,7 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "EKKO": {
@@ -368,6 +461,7 @@
   "item": "38.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "3092824",
   "source": "simplification-list-2023"
  },
  "EKPO": {
@@ -375,34 +469,43 @@
   "item": "38.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "3092824",
   "source": "simplification-list-2023"
  },
  "FAGLBSAS": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "FAGLBSIS": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "FAGLFLEXA": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "FAGLFLEXT": {
+  "action": "Mandatory application configuration steps related to General Ledger in the IMG (transaction SPRO): • Folder Preparations and Migration of Customizing Please use the step \"Check Customizing Settings Prior to Migration\" (transaction FINS_MIG_…",
   "evidence": "reports in Financial Accounting will show only the fields formerly available in FAGLFLEXT",
   "item": "15.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270339",
   "source": "simplification-list-2023"
  },
  "FMAVCT": {
@@ -410,6 +513,7 @@
   "item": "59.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2270445",
   "source": "simplification-list-2023"
  },
  "FMBDT": {
@@ -417,20 +521,25 @@
   "item": "59.9",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270445",
   "source": "simplification-list-2023"
  },
  "FMGLFLEXA": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "FMGLFLEXT": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "FMRBT": {
@@ -438,62 +547,79 @@
   "item": "59.9",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270445",
   "source": "simplification-list-2023"
  },
  "GLFUNCT": {
+  "action": "To use CSA reporting in SAP S/4HANA based on the Universal Journal, you need to fulfill several prerequistes. Refer to SAP note 932272 for a detailed explanation.",
   "evidence": "the contents of the cost of sales ledger and all special ledgers created in table GLFUNCT are included in the Universal Journal (table ACDOCA)",
   "item": "8.8",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "3006586",
   "source": "simplification-list-2023"
  },
  "GLPCA": {
+  "action": "As alternatives to planning in classical PCA you have the following options: • SAP Analytics Cloud for planning with SAP S/4HANA (SAC) • SAP S/4HANA G/L planning transactions • SAP S/4HANA integrated planning (using SAP Fiori app F1711 (Imp…",
   "evidence": "Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards",
   "item": "12.6",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2993220",
   "source": "simplification-list-2023"
  },
  "GLPCP": {
+  "action": "Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud SAP strongly recommends transitioning to Profit Center Accounting on Universal Journal after completion of your next fiscal year.",
   "evidence": "Profit Center Planning based on table GLPCP is in compatibility scope and must not be used beyond they expiry date",
   "item": "12.6",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "3572033",
   "source": "simplification-list-2023"
  },
  "GLPCT": {
+  "action": "As alternatives to planning in classical PCA you have the following options: • SAP Analytics Cloud for planning with SAP S/4HANA (SAC) • SAP S/4HANA G/L planning transactions • SAP S/4HANA integrated planning (using SAP Fiori app F1711 (Imp…",
   "evidence": "Actual postings for classical Profit Center Accounting, using GLPCA and GLPCT, will be adopted to S/4HANA product standards",
   "item": "12.6",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2993220",
   "source": "simplification-list-2023"
  },
  "GLT0": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "INDX": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "Export/import tables are still supported in 1809.",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "JVGLFLEXA": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "JVGLFLEXT": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "J_1IMOCUST": {
@@ -501,6 +627,7 @@
   "item": "3.13",
   "replacedBy": "KNA1",
   "s4status": "replaced",
+  "sapNote": "2877717",
   "source": "simplification-list-2023"
  },
  "J_1IMOVEND": {
@@ -508,13 +635,16 @@
   "item": "3.13",
   "replacedBy": "LFA1",
   "s4status": "replaced",
+  "sapNote": "2877717",
   "source": "simplification-list-2023"
  },
  "J_3GPRLHD": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "(portfolio determination), J_3GPRLHD (CEM price list",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "KNA1": {
@@ -522,62 +652,79 @@
   "item": "3.13",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2877717",
   "source": "simplification-list-2023"
  },
  "KNC1": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "KNC3": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "KNVV": {
-  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization       data] and KNVV [Customer Master Sales Data], the \u201cNFM Exchange Key\u201c field       /NFM/BOESL is still available.",
+  "action": "If you do a conversion from SAP ERP to SAP S/4HANA, the following activities are required before using NFM in S/4HANA. • NFM field “Exchange key” in transaction „Business Partner“: Since SAP S/4HANA, on-premise edition 1511, Customer and Ve…",
+  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization       data] and KNVV [Customer Master Sales Data], the “NFM Exchange Key“ field       /NFM/BOESL is still available.",
   "item": "52.8",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "3306899",
   "source": "simplification-list-2023"
  },
  "KOND3": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "(pricing), NACH (output determination), KOND3 (campaign",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "KONDN": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "determination), KONDN (free goods determination), KONHM",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "KONH": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "been removed from all condition header tables, including KONH",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "KONHM": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "determination), KONDN (free goods determination), KONHM",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "KONV": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "table KONV has been replaced in its data persistency role by the",
   "item": "39.9",
   "replacedBy": "PRCD_ELEMENTS",
   "s4status": "replaced",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "LFA1": {
@@ -585,48 +732,61 @@
   "item": "3.13",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2877717",
   "source": "simplification-list-2023"
  },
  "LFC1": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "LFC3": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "totals and application index tables were removed and replaced by identically-named DDL SQL views, called compatibility views",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "LFM1": {
-  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization       data] and KNVV [Customer Master Sales Data], the \u201cNFM Exchange Key\u201c field       /NFM/BOESL is still available.",
+  "action": "If you do a conversion from SAP ERP to SAP S/4HANA, the following activities are required before using NFM in S/4HANA. • NFM field “Exchange key” in transaction „Business Partner“: Since SAP S/4HANA, on-premise edition 1511, Customer and Ve…",
+  "evidence": "In DDIC tables LFM1 [Vendor master record purchasing organization       data] and KNVV [Customer Master Sales Data], the “NFM Exchange Key“ field       /NFM/BOESL is still available.",
   "item": "52.8",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "3306899",
   "source": "simplification-list-2023"
  },
  "LIKP": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents.",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "LIPS": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents.",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "MARA": {
+  "action": "Refer to the below SAP Notes before performing the system conversion to SAP S/4HANA: SAP Notes 2334012 2334008 2270836 2360860",
   "evidence": "number will be stored as key (MATNR) in MARA table. Hence conversion exit, which",
   "item": "48.5",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2348023",
   "source": "simplification-list-2023"
  },
  "MARC": {
@@ -634,6 +794,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MARCH": {
@@ -641,20 +802,25 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MARCHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MARCO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MARD": {
@@ -662,6 +828,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MARDH": {
@@ -669,27 +836,34 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MARDHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MARDO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MATERIALID": {
+  "action": "Refer to the below SAP Notes before performing the system conversion to SAP S/4HANA: SAP Notes 2334012 2334008 2270836 2360860",
   "evidence": "MATERIALID table should not be used any more in the coding. For more information",
   "item": "48.5",
   "replacedBy": "MARA",
   "s4status": "deprecated",
+  "sapNote": "2348023",
   "source": "simplification-list-2023"
  },
  "MBEW": {
@@ -697,6 +871,7 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "MBEWH": {
@@ -704,13 +879,16 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "MCHABO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MCHB": {
@@ -718,6 +896,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MCHBH": {
@@ -725,13 +904,16 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MCHBO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MCSD": {
@@ -739,6 +921,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MCSDH": {
@@ -746,6 +929,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MCSS": {
@@ -753,6 +937,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MCSSH": {
@@ -760,6 +945,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MDKP": {
@@ -770,10 +956,12 @@
   "source": "simplification-list-2023"
  },
  "MDRI": {
+  "action": "Follow the instructions for \"Clean up Total Requirements\" in the SAP help portal (Link) Related SAP Notes Custom Code related information Custom code reading one of the tables RQIT, RQHD, or MDRI will no longer work.",
   "evidence": "Custom code reading one of the tables RQIT, RQHD, or                                 MDRI will no longer work. Read table RESB instead.",
   "item": "30.4",
   "replacedBy": "RESB",
   "s4status": "replaced",
+  "sapNote": "2268089",
   "source": "simplification-list-2023"
  },
  "MDTB": {
@@ -795,6 +983,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MKOLH": {
@@ -802,48 +991,61 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MKOLHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MKOLO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MKPF": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG",
   "item": "27.5",
   "replacedBy": "MATDOC",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MLCD": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "MLCR": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "MLCRF": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "MLCRP": {
@@ -851,27 +1053,34 @@
   "item": "18.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MLHD": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "MLIT": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "MLKEPH": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "MLMST": {
@@ -879,20 +1088,25 @@
   "item": "18.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MLPP": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "these tables and views are obsolete. No read or write access is allowed anymore",
   "item": "8.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "MLPPF": {
+  "action": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
   "evidence": "The new Material Ledger Document tables MLDOC and MLDOCCCS replace most former periodic tables",
   "item": "12.4",
   "replacedBy": "MLDOC, MLDOCCCS",
   "s4status": "replaced",
+  "sapNote": "2354768",
   "source": "simplification-list-2023"
  },
  "MLPRKEKO": {
@@ -900,6 +1114,7 @@
   "item": "18.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MLPRKEPH": {
@@ -907,6 +1122,7 @@
   "item": "18.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MLREADST": {
@@ -914,6 +1130,7 @@
   "item": "18.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MLREPORT": {
@@ -921,6 +1138,7 @@
   "item": "18.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MLXXV": {
@@ -928,6 +1146,7 @@
   "item": "18.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2332591",
   "source": "simplification-list-2023"
  },
  "MONI": {
@@ -942,6 +1161,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSCDH": {
@@ -949,6 +1169,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSCS": {
@@ -956,27 +1177,34 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSEG": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "Material document data will be stored in MATDOC only and not anymore in MKPF and MSEG",
   "item": "27.5",
   "replacedBy": "MATDOC",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSEGO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "MATDOCOIL table has been introduced which contains former MSEGO1 & MSEGO2 table data",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSEGO2": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "MATDOCOIL table has been introduced which contains former MSEGO1 & MSEGO2 table data",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSFD": {
@@ -984,6 +1212,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSFDH": {
@@ -991,6 +1220,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSFS": {
@@ -998,6 +1228,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSID": {
@@ -1005,6 +1236,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSIDH": {
@@ -1012,6 +1244,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSIS": {
@@ -1019,6 +1252,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSKA": {
@@ -1026,6 +1260,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSKAH": {
@@ -1033,20 +1268,25 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSKAHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSKAO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSKU": {
@@ -1054,6 +1294,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSKUH": {
@@ -1061,20 +1302,25 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSKUHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSKUO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSLB": {
@@ -1082,6 +1328,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSLBH": {
@@ -1089,20 +1336,25 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSLBHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSLBO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSPR": {
@@ -1110,6 +1362,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSPRH": {
@@ -1117,20 +1370,25 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSPRHO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSPRO1": {
+  "action": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
   "evidence": "aggregated actual stock quantities will not be available anymore in the hybrid or replaced aggregation tables",
   "item": "56.9",
   "replacedBy": "MATDOCOIL",
   "s4status": "replaced",
+  "sapNote": "2328419",
   "source": "simplification-list-2023"
  },
  "MSRD": {
@@ -1138,6 +1396,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSRDH": {
@@ -1145,6 +1404,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSRS": {
@@ -1152,6 +1412,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSSA": {
@@ -1159,6 +1420,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSSAH": {
@@ -1166,6 +1428,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSSL": {
@@ -1173,6 +1436,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSSQ": {
@@ -1180,6 +1444,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSSQH": {
@@ -1187,6 +1452,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSTB": {
@@ -1194,6 +1460,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSTBH": {
@@ -1201,6 +1468,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSTE": {
@@ -1208,6 +1476,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSTEH": {
@@ -1215,6 +1484,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSTQ": {
@@ -1222,6 +1492,7 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "MSTQH": {
@@ -1229,13 +1500,16 @@
   "item": "27.5",
   "replacedBy": null,
   "s4status": "compat_view",
+  "sapNote": "2206980",
   "source": "simplification-list-2023"
  },
  "NACH": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "(pricing), NACH (output determination), KOND3 (campaign",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  },
  "NAST": {
@@ -1243,6 +1517,7 @@
   "item": "39.4",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2790427",
   "source": "simplification-list-2023"
  },
  "OBEW": {
@@ -1250,6 +1525,7 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "OBEWH": {
@@ -1257,6 +1533,7 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "OBJK": {
@@ -1264,20 +1541,25 @@
   "item": "29.1",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2580670",
   "source": "simplification-list-2023"
  },
  "PSGLFLEXA": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "PSGLFLEXT": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "QBEW": {
@@ -1285,6 +1567,7 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "QBEWH": {
@@ -1292,104 +1575,133 @@
   "item": "18.5",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2352383",
   "source": "simplification-list-2023"
  },
  "RFBLG": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "pool tables and cluster tables are no longer supported",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "RQHD": {
+  "action": "Follow the instructions for \"Clean up Total Requirements\" in the SAP help portal (Link) Related SAP Notes Custom Code related information Custom code reading one of the tables RQIT, RQHD, or MDRI will no longer work.",
   "evidence": "Custom code reading one of the tables RQIT, RQHD, or                                 MDRI will no longer work. Read table RESB instead.",
   "item": "30.4",
   "replacedBy": "RESB",
   "s4status": "replaced",
+  "sapNote": "2268089",
   "source": "simplification-list-2023"
  },
  "RQIT": {
+  "action": "Follow the instructions for \"Clean up Total Requirements\" in the SAP help portal (Link) Related SAP Notes Custom Code related information Custom code reading one of the tables RQIT, RQHD, or MDRI will no longer work.",
   "evidence": "Custom code reading one of the tables RQIT, RQHD, or                                 MDRI will no longer work. Read table RESB instead.",
   "item": "30.4",
   "replacedBy": "RESB",
   "s4status": "replaced",
+  "sapNote": "2268089",
   "source": "simplification-list-2023"
  },
  "S066": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "S067": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "STXL": {
+  "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
   "evidence": "Export/import tables are still supported in 1809.",
   "item": "2.17",
   "replacedBy": null,
   "s4status": "unchanged",
+  "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
  "T012K": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "T012T": {
+  "action": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
   "evidence": "additional tables were (partially) replaced by Universal Journal (ACDOCA)",
   "item": "8.2",
   "replacedBy": "ACDOCA",
   "s4status": "replaced",
+  "sapNote": "2270333",
   "source": "simplification-list-2023"
  },
  "T161W": {
+  "action": "The following tables and fields become obsolete in release 1709: Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud • Customizing table T605Z: Foreign Trade: Proposal for Bus.",
   "evidence": "Field T161W-EXPRF: Procedure in customizing table T161W: Order Types for Stock Transfer",
   "item": "16.3",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2468294",
   "source": "simplification-list-2023"
  },
  "T169P": {
+  "action": "Custom code that uses the old customizing of exchange rate difference handling has to be adopted. The following fields of table T169P are affected: • XPLCU • KURST Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4H…",
   "evidence": "configuration was saved in table T169P",
   "item": "38.9",
   "replacedBy": "FMLC_ERD",
   "s4status": "replaced",
+  "sapNote": "3053636",
   "source": "simplification-list-2023"
  },
  "T605U": {
+  "action": "The following tables and fields become obsolete in release 1709: Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud • Customizing table T605Z: Foreign Trade: Proposal for Bus.",
   "evidence": "The following tables and fields become obsolete in release 1709:",
   "item": "16.3",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2468294",
   "source": "simplification-list-2023"
  },
  "T605Z": {
+  "action": "The following tables and fields become obsolete in release 1709: Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud • Customizing table T605Z: Foreign Trade: Proposal for Bus.",
   "evidence": "The following tables and fields become obsolete in release 1709:",
   "item": "16.3",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2468294",
   "source": "simplification-list-2023"
  },
  "T616U": {
+  "action": "The following tables and fields become obsolete in release 1709: Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud • Customizing table T605Z: Foreign Trade: Proposal for Bus.",
   "evidence": "The following tables and fields become obsolete in release 1709:",
   "item": "16.3",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2468294",
   "source": "simplification-list-2023"
  },
  "T616Z": {
+  "action": "The following tables and fields become obsolete in release 1709: Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud • Customizing table T605Z: Foreign Trade: Proposal for Bus.",
   "evidence": "The following tables and fields become obsolete in release 1709:",
   "item": "16.3",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2468294",
   "source": "simplification-list-2023"
  },
  "T881": {
@@ -1397,6 +1709,7 @@
   "item": "8.5",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2474069",
   "source": "simplification-list-2023"
  },
  "T882G": {
@@ -1404,6 +1717,7 @@
   "item": "8.5",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2474069",
   "source": "simplification-list-2023"
  },
  "TABWA": {
@@ -1411,6 +1725,7 @@
   "item": "10.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2270388",
   "source": "simplification-list-2023"
  },
  "TABWV": {
@@ -1418,6 +1733,7 @@
   "item": "10.2",
   "replacedBy": "TABWD",
   "s4status": "replaced",
+  "sapNote": "2270388",
   "source": "simplification-list-2023"
  },
  "USER_ADDR": {
@@ -1425,76 +1741,97 @@
   "item": "2.32",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2570961",
   "source": "simplification-list-2023"
  },
  "VAKPA": {
-  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,",
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
+  "evidence": "Elimination of redundancies – Document index tables VAKPA, VAPMA, VLKPA,",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VAPMA": {
-  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,",
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
+  "evidence": "Elimination of redundancies – Document index tables VAKPA, VAPMA, VLKPA,",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VBAK": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VBAP": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "corresponding header and item tables - VBAK and VBAP for sales documents,",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VBFA": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "Simplification of document flow table VBFA",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VBOX": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "Rebate index table VBOX: See simplification item \"SD Rebate Processing",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VBRK": {
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "LIKP and LIPS for deliveries, VBRK for billing documents.",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VBUK": {
+  "action": "Adaption of the selection criteria for substance volume tracking as described in SAP Note 2198406.",
   "evidence": "VBUK and VBUP are no longer supported in this Customizing activity.",
   "item": "33.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267439",
   "source": "simplification-list-2023"
  },
  "VBUP": {
+  "action": "Adaption of the selection criteria for substance volume tracking as described in SAP Note 2198406.",
   "evidence": "VBUK and VBUP are no longer supported in this Customizing activity.",
   "item": "33.2",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267439",
   "source": "simplification-list-2023"
  },
  "VLKPA": {
-  "evidence": "Elimination of redundancies \u2013 Document index tables VAKPA, VAPMA, VLKPA,",
+  "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
+  "evidence": "Elimination of redundancies – Document index tables VAKPA, VAPMA, VLKPA,",
   "item": "39.8",
   "replacedBy": null,
   "s4status": "deprecated",
+  "sapNote": "2267306",
   "source": "simplification-list-2023"
  },
  "VLPMA": {
@@ -1519,10 +1856,12 @@
   "source": "simplification-list-2023"
  },
  "WIND": {
+  "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
   "evidence": "determination), and WIND (document index). The concatenated",
   "item": "39.9",
   "replacedBy": null,
   "s4status": "changed",
+  "sapNote": "2267308",
   "source": "simplification-list-2023"
  }
 }
