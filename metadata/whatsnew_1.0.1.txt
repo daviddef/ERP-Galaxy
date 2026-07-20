@@ -6,4 +6,6 @@ What happens to your tables in S/4HANA — now for many more of them.
 
 • Clearer graph. Table names are now easier to read — solid colour fills with high-contrast labels, and larger text on the nodes.
 
+• Smoother filtering. Module filters are now compact single-row cards with All / None and a one-tap "only this module". Swipe the detail sheet away from anywhere.
+
 • 1,975 tables in the index, all offline, still no account and no data collection.
