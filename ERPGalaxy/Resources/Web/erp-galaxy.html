@@ -154,6 +154,8 @@
   .mod-chip{padding:3px 9px;border-radius:20px;font-size:0.68rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all 0.2s;white-space:nowrap;opacity:0.45;}
   /* Desktop keeps the header compact: code only, full name on hover. */
   .mc-name{display:none;}
+  .mc-solo{display:none;}
+  .mod-allnone{display:none;}
   .mod-chip.active{opacity:1;border-color:currentColor;}
   .main{display:flex;flex:1;overflow:hidden;}
   #graph-container{flex:1;position:relative;overflow:hidden;}
@@ -263,10 +265,20 @@
     .mode-label{display:block;}
     .mode-group{display:flex;width:100%;}
     /* Drawer has vertical room: give each module its full name. */
-    .module-filters{display:flex!important;flex-direction:column;gap:6px;overflow:visible;}
-    .mod-chip{display:flex;flex-direction:column;gap:1px;width:100%;border-radius:8px;
-      padding:8px 11px;white-space:normal;font-size:.74rem;}
-    .mc-name{display:block;font-weight:500;font-size:.66rem;opacity:.75;color:var(--text-muted);}
+    .module-filters{display:flex!important;flex-direction:column;gap:5px;overflow:visible;}
+    /* Compact single-row cards: code + name on one line, bigger code text. */
+    .mod-chip{display:flex;flex-direction:row;align-items:center;gap:8px;width:100%;
+      border-radius:8px;padding:7px 10px;white-space:nowrap;}
+    .mod-chip .mc-code{font-size:.92rem;font-weight:800;flex-shrink:0;}
+    .mc-name{display:block;font-weight:500;font-size:.72rem;opacity:.8;color:var(--text-muted);
+      overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;}
+    .mc-solo{display:inline-flex;background:none;border:none;color:inherit;opacity:.5;
+      font-size:1rem;cursor:pointer;padding:0 2px;flex-shrink:0;font-family:inherit;}
+    .mc-solo:active{opacity:1;}
+    .mod-allnone{display:flex;gap:8px;margin-bottom:2px;}
+    .mod-allnone button{flex:1;background:var(--surface2);border:1px solid var(--border);
+      color:var(--text-muted);border-radius:7px;padding:6px;font-size:.72rem;font-weight:700;
+      cursor:pointer;font-family:inherit;}
     .tools-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:299;
       opacity:0;pointer-events:none;transition:opacity .26s;}
     .tools-backdrop.open{opacity:1;pointer-events:auto;}
@@ -3057,18 +3069,43 @@ function setView(v){
 
 function buildModuleFilters(){
   const el=document.getElementById('module-filters');
+  el.innerHTML='';
+  // All / None row — the fast way to get to "just one module": tap None, then
+  // the one you want. (Tap a chip = toggle; the ⊙ solos to just that module.)
+  const bar=document.createElement('div'); bar.className='mod-allnone';
+  bar.innerHTML=`<button onclick="setAllModules(true)">All</button>
+                 <button onclick="setAllModules(false)">None</button>`;
+  el.appendChild(bar);
   Object.entries(MODULE_COLORS).forEach(([mod,color])=>{
     const chip=document.createElement('div');
-    chip.className='mod-chip active';
+    chip.className='mod-chip'+(activeModules.has(mod)?' active':'');
+    chip.dataset.mod=mod;
     chip.style.color=color; chip.style.background=color+'18';
-    // Code stays prominent; the plain-English name is what makes the filter
-    // usable by anyone who doesn't already have SAP's acronyms memorised.
     chip.innerHTML=`<span class="mc-code">${MODULE_EMOJIS[mod]} ${mod}</span>`+
-                   `<span class="mc-name">${MODULE_NAMES[mod]||''}</span>`;
+                   `<span class="mc-name">${MODULE_NAMES[mod]||''}</span>`+
+                   `<button class="mc-solo" title="Only ${mod}" onclick="soloModule('${mod}',event)">⊙</button>`;
     chip.title=MODULE_NAMES[mod]||mod;
     chip.onclick=()=>toggleModule(mod,chip);
     el.appendChild(chip);
   });
+}
+function syncModuleChips(){
+  document.querySelectorAll('.mod-chip[data-mod]').forEach(c=>{
+    c.classList.toggle('active', activeModules.has(c.dataset.mod));
+  });
+}
+function setAllModules(on){
+  if(on) Object.keys(MODULE_COLORS).forEach(m=>activeModules.add(m));
+  else activeModules.clear();
+  syncModuleChips(); updateGraph();
+}
+function soloModule(mod,ev){
+  if(ev) ev.stopPropagation();
+  activeModules.clear(); activeModules.add(mod);
+  syncModuleChips(); updateGraph();
+  if(window.webkit?.messageHandlers?.hapticFeedback){
+    window.webkit.messageHandlers.hapticFeedback.postMessage({style:'selection'});
+  }
 }
 
 function toggleModule(mod,chip){
@@ -3484,26 +3521,34 @@ function initSheetSwipe(){
   const panel=document.getElementById('mobile-panel');
   const body=document.getElementById('mobile-panel-body');
   if(!panel) return;
-  let y0=null, dy=0, dragging=false;
+  let y0=null, dy=0, dragging=false, armed=false;
   const start=e=>{
-    // Only start a dismiss drag from the top of the sheet, otherwise this
-    // would hijack scrolling inside the detail body.
-    if(body && body.scrollTop>0) return;
+    // Track from anywhere on the sheet. Whether this becomes a dismiss or a
+    // normal scroll is decided in move(): a downward pull only steals the
+    // gesture once the body can't scroll up any further.
     y0=e.touches[0].clientY; dy=0; dragging=true;
+    armed=!body || body.scrollTop<=0;
     panel.style.transition='none';
   };
   const move=e=>{
     if(!dragging||y0===null) return;
     dy=e.touches[0].clientY-y0;
-    if(dy<0) dy=0;                       // downward only
-    if(dy>0){ e.preventDefault(); panel.style.transform=`translateY(${dy}px)`; }
+    if(dy<=0){                           // upward = scrolling, never a dismiss
+      if(dy<0) armed=false;
+      panel.style.transform='';
+      return;
+    }
+    // Downward: arm the dismiss only when the body is already scrolled to top,
+    // so mid-list downward swipes still scroll the content.
+    if(!armed && body && body.scrollTop<=0) armed=true;
+    if(armed){ e.preventDefault(); panel.style.transform=`translateY(${dy}px)`; }
   };
   const end=()=>{
     if(!dragging) return;
     dragging=false;
     panel.style.transition='';
     panel.style.transform='';
-    if(dy>110){                          // past the threshold = dismiss
+    if(armed && dy>90){                  // past the threshold = dismiss
       if(window.webkit?.messageHandlers?.hapticFeedback){
         window.webkit.messageHandlers.hapticFeedback.postMessage({style:'light'});
       }
@@ -3515,6 +3560,26 @@ function initSheetSwipe(){
   panel.addEventListener('touchmove',move,{passive:false});
   panel.addEventListener('touchend',end);
   panel.addEventListener('touchcancel',end);
+
+  // The header and grab handle always dismiss on a downward drag, whatever the
+  // body scroll position is — so you can flick the sheet away from the top
+  // strip no matter how far you've scrolled.
+  const grab=[document.querySelector('.mobile-panel-drag'),
+              document.querySelector('.mobile-panel-header')].filter(Boolean);
+  const hStart=e=>{ y0=e.touches[0].clientY; dy=0; dragging=true; armed=true; panel.style.transition='none'; };
+  const hMove=e=>{
+    if(!dragging||y0===null) return;
+    dy=e.touches[0].clientY-y0;
+    if(dy<0) dy=0;
+    e.preventDefault();
+    panel.style.transform=`translateY(${dy}px)`;
+  };
+  grab.forEach(g=>{
+    g.addEventListener('touchstart',hStart,{passive:true});
+    g.addEventListener('touchmove',hMove,{passive:false});
+    g.addEventListener('touchend',end);
+    g.addEventListener('touchcancel',end);
+  });
 }
 
 function closeMobilePanel(){
