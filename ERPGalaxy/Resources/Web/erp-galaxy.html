@@ -291,11 +291,11 @@
   .search-box input:focus{border-color:var(--fi);box-shadow:0 0 0 2px rgba(79,156,249,.15);}
   @keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
   /* ECC→S/4 Migration Journey diagram */
-  .journey-flow{display:flex;align-items:center;gap:10px;margin:8px 0 12px;flex-wrap:nowrap;}
-  .journey-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
+  .journey-flow{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin:8px 0 12px;}
+  .journey-col{display:flex;flex-direction:column;gap:8px;width:100%;}
   /* Cards share the row evenly and wrap their text — descriptions used to be
      cut at 30 chars AND clipped by a fixed min-width, so they were unreadable. */
-  .journey-node{border:1.5px solid;border-radius:8px;padding:8px 10px;cursor:pointer;transition:all .2s;
+  .journey-node{border:1.5px solid;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .2s;
     min-width:0;width:100%;box-sizing:border-box;}
   .journey-node:hover{transform:scale(1.03);}
   .journey-ecc{border-color:#ef4444;background:rgba(239,68,68,.08);}
@@ -307,7 +307,7 @@
   .journey-s4 .jn-id{color:#22c55e;}
   .jn-desc{font-size:.62rem;color:var(--text-muted);line-height:1.35;margin-top:3px;
     overflow-wrap:anywhere;white-space:normal;}
-  .journey-arrow{font-size:1.4rem;color:var(--text-muted);padding:0 2px;align-self:center;}
+    .journey-arrow{text-align:center;font-size:1.4rem;color:var(--text-muted);padding:0 2px;align-self:center;}
   @keyframes flowArrow{0%,100%{opacity:.4;transform:translateX(0);}50%{opacity:1;transform:translateX(3px);}}
 </style>
 </head>
@@ -3399,8 +3399,8 @@ function buildDetailHTML(d){
     if(d.s4status==='deprecated'&&replacements.length){
       return `<div class="section-title">🗺️ Migration Journey</div>
         <div class="journey-flow">
-          ${currentNode}
-          <div class="journey-arrow">→</div>
+          <div class="journey-col">${currentNode}</div>
+          <div class="journey-arrow">↓</div>
           <div class="journey-col">${s4Nodes}</div>
         </div>`;
     }
@@ -3408,8 +3408,8 @@ function buildDetailHTML(d){
       return `<div class="section-title">🗺️ Migration Journey</div>
         <div class="journey-flow">
           <div class="journey-col">${eccNodes}</div>
-          <div class="journey-arrow">→</div>
-          ${currentNode}
+          <div class="journey-arrow">↓</div>
+          <div class="journey-col">${currentNode}</div>
         </div>`;
     }
     return '';
