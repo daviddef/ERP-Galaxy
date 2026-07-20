@@ -193,3 +193,22 @@ splash art). Ours do — that section is generic advice, not a specific finding.
 - [ ] App Privacy declared *(web UI only — API cannot do this)*
 - [ ] Screen recording on a physical device — **David**, see `metadata/RECORDING_SCRIPT.md`
 - [ ] Reply to Apple in App Store Connect with the recording attached
+
+---
+
+## 1.0.1 submission (2026-07-20)
+
+Submitted for review — build **10** (1.0.1), state WAITING_FOR_REVIEW.
+
+Rolled up since v1.0 shipped: migration verdicts 59→218, join finder, node
+contrast + Migration Journey layout fixes, sheet swipe-dismiss from anywhere,
+module All/None/solo + compact single-row chips.
+
+Note: `appStoreVersionSubmissions` is deprecated (403, DELETE-only). The current
+submit flow is: POST /v1/reviewSubmissions {platform:IOS} → POST
+/v1/reviewSubmissionItems {reviewSubmission, appStoreVersion} → PATCH
+/v1/reviewSubmissions/{id} {submitted:true}. Also: PATCH .../relationships/build
+returns 204 (empty body), which trips a naive JSON parser but is success.
+
+As a metadata-inclusive update from an already-approved app past the 2.1 round,
+this should get a lighter review than the first submission.
