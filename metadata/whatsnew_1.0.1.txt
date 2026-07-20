@@ -1,0 +1,9 @@
+What happens to your tables in S/4HANA — now for many more of them.
+
+• Migration verdicts expanded from 59 to 218 tables. Asset accounting (ANEA, ANEK, ANLP), Material Ledger (CKMI1, CKML*), change documents and business partner tables now show whether they disappear, move, become a compatibility view, or carry over — each with a quote from SAP's Simplification List.
+
+• New: Join finder. Every table now shows which tables it joins to directly, and the exact key fields to join ON. Shared primary keys are shown as high confidence; declared foreign keys are flagged when they need checking.
+
+• Clearer graph. Table names are now easier to read — solid colour fills with high-contrast labels, and larger text on the nodes.
+
+• 1,975 tables in the index, all offline, still no account and no data collection.
