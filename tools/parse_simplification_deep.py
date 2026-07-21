@@ -21,12 +21,15 @@ for i,m in enumerate(heads):
     seg=t[m.start():end]
     # note numbers: 10-digit zero-padded, strip leading zeros
     notes=[]
-    rn=re.search(r'Related Notes(.*?)(?=Symptom|Solution|Description|Required|How to|\Z)', seg, re.S)
+    # anchor on the literal 'Related Notes:' and stop at the next section HEADING
+    # (line-start), not the first stray occurrence of the word.
+    rn=re.search(r'Related Notes:(.*?)(?=\n\s*(?:Symptom|Reason and|Solution|Description|Required|How to|Business Process)\b)', seg, re.S)
     if rn:
         for nm in re.finditer(r'\b0*(\d{6,7})\b', rn.group(1)):
             n=nm.group(1)
             if n not in notes: notes.append(n)
-    action=field(seg,"Required and Recommended Action", ["How to Determine","Business Process","\n\n\n"])
+    am=re.search(r'Required and Recommended Action[s]?:?(.*?)(?=\n\s*(?:How to Determine|Business Process|Related Notes)\b|\Z)', seg, re.S)
+    action=re.sub(r'\s+',' ',am.group(1)).strip()[:600] if am else None
     out[m.group(1)]={"title":re.sub(r'\s+',' ',m.group(3)).strip(),
                      "notes":notes[:4],
                      "action":(action[:500] if action else None)}

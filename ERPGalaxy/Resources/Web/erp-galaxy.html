@@ -134,6 +134,22 @@
   .lc-same{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.07);}
   .lc-unknown{opacity:.85;}
   .lc-new{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.09);}
+  .pb-block{display:none;border-top:1px solid var(--border);padding-top:12px;}
+  .pb-sub{font-size:.66rem;color:var(--text-muted);margin:-4px 0 8px;}
+  .pb-row{display:flex;align-items:center;gap:9px;width:100%;background:var(--surface2);
+    border:1px solid var(--border);border-radius:8px;padding:9px 10px;margin-bottom:6px;
+    cursor:pointer;font-family:inherit;text-align:left;}
+  .pb-ico{font-size:1rem;flex-shrink:0;}
+  .pb-name{flex:1;min-width:0;font-size:.8rem;font-weight:700;color:var(--text);}
+  .pb-n{font-size:.66rem;color:var(--text-muted);background:var(--surface);border-radius:9px;padding:1px 7px;}
+  .pb-list{margin:6px 0 12px;padding-left:18px;}
+  .pb-list li{font-size:.78rem;color:var(--text-muted);line-height:1.5;margin-bottom:6px;}
+  .pb-chips{display:flex;flex-wrap:wrap;gap:5px;}
+  .pb-chip{background:none;border:1px solid;border-radius:10px;padding:3px 8px;
+    font-family:monospace;font-size:.68rem;font-weight:700;cursor:pointer;}
+  .pb-link{display:block;width:100%;text-align:left;background:rgba(167,139,250,.12);
+    border:1px solid rgba(167,139,250,.5);color:#a78bfa;border-radius:8px;padding:8px 10px;
+    margin:8px 0 0;font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit;}
   .legend-block{display:none;border-top:1px solid var(--border);padding-top:12px;}
   .lg-title{font-weight:700;font-size:.9rem;margin-bottom:8px;}
   .lg-sub{font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin:10px 0 5px;}
@@ -268,6 +284,7 @@
     .toggle-btn{flex:1;padding:11px 8px;font-size:.82rem;}
     .depth-control{display:block;padding-bottom:2px;border-bottom:1px solid var(--border);}
     .legend-block{display:block;}
+    .pb-block{display:block;}
     .mode-label{display:block;}
     .mode-group{display:flex;width:100%;}
     /* Drawer has vertical room: give each module its full name. */
@@ -366,6 +383,11 @@
       <div class="depth-hint" id="depth-hint">Tap a table first, then widen the ring.</div>
     </div>
     <div class="module-filters" id="module-filters"></div>
+    <div class="pb-block" id="pb-block">
+      <div class="lg-title">🧭 Migration playbooks</div>
+      <div class="pb-sub">The scenarios a conversion project plans around</div>
+      <div id="playbook-list"></div>
+    </div>
     <div class="legend-block" id="legend-block">
       <div class="lg-title">Legend</div>
       <div class="lg-sub">Planet fill — migration fate</div>
@@ -2699,6 +2721,61 @@ function buildJoins(id){
     Only direct joins are shown; multi-hop paths are not inferred.</div>`;
 }
 
+const PLAYBOOKS=[{"id":"bp-cvi","icon":"👥","name":"Business Partner / CVI","why":"In S/4HANA the Business Partner is the single master record. Customers and vendors are no longer maintained independently — every KNA1 and LFA1 record must have a matching BUT000 business partner, created through Customer/Vendor Integration (CVI).","watch":["Every customer and vendor needs a BP before conversion — CVI is a prerequisite, not a follow-up task.","Address data moves with it: ADRC and BUTADRSEARCH are part of the same conversion.","BUT000_TD holds time-dependent header data; check it if BP fields look like they changed over time.","Country-specific master data (e.g. the India GST tables) has its own migration item."],"tables":["ADRC","BUT000","BUT000_TD","BUTADRSEARCH","J_1IMOCUST","J_1IMOVEND","KNA1","LFA1"],"notes":["2576961","2379157","2409939","2877717"],"items":["5.1.15","5.1.22","5.1.19","5.1.17"]},{"id":"matnr","icon":"🔢","name":"Material number field length","why":"S/4HANA can extend the material number from 18 to 40 characters. The feature is optional and off by default, but turning it on ripples through every object that stores or compares a material number — including your own code.","watch":["Custom code that declares MATNR with a fixed length, or moves it into a shorter field, will truncate.","Interfaces and file layouts with a fixed 18-character material field need widening on both sides.","In a multi-system landscape the change has to be coordinated — a longer number cannot be sent to a system that has not been extended.","Decide before conversion: switching later is far more disruptive."],"tables":["A133","A144","A145","A148","A160","A161","A304","A305","BSIM","CHVW","DBVM","DGTMD_LKEY","EBEW","EBEWH","EBUB","EKUB","EORD","EQUK","MAKT","MAPL","MARA","MARC","MARCH","MARCHO1","MARCO1","MARD","MARDH","MARDHO1","MARDO1","MARM","MAST","MBEW","MBEWH","MCH1","MCHA","MCHB","MCHBH","MCHBO1","MCSD","MCSDH","MCSS","MCSSH","MDKP","MKOL","MKOLH","MKOLHO1","MKOLO1","MLAN","MMINKON","MSCD","MSCDH","MSCS","MSFD","MSFDH","MSFS","MSID","MSIDH","MSIS","MSKA","MSKAH"],"notes":["2267140","2270396","2471287"],"items":["5.1.5","13.2.4","6.1.21"],"tables_note":"Tables in this app whose primary key includes MATNR — these are the ones that store a material number as part of their identity."},{"id":"acdoca","icon":"📒","name":"Universal Journal (ACDOCA)","why":"S/4HANA merges Finance, Controlling, Asset Accounting, Material Ledger and profitability into one line-item table, ACDOCA. The classic totals and index tables are no longer the system of record; many survive only as compatibility views so existing reads keep working.","watch":["Always filter ACDOCA by ledger (RLDNR) unless you deliberately want every ledger.","Reads against the old totals tables may still work through compatibility views — writes do not.","Reporting built on the old tables should be re-pointed at ACDOCA to see the full picture.","Currency configuration is part of this change; check the currency item before assuming parity."],"tables":["ACDOCA","ANEP","BKPF","BSEG","COEP","COSP","COSS","FAGLFLEXA","GLT0","T001A","T881","T882G","TKA01"],"notes":["2344012","2270449"],"items":["6.1.12","13.14.5"]},{"id":"matdoc","icon":"📦","name":"Inventory documents (MATDOC)","why":"Material document header and items (MKPF, MSEG) are consolidated into MATDOC, and the aggregate stock tables are calculated on the fly rather than stored. Reads are redirected, but anything that writes to or joins on the old tables needs attention.","watch":["Custom code updating MKPF or MSEG must be changed to MATDOC.","Aggregated stock quantities are derived at runtime — do not assume a stored total.","Joins written against MKPF/MSEG keys should be re-checked against the MATDOC key.","Performance characteristics differ; re-test heavy inventory reports."],"tables":["MATDOC","MKPF","MSEG"],"notes":["2319579"],"items":["15.3.7"]}];
+
+// ── Migration playbooks ────────────────────────────────────────────────────
+// The scenarios a conversion project actually plans around. Facts (tables,
+// SAP Note numbers, what changes) come from SAP's Simplification List; the
+// wording is ours, same as every description in the app.
+function playbooksFor(id){ return PLAYBOOKS.filter(p=>p.tables.includes(id)); }
+function openPlaybook(pid){
+  const p=PLAYBOOKS.find(x=>x.id===pid); if(!p) return;
+  const chips=p.tables.map(t=>{
+    const mod=(TABLES.find(x=>x.id===t)||{}).module || (CODEX[t]?CODEX[t][0]:null);
+    const col=MODULE_COLORS[mod]||'#94a3b8';
+    const open=TABLES.find(x=>x.id===t)?`jumpTo('${t}')`:`openCodex('${t}')`;
+    return `<button class="pb-chip" style="border-color:${col};color:${col}" onclick="${open}">${t}</button>`;
+  }).join('');
+  const body=`
+    <div class="lc-box lc-changed">
+      <div class="lc-head">${p.icon} <strong>${p.name}</strong></div>
+      <div class="lc-body">${p.why}</div>
+    </div>
+    <div class="section-title">⚠️ What to watch</div>
+    <ul class="pb-list">${p.watch.map(w=>`<li>${w}</li>`).join('')}</ul>
+    <div class="section-title">🗂️ Tables involved (${p.tables.length})</div>
+    ${p.tables_note?`<div class="lc-src" style="margin:0 0 6px">${p.tables_note}</div>`:''}
+    <div class="pb-chips">${chips}</div>
+    <div class="lc-src" style="margin-top:14px">SAP Simplification List · Notes
+      ${p.notes.map(n=>`<button class="lc-note" onclick="noteInfo('${n}',event)">${n}</button>`).join(' ')}
+      · items ${p.items.join(', ')}</div>
+    <div style="height:16px"></div>`;
+  const title=`<span style="font-weight:700">${p.icon} ${p.name}</span>`;
+  if(window.innerWidth<=700){
+    document.getElementById('mobile-panel-title').innerHTML=title;
+    document.getElementById('mobile-panel-body').innerHTML=body;
+    document.getElementById('mobile-panel').classList.add('active');
+    document.getElementById('overlay-backdrop').classList.add('active');
+    mobilePanelOpen=true;
+  }else{
+    document.getElementById('sidebar-header').innerHTML=title;
+    document.getElementById('sidebar-content').innerHTML=body;
+  }
+  toggleTools(false);
+  if(window.webkit?.messageHandlers?.hapticFeedback){
+    window.webkit.messageHandlers.hapticFeedback.postMessage({style:'selection'});
+  }
+}
+function buildPlaybookList(){
+  const el=document.getElementById('playbook-list'); if(!el) return;
+  el.innerHTML=PLAYBOOKS.map(p=>
+    `<button class="pb-row" onclick="openPlaybook('${p.id}')">
+       <span class="pb-ico">${p.icon}</span>
+       <span class="pb-name">${p.name}</span>
+       <span class="pb-n">${p.tables.length}</span>
+     </button>`).join('');
+}
+
 // ── Migration impact ───────────────────────────────────────────────────────
 // The question the websites can't answer: "what happens to MY tables?"
 // Fate is driven by each table's ECC/S4 availability flags first — those are
@@ -3002,6 +3079,7 @@ function openCodex(id){
     ${head}
     <div class="section-title">🧠 What it is</div>
     <div class="plain-english">${codexProse(id)||'No description available.'}</div>
+    ${playbooksFor(id).map(p=>`<button class="pb-link" onclick="openPlaybook('${p.id}')">${p.icon} Part of the ${p.name} playbook →</button>`).join('')}
     ${fks}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keyHtml}</div>
@@ -3057,6 +3135,7 @@ function exitFocus(){
 
 function init(){
   setFunMode(funMode);
+  buildPlaybookList();
   initDismissResults();
   buildModuleFilters(); buildLegend(); buildGraph(); initSheetSwipe(); renderLockBar();
   document.getElementById('search').addEventListener('focus',()=>{ if(!searchQuery) renderFavs(); });
@@ -3497,6 +3576,7 @@ function buildDetailHTML(d){
     ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
+    ${playbooksFor(d.id).map(p=>`<button class="pb-link" onclick="openPlaybook('${p.id}')">${p.icon} Part of the ${p.name} playbook →</button>`).join('')}
     ${journeySection}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
