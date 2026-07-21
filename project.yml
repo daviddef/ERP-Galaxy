@@ -36,7 +36,10 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         CODE_SIGN_STYLE: Automatic
-        SUPPORTS_MACCATALYST: false
+        SUPPORTS_MACCATALYST: true
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: NO
+        CODE_SIGN_ENTITLEMENTS: ERPGalaxy/ERPGalaxy.entitlements
         # "Designed for iPad" on Apple Silicon Macs -- no Catalyst work required.
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: true
         ENABLE_USER_SCRIPT_SANDBOXING: true
@@ -55,6 +58,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.daviddef.erpgalaxy.widget
+        SUPPORTS_MACCATALYST: true
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
         INFOPLIST_FILE: ERPGalaxyWidget/Info.plist
         TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGN_STYLE: Automatic
