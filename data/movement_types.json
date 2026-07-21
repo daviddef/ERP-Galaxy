@@ -68,8 +68,8 @@
   "sap": "Goods issue for an order"
  },
  "281": {
-  "plain": null,
-  "sap": "Goods issue for a"
+  "plain": "Materials being consumed by a project network activity — stock leaves the warehouse and is charged to the network.",
+  "sap": "Goods issue for a network"
  },
  "291": {
   "plain": "A flexible goods issue where every account-assignment field is open, letting you charge the stock to whichever cost object you choose.",

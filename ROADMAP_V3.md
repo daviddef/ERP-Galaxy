@@ -42,9 +42,50 @@ The market test's verdict held up through a real review cycle: **the moat is the
 
 **2. Migration scenario playbooks.** BP/CVI conversion and material-number extension are the two migration pains that are *documentable generic knowledge*, not client-specific remediation (per practitioner research). Curated "scenario" pages — the tables involved, what breaks, what to check — extend the verdict schema we already have. Public SAP Community blogs are the source. *Medium effort, pure curation, deepens the moat.*
 
-**3. Movement-type / document-type decoder.** "What does BWART 101 mean?" is a distinct, unserved question. Standard code sets only (T156, T003) — **not** client-configured domains like condition types, where there's no universal answer. Bounded public dataset. *Medium effort, strong differentiation.*
+**3. Movement-type / document-type decoder.** ✅ **Complete.** "What does BWART 101 mean?" is a distinct, unserved question. Standard code sets only (T156, T003) — **not** client-configured domains like condition types, where there's no universal answer.
+
+- **Movement types (T156/BWART):** 91 standard types + derived reversals.
+- **Document types (T003/BLART):** 10 types, verbatim from [SAP Help — Document Types](https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/a8aaa72cb39a48528b39b61623c15baa/7b47d153da7e4308e10000000a174cb4.html) (S/4HANA 2025 FPS01), "Document Types in the Standard System". SAP's own page calls these "the most important" — there is no exhaustive public list because **BLART is client-configurable**, so the panel says so explicitly rather than implying the set is complete.
+
+*Correction: this item was previously marked done when only the movement-type half had shipped.*
 
 **4. Deeper Simplification List parse + 2025 release.** ⭐ *Research-confirmed and verified by hand.* The SAP Note number, successor object, compat-view status and conversion steps for every verdict are **already in the PDF we parse** — we just extract the verdict quote and drop the rest. Deepen the parser + repoint at the 2025 PDF (~85 more items). Turns 218 verdicts into 218 mini-playbooks. No new data source, no licensing question. See §research below.
+
+### Tier 2 — the next body of work
+
+> **Note on numbering.** There was no Tier 2 in this document. The original Tier 2 item was
+> promoted into Tier 1 as item 4 and shipped, so "move to Tier 2" had nothing to move to.
+> This section defines it.
+
+**5. Field-level S/4 schema deltas.** ⭐ **The headline candidate.** Today a verdict is
+table-level: "BSEG survives, changed." The unanswered question is *what changed in the columns* —
+which fields were added, dropped, retyped or lengthened. That is the difference between "this
+table changes" and "your interface breaks on field X at length Y."
+
+The one proven anchor is **MATNR 18 → 40 characters**, which is exactly the kind of fact that
+breaks real code. Deep research is running to answer three things before any build starts:
+
+1. Does SAP publish field-level deltas anywhere citable, or is it only inferable?
+2. Is there a licensable structured source (DD03L-style dumps) or is every candidate a
+   scrape-forbidden competitor site?
+3. What coverage is honestly achievable — all 244 migration tables, or a credible handful?
+
+**Do not build until that verdict is in.** The failure mode here is worse than elsewhere: a
+wrong field length or data type is a fact a consultant would act on. This must hold the same
+line as everything else — *if we can't source it, we don't ship it* — and partial coverage must
+look partial, not authoritative.
+
+**6. Fill the `lore` gap.** 132 of 2,001. Fun mode is the app's personality and it's mostly
+empty outside the curated set. Pure authoring, zero sourcing risk, never blocks a release.
+
+**7. Resolve the known data debt.** The 12 tables where key sources disagree, and the ~150
+`moduleInferred` assignments guessed from name prefixes. Small, unglamorous, and it removes the
+soft spots most likely to embarrass the app in front of someone who knows the system.
+
+**8. Monetisation — Pro IAP, not ads.** Deferred deliberately, not declined. Ads would force
+Device ID / Advertising Data / IP onto a privacy label whose emptiness is currently the
+listing's strongest asset and part of the Guideline 4.2 defence already cleared. Revisit once
+item 5 lands, because field-level data is the thing worth paying for.
 
 ### Tier 3 — declined, with reasons
 - **Fiori app → T-code mapping.** Verified to exist (unauthenticated OData) but SAP's API Policy explicitly forbids the bulk extraction it would need. Hand-curating a bounded set for our 86 existing T-codes is the only defensible path, and it's labour-heavy. The classic library also sunsets Dec 2026.
