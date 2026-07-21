@@ -57,23 +57,39 @@ The market test's verdict held up through a real review cycle: **the moat is the
 > promoted into Tier 1 as item 4 and shipped, so "move to Tier 2" had nothing to move to.
 > This section defines it.
 
-**5. Field-level S/4 schema deltas.** ⭐ **The headline candidate.** Today a verdict is
-table-level: "BSEG survives, changed." The unanswered question is *what changed in the columns* —
-which fields were added, dropped, retyped or lengthened. That is the difference between "this
-table changes" and "your interface breaks on field X at length Y."
+**5. Field-level S/4 schema deltas.** ✅ **Shipped, in the form the research supports.**
 
-The one proven anchor is **MATNR 18 → 40 characters**, which is exactly the kind of fact that
-breaks real code. Deep research is running to answer three things before any build starts:
+**The research verdict: a full per-table field diff is blocked, and not on difficulty.**
 
-1. Does SAP publish field-level deltas anywhere citable, or is it only inferable?
-2. Is there a licensable structured source (DD03L-style dumps) or is every candidate a
-   scrape-forbidden competitor site?
-3. What coverage is honestly achievable — all 244 migration tables, or a credible handful?
+| Source | Verdict |
+|---|---|
+| **erpexplorer.com** | Only public source with **both** ECC and S/4 field lists per table (name, data element, type, length, decimals, key flag). **But** its `robots.txt` names `ClaudeBot`, `GPTBot`, `CCBot`, `Google-Extended` and others with `Disallow: /`, and the ECC↔S/4 "Differences" view is their **paid Pro feature**. Scraping it to build a competing free feature is a stated position, not a grey area. **Declined.** |
+| sapdatasheet.org | ECC only, single version, no S/4 side |
+| leanx.eu / se80.co.uk | ECC only / Cloudflare bot challenge |
+| GitHub DD03L dumps | None found for ECC+S/4 |
+| SAP Simplification Database (SYCM/ATC) | Real and field-aware, but S-user gated — not public |
 
-**Do not build until that verdict is in.** The failure mode here is worse than elsewhere: a
-wrong field length or data type is a fact a consultant would act on. This must hold the same
-line as everything else — *if we can't source it, we don't ship it* — and partial coverage must
-look partial, not authoritative.
+**What we shipped instead, and it's the better feature anyway:** the changes that actually break
+code are *systemic* — whole domains, not one table — and SAP documents them in the Simplification
+List we already parse. Six changes, every figure and Note number from SAP's own 2025 PDF:
+
+| Change | From → To | Note |
+|---|---|---|
+| Material number | `CHAR 18` → `CHAR 40` | 2267140 |
+| Currency amounts (AFLE) | 9–22 digits → `23` digits | 2628654 |
+| SD document category | `VBTYP CHAR 1` → `VBTYPL CHAR 4` | 2267306 |
+| Object list number | `INT4` → `INT8` *(type, not length)* | 2580670 |
+| Segment | `16` → `40` chars | 2522971 |
+| Season / Collection / Theme | → `10` chars | 2624475 |
+
+Attached to tables two ways: tables SAP **names** in the item text, and tables carrying the field
+as a **key** field (MATNR hits 114). Both the opt-in switches and the coverage limit are stated in
+the app — we hold key fields, not full field lists, so MSEG carries MATNR but won't match. The
+panel says that rather than implying completeness.
+
+**Still open:** per-table added/removed/renamed fields beyond these systemic changes. That needs
+either live DDIC access to both an ECC and an S/4 system, or a licensing conversation with
+erpexplorer — not scraping.
 
 **6. Fill the `lore` gap.** 132 of 2,001. Fun mode is the app's personality and it's mostly
 empty outside the curated set. Pure authoring, zero sourcing risk, never blocks a release.
