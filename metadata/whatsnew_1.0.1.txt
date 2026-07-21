@@ -1,59 +1,54 @@
 A much bigger answer to "what happens to my tables in S/4HANA" — now down to the column, and with somewhere to put what you find.
 
 NEW — TO-DO LIST
-Found something you need to act on? Add it. Tables, migration playbooks, field changes, decoded movement and document types, plus your own free-text notes all go on one working list.
-• Grouped into a suggested order: work out what applies, decide the switches, prepare before conversion, then custom code and interfaces
-• Tick items off, reorder them, clear what's done
-• Share the list as text, or export it as a PDF
+Found something to act on? Add it. Tables, playbooks, field changes, decoded movement and document types, plus your own notes all go on one working list.
+• Grouped into a suggested order: what applies, the switches to decide, prepare before conversion, then custom code and interfaces
+• Tick off, reorder, clear what's done
+• Share as text or export as a PDF
 Nothing leaves your device unless you tap share.
 
 NEW — FIELD-LEVEL CHANGES
-Knowing a table survives isn't enough if a field under it changed shape. Six systemic changes, each with SAP's own Note number:
+Knowing a table survives isn't enough if a field under it changed shape. Six systemic changes, each with SAP's Note number:
 • Material number CHAR 18 → CHAR 40 (Note 2267140)
 • Currency amounts 9–22 digits → 23 digits (Note 2628654)
 • SD document category VBTYP CHAR 1 → VBTYPL CHAR 4 (Note 2267306)
 • Object list number INT4 → INT8 — a data type change, not just a length (Note 2580670)
 • Segment 16 → 40 characters (Note 2522971)
 • Season, Collection and Theme → 10 characters (Note 2624475)
-Search MATNR and get "CHAR 18 → CHAR 40" straight away. The switches matter too, so they're stated: amount field extension is off by default and cannot be reversed once activated.
+Search MATNR and get "CHAR 18 → CHAR 40" straight away. The switches matter too: amount field extension is off by default and cannot be reversed once activated.
 
 MIGRATION VERDICTS — 59 TO 244 TABLES
-Asset accounting, Material Ledger, change documents, business partner, Funds Management, LIS statistics and more now tell you whether a table disappears, moves, becomes a read-only compatibility view, changes, or carries over — sourced from SAP's own Simplification List.
+Asset accounting, Material Ledger, change documents, business partner, Funds Management, LIS statistics and more now tell you whether a table disappears, moves, becomes a read-only compatibility view, changes, or carries over — from SAP's own Simplification List.
 
 NOW WITH THE SAP NOTE AND WHAT TO DO
-208 verdicts carry the citable SAP Note number, and 131 add a plain-English "What to do". MKPF no longer just says "merged into MATDOC" — it tells you that custom code updating MKPF or MSEG must be changed to MATDOC, and gives you Note 2328419 to cite.
+208 verdicts carry the citable SAP Note number, and 131 add a plain-English "What to do". MKPF no longer just says "merged into MATDOC" — it tells you custom code must change to MATDOC, and gives you Note 2328419 to cite.
 
 NEW — MIGRATION PLAYBOOKS
-The four scenarios a conversion project actually plans around, each with what to watch, the tables involved, and the SAP Notes:
-• Business Partner / CVI
-• Material number field length extension
-• Universal Journal (ACDOCA)
-• Inventory documents (MATDOC)
-Affected tables link straight to their playbook.
+The four scenarios a conversion project plans around, each with what to watch, the tables involved, and the SAP Notes: Business Partner / CVI, material number field length extension, Universal Journal (ACDOCA), and inventory documents (MATDOC). Affected tables link straight to their playbook.
 
-NEW — MOVEMENT TYPE AND DOCUMENT TYPE DECODER
-Type 261 into search and get the answer above the table results: "components being consumed by a production order". 91 standard movement types, including reversals — search 102 and get "reverses 101". Document types too: KR, DZ, SA and the rest of SAP's standard set, with a reminder to check the client's own T003, because document types are configured per client.
+NEW — MOVEMENT AND DOCUMENT TYPE DECODER
+Type 261 into search and get the answer above the table results: "components being consumed by a production order". 91 movement types including reversals — search 102 and get "reverses 101". Document types too: KR, DZ, SA and the rest of SAP's standard set, with a reminder to check the client's own T003, since these are configured per client.
 
 NEW — JOIN FINDER
-Every table now shows what it joins to directly and the exact key fields to join ON. Shared primary keys are marked high confidence; declared foreign keys are flagged when they need checking. Where there is no direct join, it says so rather than inventing one.
+Every table shows what it joins to directly and the exact key fields to join ON. Shared primary keys are marked high confidence; declared foreign keys are flagged when they need checking. Where there is no direct join, it says so rather than inventing one.
 
 EASIER TO READ
-• Table names on the graph are much clearer — solid fills, high-contrast labels, larger text
-• Planet colour now shows migration fate at a glance: red disappears, green is new, orange changes, slate carries over
+• Table names on the graph are much clearer — solid fills, high-contrast labels
+• Planet colour shows migration fate: red disappears, green is new, orange changes, slate carries over
 • Fun mode is also the accessible mode — larger, bolder, higher contrast
 • Migration Journey no longer squashes long table names
 
 EASIER TO USE
 • Search finds tables in the galaxy too, ranked properly — type BSEG and BSEG comes first
-• Tap outside the search results to dismiss them
-• Swipe the detail sheet away from anywhere, not just from the top
-• Module filters are compact single-row cards with All / None and a one-tap "only this module"
-• Relationships now show every connection, in both directions — MARA went from 6 to 37
+• Tap outside search results to dismiss them
+• Swipe the detail sheet away from anywhere, not just the top
+• Module filters are compact cards with All / None and a one-tap "only this module"
+• Relationships show every connection, both directions — MARA went from 6 to 37
 
 FIXED
-Movement type 281 showed a cut-off description. It reads "goods issue for a network" now.
+Movement type 281 was cut off. It reads "goods issue for a network" now.
 
 MORE CONTEXT ON MORE TABLES
-Fun mode now has something to say about 1,021 tables, up from 132 — what each one actually is and how it sits next to its neighbours. 113 tables also had their module corrected using SAP’s own application component rather than a guess from the table name, so LIS structures now sit under PP and PM, and the Material Ledger tables under CO.
+Fun mode now has something to say about 1,021 tables, up from 132 — what each one is and how it sits next to its neighbours. 113 tables also had their module corrected from SAP’s own application component instead of a guess: LIS structures now sit under PP and PM, Material Ledger under CO.
 
 2,001 tables in the index, still completely offline, still no account, still no data collection.

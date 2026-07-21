@@ -257,3 +257,24 @@ Sequence that works, in order — deviating causes avoidable failures:
 Verified before submitting rather than after: `appStoreReviewDetails.notes` still populated
 (3,990 chars, `demoAccountRequired: false`). That resource — not `betaAppReviewDetails` — is
 what App Store review reads, and confusing the two caused the original Guideline 2.1 round.
+
+---
+
+## 1.0.1 resubmitted with build 17 (2026-07-21)
+
+Third cancel-and-resubmit of the day, adding the to-do list, lore 132→1,021 and the module
+corrections. Version was still `WAITING_FOR_REVIEW`, so again only queue position was lost.
+
+**There is no way to swap a build into an in-flight submission.** `reviewSubmissionItems` is
+immutable once submitted, so "push this into the review" always means cancel → attach → new
+submission. Budget for losing queue position each time.
+
+**Mistake worth not repeating:** the `whatsNew` PATCH failed with
+`ENTITY_ERROR.ATTRIBUTE.INVALID.TOO_LONG` (4,268 chars against a **4,000** limit) and the
+submission went out anyway, because the failure wasn't checked before submitting. The notes on
+the submission were the previous build's. **Check the PATCH result before the submit call**, and
+read the value back rather than trusting the write.
+
+Recovery was cheap only because `whatsNew` **can still be edited while `WAITING_FOR_REVIEW`** —
+trimmed to 3,986 chars, patched, and verified by read-back. No second cancel needed. Don't rely
+on that for anything the reviewer has already started reading.
