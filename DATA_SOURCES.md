@@ -245,3 +245,61 @@ The extractions themselves are good and evidence-backed (`MKPF`/`MSEG` → repla
 | `relations` | **nothing** | 0% | curation only |
 
 Sources: [Simplification List for SAP S/4HANA 2023](https://help.sap.com/doc/c34b5ef72430484cb4d8895d5edd12af/2023/en-US/SIMPL_OP2023.pdf) · [SAP Help Portal — Simplification Lists](https://help.sap.com/docs/search?q=sap+simplification+list&locale=en-US&format=pdf&product=SAP_S4HANA_ON-PREMISE) · [ABAP Platform Trial image docs](https://github.com/SAP-docs/abap-platform-trial-image) · [SAP Community — trial has no standard tables](https://community.sap.com/t5/application-development-discussions/abap-trial-trial-version-do-not-have-standard-tables/td-p/12064151) · [DD03L — Table Fields](https://www.sapdatasheet.org/abap/tabl/dd03l.html)
+
+---
+
+## SAP ABAP Cloudification Repository (BAPIs / RFC function modules)
+
+**Source:** https://github.com/SAP/abap-atc-cr-cv-s4hc
+**Owner:** SAP SE · **Licence:** Apache-2.0 · verified via the GitHub API (`spdx_id: Apache-2.0`)
+
+Apache-2.0 permits commercial redistribution with attribution, which is why this is the one
+API-adjacent source the app uses. The alternatives are closed:
+
+- `api.sap.com/robots.txt` disallows **ClaudeBot** on `/badi/*`, `/businessobject/*`,
+  `/cdsviews/*` and `/api/*/schema` — precisely the content that would be wanted.
+- SAP API Policy §2.2.2 prohibits *"interaction or integration with (semi-)autonomous or
+  generative AI systems"* and *"scraping, harvesting, or systematic and/or large-scale data
+  extraction"*.
+- SAP's site Terms of Use (revised 26 Feb 2026) name *"Model Context Protocol (MCP),
+  agent-frameworks"* in the prohibited-extraction list. Note `help.sap.com/robots.txt`
+  allow-lists ClaudeBot, but the TOU scopes that to *"standard web indexing purposes"* — it is
+  **not** a licence to build a shipped dataset.
+
+**Files used:** `src/objectClassifications_SAP.json`, `src/objectReleaseInfoLatest.json`
+
+**Shipped:** 3,622 entries — every `BAPI_` module plus any other carrying a table link or a C1
+release status. Names, application component, RFC flag, cloud release status. The remaining
+~1,600 internal modules were dropped: 77KB for no question anyone asks.
+
+**Not available, at all:** parameter signatures. SAP publishes none publicly
+(`api.sap.com/api/*/schema` is ClaudeBot-disallowed; otherwise it is SE37 in a live system).
+Also absent: the Business Object Repository layer (BUS2032 etc.), enumerable only in-system.
+
+### The inferred table edge — read this before trusting it
+
+**SAP does not publish which tables a function module reads or writes.** It publishes, for some
+objects, the CDS view that supersedes them. Where a module and a table point at the *same*
+successor view, the app links them — SAP said both were modernised into that view.
+
+That is **our inference from published data, not SAP's statement.** It is therefore labelled
+**"Related, not read/write"** everywhere it appears, and the view the link came through is named
+so the reasoning is visible and checkable.
+
+Yield is deliberately small: **47 modules** link to tables the app holds, out of 3,622. Only 81
+function modules carry a successor at all. A table with no link shows nothing rather than
+implying we checked and found none.
+
+## Business-concept aliases
+
+Hand-authored search terms pointing at a table — our own editorial content, asserting no SAP
+fact beyond the table's identity.
+
+Infotype 0048 is the case that prompted them: its canonical page calls it "Residence Status" and
+never says "visa", so searching *visa* found nothing. SAP's own US payroll documentation
+("Nonresident Alien Payroll Processing", PY-US) calls the same infotype **"Visa status"**, with
+subtypes **US01 (Visa information)** and **US02 (I-94 records)**.
+
+0048 and 0094 are kept distinct on purpose: both are called "Residence Status", but 0048 is
+immigration and 0094 is tax residency. Conflating them would be wrong in a way a payroll
+consultant would catch immediately.
