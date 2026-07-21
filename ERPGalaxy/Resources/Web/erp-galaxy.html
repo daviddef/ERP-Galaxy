@@ -25,6 +25,12 @@
   .search-box input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 10px 7px 32px;color:var(--text);font-size:0.85rem;outline:none;transition:border-color 0.2s;}
   /* Desktop: tools sit inline in the header. Mobile turns this into a drawer. */
   .header-tools{display:contents;}
+  /* Filters get their own icon beside the burger so the menu isn't a dumping
+     ground. Hidden on desktop, where the tools sit inline in the header. */
+  .iconbtn{display:none;align-items:center;justify-content:center;width:40px;height:40px;
+    flex-shrink:0;background:none;border:1px solid var(--border);border-radius:10px;
+    color:var(--text);cursor:pointer;padding:0;font-family:inherit;}
+  .iconbtn[aria-expanded="true"]{border-color:var(--fi);color:var(--fi);}
   .tools-head,.tools-close{display:none;}
   .burger{display:none;flex-direction:column;justify-content:center;gap:4px;width:40px;height:40px;flex-shrink:0;
     background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;padding:0 10px;}
@@ -188,6 +194,17 @@
     cursor:pointer;font-family:inherit;}
   .td-bar button:hover{border-color:var(--text-muted);}
   .td-empty{color:var(--text-muted);font-size:.78rem;line-height:1.6;padding:10px 0;}
+  .ff-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;
+    border-bottom:1px solid var(--border);font-size:.78rem;}
+  .ff-row span{color:var(--text-muted);font-size:.72rem;}
+  .td-bar button.ff-on{border-color:var(--fi);color:var(--fi);}
+  .lk-warn{width:100%;font-size:.7rem;color:#fbbf24;padding:4px 8px;}
+  .vw-row{display:flex;gap:6px;align-items:stretch;margin-top:6px;}
+  .vw-open{flex:1;text-align:left;background:rgba(255,255,255,.04);border:1px solid var(--border);
+    border-radius:9px;color:var(--text);padding:8px 10px;font-size:.78rem;font-weight:700;
+    cursor:pointer;font-family:inherit;}
+  .vw-open span{display:block;font-weight:400;font-size:.66rem;color:var(--text-muted);margin-top:2px;}
+  textarea.td-notebox{resize:vertical;min-height:56px;}
   .td-notebox{width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);
     border:1px solid var(--border);border-radius:9px;color:var(--text);padding:8px 10px;
     font-size:.76rem;font-family:inherit;margin-top:8px;}
@@ -310,6 +327,7 @@
     header{gap:8px;padding:8px 10px;flex-wrap:nowrap;}
     .brand{display:none;}
     .burger{display:flex;}
+    .iconbtn{display:flex;}
     .search-box{flex:1;max-width:none;min-width:0;}
     /* 16px min stops iOS zooming the page when the field is focused. */
     .search-box input{font-size:16px;padding:11px 34px 11px 38px;border-radius:10px;}
@@ -403,25 +421,31 @@
     <input type="text" id="search" placeholder="Search tables, modules, T-codes…" autocomplete="off" autocorrect="off" spellcheck="false"/>
     <span class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear">✕</span>
   </div>
-  <button class="burger" id="burger" onclick="toggleTools()" aria-label="Filters and view options" aria-expanded="false">
+  <button class="iconbtn" id="filter-btn" onclick="toggleDrawer('filter-tools')"
+          aria-label="Filters" aria-expanded="false">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path d="M3 5h18l-7 8v6l-4 2v-8z" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <button class="burger" id="burger" onclick="toggleDrawer('menu-tools')"
+          aria-label="Menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <!-- Same DOM on every size: inline toolbar on desktop, slide-in drawer on mobile. -->
-  <div class="header-tools" id="header-tools">
+  <!-- Two drawers: filters on their own icon, everything else on the burger.
+       Same DOM at every size -- inline toolbar on desktop, slide-in on mobile. -->
+  <div class="header-tools" id="filter-tools">
     <div class="tools-head">
-      <span>Filters &amp; View</span>
-      <button class="tools-close" onclick="toggleTools(false)" aria-label="Close">✕</button>
+      <span>Filters</span>
+      <button class="tools-close" onclick="toggleDrawer('filter-tools',false)" aria-label="Close">&#10005;</button>
     </div>
+    <div class="mode-label">Which system</div>
     <div class="toggle-group">
-      <button class="toggle-btn active" id="btn-ecc" onclick="setView('ecc')">ECC6</button>
+      <button class="toggle-btn" id="btn-ecc" onclick="setView('ecc')">ECC6</button>
       <button class="toggle-btn s4" id="btn-s4" onclick="setView('s4')">S/4HANA</button>
-      <button class="toggle-btn both" id="btn-both" onclick="setView('both')">Both</button>
+      <button class="toggle-btn both active" id="btn-both" onclick="setView('both')">Both</button>
     </div>
-    <div class="mode-label">Reading mode</div>
-    <div class="toggle-group mode-group">
-      <button class="toggle-btn" id="btn-classic" onclick="setFunMode(false)">📋 Classic</button>
-      <button class="toggle-btn mode-fun active" id="btn-fun" onclick="setFunMode(true)">🎭 Fun</button>
-    </div>
+    <div class="depth-hint" id="view-hint">Showing tables from both systems.</div>
     <div class="depth-control">
       <label for="depth">Levels <span class="depth-value" id="depth-value">1</span></label>
       <input type="range" id="depth" min="1" max="4" step="1" value="1"
@@ -429,13 +453,47 @@
       <div class="depth-hint" id="depth-hint">Tap a table first, then widen the ring.</div>
     </div>
     <div class="module-filters" id="module-filters"></div>
+  </div>
+  <div class="header-tools" id="menu-tools">
+    <div class="tools-head">
+      <span>Menu</span>
+      <button class="tools-close" onclick="toggleDrawer('menu-tools',false)" aria-label="Close">&#10005;</button>
+    </div>
     <div class="pb-block">
-      <div class="lg-title">✅ To-do list</div>
+      <div class="lg-title">&#9989; To-do list</div>
       <div class="pb-sub">Tables, playbooks, field changes and notes you want to act on</div>
-      <button class="todo-add todo-btn" onclick="toggleTools(false);openTodo()">
+      <button class="todo-add todo-btn" onclick="toggleDrawer('menu-tools',false);openTodo()">
         Open to-do list<span class="todo-count" id="todo-count" style="display:none">0</span>
       </button>
     </div>
+    <div class="pb-block">
+      <div class="lg-title">&#129522; Where is this field?</div>
+      <div class="pb-sub">Find every table carrying a field &mdash; KUNNR, PERNR, WERKS&hellip;</div>
+      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openFieldFinder('')">
+        Open field finder</button>
+    </div>
+    <div class="pb-block">
+      <div class="lg-title">&#128203; Paste a table list</div>
+      <div class="pb-sub">Paste names from a spec or a spreadsheet &mdash; the chart shows only those</div>
+      <textarea class="td-notebox" id="paste-list" rows="3"
+        placeholder="BSEG, BKPF, MARA&#10;or one per line"></textarea>
+      <button class="todo-add" onclick="pasteBoard()">Show these on the chart</button>
+      <div class="pb-sub" id="paste-msg"></div>
+    </div>
+    <div class="pb-block">
+      <div class="lg-title">&#128190; Saved views</div>
+      <div class="pb-sub">System, modules, board and focus &mdash; saved together</div>
+      <input class="td-notebox" id="view-name" placeholder="Name this view&hellip;"
+             onkeydown="if(event.key==='Enter')saveCurrentView()"/>
+      <button class="todo-add" onclick="saveCurrentView()">Save current view</button>
+      <div id="views-list"></div>
+    </div>
+    <div class="mode-label">Reading mode</div>
+    <div class="toggle-group mode-group">
+      <button class="toggle-btn" id="btn-classic" onclick="setFunMode(false)">&#128203; Brief</button>
+      <button class="toggle-btn mode-fun active" id="btn-fun" onclick="setFunMode(true)">&#127917; Detailed</button>
+    </div>
+    <div class="depth-hint" id="mode-hint">Detailed gives the full explainer in larger, higher-contrast text.</div>
     <div class="pb-block" id="pb-block">
       <div class="lg-title">🧭 Migration playbooks</div>
       <div class="pb-sub">The scenarios a conversion project plans around</div>
@@ -2547,7 +2605,9 @@ const LINKS_RAW=[
 ];
 
 // ─── APP STATE ───────────────────────────────────────────────────────────────
-let currentView='both', activeModules=new Set(Object.keys(MODULE_COLORS));
+let currentView='both';
+try{ const v=localStorage.getItem('erpgalaxy.view'); if(v) currentView=v; }catch(e){}
+let activeModules=new Set(Object.keys(MODULE_COLORS));
 let selectedNode=null, searchQuery='', simulation, svg, g, link, node, zoomBehavior;
 let focusMode=false, focusCenter=null, focusDepth=1;
 
@@ -2799,6 +2859,10 @@ function decodeLookup(q){
   const fu=s.toUpperCase();
   const fc=FIELD_CHANGES.find(x=>(x.fields||[]).includes(fu));
   if(fc) return {kind:'fieldchange', code:fu, fc, sap:fc.title, plain:fc.plain, reversalOf:null};
+  // Any other field we hold: answer "where does this live" instead of nothing.
+  const ff=resolveField(s);
+  if(ff) return {kind:'fieldwhere', code:ff, reversalOf:null,
+                 sap:'Field', plain:Object.keys(fieldIndex()[ff]||{}).length+' tables carry this field'};
   const m=s.match(/^(?:bwart\s*)?([1-7]\d\d)$/i);
   if(!m) return null;
   const c=m[1];
@@ -2816,6 +2880,13 @@ function decodeLookup(q){
 function buildDecodeCard(q){
   const d=decodeLookup(q);
   if(!d) return '';
+  if(d.kind==='fieldwhere'){
+    return `<div class="dc-card" onclick="openFieldFinder('${d.code}')">
+      <div class="dc-top"><span class="dc-code">${d.code}</span>
+        <span class="dc-tag">Field</span></div>
+      <div class="dc-desc">${d.plain} — tap to see them and put them on the chart</div>
+    </div>`;
+  }
   if(d.kind==='fieldchange'){
     return `<div class="dc-card" onclick="openFieldChange('${d.fc.id}')">
       <div class="dc-top"><span class="dc-code">${d.code}</span>
@@ -3038,6 +3109,21 @@ const FATE={
   arrives:{label:'New in S/4', icon:'🆕', col:'#22c55e', blurb:'Did not exist in ECC6. A destination, not a risk.'},
   unknown:{label:'Unknown', icon:'❓', col:'#64748b', blurb:'Index entry — S/4 status not established.'}
 };
+// Which system a table belongs to, for the ECC6 / S/4HANA / Both filter.
+// Curated tables carry explicit ecc/s4 flags. Index tables don't, so we only
+// hide one when SAP's Simplification List actually says it is gone or new --
+// an unknown table stays visible rather than being hidden on a guess.
+function inEra(id, view){
+  view = view || currentView;
+  if(view==='both') return true;
+  const t=TABLES.find(x=>x.id===id);
+  if(t) return view==='ecc' ? !!t.ecc : !!t.s4;
+  const e=S4_LIFECYCLE[id];
+  if(!e) return true;
+  if(e[0]==='deprecated') return view==='ecc';   // gone in S/4
+  if(e[0]==='arrives')    return view==='s4';    // new in S/4
+  return true;                                    // changed / moved / compat: in both
+}
 function tableFate(id){
   const t=TABLES.find(x=>x.id===id);
   if(!t) return 'unknown';                       // Codex entry: no ECC/S4 flags
@@ -3120,8 +3206,13 @@ function lockBtn(id){
 }
 function setOnlyLocked(v){
   onlyLocked=v;
-  document.getElementById('only-locked').classList.toggle('on',v);
-  document.getElementById('only-locked').textContent=v?'🔒 Only locked':'Show all';
+  // The bar is emptied when nothing is locked, so the button may not exist --
+  // clearing the board while "only locked" was on used to throw here.
+  const btn=document.getElementById('only-locked');
+  if(btn){
+    btn.classList.toggle('on',v);
+    btn.textContent=v?'🔒 Only locked':'Show all';
+  }
   updateGraph();
   if(v && LOCKS.length) setTimeout(()=>resetZoom&&resetZoom(),350);
 }
@@ -3154,6 +3245,228 @@ function renderLockBar(){
     <button class="lk-impact" onclick="toggleImpact()">🧭 Impact</button>
     <button class="lk-clear" onclick="clearLocks()">Clear</button>`;
   bar.classList.add('visible');
+}
+
+// ── Field finder ───────────────────────────────────────────────────────────
+// "Where do I find the customer number?" -- answered from key fields plus the
+// foreign keys SAP declares. Built lazily and cached; it is a scan of 2,001
+// tables and nothing needs it until someone asks.
+//
+// IMPORTANT LIMIT, stated wherever results are shown: we hold key fields and
+// declared foreign keys, NOT full field lists. A table can carry KUNNR as an
+// ordinary attribute and not appear here. This finds where a field is
+// structural, which is what you want for joins -- but it is not exhaustive.
+let FIELD_INDEX=null;
+const FIELD_NOISE=new Set(['MANDT','CLIENT','MANDANT','SPRAS','LANGU']);
+function fieldIndex(){
+  if(FIELD_INDEX) return FIELD_INDEX;
+  const ix={};
+  const add=(f,id,how)=>{
+    if(!f) return;
+    f=String(f).toUpperCase();
+    if(FIELD_NOISE.has(f)) return;
+    (ix[f]=ix[f]||{})[id]=ix[f][id]||how;
+  };
+  TABLES.forEach(t=>(t.keyFields||[]).forEach(f=>add(f,t.id,'key')));
+  for(const id in CODEX) ((CODEX[id]||[])[2]||[]).forEach(f=>add(f,id,'key'));
+  // FK[src] = [outbound, inbound]. Only outbound tells us the field lives in
+  // src; inbound names a field belonging to the other table, which that
+  // table's own outbound entry already covers.
+  for(const src in FK){
+    const out=(FK[src]||[])[0]||{};
+    for(const tgt in out) add(out[tgt], src, 'foreign key');
+  }
+  FIELD_INDEX=ix;
+  return ix;
+}
+// Common business fields people ask for by name rather than by SAP field id.
+const FIELD_ALIASES={
+  'CUSTOMER':'KUNNR','CUSTOMER NUMBER':'KUNNR','CUSTOMER NO':'KUNNR',
+  'VENDOR':'LIFNR','VENDOR NUMBER':'LIFNR','SUPPLIER':'LIFNR',
+  'MATERIAL':'MATNR','MATERIAL NUMBER':'MATNR',
+  'PLANT':'WERKS','PERSONNEL':'PERNR','PERSONNEL NUMBER':'PERNR','EMPLOYEE':'PERNR',
+  'COMPANY CODE':'BUKRS','SALES ORDER':'VBELN','PURCHASE ORDER':'EBELN',
+  'COST CENTER':'KOSTL','COST CENTRE':'KOSTL','GL ACCOUNT':'HKONT',
+  'PROFIT CENTER':'PRCTR','PROFIT CENTRE':'PRCTR','STORAGE LOCATION':'LGORT',
+  'BATCH':'CHARG','ORDER':'AUFNR','DOCUMENT NUMBER':'BELNR','ASSET':'ANLN1',
+};
+function resolveField(term){
+  const t=String(term).trim().toUpperCase();
+  if(!t) return null;
+  const ix=fieldIndex();
+  // Aliases win over a literal match. Someone typing "plant" means WERKS, even
+  // though a rare field literally called PLANT exists -- matching that instead
+  // would answer a question nobody asked.
+  const a=FIELD_ALIASES[t];
+  if(a&&ix[a]) return a;
+  return ix[t] ? t : null;
+}
+/** Split "customer number, PERNR and plant" into resolved SAP field names. */
+function parseFieldQuery(q){
+  const parts=String(q).split(/[,;/]|\band\b|\+/i).map(s=>s.trim()).filter(Boolean);
+  const out=[];
+  parts.forEach(p=>{ const f=resolveField(p); if(f&&!out.includes(f)) out.push(f); });
+  return out;
+}
+function tablesWithFields(fields, mode){
+  const ix=fieldIndex();
+  const per={}; fields.forEach(f=>per[f]=ix[f]||{});
+  const ids=new Set();
+  if(mode==='all'){
+    const first=Object.keys(per[fields[0]]||{});
+    first.forEach(id=>{ if(fields.every(f=>per[f][id])) ids.add(id); });
+  } else {
+    fields.forEach(f=>Object.keys(per[f]).forEach(id=>ids.add(id)));
+  }
+  return {ids:[...ids].sort(), per};
+}
+let fieldQueryMode='any';
+function openFieldFinder(q, mode){
+  const query=q!==undefined?q:(document.getElementById('field-q')?.value||'');
+  if(mode) fieldQueryMode=mode;
+  const fields=parseFieldQuery(query);
+  const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  let body;
+  if(!fields.length){
+    body=`<div class="td-empty">Type one or more fields — SAP names like
+      <strong>KUNNR</strong>, <strong>PERNR</strong>, <strong>WERKS</strong>, or plain English like
+      <strong>customer number, personnel number, plant</strong>.<br><br>
+      You'll get every table where that field is part of the key or a declared foreign key,
+      and you can put the whole set on the board.</div>`;
+  } else {
+    const {ids,per}=tablesWithFields(fields, fieldQueryMode);
+    const byMod={};
+    ids.forEach(id=>{
+      const m=(TABLES.find(x=>x.id===id)||{}).module||(CODEX[id]?CODEX[id][0]:'?');
+      (byMod[m]=byMod[m]||[]).push(id);
+    });
+    const chips=ids.slice(0,120).map(id=>{
+      const m=(TABLES.find(x=>x.id===id)||{}).module||(CODEX[id]?CODEX[id][0]:null);
+      const col=MODULE_COLORS[m]||'#94a3b8';
+      const open=TABLES.find(x=>x.id===id)?`jumpTo('${id}')`:`openCodex('${id}')`;
+      const which=fields.filter(f=>per[f][id]).join('+');
+      return `<button class="pb-chip" style="border-color:${col};color:${col}"
+        title="${which}" onclick="${open}">${id}</button>`;
+    }).join('');
+    body=`
+      <div class="lc-box lc-changed">
+        <div class="lc-head">🧲 <strong>${fields.join(' · ')}</strong></div>
+        <div class="lc-body">${ids.length} table${ids.length===1?'':'s'} carry
+          ${fields.length>1?(fieldQueryMode==='all'?'<strong>all</strong> of these fields':'<strong>any</strong> of these fields'):'this field'}
+          as a key field or a declared foreign key.</div>
+      </div>
+      ${fields.length>1?`<div class="td-bar">
+        <button class="${fieldQueryMode==='any'?'ff-on':''}" onclick="openFieldFinder(undefined,'any')">Any field</button>
+        <button class="${fieldQueryMode==='all'?'ff-on':''}" onclick="openFieldFinder(undefined,'all')">All fields</button>
+      </div>`:''}
+      <div class="section-title">📊 Per field</div>
+      ${fields.map(f=>`<div class="ff-row"><strong>${esc(f)}</strong>
+         <span>${Object.keys(per[f]).length} tables</span></div>`).join('')}
+      <div class="section-title">🗂️ By module</div>
+      ${Object.keys(byMod).sort((a,b)=>byMod[b].length-byMod[a].length).map(m=>
+        `<div class="ff-row"><strong style="color:${MODULE_COLORS[m]||'#94a3b8'}">${esc(m)}</strong>
+         <span>${byMod[m].length}</span></div>`).join('')}
+      <div class="section-title">🪐 Tables${ids.length>120?' (first 120)':''}</div>
+      <div class="pb-chips">${chips}</div>
+      <div class="td-bar">
+        <button onclick="boardFromList(${JSON.stringify(ids).replace(/"/g,'&quot;')},'${esc(fields.join('+'))}')">
+          Show only these on the chart</button>
+      </div>
+      <div class="lc-src" style="margin-top:12px">Found where the field is part of the primary key
+        or a foreign key SAP declares. This app stores key fields and declared foreign keys, not
+        full field lists — a table can carry the field as an ordinary attribute and not appear here.</div>`;
+  }
+  showDecodePanel('🧲','field finder',
+    `<input class="td-notebox" id="field-q" value="${esc(query)}"
+       placeholder="KUNNR, PERNR, WERKS…" style="margin:0 0 10px"
+       onkeydown="if(event.key==='Enter')openFieldFinder(this.value)"/>
+     <button class="todo-add" onclick="openFieldFinder(document.getElementById('field-q').value)">Find</button>
+     <div style="height:10px"></div>${body}<div style="height:16px"></div>`);
+  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+    .innerHTML='<span style="font-weight:700">🧲 Where is this field?</span>';
+}
+
+// ── Board from a list ──────────────────────────────────────────────────────
+// Locking already restricts the graph to exactly what you picked, so pasting a
+// list is just a bulk lock. Reuses the lock bar and the impact summary.
+function boardFromList(ids, label){
+  const known=[], unknown=[];
+  ids.forEach(raw=>{
+    const id=String(raw).trim().toUpperCase();
+    if(!id) return;
+    const hit=TABLES.find(t=>t.id===id) ? id : (CODEX[id] ? id : null);
+    if(hit){ if(!known.includes(hit)) known.push(hit); }
+    else if(!unknown.includes(id)) unknown.push(id);
+  });
+  LOCKS=known; saveLocks(); renderLockBar(); renderImpact();
+  setOnlyLocked(known.length>0);
+  toggleTools(false);
+  if(unknown.length){
+    // Say what was dropped rather than silently showing a shorter board.
+    const box=document.getElementById('lock-bar');
+    if(box) box.insertAdjacentHTML('afterbegin',
+      `<div class="lk-warn">Not in the index, skipped: ${unknown.slice(0,12).join(', ')}${unknown.length>12?` +${unknown.length-12} more`:''}</div>`);
+  }
+  return {known:known.length, unknown};
+}
+function pasteBoard(){
+  const el=document.getElementById('paste-list');
+  const raw=(el?.value||'');
+  if(!raw.trim()) return;
+  const ids=raw.split(/[\s,;\n\r\t|]+/).filter(Boolean);
+  const r=boardFromList(ids);
+  if(el) el.value='';
+  const msg=document.getElementById('paste-msg');
+  if(msg) msg.textContent=`${r.known} on the board`+(r.unknown.length?`, ${r.unknown.length} not recognised`:'');
+}
+
+// ── Saved views ────────────────────────────────────────────────────────────
+// A view is the whole working state: which system, which modules, what's on
+// the board, focus and depth. Stored locally like everything else.
+let VIEWS=[];
+try{ VIEWS=JSON.parse(localStorage.getItem('erpgalaxy.views')||'[]'); }catch(e){ VIEWS=[]; }
+function saveViews(){ try{ localStorage.setItem('erpgalaxy.views',JSON.stringify(VIEWS)); }catch(e){} }
+function currentViewState(){
+  return {view:currentView, modules:[...activeModules], locks:[...LOCKS],
+          onlyLocked:!!onlyLocked, depth:focusDepth,
+          focus:(typeof focusMode!=='undefined'&&focusMode)?focusCenter:null};
+}
+function saveCurrentView(){
+  const el=document.getElementById('view-name');
+  const name=(el?.value||'').trim() || ('View '+(VIEWS.length+1));
+  const i=VIEWS.findIndex(v=>v.name.toLowerCase()===name.toLowerCase());
+  const rec={name, state:currentViewState()};
+  if(i>=0) VIEWS[i]=rec; else VIEWS.push(rec);
+  saveViews(); if(el) el.value='';
+  renderViews();
+}
+function applyView(name){
+  const v=VIEWS.find(x=>x.name===name); if(!v) return;
+  const s=v.state;
+  activeModules=new Set(s.modules&&s.modules.length?s.modules:Object.keys(MODULE_COLORS));
+  buildModuleFilters();
+  LOCKS=[...(s.locks||[])]; saveLocks(); renderLockBar(); renderImpact();
+  if(typeof exitFocus==='function' && typeof focusMode!=='undefined' && focusMode) exitFocus();
+  if(s.depth) setFocusDepth(s.depth);
+  setView(s.view||'both');            // also persists and repaints
+  setOnlyLocked(!!s.onlyLocked);
+  if(s.focus && typeof enterFocus==='function') enterFocus(s.focus);
+  toggleTools(false);
+}
+function deleteView(name){
+  VIEWS=VIEWS.filter(v=>v.name!==name); saveViews(); renderViews();
+}
+function renderViews(){
+  const el=document.getElementById('views-list');
+  if(!el) return;
+  el.innerHTML = VIEWS.length
+    ? VIEWS.map(v=>`<div class="vw-row">
+        <button class="vw-open" onclick="applyView('${v.name.replace(/'/g,"\\'")}')">
+          ${v.name}<span>${v.state.locks?.length?v.state.locks.length+' locked · ':''}${v.state.view.toUpperCase()}</span>
+        </button>
+        <button class="td-x" onclick="deleteView('${v.name.replace(/'/g,"\\'")}')" aria-label="Delete">✕</button>
+      </div>`).join('')
+    : '<div class="pb-sub">No saved views yet. Set the chart up how you want it, then save.</div>';
 }
 
 // ── Favourites ─────────────────────────────────────────────────────────────
@@ -3320,6 +3633,30 @@ function openTodo(){
     .innerHTML=`<span style="font-weight:700">✅ To-do list</span>`;
 }
 function renderTodo(){ if(document.getElementById('todo-body')) openTodo(); }
+// Everything we know about a table, gathered once so the text and PDF exports
+// carry the same facts as the on-screen panel rather than just a title.
+function tableFacts(id){
+  const t=TABLES.find(x=>x.id===id);
+  const c=CODEX[id];
+  if(!t&&!c) return null;
+  const f=tableFate(id);
+  const e=S4_LIFECYCLE[id];
+  const joins=joinableWith(id,8);
+  return {
+    id,
+    module: t? t.module : c[0],
+    desc: t? (t.shortDesc||'') : (c[1]||''),
+    prose: t? (t.plainEnglish||'') : (c[3]||''),
+    keys: tableKeys(id).filter(x=>x!=='MANDT'&&x!=='CLIENT'&&x!=='MANDANT'),
+    fate: FATE[f] ? FATE[f].label : null,
+    successor: e&&e[1] ? e[1] : null,
+    sapNote: e&&e[4] ? e[4] : null,
+    action: e&&e[5] ? e[5] : (t&&t.s4note) || null,
+    playbooks: playbooksFor(id).map(p=>p.name),
+    fieldChanges: fieldChangesFor(id).map(x=>x.title),
+    joins: joins.map(j=>`${j.id} on ${j.fields.join(', ')} (${j.conf} confidence)`),
+  };
+}
 // Plain text for sharing/email, and a printable HTML for the PDF. Both are
 // built here so what you read on screen is what leaves the device.
 function todoAsText(){
@@ -3329,8 +3666,19 @@ function todoAsText(){
     s+=g.phase.name.toUpperCase()+'\n'+g.phase.why+'\n\n';
     g.items.forEach(it=>{
       s+='  ['+(it.done?'x':' ')+'] '+it.title+'\n';
-      if(it.kind!=='note') s+='      '+it.kind+' · '+it.ref+'\n';
+      if(it.kind!=='note') s+='      '+it.kind+' \u00b7 '+it.ref+'\n';
       if(it.detail) s+='      '+it.detail+'\n';
+      const F=it.kind==='table'?tableFacts(it.ref):null;
+      if(F){
+        if(F.prose||F.desc) s+='      '+(F.prose||F.desc)+'\n';
+        s+='      Module: '+F.module+(F.fate?'   S/4: '+F.fate:'')
+          +(F.successor?' -> '+F.successor:'')+(F.sapNote?'   SAP Note '+F.sapNote:'')+'\n';
+        if(F.keys.length)         s+='      Key: '+F.keys.join(', ')+'\n';
+        if(F.action)              s+='      What to do: '+F.action+'\n';
+        if(F.playbooks.length)    s+='      Playbooks: '+F.playbooks.join('; ')+'\n';
+        if(F.fieldChanges.length) s+='      Field changes: '+F.fieldChanges.join('; ')+'\n';
+        if(F.joins.length)        s+='      Joins: '+F.joins.join(' | ')+'\n';
+      }
     });
     s+='\n';
   });
@@ -3347,11 +3695,24 @@ function todoAsHTML(){
         letter-spacing:.05em;margin:22px 0 2px">${esc(g.phase.name)}</h2>
         <div style="font:400 11px -apple-system,sans-serif;color:#666;margin-bottom:10px">${esc(g.phase.why)}</div>`;
     g.items.forEach(it=>{
-      s+=`<div style="margin:0 0 9px;padding-left:20px;position:relative;font:400 12px -apple-system,sans-serif">
-        <span style="position:absolute;left:0">${it.done?'☑':'☐'}</span>
+      const F=it.kind==='table'?tableFacts(it.ref):null;
+      const row=(label,val)=>val?`<div style="margin-top:2px"><span style="color:#999">${label}</span>
+        <span style="color:#333">${esc(val)}</span></div>`:'';
+      s+=`<div style="margin:0 0 11px;padding-left:20px;position:relative;font:400 12px -apple-system,sans-serif">
+        <span style="position:absolute;left:0">${it.done?'\u2611':'\u2610'}</span>
         <strong style="${it.done?'text-decoration:line-through;color:#888':''}">${esc(it.title)}</strong>
-        ${it.kind!=='note'?`<div style="color:#777;font-size:10px">${esc(it.kind)} · ${esc(it.ref)}</div>`:''}
+        ${it.kind!=='note'?`<div style="color:#777;font-size:10px">${esc(it.kind)} \u00b7 ${esc(it.ref)}</div>`:''}
         ${it.detail?`<div style="color:#555;font-size:11px;margin-top:2px">${esc(it.detail)}</div>`:''}
+        ${F?`<div style="font-size:10.5px;line-height:1.5;margin-top:4px;padding-left:8px;border-left:2px solid #e2e2e2">
+          ${F.prose||F.desc?`<div style="color:#444">${esc(F.prose||F.desc)}</div>`:''}
+          ${row('Module',F.module)}
+          ${row('S/4HANA',[F.fate,F.successor?'\u2192 '+F.successor:'',F.sapNote?'SAP Note '+F.sapNote:''].filter(Boolean).join('  '))}
+          ${row('Key',F.keys.join(', '))}
+          ${row('What to do',F.action)}
+          ${row('Playbooks',F.playbooks.join('; '))}
+          ${row('Field changes',F.fieldChanges.join('; '))}
+          ${row('Joins',F.joins.join('  |  '))}
+        </div>`:''}
       </div>`;
     });
   });
@@ -3440,11 +3801,13 @@ function codexSearch(q){
     return -1;
   };
   for(const [id,t] of inGraph){
+    if(!inEra(id)) continue;              // the ECC/S4 filter applies to search too
     const sc=score(id, t.shortDesc||'', t.module);
     if(sc>=0) hits.push({id, sc, graph:true});
   }
   for(const id in CODEX){
     if(inGraph.has(id)) continue;
+    if(!inEra(id)) continue;
     const [mod,desc]=CODEX[id];
     const sc=score(id, desc||'', mod);
     if(sc>=0) hits.push({id, sc, graph:false});
@@ -3572,18 +3935,29 @@ function openCodex(id){
   }
 }
 
-function toggleTools(force){
-  const t=document.getElementById('header-tools');
+function toggleDrawer(id, force){
+  const t=document.getElementById(id);
   const b=document.getElementById('tools-backdrop');
-  const k=document.getElementById('burger');
   const open = (force===undefined) ? !t.classList.contains('open') : !!force;
+  // Only one drawer at a time -- the backdrop is shared.
+  ['filter-tools','menu-tools'].forEach(x=>{
+    if(x!==id) document.getElementById(x).classList.remove('open');
+  });
   t.classList.toggle('open', open);
   b.classList.toggle('open', open);
-  k.classList.toggle('open', open);
-  k.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const burger=document.getElementById('burger');
+  burger.classList.toggle('open', open && id==='menu-tools');
+  burger.setAttribute('aria-expanded', (open&&id==='menu-tools')?'true':'false');
+  document.getElementById('filter-btn')
+    .setAttribute('aria-expanded', (open&&id==='filter-tools')?'true':'false');
   if(window.webkit?.messageHandlers?.hapticFeedback){
     window.webkit.messageHandlers.hapticFeedback.postMessage({style:'light'});
   }
+}
+// Kept so anything still calling the old name closes both drawers.
+function toggleTools(force){
+  if(force===false){ toggleDrawer('filter-tools',false); toggleDrawer('menu-tools',false); return; }
+  toggleDrawer('menu-tools', force);
 }
 function enterFocus(id){
   focusMode=true; focusCenter=id;
@@ -3605,6 +3979,8 @@ function exitFocus(){
 
 function init(){
   setFunMode(funMode);
+  setView(currentView);
+  renderViews();
   buildPlaybookList();
   initDismissResults();
   buildModuleFilters(); buildLegend(); buildGraph(); initSheetSwipe(); renderLockBar();
@@ -3630,8 +4006,16 @@ function init(){
 
 function setView(v){
   currentView=v;
+  try{ localStorage.setItem('erpgalaxy.view', v); }catch(e){}
   ['ecc','s4','both'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',v===x));
+  const hint=document.getElementById('view-hint');
+  if(hint) hint.textContent = v==='ecc'
+    ? 'ECC6 only — tables that arrive in S/4HANA are hidden, in the graph and in search.'
+    : v==='s4'
+      ? 'S/4HANA only — tables that disappear in S/4HANA are hidden, in the graph and in search.'
+      : 'Showing tables from both systems.';
   updateGraph();
+  if(searchQuery) renderCodexResults(searchQuery);
 }
 
 function buildModuleFilters(){

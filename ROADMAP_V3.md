@@ -197,3 +197,41 @@ freely.
 
 PDF is rendered natively via `UIMarkupTextPrintFormatter` rather than an offscreen WKWebView, so
 there's no async load racing the share-sheet presentation.
+
+---
+
+## Workspace features (2026-07-21)
+
+**Richer to-do export.** Table items in the text and PDF now carry what the on-screen panel
+carries: description, module, S/4 fate and successor, SAP Note, key fields, "what to do",
+playbooks, field changes and direct joins with their `ON` fields and confidence.
+
+**Field finder — "where do I find the customer number?"** Answered from key fields plus the
+foreign keys SAP declares, over 1,694 distinct fields. Accepts SAP names (`KUNNR`) or plain
+English (`customer number, personnel number and plant`), single or comma-separated, with
+Any/All matching. Reports per-field counts and a module breakdown, and puts the whole set on
+the chart in one tap.
+
+Aliases deliberately beat literal matches: a rare field literally named `PLANT` exists, but
+someone typing "plant" means `WERKS`, and matching the literal would answer a question nobody
+asked.
+
+**The limit is stated in the panel, not buried.** We hold key fields and declared foreign keys,
+not full field lists — a table can carry `KUNNR` as an ordinary attribute and never appear.
+This finds where a field is *structural*, which is what you want for joins, but it is not
+exhaustive.
+
+**Paste a table list.** Bulk-locks whatever you paste (commas, spaces or newlines) and shows
+only those. Names not in the index are **named in a warning** rather than silently dropped —
+a shorter board that looks complete is worse than one that admits what it skipped.
+
+**Saved views.** Captures the whole working state — which system, active modules, the board,
+only-locked, focus and depth — under a name, restorable in one tap. `localStorage`, same
+posture as everything else.
+
+All three funnel into the same board machinery that already existed for locks, so the impact
+summary works on them unchanged.
+
+**Pre-existing bug found while wiring this:** `setOnlyLocked` assumed the `#only-locked` button
+existed, but `renderLockBar` empties the bar when nothing is locked — so clearing the board
+while "only locked" was on threw. Guarded.
