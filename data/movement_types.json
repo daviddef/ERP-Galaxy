@@ -1,0 +1,366 @@
+{
+ "101": {
+  "plain": "Stock arriving against a purchase order or production order — the standard \"goods have turned up\" posting.",
+  "sap": "Goods receipt for purchase order or order"
+ },
+ "103": {
+  "plain": "Receiving goods against a purchase order into a blocked holding area for inspection before they're released to normal stock; not usable for stock transport orders.",
+  "sap": "Goods receipt for purchase order into GR blocked stock"
+ },
+ "105": {
+  "plain": "Releasing goods that were sitting in GR blocked stock into normal usable stock, once they've been approved — it behaves just like a standard goods receipt.",
+  "sap": "Release from GR blocked stock for purchase order"
+ },
+ "121": {
+  "plain": "A follow-up correction posting for subcontracting quantities, generated automatically by the system rather than entered by a user.",
+  "sap": "Subsequent adjustment for subcontracting"
+ },
+ "122": {
+  "plain": "Sending goods back to the supplier or back to production against a purchase order or production order, kept separate from a straight cancellation of the original receipt.",
+  "sap": "Return delivery to supplier or to production"
+ },
+ "123": {
+  "plain": "Undoing a previously posted return delivery, putting the stock quantities back the way they were before the return was recorded.",
+  "sap": "Reversal of return delivery"
+ },
+ "124": {
+  "plain": "Sending goods that were sitting in GR blocked stock back to the vendor, reversing what had been received into that blocked status.",
+  "sap": "Return delivery to vendor from GR blocked stock"
+ },
+ "125": {
+  "plain": "Reversing a return delivery that was previously posted from GR blocked stock back to the vendor, restoring the blocked stock.",
+  "sap": "Return delivery from GR blocked stock - reversal"
+ },
+ "131": {
+  "plain": "An automatic goods receipt posting tied to a run schedule header — created by the system when that receipt is confirmed, not something a user enters directly.",
+  "sap": "Goods receipt for run schedule header"
+ },
+ "141": {
+  "plain": "An automatic correction the system posts for an active ingredient when it detects that a goods receipt caused too much or too little component consumption.",
+  "sap": "Goods receipt for subsequent adjustment for active ingredient"
+ },
+ "161": {
+  "plain": "Sending goods back to the vendor against a purchase order line that was flagged as a returns item, posted at the same time as the original receipt.",
+  "sap": "Return for purchase order"
+ },
+ "201": {
+  "plain": "Stock being pulled out of the warehouse and charged to a cost center, drawn only from stock that is free and available for use.",
+  "sap": "Goods issue for a cost center"
+ },
+ "221": {
+  "plain": "Stock being issued and charged to a project, taken only from unrestricted, freely usable inventory rather than blocked or inspection stock.",
+  "sap": "Goods issue for a project"
+ },
+ "231": {
+  "plain": "Stock leaving the warehouse for a customer order when the delivery isn't being handled through the Shipping component.",
+  "sap": "Goods issue for a customer order (without Shipping)"
+ },
+ "241": {
+  "plain": "Stock being issued and charged against a fixed asset record, drawn only from stock that is free and available for use.",
+  "sap": "Goods issue for an asset"
+ },
+ "251": {
+  "plain": "Stock sold and issued without a formal sales order in the system, normally posted against a cost center by default.",
+  "sap": "Goods issue for sales (without customer order)"
+ },
+ "261": {
+  "plain": "Components being consumed by a production order — stock leaves the warehouse and goes into the order.",
+  "sap": "Goods issue for an order"
+ },
+ "281": {
+  "plain": null,
+  "sap": "Goods issue for a"
+ },
+ "291": {
+  "plain": "A flexible goods issue where every account-assignment field is open, letting you charge the stock to whichever cost object you choose.",
+  "sap": "Goods issue for any arbitrary account assignment"
+ },
+ "301": {
+  "plain": "Moving stock directly from one plant's freely usable inventory straight into another plant's freely usable inventory in a single posting.",
+  "sap": "Transfer posting plant to plant in one step"
+ },
+ "303": {
+  "plain": "The first half of a two-step plant transfer: stock leaves the sending plant's usable inventory and sits in transit until it's received.",
+  "sap": "Transfer posting plant to plant in two steps - removal from storage"
+ },
+ "305": {
+  "plain": "The second half of a two-step plant transfer: stock in transit is received into the new plant's usable stock, with no additional valuation posted.",
+  "sap": "Transfer posting plant to plant in two steps - placement in storage"
+ },
+ "309": {
+  "plain": "Reclassifying stock from one material number to another, moving the quantity out of one material's usable stock and into another's.",
+  "sap": "Transfer posting material to material"
+ },
+ "311": {
+  "plain": "Moving stock directly between two storage locations within the same plant, from one location's usable stock straight into the other's, in one posting.",
+  "sap": "Transfer posting storage location to storage location in one step"
+ },
+ "313": {
+  "plain": "The first step of a two-step storage location transfer: stock leaves the source location's usable inventory and is held as stock in transfer.",
+  "sap": "Stock transfer storage location to storage location in two steps - removal from storage"
+ },
+ "315": {
+  "plain": "The second step of a two-step storage location transfer: stock that was in transit is placed into the receiving location's usable inventory.",
+  "sap": "Transfer posting storage location to storage location in two steps - placement in storage"
+ },
+ "317": {
+  "plain": "In retail, combining separate component materials back into a single structured product, reversing a previous split into components.",
+  "sap": "Creation of a structured material from constituent components (Retail)"
+ },
+ "319": {
+  "plain": "In retail, breaking a structured product apart into its individual component materials, entered manually when needed.",
+  "sap": "Split structured material into components (Retail)"
+ },
+ "321": {
+  "plain": "Stock that passed quality inspection being released into freely usable inventory, optionally moving it to a different storage location at the same time.",
+  "sap": "Transfer posting stock in quality inspection - unrestricted-use stock"
+ },
+ "323": {
+  "plain": "Moving stock that is still under quality inspection from one storage location to another, without changing its inspection status.",
+  "sap": "Transfer posting storage location to storage location - stock in quality inspection"
+ },
+ "325": {
+  "plain": "Moving blocked stock from one storage location to another while it stays blocked and unavailable for use.",
+  "sap": "Transfer posting storage location to storage location - blocked stock"
+ },
+ "331": {
+  "plain": "Pulling a physical sample out of stock that is under quality inspection for testing purposes; because the sample is destroyed, it's treated the same as scrapping.",
+  "sap": "Withdrawal of sample from stock in quality inspection"
+ },
+ "333": {
+  "plain": "Pulling a physical sample out of freely usable stock for testing; since the sample is destroyed in testing, it's accounted for the same as scrap.",
+  "sap": "Withdrawal of sample from unrestricted-use stock"
+ },
+ "335": {
+  "plain": "Pulling a physical sample out of blocked stock for testing; because the sample gets destroyed, it's posted the same way as scrapping.",
+  "sap": "Withdrawal of sample from blocked stock"
+ },
+ "340": {
+  "plain": "Changing which valuation type a batch is assigned to, which the system posts when you edit the batch's data — and this one can't be reversed.",
+  "sap": "Revaluation of batch"
+ },
+ "341": {
+  "plain": "An automatic posting that fires when a batch's status flips from available to unavailable, moving its stock from usable into restricted stock.",
+  "sap": "Change in status of a batch (available to unavailable)"
+ },
+ "343": {
+  "plain": "Releasing blocked stock into freely usable inventory, with the option to move it to a different storage location at the same time.",
+  "sap": "Transfer posting blocked stock - unrestricted-use stock"
+ },
+ "349": {
+  "plain": "Moving blocked stock into quality inspection status instead of releasing it straight to usable stock, optionally shifting it to another storage location too.",
+  "sap": "Transfer posting from blocked stock to stock in quality inspection"
+ },
+ "351": {
+  "plain": "Stock leaving one plant's usable inventory for a stock transport order, sitting as in-transit stock until the receiving plant takes it in, without using Shipping.",
+  "sap": "Goods issue for a stock transport order (without Shipping)"
+ },
+ "411": {
+  "plain": "Converting sales-order stock, vendor consignment stock, or project stock into the company's own regular storage location stock, requiring the matching special stock indicator.",
+  "sap": "Transfer posting of special stocks E, K, and Q to company's own stock"
+ },
+ "413": {
+  "plain": "Moving stock — whether your own regular inventory, another sales order's stock, consignment stock, or project stock — into a specific sales order's reserved stock.",
+  "sap": "Transfer posting to sales order stock"
+ },
+ "415": {
+  "plain": "Moving stock — from your own regular inventory, consignment stock, or another project's stock — into a specific project's reserved stock.",
+  "sap": "Transfer posting to project stock"
+ },
+ "441": {
+  "plain": "Reclassifying returnable empties, such as bottles or containers, as tied to a specific filled product rather than tracked as general loose empties stock.",
+  "sap": "Transfer posting non-tied to tied empties"
+ },
+ "451": {
+  "plain": "Recording goods a customer sent back when the return isn't processed through the Shipping component, landing the stock in blocked returns status.",
+  "sap": "Returns from customer (without Shipping)"
+ },
+ "453": {
+  "plain": "Releasing customer-returned stock out of blocked-returns status into normal usable, valuated inventory once it's been checked and accepted.",
+  "sap": "Transfer posting blocked stock returns to unrestricted-use stock"
+ },
+ "455": {
+  "plain": "Moving customer-returned stock that is still in blocked-returns status from one storage location to another, without changing its blocked status.",
+  "sap": "Transfer posting storage location to storage location - blocked stock returns"
+ },
+ "457": {
+  "plain": "Sending customer-returned stock out of blocked-returns status into quality inspection, converting it to valuated stock in the process.",
+  "sap": "Transfer posting blocked stock returns to quality inspection stock"
+ },
+ "459": {
+  "plain": "Converting customer-returned stock from blocked-returns status into standard blocked stock, which brings the quantity into the company's valuated inventory records.",
+  "sap": "Transfer posting blocked stock returns to blocked stock"
+ },
+ "501": {
+  "plain": "Receiving stock straight into usable inventory from a vendor delivery that has no purchase order behind it, so the invoice can't be matched against it later.",
+  "sap": "Goods receipt without purchase order - unrestricted-use stock"
+ },
+ "503": {
+  "plain": "Receiving stock into quality inspection from a vendor delivery with no purchase order behind it, meaning the invoice can't later be matched to this receipt.",
+  "sap": "Goods receipt without purchase order - stock in quality inspection"
+ },
+ "505": {
+  "plain": "Receiving stock into blocked status from a vendor delivery that has no purchase order behind it, so it can't be matched to an invoice later.",
+  "sap": "Goods receipt without purchase order - blocked stock"
+ },
+ "511": {
+  "plain": "Stock received from a vendor at no cost, added to usable inventory — if the material uses moving average pricing, that average price drops as a result.",
+  "sap": "Free-of-charge delivery from vendor"
+ },
+ "521": {
+  "plain": "Stock coming out of production straight into usable inventory when there's no production order tied to the receipt.",
+  "sap": "Goods receipt without order - unrestricted-use stock"
+ },
+ "523": {
+  "plain": "Stock coming out of production and placed into quality inspection when there is no production order behind the delivery.",
+  "sap": "Goods receipt without order - stock in quality inspection"
+ },
+ "525": {
+  "plain": "Stock coming out of production and placed into blocked status when there is no production order behind the delivery.",
+  "sap": "Goods receipt without order - blocked stock"
+ },
+ "531": {
+  "plain": "Recording a by-product generated during production, normally linked back to the production order though it can also be posted with no order reference.",
+  "sap": "Goods receipt from by-product from the order"
+ },
+ "541": {
+  "plain": "Sending component materials from your own usable stock out to a subcontractor, so they have what they need to complete a subcontract order.",
+  "sap": "Transfer posting unrestricted-use stock - stock of material provided to vendor"
+ },
+ "543": {
+  "plain": "An automatic posting that records components previously sent to a subcontractor as consumed, rather than something a user enters directly.",
+  "sap": "Consumption from stock of material provided to vendor"
+ },
+ "545": {
+  "plain": "Recording a by-product returned from a subcontractor into the stock provided to that vendor, triggered when a component was entered with a negative quantity on the subcontract order.",
+  "sap": "Goods receipt from by-product from subcontracting"
+ },
+ "551": {
+  "plain": "Writing off good stock as scrap; the quantity leaves inventory and the cost is posted to a scrap account.",
+  "sap": "Scrapping from unrestricted-use stock"
+ },
+ "553": {
+  "plain": "Writing off stock that was sitting in quality inspection as scrap; the quantity leaves inventory and the cost posts to a scrap account.",
+  "sap": "Scrapping from stock in quality inspection"
+ },
+ "555": {
+  "plain": "Writing off blocked stock as scrap; the quantity leaves inventory and the cost posts to a scrap account, the same as scrapping any other stock.",
+  "sap": "Scrapping from blocked stock"
+ },
+ "561": {
+  "plain": "Loading an opening stock quantity into usable inventory for the first time, such as when a material is first set up in the system.",
+  "sap": "Initial entry of stock - unrestricted-use stock"
+ },
+ "563": {
+  "plain": "Loading an opening stock quantity directly into quality inspection status when first setting up a material's stock in the system.",
+  "sap": "Initial entry of stock - quality inspection"
+ },
+ "565": {
+  "plain": "Loading an opening stock quantity directly into blocked status when first setting up a material's stock in the system.",
+  "sap": "Initial entry of stock - blocked stock"
+ },
+ "571": {
+  "plain": "Stock completed against an assembly order landing in usable inventory, posted only through the repetitive manufacturing goods-receipt-for-sales-order function, not directly in Inventory Management.",
+  "sap": "Goods receipt for assembly order to unrestricted-use"
+ },
+ "573": {
+  "plain": "Stock completed against an assembly order landing in quality inspection, posted only through the repetitive manufacturing goods-receipt-for-sales-order function, not directly in Inventory Management.",
+  "sap": "Goods receipt for assembly order to quality inspection"
+ },
+ "575": {
+  "plain": "Stock completed against an assembly order landing in blocked status, posted only through the repetitive manufacturing goods-receipt-for-sales-order function, not directly in Inventory Management.",
+  "sap": "Goods receipt for assembly order to blocked stock"
+ },
+ "581": {
+  "plain": "Recording a by-product coming out of a project network, normally linked back to that network though it can also be posted without a reference.",
+  "sap": "Goods receipt of a by-product from the network"
+ },
+ "601": {
+  "plain": "Stock leaving the warehouse as part of a customer delivery, posted automatically by the Shipping component when the delivery is confirmed.",
+  "sap": "Goods issue for delivery (Shipping)"
+ },
+ "621": {
+  "plain": "Sending returnable packaging like pallets or crates out to a customer, moving it from your own usable stock into packaging stock held at the customer.",
+  "sap": "Transfer posting unrestricted-use - returnable packaging (Shipping)"
+ },
+ "623": {
+  "plain": "Recording returnable packaging as consumed or used up at the customer's site, reducing the returnable packaging stock tracked there.",
+  "sap": "Goods issue from returnable packaging stock at customer (Shipping)"
+ },
+ "631": {
+  "plain": "Sending stock out to a customer as consignment inventory, moving it from your own usable stock into stock held at the customer's location.",
+  "sap": "Transfer posting unrestricted use - customer consignment stock (Shipping)"
+ },
+ "633": {
+  "plain": "Recording consignment stock at the customer as consumed, reducing the usable consignment stock that had been held at their site.",
+  "sap": "Goods issue from customer consignment (Shipping)"
+ },
+ "641": {
+  "plain": "Stock leaving one plant's usable inventory for a stock transport order processed through Shipping, sitting as in-transit stock until the receiving plant takes it in.",
+  "sap": "Goods issue for a stock transport order (Shipping)"
+ },
+ "651": {
+  "plain": "Recording goods a customer sent back through a Shipping returns delivery, landing the stock in blocked-returns status.",
+  "sap": "Returns from customer (Shipping)"
+ },
+ "653": {
+  "plain": "Recording a customer return processed through Shipping and posting it straight into usable, valuated stock rather than a blocked holding status.",
+  "sap": "Returns from customer (Shipping) to unrestricted-use stock"
+ },
+ "655": {
+  "plain": "Recording a customer return processed through Shipping and posting it directly into quality inspection as valuated stock, rather than a blocked holding status.",
+  "sap": "Returns from customer (Shipping) to stock in quality inspection"
+ },
+ "657": {
+  "plain": "Recording a customer return processed through Shipping and posting it directly into blocked stock, but still as valuated inventory rather than blocked-returns status.",
+  "sap": "Returns from customer (Shipping) to blocked stock"
+ },
+ "661": {
+  "plain": "Sending goods back to a vendor with no reference to the original purchase order, where the return is processed as a proper delivery through Shipping.",
+  "sap": "Returns to vendor via Shipping"
+ },
+ "671": {
+  "plain": "Handling a returns item within a stock transport order that's processed via Shipping, moving the returned quantity back as stock in transit to the issuing plant.",
+  "sap": "Returns for stock transport order via Shipping"
+ },
+ "677": {
+  "plain": "Completing, on the issuing plant's side, a one-step stock transport order return — the returned quantity lands back in that plant's usable stock.",
+  "sap": "Returns for stock transport order in one step (Shipping)"
+ },
+ "701": {
+  "plain": "An automatic adjustment posted when a physical inventory count finds a discrepancy in usable stock, correcting the system quantity to match what was counted.",
+  "sap": "Inventory differences in unrestricted-use stock (MM-IM)"
+ },
+ "703": {
+  "plain": "An automatic adjustment posted when a physical inventory count finds a discrepancy in stock that's under quality inspection, correcting the system quantity.",
+  "sap": "Inventory differences in quality inspection stock (MM-IM)"
+ },
+ "707": {
+  "plain": "An automatic adjustment posted when a physical inventory count finds a discrepancy in blocked stock, correcting the system quantity to match what was counted.",
+  "sap": "Inventory differences in blocked stock (MM-IM)"
+ },
+ "711": {
+  "plain": "An automatic adjustment to usable stock quantities, posted when a warehouse-management inventory count uncovers a discrepancy against the system record.",
+  "sap": "Inventory differences in unrestricted-use stock (LE-WM)"
+ },
+ "713": {
+  "plain": "An automatic adjustment to quality-inspection stock quantities, posted when a warehouse-management inventory count uncovers a discrepancy against the system record.",
+  "sap": "Inventory differences in quality inspection stock (LE-WM)"
+ },
+ "715": {
+  "plain": "An automatic adjustment to blocked-returns stock quantities, posted when a warehouse-management inventory count uncovers a discrepancy against the system record.",
+  "sap": "Inventory differences in blocked stock returns (LE-WM)"
+ },
+ "717": {
+  "plain": "An automatic adjustment to blocked stock quantities, posted when a warehouse-management inventory count uncovers a discrepancy against the system record.",
+  "sap": "Inventory differences in blocked stock (LE-WM)"
+ },
+ "721": {
+  "plain": "In retail, an automatic posting that revalues a value-only material's total sales price on a given date, without affecting its margin.",
+  "sap": "- Sales value receipt - not affecting margins (Retail)"
+ },
+ "731": {
+  "plain": "In retail, an automatic posting that partially revalues a value-only material's sales price on a given date, this time affecting its margin.",
+  "sap": "- Sales value receipt - affecting margins (Retail)"
+ }
+}
