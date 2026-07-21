@@ -212,3 +212,20 @@ returns 204 (empty body), which trips a naive JSON parser but is success.
 
 As a metadata-inclusive update from an already-approved app past the 2.1 round,
 this should get a lighter review than the first submission.
+
+---
+
+## 1.0.1 resubmitted with build 15 (2026-07-20)
+
+Cancelled the pending build-10 submission and resubmitted with **build 15** so the whole
+Tier-1 body of work ships together. 1.0.1 had never been public, so the version number was
+reused rather than bumped.
+
+Cancelling: `PATCH /v1/reviewSubmissions/{id} {canceled:true}` → the submission goes
+CANCELING and the version flips to `DEVELOPER_REJECTED` (Apple's term for "you withdrew it",
+not a rejection). A new `reviewSubmission` cannot be created until the old one leaves the
+open states, so poll before creating.
+
+Shipping in 1.0.1: migration verdicts 59→244 with SAP Note + required action, 26 new tables
+from the 2025 Simplification List, four migration playbooks, the movement-type decoder, the
+join finder, and the graph/search/sheet UI fixes.
