@@ -278,3 +278,31 @@ read the value back rather than trusting the write.
 Recovery was cheap only because `whatsNew` **can still be edited while `WAITING_FOR_REVIEW`** —
 trimmed to 3,986 chars, patched, and verified by read-back. No second cancel needed. Don't rely
 on that for anything the reviewer has already started reading.
+
+---
+
+## 1.0.1 resubmitted with build 18 (2026-07-22)
+
+Fourth and final swap for this release. Cancelled build 17, attached 18, resubmitted. Version
+was `WAITING_FOR_REVIEW` throughout, never `IN_REVIEW`, so only queue position was lost.
+
+Justified by two user-visible defects that were live in build 17:
+- the ECC6 / S/4HANA filter defaulted to `both` while the **ECC6 button rendered as active**, so
+  the UI contradicted the data on every fresh launch, and the filter never applied to search;
+- `setOnlyLocked` assumed `#only-locked` existed, but `renderLockBar` empties the bar when
+  nothing is locked — clearing the board while "only locked" was on threw.
+
+Added on top: field finder, paste-to-board, saved views, richer to-do PDF, and the split of
+filters onto their own icon with the to-do list at the top of the burger menu.
+
+**The `whatsNew` procedure that fixes last round's mistake**, followed here:
+1. PATCH the localization.
+2. **Check the PATCH result** — a `409 ENTITY_ERROR.ATTRIBUTE.INVALID.TOO_LONG` is silent unless
+   you look at it.
+3. **GET it back and compare to what was sent**, byte for byte.
+4. Only then create the `reviewSubmission` and submit.
+
+Read-back confirmed 3,745 chars matching the sent text exactly before the submit call.
+Note the file was 3,826 bytes on disk but 3,745 characters over the wire — multi-byte
+characters (— and ’) mean **the byte count on disk is not the count Apple limits**. Measure
+characters, not bytes, and leave headroom.
