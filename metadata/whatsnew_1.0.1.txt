@@ -1,11 +1,36 @@
-What happens to your tables in S/4HANA — now for many more of them.
+A much bigger answer to "what happens to my tables in S/4HANA".
 
-• Migration verdicts expanded from 59 to 218 tables. Asset accounting (ANEA, ANEK, ANLP), Material Ledger (CKMI1, CKML*), change documents and business partner tables now show whether they disappear, move, become a compatibility view, or carry over — each with a quote from SAP's Simplification List.
+MIGRATION VERDICTS — 59 TO 244 TABLES
+Asset accounting, Material Ledger, change documents, business partner, Funds Management, LIS statistics and more now tell you whether a table disappears, moves, becomes a read-only compatibility view, changes, or carries over — sourced from SAP's own Simplification List.
 
-• New: Join finder. Every table now shows which tables it joins to directly, and the exact key fields to join ON. Shared primary keys are shown as high confidence; declared foreign keys are flagged when they need checking.
+NOW WITH THE SAP NOTE AND WHAT TO DO
+208 verdicts carry the citable SAP Note number, and 131 add a plain-English "What to do". MKPF no longer just says "merged into MATDOC" — it tells you that custom code updating MKPF or MSEG must be changed to MATDOC, and gives you Note 2328419 to cite.
 
-• Clearer graph. Table names are now easier to read — solid colour fills with high-contrast labels, and larger text on the nodes.
+NEW — MIGRATION PLAYBOOKS
+The four scenarios a conversion project actually plans around, each with what to watch, the tables involved, and the SAP Notes:
+• Business Partner / CVI
+• Material number field length extension
+• Universal Journal (ACDOCA)
+• Inventory documents (MATDOC)
+Affected tables link straight to their playbook.
 
-• Smoother filtering. Module filters are now compact single-row cards with All / None and a one-tap "only this module". Swipe the detail sheet away from anywhere.
+NEW — MOVEMENT TYPE DECODER
+Type 261 into search and get the answer above the table results: "components being consumed by a production order". 91 standard movement types, including reversals — search 102 and get "reverses 101".
 
-• 1,975 tables in the index, all offline, still no account and no data collection.
+NEW — JOIN FINDER
+Every table now shows what it joins to directly and the exact key fields to join ON. Shared primary keys are marked high confidence; declared foreign keys are flagged when they need checking. Where there is no direct join, it says so rather than inventing one.
+
+EASIER TO READ
+• Table names on the graph are much clearer — solid fills, high-contrast labels, larger text
+• Planet colour now shows migration fate at a glance: red disappears, green is new, orange changes, slate carries over
+• Fun mode is also the accessible mode — larger, bolder, higher contrast
+• Migration Journey no longer squashes long table names
+
+EASIER TO USE
+• Search finds tables in the galaxy too, ranked properly — type BSEG and BSEG comes first
+• Tap outside the search results to dismiss them
+• Swipe the detail sheet away from anywhere, not just from the top
+• Module filters are compact single-row cards with All / None and a one-tap "only this module"
+• Relationships now show every connection, in both directions — MARA went from 6 to 37
+
+2,001 tables in the index, still completely offline, still no account, still no data collection.
