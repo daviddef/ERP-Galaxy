@@ -229,3 +229,31 @@ open states, so poll before creating.
 Shipping in 1.0.1: migration verdicts 59→244 with SAP Note + required action, 26 new tables
 from the 2025 Simplification List, four migration playbooks, the movement-type decoder, the
 join finder, and the graph/search/sheet UI fixes.
+
+---
+
+## 1.0.1 resubmitted with build 16 (2026-07-21)
+
+Second cancel-and-resubmit, same flow as build 15. Cancelled ~30 min after submitting build 15
+so the field-level work ships in the same release. Cheap because the version was still
+`WAITING_FOR_REVIEW`, never `IN_REVIEW` — only queue position was lost.
+
+Added over build 15: six field-level S/4 changes (MATNR 18→40, AFLE →23 digits, VBTYP→VBTYPL,
+OBJKNR INT4→INT8, Segment 16→40, Season →10), the document-type decoder (T003/BLART), and a
+fix to movement type 281, which shipped in build 15 with a truncated description.
+
+Sequence that works, in order — deviating causes avoidable failures:
+1. Upload the new build and **wait for `processingState: VALID`** before cancelling anything.
+   Cancelling first surrenders queue position with nothing ready to replace it.
+2. `PATCH /v1/reviewSubmissions/{id} {canceled:true}` → `CANCELING`, then `COMPLETE`; the
+   version flips to `DEVELOPER_REJECTED`. A new submission cannot be created while the old one
+   is still in an open state, so poll until it leaves.
+3. `PATCH /v1/appStoreVersions/{id}/relationships/build` — returns **204 with an empty body**,
+   which is success, not a parse failure.
+4. `whatsNew` lives on `appStoreVersionLocalizations`, per locale — **not** on the version.
+   Only `en-AU` exists here (the primary locale); writing `en-US` fails as "not found".
+5. Create `reviewSubmissions` → add `reviewSubmissionItems` → `PATCH {submitted:true}`.
+
+Verified before submitting rather than after: `appStoreReviewDetails.notes` still populated
+(3,990 chars, `demoAccountRequired: false`). That resource — not `betaAppReviewDetails` — is
+what App Store review reads, and confusing the two caused the original Guideline 2.1 round.
