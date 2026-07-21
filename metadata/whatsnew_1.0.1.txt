@@ -1,4 +1,14 @@
-A much bigger answer to "what happens to my tables in S/4HANA".
+A much bigger answer to "what happens to my tables in S/4HANA" — now down to the column.
+
+NEW — FIELD-LEVEL CHANGES
+Knowing a table survives isn't enough if a field under it changed shape. Six systemic changes, each with SAP's own Note number:
+• Material number CHAR 18 → CHAR 40 (Note 2267140)
+• Currency amounts 9–22 digits → 23 digits (Note 2628654)
+• SD document category VBTYP CHAR 1 → VBTYPL CHAR 4 (Note 2267306)
+• Object list number INT4 → INT8 — a data type change, not just a length (Note 2580670)
+• Segment 16 → 40 characters (Note 2522971)
+• Season, Collection and Theme → 10 characters (Note 2624475)
+Search MATNR and get "CHAR 18 → CHAR 40" straight away. The switches matter too, so they're stated: amount field extension is off by default and cannot be reversed once activated.
 
 MIGRATION VERDICTS — 59 TO 244 TABLES
 Asset accounting, Material Ledger, change documents, business partner, Funds Management, LIS statistics and more now tell you whether a table disappears, moves, becomes a read-only compatibility view, changes, or carries over — sourced from SAP's own Simplification List.
@@ -14,8 +24,8 @@ The four scenarios a conversion project actually plans around, each with what to
 • Inventory documents (MATDOC)
 Affected tables link straight to their playbook.
 
-NEW — MOVEMENT TYPE DECODER
-Type 261 into search and get the answer above the table results: "components being consumed by a production order". 91 standard movement types, including reversals — search 102 and get "reverses 101".
+NEW — MOVEMENT TYPE AND DOCUMENT TYPE DECODER
+Type 261 into search and get the answer above the table results: "components being consumed by a production order". 91 standard movement types, including reversals — search 102 and get "reverses 101". Document types too: KR, DZ, SA and the rest of SAP's standard set, with a reminder to check the client's own T003, because document types are configured per client.
 
 NEW — JOIN FINDER
 Every table now shows what it joins to directly and the exact key fields to join ON. Shared primary keys are marked high confidence; declared foreign keys are flagged when they need checking. Where there is no direct join, it says so rather than inventing one.
@@ -32,5 +42,8 @@ EASIER TO USE
 • Swipe the detail sheet away from anywhere, not just from the top
 • Module filters are compact single-row cards with All / None and a one-tap "only this module"
 • Relationships now show every connection, in both directions — MARA went from 6 to 37
+
+FIXED
+Movement type 281 showed a cut-off description. It reads "goods issue for a network" now.
 
 2,001 tables in the index, still completely offline, still no account, still no data collection.
