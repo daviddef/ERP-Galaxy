@@ -306,3 +306,21 @@ Read-back confirmed 3,745 chars matching the sent text exactly before the submit
 Note the file was 3,826 bytes on disk but 3,745 characters over the wire — multi-byte
 characters (— and ’) mean **the byte count on disk is not the count Apple limits**. Measure
 characters, not bytes, and leave headroom.
+
+---
+
+## 1.0.1 resubmitted with build 19 (2026-07-22)
+
+Fifth swap. Justified on data correctness, not features: build 18 shipped a detail panel that
+read "Unchanged in S/4." for **VBUK and VBUP**, which SAP eliminated, and for **MARC/MARD**,
+which SAP says survive only as compatibility views. A consultant acting on that would be
+misled, so it was worth the queue position.
+
+Also in 19: the migration-fate filter, the orbiting splash screen, and the fix that stopped the
+detail panel and the planet colour disagreeing (BSIS showed a "read-only view" planet beside a
+panel saying "not in S/4HANA").
+
+`whatsNew` procedure followed and clean this time: PATCH, **check the result**, GET it back and
+compare to what was sent, and only then submit. 3,724 characters against the 4,000 limit —
+**measured as characters, not bytes**. The file is 3,798 bytes on disk; em dashes and curly
+quotes are multi-byte, and `wc -c` is not the number Apple enforces.
