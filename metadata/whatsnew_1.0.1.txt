@@ -1,49 +1,50 @@
 A much bigger answer to "what happens to my tables in S/4HANA" — now down to the column, with somewhere to put what you find.
 
+FIXED — CORRECTED MIGRATION VERDICTS
+Some tables showed our older one-line summary instead of SAP's published verdict, and the two had drifted apart. VBUK and VBUP read "unchanged" when SAP eliminated them. MARC and MARD read "unchanged" where SAP says compatibility view only. Where our wording disagrees with the Simplification List, SAP now wins, and the detail panel and the planet colour can no longer tell you different things.
+
 NEW — TO-DO LIST
-Found something to act on? Add it. Tables, playbooks, field changes, decoded codes and your own notes go on one working list, grouped into a suggested order: what applies, the switches to decide, prepare before conversion, then custom code. Tick off, reorder, share as text, or export a PDF that carries the full detail for every table — description, S/4 fate, SAP Note, key fields, what to do, and how it joins.
+Found something to act on? Add it. Tables, playbooks, field changes, decoded codes and your own notes go on one working list, grouped into a suggested order: what applies, the switches to decide, prepare before conversion, then custom code. Tick off, reorder, share as text, or export a PDF carrying the full detail for every table — description, S/4 fate, SAP Note, key fields, what to do, and how it joins.
 
 NEW — WHERE IS THIS FIELD?
-Ask for a field by SAP name or plain English — "customer number, personnel number and plant" — and get every table carrying it as a key field or a declared foreign key, counted by module. Then put the whole set on the chart in one tap.
+Ask by SAP name or plain English — "customer number, personnel number and plant" — and get every table carrying it as a key field or declared foreign key, counted by module. Put the whole set on the chart in one tap.
+
+NEW — FILTER BY MIGRATION FATE
+Show only what disappears, only what changes, only what is new in S/4HANA, or only what carries over. Counts update as you filter.
 
 NEW — PASTE A TABLE LIST
 Paste names from a spec or a spreadsheet and the chart shows only those. Anything not in the index is named, not silently skipped.
 
 NEW — SAVED VIEWS
-Save which system, which modules, what's on the board and where you're focused, all under one name. Reopen it in a tap.
+Save which system, which modules, which fates, what's on the board and where you're focused, all under one name.
 
 NEW — FIELD-LEVEL CHANGES
 Knowing a table survives isn't enough if a field under it changed shape. Six systemic changes, each with SAP's Note number:
 • Material number CHAR 18 → CHAR 40 (Note 2267140)
 • Currency amounts 9–22 digits → 23 digits (Note 2628654)
 • SD document category VBTYP CHAR 1 → VBTYPL CHAR 4 (Note 2267306)
-• Object list number INT4 → INT8 — a type change, not just a length (Note 2580670)
+• Object list number INT4 → INT8 — a type change, not a length (Note 2580670)
 • Segment 16 → 40 characters (Note 2522971)
 • Season, Collection and Theme → 10 characters (Note 2624475)
-Search MATNR and get "CHAR 18 → CHAR 40" straight away. Amount field extension is off by default and cannot be reversed once activated — so the app says so.
+Search MATNR and get "CHAR 18 → CHAR 40" straight away.
 
 MIGRATION VERDICTS — 59 TO 244 TABLES
-Asset accounting, Material Ledger, change documents, business partner, Funds Management, LIS statistics and more now tell you whether a table disappears, moves, becomes a read-only compatibility view, changes, or carries over — from SAP's own Simplification List. 208 carry the citable SAP Note, and 131 add a plain-English "What to do".
+Asset accounting, Material Ledger, change documents, business partner, Funds Management, LIS statistics and more now tell you whether a table disappears, moves, becomes a read-only view, changes, or carries over — from SAP's own Simplification List. 208 carry the citable SAP Note, 131 add a plain-English "What to do".
 
 NEW — MIGRATION PLAYBOOKS
-The four scenarios a conversion project plans around, each with what to watch, the tables, and the SAP Notes: Business Partner / CVI, material number field length, Universal Journal (ACDOCA), inventory documents (MATDOC).
+The four scenarios a conversion project plans around: Business Partner / CVI, material number field length, Universal Journal (ACDOCA), inventory documents (MATDOC).
 
 NEW — MOVEMENT AND DOCUMENT TYPE DECODER
-Type 261 and get "components being consumed by a production order". 91 movement types including reversals — search 102 and get "reverses 101". Document types too: KR, DZ, SA and the rest of the standard set, with a reminder to check the client's own T003.
+Type 261 and get "components being consumed by a production order". 91 movement types including reversals. Document types too — KR, DZ, SA and the rest of the standard set.
 
 NEW — JOIN FINDER
 Every table shows what it joins to and the exact fields to join ON, with confidence marked. Where there is no direct join, it says so rather than inventing one.
 
 EASIER TO USE
-• Filters moved to their own icon; the burger menu now opens with your to-do list
+• Filters moved to their own icon; the burger menu opens with your to-do list
 • Reading mode renamed to what it does — Brief or Detailed
-• Fun mode is also the accessible mode: larger, bolder, higher contrast
-• Relationships show every connection, both directions — MARA went from 6 to 37
-
-FIXED
-• The ECC6 / S/4HANA filter now applies to search as well as the chart, and the buttons show the filter you are actually on
-• Clearing the board while "only locked" was on could wedge it
-• Movement type 281 was cut off; it reads "goods issue for a network" now
+• The ECC6 / S/4HANA filter now applies to search as well as the chart
+• A livelier launch screen
 
 MORE CONTEXT ON MORE TABLES
 Fun mode now has something to say about 1,021 tables, up from 132. 113 tables had their module corrected from SAP's own application component instead of a guess.
