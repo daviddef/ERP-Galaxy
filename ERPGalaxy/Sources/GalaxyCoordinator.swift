@@ -4,7 +4,7 @@ import WebKit
 final class GalaxyCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
 
     enum MessageName: String, CaseIterable {
-        case nodeSelected, hapticFeedback, shareTable
+        case nodeSelected, hapticFeedback, shareTable, exportTodo
     }
 
     weak var webView: WKWebView?
@@ -34,6 +34,10 @@ final class GalaxyCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHa
             triggerHaptic(style: body["style"] ?? "light")
         case .shareTable:
             shareTable(tableId: body["tableId"] ?? "", desc: body["shortDesc"] ?? "")
+        case .exportTodo:
+            exportTodo(format: body["format"] ?? "share",
+                       text: body["text"] ?? "",
+                       html: body["html"] ?? "")
         }
     }
 
@@ -49,7 +53,59 @@ final class GalaxyCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHa
     private func shareTable(tableId: String, desc: String) {
         guard !tableId.isEmpty else { return }
         let text = "SAP Table \(tableId): \(desc)\n\nExplored via ERP Galaxy 🌌"
-        let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        present(activityItems: [text])
+    }
+
+    /// The to-do list leaves the device only here, and only when the user taps
+    /// share or export. `share` hands over plain text (Mail is in the sheet, so
+    /// this covers emailing the list); `pdf` renders a paginated document first.
+    private func exportTodo(format: String, text: String, html: String) {
+        guard !text.isEmpty else { return }
+        if format == "pdf", let url = writePDF(html: html) {
+            present(activityItems: [url])
+        } else {
+            present(activityItems: [text])
+        }
+    }
+
+    /// Paginated PDF via UIMarkupTextPrintFormatter — no offscreen WKWebView and
+    /// no async load to race against, which matters because the share sheet has
+    /// to be presented in the same user-initiated moment.
+    private func writePDF(html: String) -> URL? {
+        let formatter = UIMarkupTextPrintFormatter(markupText: html)
+        let renderer = UIPrintPageRenderer()
+        renderer.addPrintFormatter(formatter, startingAtPageAt: 0)
+
+        // A4 at 72dpi with a 36pt (half-inch) margin.
+        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8)
+        renderer.setValue(page, forKey: "paperRect")
+        renderer.setValue(page.insetBy(dx: 36, dy: 36), forKey: "printableRect")
+
+        let data = NSMutableData()
+        UIGraphicsBeginPDFContextToData(data, page, nil)
+        // numberOfPages triggers layout, so it must be read after the rects are set.
+        let pages = renderer.numberOfPages
+        guard pages > 0 else { UIGraphicsEndPDFContext(); return nil }
+        for i in 0..<pages {
+            UIGraphicsBeginPDFPage()
+            renderer.drawPage(at: i, in: UIGraphicsGetPDFContextBounds())
+        }
+        UIGraphicsEndPDFContext()
+
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("ERP Galaxy to-do.pdf")
+        do {
+            try data.write(to: url, options: .atomic)
+            return url
+        } catch {
+            print("PDF write failed: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    private func present(activityItems: [Any]) {
+        let av = UIActivityViewController(activityItems: activityItems,
+                                          applicationActivities: nil)
 
         // Resolve the *key* window of the active scene. `windows.first` on an
         // arbitrary scene breaks on iPad multi-window and Designed-for-iPad on Mac.

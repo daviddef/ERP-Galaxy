@@ -155,3 +155,45 @@ No downloadable "table X → remediate" file exists without a support contract a
 - ~150 module assignments on migration tables are `moduleInferred` (from name prefixes)
 - `lore` at 132/1,975 — grows incrementally, never blocks a release
 - Privacy policy depends on the repo staying public (GitHub Pages)
+
+---
+
+## Tier 2 progress (2026-07-21)
+
+**#6 Lore — 132 → 1,021.** Written for the 896 practitioner-facing tables (FI, MM, SD, CO, PP,
+PM, FM, BASIS); HR and EHS remain the long tail.
+
+Generated strictly from what we already hold — each table's own `desc`, module, key fields and
+foreign-key neighbours — then put through `tools/merge_lore.py`, which rejects any entry
+containing an identifier, transaction code, SAP Note, release or number not present in that
+table's own source. **7 of 896 were rejected and dropped**, and they were real catches:
+invented transaction codes `RF180` and `TA20C`, and tables cited that weren't in the record's
+context. Tables with nothing to say are left saying so rather than padded.
+
+**#7 Data debt — 185 → 72 inferred modules.** `tools/fix_inferred_modules.py` replaces
+name-prefix guesses with SAP's own **Application Component** from the Simplification List.
+113 resolved (69 corrected, 44 confirmed); LIS structures moved to PP/PM, special-stock tables
+to MM, SD index tables to SD, Material Ledger to CO.
+
+Deliberately conservative: the component must map cleanly into the app's module vocabulary, and
+every matching item must agree. That's what stops `DBTABLOG` — a Basis change-log table
+mentioned in passing by a logistics item — from being relabelled. The 72 that don't resolve
+keep `moduleInferred`. The 12 tables with disagreeing key sources are untouched; there is still
+no third source to break the tie.
+
+## New: to-do list
+
+Anything in the app can go on a working list — table, playbook, field change, decoded code, or
+a free-text note. Stored in `localStorage` like locks and favourites, so the offline/no-account
+posture is unchanged; the list leaves the device only through the share sheet or PDF export,
+both user-initiated.
+
+**On the suggested order.** Items are grouped into: work out what applies → decide the switches
+→ prepare before conversion → custom code and interfaces → reference. This is derived from what
+each item *is* and from SAP's own relevancy/action text — items carrying a "how to determine
+relevancy" check sort first, opt-in switches next because some (AFLE) cannot be reversed once
+activated. It is **not** a dependency graph SAP publishes, and the panel says so. Arrows reorder
+freely.
+
+PDF is rendered natively via `UIMarkupTextPrintFormatter` rather than an offscreen WKWebView, so
+there's no async load racing the share-sheet presentation.
