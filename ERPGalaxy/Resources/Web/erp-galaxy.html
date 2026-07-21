@@ -2626,8 +2626,25 @@ function noteInfo(n,ev){
   if(ev) ev.stopPropagation();
   alert('SAP Note '+n+'\n\nThis is SAP\'s official note for this change. Look it up in SAP for Me / the Support Portal (support.sap.com) for the full guidance. ERP Galaxy is offline and does not fetch it.');
 }
+// Does our curated one-liner actually agree with SAP's verdict? Our s4note
+// predates the Simplification List ingestion, and 20 of them had drifted --
+// VBUK and VBUP read "Unchanged in S/4" while SAP had eliminated them, MARC and
+// MARD read "Unchanged" where SAP says compatibility view only. Telling a
+// consultant a table is unchanged when SAP says it is gone is materially wrong,
+// so where the two disagree SAP wins and our sentence is dropped rather than
+// shown alongside a contradicting headline.
+function noteAgrees(status, note){
+  if(!note) return true;
+  if(/unchanged|no change|not affected|unaffected|carries over/i.test(note))
+    return status==='unchanged';
+  if(/\bgone\b|removed|no longer exists|not available in s\/?4|deprecated/i.test(note))
+    return status==='deprecated';
+  if(/replaced|now lives|merged/i.test(note))
+    return status==='replaced'||status==='compat_view'||status==='deprecated';
+  return true;   // neutral prose adds detail without claiming a verdict
+}
 function buildLifecycle(d, hideChips){
-  const note=d.s4note||null;   // curated prose beats our generic blurb
+  const note=d.s4note||null;   // curated prose, used only where it agrees (see noteAgrees)
   // SAP Note + required action apply whatever branch we take, so build once.
   const _e=S4_LIFECYCLE[d.id]||[];
   const _note=_e[4], _act=_e[5];
@@ -2644,21 +2661,27 @@ function buildLifecycle(d, hideChips){
       : '';
     return `<div class="lc-box lc-new">
         <div class="lc-head">🆕 <strong>New in S/4HANA</strong></div>
-        <div class="lc-body">${note||'Introduced with S/4HANA — it does not exist in ECC6. A migration destination, not a risk.'}</div>
+        <div class="lc-body">${(noteAgrees('arrives',note)&&note)||'Introduced with S/4HANA — it does not exist in ECC6. A migration destination, not a risk.'}</div>
         ${feedHtml}
         ${extra}
         <div class="lc-src">From this table's ECC/S4 availability flags</div>
       </div>`;
   }
-  if(d.ecc && !d.s4){
+  // SAP's Simplification List outranks our coarse ecc/s4 flags -- the same
+  // precedence tableFate already uses for the planet colour. Checking the flags
+  // first made the panel contradict the graph: BSIS is flagged s4:false but SAP
+  // says it survives as a compatibility view, so the planet said "read-only
+  // view" while the panel said "not in S/4HANA". The flags are consulted only
+  // when SAP has published nothing.
+  const e=S4_LIFECYCLE[d.id];
+  if(!e && d.ecc && !d.s4){
     return `<div class="lc-box lc-gone">
         <div class="lc-head">❌ <strong>ECC6 only — not in S/4HANA</strong></div>
-        <div class="lc-body">${note||'Not available in S/4HANA. Anything reading it will need reworking.'}</div>
+        <div class="lc-body">${(noteAgrees('deprecated',note)&&note)||'Not available in S/4HANA. Anything reading it will need reworking.'}</div>
         ${extra}
         <div class="lc-src">From this table's ECC/S4 availability flags</div>
       </div>`;
   }
-  const e=S4_LIFECYCLE[d.id];
   if(!e) return `<div class="lc-box lc-unknown">
       <div class="lc-head">❓ <strong>Not in the Simplification List</strong></div>
       <div class="lc-body">${note||'SAP has not published a simplification item naming this table. That usually means it carries over untouched — but absence of an item is not a promise. Verify before you rely on it.'}</div>
@@ -2673,9 +2696,10 @@ function buildLifecycle(d, hideChips){
     changed:"Still present, but its structure, semantics or content changed.",
     unchanged:"SAP states this table is unaffected."
   }[status]||"";
+  const agrees=noteAgrees(status, note);
   return `<div class="lc-box ${L.cls}">
       <div class="lc-head">${L.icon} <strong>${L.text}</strong></div>
-      <div class="lc-body">${note||detail}</div>
+      <div class="lc-body">${(agrees&&note)||detail}</div>
       ${byChip}
       ${ev?`<div class="lc-ev">“${ev}”</div>`:''}
       ${extra}
@@ -3133,16 +3157,18 @@ function tableFate(id){
   // SAP's own words outrank our coarse flags. BSAD is flagged s4:false, but the
   // Simplification List says it survives as a compatibility view — telling a
   // consultant "gone" when their reports still read is materially wrong.
+  // Every published verdict is resolved here, before the flags get a say.
+  // Splitting this so that only compat/replaced/deprecated outranked the flags
+  // left COBK red ("disappears") while its own panel said SAP calls it
+  // unchanged, and GLPCA red while the panel said changed.
   if(e){
     if(e[0]==='compat_view') return 'compat';
     if(e[0]==='replaced')    return 'moves';
     if(e[0]==='deprecated')  return 'dies';
+    if(e[0]==='changed')     return 'changes';
+    if(e[0]==='unchanged')   return 'safe';
   }
   if(t.ecc && !t.s4) return 'dies';
-  if(e){
-    if(e[0]==='changed')   return 'changes';
-    if(e[0]==='unchanged') return 'safe';
-  }
   if(t.s4status==='deprecated') return 'dies';
   if(t.s4status==='modified')   return 'changes';
   return 'safe';
