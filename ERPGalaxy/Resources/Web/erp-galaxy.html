@@ -194,6 +194,13 @@
     cursor:pointer;font-family:inherit;}
   .td-bar button:hover{border-color:var(--text-muted);}
   .td-empty{color:var(--text-muted);font-size:.78rem;line-height:1.6;padding:10px 0;}
+  .fate-chip{display:flex;align-items:center;gap:7px;width:100%;background:rgba(255,255,255,.03);
+    border:1px solid var(--border);border-radius:9px;padding:7px 9px;margin-bottom:5px;
+    color:var(--text-muted);font-size:.76rem;font-family:inherit;cursor:pointer;text-align:left;}
+  .fate-chip.on{border-color:var(--fc);color:var(--text);background:color-mix(in srgb,var(--fc) 12%,transparent);}
+  .fate-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .fate-chip .fate-name{flex:1;font-weight:700;}
+  .fate-chip .fate-n{font-size:.68rem;opacity:.75;}
   .ff-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;
     border-bottom:1px solid var(--border);font-size:.78rem;}
   .ff-row span{color:var(--text-muted);font-size:.72rem;}
@@ -452,6 +459,10 @@
              oninput="setFocusDepth(this.value)"/>
       <div class="depth-hint" id="depth-hint">Tap a table first, then widen the ring.</div>
     </div>
+    <div class="mode-label">Migration fate</div>
+    <div class="pb-sub">Show only what happens to a table in S/4HANA</div>
+    <div class="module-filters" id="fate-filters"></div>
+    <div class="mode-label">Modules</div>
     <div class="module-filters" id="module-filters"></div>
   </div>
   <div class="header-tools" id="menu-tools">
@@ -2606,6 +2617,17 @@ const LINKS_RAW=[
 
 // ─── APP STATE ───────────────────────────────────────────────────────────────
 let currentView='both';
+// Migration-fate filter: the same four buckets as the legend, so what you can
+// filter by matches what the colours already mean.
+const FATE_GROUPS=[
+  {id:'dies',   label:'Disappears',   col:'#ef4444', fates:['dies']},
+  {id:'changed',label:'Changes',      col:'#f59e0b', fates:['changes','moves','compat']},
+  {id:'arrives',label:'New in S/4',   col:'#22c55e', fates:['arrives']},
+  {id:'safe',   label:'Carries over', col:'#64748b', fates:['safe','unknown']},
+];
+let activeFates=new Set(FATE_GROUPS.map(g=>g.id));
+try{ const v=JSON.parse(localStorage.getItem('erpgalaxy.fates')||'null');
+     if(Array.isArray(v)&&v.length) activeFates=new Set(v); }catch(e){}
 try{ const v=localStorage.getItem('erpgalaxy.view'); if(v) currentView=v; }catch(e){}
 let activeModules=new Set(Object.keys(MODULE_COLORS));
 let selectedNode=null, searchQuery='', simulation, svg, g, link, node, zoomBehavior;
@@ -4005,6 +4027,7 @@ function exitFocus(){
 
 function init(){
   setFunMode(funMode);
+  buildFateFilters();
   setView(currentView);
   renderViews();
   buildPlaybookList();
@@ -4030,6 +4053,48 @@ function init(){
   });
 }
 
+function fateGroupOf(id){
+  const f=tableFate(id);
+  const g=FATE_GROUPS.find(x=>x.fates.includes(f));
+  return g?g.id:'safe';
+}
+function fateActive(id){ return activeFates.has(fateGroupOf(id)); }
+function setAllFates(on){
+  activeFates = on ? new Set(FATE_GROUPS.map(g=>g.id)) : new Set();
+  persistFates(); buildFateFilters(); updateGraph();
+  if(searchQuery) renderCodexResults(searchQuery);
+}
+function toggleFate(id){
+  if(activeFates.has(id)) activeFates.delete(id); else activeFates.add(id);
+  persistFates(); buildFateFilters(); updateGraph();
+  if(searchQuery) renderCodexResults(searchQuery);
+}
+function soloFate(id,ev){
+  if(ev) ev.stopPropagation();
+  activeFates=new Set([id]);
+  persistFates(); buildFateFilters(); updateGraph();
+  if(searchQuery) renderCodexResults(searchQuery);
+}
+function persistFates(){
+  try{ localStorage.setItem('erpgalaxy.fates',JSON.stringify([...activeFates])); }catch(e){}
+}
+function buildFateFilters(){
+  const el=document.getElementById('fate-filters');
+  if(!el) return;
+  const counts={}; FATE_GROUPS.forEach(g=>counts[g.id]=0);
+  TABLES.forEach(t=>{ if(activeModules.has(t.module)&&inEra(t.id)) counts[fateGroupOf(t.id)]++; });
+  el.innerHTML=`<div class="mod-allnone">
+      <button onclick="setAllFates(true)">All</button>
+      <button onclick="setAllFates(false)">None</button>
+    </div>` +
+    FATE_GROUPS.map(g=>`<button class="fate-chip ${activeFates.has(g.id)?'on':''}"
+      style="--fc:${g.col}" onclick="toggleFate('${g.id}')">
+      <span class="fate-dot" style="background:${g.col}"></span>
+      <span class="fate-name">${g.label}</span>
+      <span class="fate-n">${counts[g.id]}</span>
+      <span class="mod-solo" title="Only this" onclick="soloFate('${g.id}',event)">⊙</span>
+    </button>`).join('');
+}
 function setView(v){
   currentView=v;
   try{ localStorage.setItem('erpgalaxy.view', v); }catch(e){}
@@ -4040,6 +4105,7 @@ function setView(v){
     : v==='s4'
       ? 'S/4HANA only — tables that disappear in S/4HANA are hidden, in the graph and in search.'
       : 'Showing tables from both systems.';
+  buildFateFilters();      // counts are era-dependent
   updateGraph();
   if(searchQuery) renderCodexResults(searchQuery);
 }
@@ -4144,6 +4210,7 @@ function getVisibleTables(){
 
   let base=TABLES.filter(t=>{
     if(!activeModules.has(t.module)) return false;
+    if(!fateActive(t.id)) return false;
 
     // The ECC/S4 toggle is a filter and must always win. This used to be
     // bypassed for neighbourhood members so S/4 successors stayed visible,
