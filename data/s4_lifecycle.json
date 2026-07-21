@@ -550,6 +550,42 @@
   "sapNote": "2270445",
   "source": "simplification-list-2023"
  },
+ "FMUSFGFACTS1A": {
+  "action": "None Related SAP Notes Custom Code related information All related objects do still exist, thus no technical problems (like syntax errors) will occur all existing data resulting from the use of ADB in the Business Suite will remain untouche…",
+  "evidence": "It replaces the US Federal Ledgers 96 and 97 (FMUSFGFACTS1A, FMUSFGFACTS1T as well as FMUSFGFACTS2A and FMUSFGFACTS2T)",
+  "item": "13.14.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2270415",
+  "source": "simplification-list-2025"
+ },
+ "FMUSFGFACTS1T": {
+  "action": "None Related SAP Notes Custom Code related information All related objects do still exist, thus no technical problems (like syntax errors) will occur all existing data resulting from the use of ADB in the Business Suite will remain untouche…",
+  "evidence": "It replaces the US Federal Ledgers 96 and 97 (FMUSFGFACTS1A, FMUSFGFACTS1T as well as FMUSFGFACTS2A and FMUSFGFACTS2T)",
+  "item": "13.14.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2270415",
+  "source": "simplification-list-2025"
+ },
+ "FMUSFGFACTS2A": {
+  "action": "None Related SAP Notes Custom Code related information All related objects do still exist, thus no technical problems (like syntax errors) will occur all existing data resulting from the use of ADB in the Business Suite will remain untouche…",
+  "evidence": "It replaces the US Federal Ledgers 96 and 97 (FMUSFGFACTS1A, FMUSFGFACTS1T as well as FMUSFGFACTS2A and FMUSFGFACTS2T)",
+  "item": "13.14.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2270415",
+  "source": "simplification-list-2025"
+ },
+ "FMUSFGFACTS2T": {
+  "action": "None Related SAP Notes Custom Code related information All related objects do still exist, thus no technical problems (like syntax errors) will occur all existing data resulting from the use of ADB in the Business Suite will remain untouche…",
+  "evidence": "It replaces the US Federal Ledgers 96 and 97 (FMUSFGFACTS1A, FMUSFGFACTS1T as well as FMUSFGFACTS2A and FMUSFGFACTS2T)",
+  "item": "13.14.8",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2270415",
+  "source": "simplification-list-2025"
+ },
  "GLFUNCT": {
   "action": "To use CSA reporting in SAP S/4HANA based on the Universal Journal, you need to fulfill several prerequistes. Refer to SAP note 932272 for a detailed explanation.",
   "evidence": "the contents of the cost of sales ledger and all special ledgers created in table GLFUNCT are included in the Universal Journal (table ACDOCA)",
@@ -1605,6 +1641,114 @@
   "sapNote": "2268089",
   "source": "simplification-list-2023"
  },
+ "S021": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S022": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S023": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S024": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S025": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S026": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S028": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S061": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S062": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S063": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S064": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S065": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
  "S066": {
   "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
   "evidence": "LIS tables S066, S067: See simplification item \"Credit Management\", SAP",
@@ -1622,6 +1766,78 @@
   "s4status": "deprecated",
   "sapNote": "2267306",
   "source": "simplification-list-2023"
+ },
+ "S070": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S076": {
+  "action": "PP SOP is intended as a bridge or interim solution in S/4HANA, which allows you a stepwise system conversion from SAP ERP to SAP S/4HANA on-premise edition and SAP IBP. PP SOP is part of the S/4HANA compatibility pack.",
+  "evidence": "The following tables are part of the compatibility pack: PGPL, SAUF, S076",
+  "item": "9.5.17",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268064",
+  "source": "simplification-list-2025"
+ },
+ "S111": {
+  "action": "In SAP S/4HANA there are no direct activities required for continuing the business process for subsequent settlement, with the only exception that the agreements have to be closed after the end of the validity period.",
+  "evidence": "the structure of table S111 was adjusted",
+  "item": "13.15.8",
+  "replacedBy": null,
+  "s4status": "changed",
+  "sapNote": "2267415",
+  "source": "simplification-list-2025"
+ },
+ "S114": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S115": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S116": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "evidence": "will not work after the update of the LIS tables is switched off",
+  "item": "4.1.13",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2267463",
+  "source": "simplification-list-2025"
+ },
+ "S225": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
+ },
+ "S227": {
+  "action": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "evidence": "With this it is possible to replace LIS.",
+  "item": "9.2.1",
+  "replacedBy": null,
+  "s4status": "deprecated",
+  "sapNote": "2268063",
+  "source": "simplification-list-2025"
  },
  "STXL": {
   "action": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
@@ -1854,6 +2070,24 @@
   "replacedBy": null,
   "s4status": "deprecated",
   "source": "simplification-list-2023"
+ },
+ "WBASSOC": {
+  "action": "For Target release SAP S/4HANA 1511 and SAP S/4HANA 1610: Pre-Check is performed for the component LO-GT. Custom code adoption on the new DB- Design can be checked in the start release to identify the code places which have to adjust to the…",
+  "evidence": "Simplification of DB Key Fields and tables structures (WBHF, WBGT, WBIT, WBASSOC, WCOCOF, WB2_D_BUSVOLBASE, WB2_D_BVB_SETTL)",
+  "item": "6.6.2",
+  "replacedBy": null,
+  "s4status": "changed",
+  "sapNote": "2267785",
+  "source": "simplification-list-2025"
+ },
+ "WCOCOF": {
+  "action": "For Target release SAP S/4HANA 1511 and SAP S/4HANA 1610: Pre-Check is performed for the component LO-GT. Custom code adoption on the new DB- Design can be checked in the start release to identify the code places which have to adjust to the…",
+  "evidence": "Simplification of DB Key Fields and tables structures (WBHF, WBGT, WBIT, WBASSOC, WCOCOF, WB2_D_BUSVOLBASE, WB2_D_BVB_SETTL)",
+  "item": "6.6.2",
+  "replacedBy": null,
+  "s4status": "changed",
+  "sapNote": "2267785",
+  "source": "simplification-list-2025"
  },
  "WIND": {
   "action": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
