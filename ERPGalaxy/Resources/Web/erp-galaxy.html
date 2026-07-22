@@ -204,9 +204,70 @@
     color:var(--fc);border-radius:9px;padding:7px 10px;font-size:.72rem;font-weight:700;
     background:color-mix(in srgb,var(--fc) 12%,transparent);white-space:nowrap;}
   .pa-fi{font-size:.82rem;line-height:1;}
+  .pa-fl{white-space:nowrap;}
   .pa-ico{width:36px;height:34px;display:inline-flex;align-items:center;justify-content:center;
     background:rgba(167,139,250,.12);border:1px solid #a78bfa;border-radius:9px;
     font-size:1rem;cursor:pointer;font-family:inherit;padding:0;}
+  .sec-label{font-size:.64rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--text-muted);margin:14px 0 7px;}
+  .tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+  .tool{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;
+    background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;
+    padding:13px 8px;color:var(--text);cursor:pointer;font-family:inherit;}
+  .tool:hover{border-color:var(--fi);}
+  .tool-i{font-size:1.35rem;line-height:1;}
+  .tool-t{font-size:.72rem;font-weight:700;}
+  .tool-n{position:absolute;top:6px;right:8px;background:#34d399;color:#04231a;font-size:.6rem;
+    font-weight:800;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;
+    justify-content:center;padding:0 4px;}
+  .row-link{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;
+    background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;
+    padding:10px 12px;margin-bottom:6px;color:var(--text);font-size:.79rem;font-weight:700;
+    cursor:pointer;font-family:inherit;text-align:left;}
+  .row-sub{font-size:.67rem;font-weight:400;color:var(--text-muted);}
+  .fold{border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden;}
+  .fold>summary{padding:10px 12px;font-size:.79rem;font-weight:700;cursor:pointer;list-style:none;}
+  .fold>summary::-webkit-details-marker{display:none;}
+  .fold>summary::after{content:'\25BE';float:right;color:var(--text-muted);}
+  .fold[open]>summary::after{content:'\25B4';}
+  .fold>div{padding:0 12px 12px;}
+  /* List view */
+  .lv-wrap{max-height:46vh;overflow-y:auto;border:1px solid var(--border);border-radius:10px;}
+  table.lv{width:100%;border-collapse:collapse;font-size:.76rem;}
+  table.lv thead th{position:sticky;top:0;background:var(--surface2);text-align:left;
+    padding:7px 9px;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--text-muted);border-bottom:1px solid var(--border);z-index:1;}
+  table.lv td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:top;}
+  table.lv tbody tr{cursor:pointer;}
+  table.lv tbody tr:hover{background:rgba(255,255,255,.04);}
+  .lv-id{display:block;font-family:monospace;font-weight:700;color:var(--text);}
+  .lv-desc{display:block;color:var(--text-muted);font-size:.68rem;margin-top:1px;line-height:1.35;}
+  /* Lessons */
+  .lesson{border:1px solid var(--border);border-left-width:3px;border-radius:10px;
+    padding:10px 12px;margin-bottom:9px;background:rgba(255,255,255,.03);}
+  .lesson.sourced{border-left-color:#4f9cf9;}
+  .lesson.principle{border-left-color:#a78bfa;}
+  .lesson-h{font-size:.84rem;font-weight:800;line-height:1.3;margin-bottom:4px;}
+  .lesson-b{font-size:.78rem;line-height:1.55;color:var(--text-muted);}
+  /* Field guide */
+  .fg{font-size:.82rem;line-height:1.6;}
+  .fg-h2{font-size:1.02rem;font-weight:800;margin:4px 0 10px;line-height:1.3;}
+  .fg-h3{font-size:.92rem;font-weight:800;margin:20px 0 7px;color:var(--fi);line-height:1.3;}
+  .fg-h4{font-size:.82rem;font-weight:800;margin:15px 0 5px;line-height:1.3;}
+  .fg-p{margin:0 0 10px;color:var(--text-muted);}
+  .fg-p strong{color:var(--text);}
+  .fg-ul{margin:0 0 10px;padding-left:18px;color:var(--text-muted);}
+  .fg-ul li{margin-bottom:5px;}
+  .fg-hr{border:0;border-top:1px solid var(--border);margin:16px 0;}
+  .fg-tw{overflow-x:auto;margin:0 0 12px;border:1px solid var(--border);border-radius:9px;}
+  table.fg-t{width:100%;border-collapse:collapse;font-size:.74rem;}
+  table.fg-t th{background:var(--surface2);text-align:left;padding:6px 8px;font-weight:800;
+    border-bottom:1px solid var(--border);white-space:nowrap;}
+  table.fg-t td{padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text-muted);
+    vertical-align:top;}
+  table.fg-t td strong{color:var(--text);}
+  .fg code{background:rgba(255,255,255,.07);padding:1px 4px;border-radius:4px;
+    font-size:.92em;color:var(--text);}
   .fate-chip{display:flex;align-items:center;gap:7px;width:100%;background:rgba(255,255,255,.03);
     border:1px solid var(--border);border-radius:9px;padding:7px 9px;margin-bottom:5px;
     color:var(--text-muted);font-size:.76rem;font-family:inherit;cursor:pointer;text-align:left;}
@@ -491,49 +552,6 @@
       migration verdicts sit.</div>
     <div class="mode-label">Modules</div>
     <div class="module-filters" id="module-filters"></div>
-  </div>
-  <div class="header-tools" id="menu-tools">
-    <div class="tools-head">
-      <span>Menu</span>
-      <button class="tools-close" onclick="toggleDrawer('menu-tools',false)" aria-label="Close">&#10005;</button>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#9989; To-do list</div>
-      <div class="pb-sub">Tables, playbooks, field changes and notes you want to act on</div>
-      <button class="todo-add todo-btn" onclick="toggleDrawer('menu-tools',false);openTodo()">
-        Open to-do list<span class="todo-count" id="todo-count" style="display:none">0</span>
-      </button>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#128203; Show as list</div>
-      <div class="pb-sub">Every table matching your filters, as a table you can scan</div>
-      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openList()">
-        Open the list</button>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#128214; ECC &#8594; S/4HANA field guide</div>
-      <div class="pb-sub">Everything we know, in one readable document</div>
-      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openFieldGuide()">
-        Open the guide</button>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#127891; Lessons learned</div>
-      <div class="pb-sub">What repeatedly matters, from SAP&#8217;s own actions and from this app</div>
-      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openLessons()">
-        Open lessons</button>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#128268; BAPIs &amp; function modules</div>
-      <div class="pb-sub">Search SAP&#8217;s BAPI and RFC catalogue by name or component</div>
-      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openBapiBrowser('')">
-        Open catalogue</button>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#129522; Where is this field?</div>
-      <div class="pb-sub">Find every table carrying a field &mdash; KUNNR, PERNR, WERKS&hellip;</div>
-      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openFieldFinder('')">
-        Open field finder</button>
-    </div>
     <div class="pb-block">
       <div class="lg-title">&#128203; Paste a table list</div>
       <div class="pb-sub">Paste names from a spec or a spreadsheet &mdash; the chart shows only those</div>
@@ -550,18 +568,44 @@
       <button class="todo-add" onclick="saveCurrentView()">Save current view</button>
       <div id="views-list"></div>
     </div>
-    <div class="mode-label">Reading mode</div>
-    <div class="toggle-group mode-group">
-      <button class="toggle-btn" id="btn-classic" onclick="setFunMode(false)">&#128203; Brief</button>
-      <button class="toggle-btn mode-fun active" id="btn-fun" onclick="setFunMode(true)">&#127917; Detailed</button>
+  </div>
+  <div class="header-tools" id="menu-tools">
+    <div class="tools-head">
+      <span>Menu</span>
+      <button class="tools-close" onclick="toggleDrawer('menu-tools',false)" aria-label="Close">&#10005;</button>
     </div>
-    <div class="depth-hint" id="mode-hint">Detailed gives the full explainer in larger, higher-contrast text.</div>
-    <div class="pb-block" id="pb-block">
+
+    <div class="sec-label">Tools</div>
+    <div class="tool-grid">
+      <button class="tool" onclick="toggleDrawer('menu-tools',false);openTodo()">
+        <span class="tool-i">&#9989;</span><span class="tool-t">To-do</span>
+        <span class="tool-n" id="todo-count" style="display:none">0</span></button>
+      <button class="tool" onclick="toggleDrawer('menu-tools',false);openFieldFinder('')">
+        <span class="tool-i">&#129522;</span><span class="tool-t">Find a field</span></button>
+      <button class="tool" onclick="toggleDrawer('menu-tools',false);openBapiBrowser('')">
+        <span class="tool-i">&#128268;</span><span class="tool-t">BAPIs</span></button>
+      <button class="tool" onclick="toggleDrawer('menu-tools',false);openList()">
+        <span class="tool-i">&#128203;</span><span class="tool-t">Table list</span></button>
+    </div>
+
+    <div class="sec-label">Learn</div>
+    <button class="row-link" onclick="toggleDrawer('menu-tools',false);openFieldGuide()">
+      <span>&#128214; ECC &#8594; S/4HANA field guide</span>
+      <span class="row-sub">The whole picture, in one read</span></button>
+    <button class="row-link" onclick="toggleDrawer('menu-tools',false);openLessons()">
+      <span>&#127891; Lessons learned</span>
+      <span class="row-sub">What repeatedly matters, and why</span></button>
+    <details class="fold">
+      <summary>&#129517; Migration playbooks</summary>
+      <div id="pb-block">
       <div class="lg-title">🧭 Migration playbooks</div>
       <div class="pb-sub">The scenarios a conversion project plans around</div>
       <div id="playbook-list"></div>
     </div>
-    <div class="legend-block" id="legend-block">
+    </details>
+    <details class="fold">
+      <summary>&#127912; Legend</summary>
+      <div id="legend-block">
       <div class="lg-title">Legend</div>
       <div class="lg-sub">Planet fill — migration fate</div>
       <div class="lg-row"><span class="lg-dot" style="background:#ef4444;border-color:#ef4444"></span> Disappears — not in S/4HANA</div>
@@ -580,6 +624,14 @@
       <div class="lg-sub">Size</div>
       <div class="lg-row"><span class="lg-dot" style="width:8px;height:8px;background:#94a3b8"></span><span class="lg-dot" style="background:#94a3b8"></span> Bigger = more connections</div>
     </div>
+    </details>
+
+    <div class="sec-label">Display</div>
+    <div class="toggle-group mode-group">
+      <button class="toggle-btn" id="btn-classic" onclick="setFunMode(false)">&#128203; Brief</button>
+      <button class="toggle-btn mode-fun active" id="btn-fun" onclick="setFunMode(true)">&#127917; Detailed</button>
+    </div>
+    <div class="depth-hint">Detailed gives the full explainer in larger, higher-contrast text.</div>
   </div>
   <div class="tools-backdrop" id="tools-backdrop" onclick="toggleTools(false)"></div>
   <div class="codex-results" id="codex-results"></div>
