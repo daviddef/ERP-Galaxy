@@ -28,20 +28,17 @@ Add tables, playbooks, field changes, decoded codes and your own notes to one wo
 NEW — BAPI AND FUNCTION MODULE CATALOGUE
 3,622 BAPIs and RFC-enabled modules with their application component and cloud release status. Searchable in business language — try "work order", "goods movement", "purchase order".
 
-NEW — WHERE IS THIS FIELD?
-Ask by SAP name or plain English: "customer number, personnel number and plant". Business terms work too — "visa" finds infotype 0048.
-
 NEW — FIELD-LEVEL CHANGES
 Six systemic changes, each with SAP's Note number: material number CHAR 18 → 40, currency amounts to 23 digits, VBTYP → VBTYPL, object list number INT4 → INT8, segment 16 → 40, season → 10.
-
-NEW — MIGRATION PLAYBOOKS
-Business Partner / CVI, material number length, Universal Journal, inventory documents.
 
 NEW — JOIN FINDER
 Every table shows what it joins to and the exact fields to join ON, with confidence marked.
 
 ALSO NEW
 Paste a table list to chart only those. Save the whole working state as a named view. Park the detail panel mid-screen and keep browsing.
+
+FIXED — RELATIONSHIPS NOW DRAWN ON THE CHART
+Tables listed relationships in their panel that the chart never drew — 26 of them, including ACDOCA to T001 and LIKP to VBAK. The chart and the panel were reading two different lists. They now read the same one.
 
 FIXED
 Long table names no longer spill outside their circle on the chart. The ECC6 / S/4HANA filter applies to search as well as the chart, and the buttons show the filter you are actually on. Movement type 281 was cut off mid-sentence.

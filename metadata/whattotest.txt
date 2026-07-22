@@ -1,26 +1,26 @@
-Build 25 — payroll cluster tables, which the app was previously getting wrong.
+Build 26 — the chart now draws the relationships the panels claim.
 
-NEW — CLUSTER TABLES ARE NOW THEIR OWN CLASS
-PCL3 and PCL4 were missing from the app entirely and PCL1 had no description
-at all. All four are now there, along with HRPY_RGDIR and P2RX_RT.
+FIXED — "0 RELATIONSHIPS" WITH NO LINES ON THE CHART
+Reported on build 25: searching PCL showed six tables and no lines at all,
+while PCL1's panel listed relationships to PCL2 and PA2001. The chart drew one
+hand-maintained edge list and the panel read another, and they had drifted on
+26 edges across 21 tables — ACDOCA to T001, T156 to MSEG, LIKP to VBAK among
+them, none of which had ever been drawn. Please search PCL again: you should
+now get five lines. The whole chart went from 411 edges to 432.
 
-More importantly, the app used to list key fields and derived joins on these
-tables as though you could SELECT them. You cannot. Open PCL2 and you should
-now see, before anything else, a block saying no SELECT will read this data.
+NEW — ABAP ON RELATIONSHIPS, WHERE THERE IS ANY
+The code icon lives on joins because only a join carries the ON fields. A
+relationship is a business statement and often shares no key at all. Where a
+relationship does happen to be joinable, </> now appears on it too; where it
+does not, nothing appears, rather than offering a SELECT that could never run.
+It is suppressed on cluster tables entirely — PCL1 and PCL2 share a key and
+SQL would join them happily, which would still tell you nothing.
 
-WORTH CHECKING AS A PRACTITIONER
-• PCL2 — the RELID areas, what is actually inside the payload (RT, CRT, WPBP,
-  BT, VERSC), and what PC_PAYRESULT is really doing when you run it
-• The S/4HANA section on PCL2. We changed this verdict. It used to say
-  "Unchanged in S/4." which was true but missed the point entirely.
-• Tap a join on PCL2 and then the code icon — the ABAP generator should give
-  you IMPORT FROM DATABASE, not a SELECT with a JOIN
-• The RELID area lists are the one part we cannot fully stand behind. SAP does
-  not publish them. If any area looks wrong against your own SE11, tell us.
-
-FROM BUILD 24, STILL WORTH A LOOK
-• First-run walkthrough — delete and reinstall, or App guide > Replay
-• The collapsible Modules, Playbooks and Legend sections, fixed in 24
+FROM BUILD 25, WORTH A LOOK IF YOU HAVE NOT
+• PCL1 to PCL4, HRPY_RGDIR and P2RX_RT are all new
+• PCL2 — what is inside the payload (RT, CRT, WPBP, BT, VERSC), and what
+  PC_PAYRESULT is really doing when you run it
+• The S/4HANA verdict on PCL2, which we changed
 
 STILL NEVER RUN ON HARDWARE
 Share list, and Share on the field guide — both go through the iOS share sheet.
