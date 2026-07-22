@@ -1,39 +1,30 @@
-Build 27 — the Mac and iPad experience, landscape, and a lot of hidden verdicts.
+Build 28 — fixes the launch crash in build 27.
 
-FIXED — MAC AND IPAD NOW USE THE SAME MENUS AS THE PHONE
-There were two layouts and only one was maintained. Any window wider than
-700px still got the original pre-mobile design: no burger, no filter button,
-both drawers spilled permanently inline (the clutter and the lingering
-filters), a legend stuck over the chart and a thin right-hand detail strip.
-At 1280x800 the header took 78% of the window and the graph got 16%.
-Now 60px header, 93% graph, drawers that slide in as proper menus.
-Please open it on the Mac and confirm the menus match your phone.
+FIXED — BUILD 27 CRASHED ON LAUNCH
+Apologies. Build 27 crashed for everyone on the first launch after updating.
+CoreSpotlight rejects the batching API on the shared index and throws, and the
+indexer runs whenever the build number changes — so every tester hit it. The
+batching was an unnecessary embellishment and has been removed entirely.
+Reproduced and verified fixed in the simulator before cutting this build.
 
-FIXED — LANDSCAPE ON IPHONE WAS COMPLETELY BROKEN
-Same root cause. A phone held sideways is 852x393, wider than 700, so it took
-the desktop branch. The graph computed to zero height and could not be
-scrolled to. Please rotate the phone — you should now get the normal layout.
+PLEASE CONFIRM FIRST
+Just that it launches and stays up. That is the whole point of this build.
 
-FIXED — 202 INDEX TABLES NEVER SHOWED THEIR S/4 VERDICT
-Filter to Disappears, tap a table that is not on the chart. It used to say
-nothing about disappearing while the list view drew it a red marker from the
-same data. Try ANEA, ATAB or COVP.
-
-FIXED — COUNTS THAT CONTRADICTED EACH OTHER
-The app said 217 tables drawn (it is 228) and 2,001 in the index (2,057), and
-the joins heading printed its own 40-row cap as if it were the total. MARA now
-reads "40 of 106".
-
-NEW — LEFT OUTER JOIN IN THE ABAP GENERATOR
-Tap a join, then the code icon. There is now an INNER / LEFT OUTER toggle.
-Worth checking as a practitioner: the LEFT OUTER version warns that unmatched
-columns come back INITIAL rather than null, and that a WHERE condition on the
-right-hand table silently turns it back into an inner join.
-
-FIXED — SPOTLIGHT SEARCH HAD STOPPED WORKING
-Indexed items were expiring after about a month and never rebuilt, so anyone
-who had the app a while had no results. Try typing a table name into iOS
-search. Tables added recently were also missing entirely.
+THEN, EVERYTHING FROM 27 THAT NOBODY COULD REACH
+• Mac and iPad now use the same menus as the phone. Previously any window
+  wider than a portrait phone got an older layout: no menu buttons, filters
+  and guides spilled permanently inline, a legend stuck over the chart and a
+  thin right-hand detail strip.
+• iPhone landscape was completely broken — the graph collapsed to nothing.
+• 202 tables in the wider index never showed their S/4 verdict. Filter to
+  Disappears and tap a table not on the chart — try ANEA, ATAB or COVP.
+• Counts that contradicted each other. MARA's joins now read "40 of 106".
+• LEFT OUTER JOIN in the ABAP generator. Tap a join, then the code icon.
+  The left outer version warns that unmatched columns come back INITIAL
+  rather than null, and that a WHERE on the right-hand table silently turns
+  it back into an inner join.
+• Spotlight search — type a table name into iOS search. Indexed entries were
+  expiring after about a month and never rebuilding.
 
 AND AS ALWAYS
 If a verdict or description reads wrong to you as a practitioner, that is the
