@@ -560,23 +560,13 @@
     <div class="depth-hint">Counts above are for the 217 tables drawn in the galaxy.
       &#8220;Show as table&#8221; in the menu also reaches the rest of the index, where most
       migration verdicts sit.</div>
-    <div class="mode-label">Modules</div>
-    <div class="module-filters" id="module-filters"></div>
-    <div class="pb-block">
-      <div class="lg-title">&#128203; Paste a table list</div>
-      <div class="pb-sub">Paste names from a spec or a spreadsheet &mdash; the chart shows only those</div>
-      <textarea class="td-notebox" id="paste-list" rows="3"
-        placeholder="BSEG, BKPF, MARA&#10;or one per line"></textarea>
-      <button class="todo-add" onclick="pasteBoard()">Show these on the chart</button>
-      <div class="pb-sub" id="paste-msg"></div>
-    </div>
-    <div class="pb-block">
-      <div class="lg-title">&#128190; Saved views</div>
-      <div class="pb-sub">System, modules, board and focus &mdash; saved together</div>
-      <input class="td-notebox" id="view-name" placeholder="Name this view&hellip;"
-             onkeydown="if(event.key==='Enter')saveCurrentView()"/>
-      <button class="todo-add" onclick="saveCurrentView()">Save current view</button>
-      <div id="views-list"></div>
+    <details class="fold" id="mod-fold">
+      <summary><span id="mod-summary">Modules</span></summary>
+      <div class="module-filters" id="module-filters"></div>
+    </details>
+    <div class="td-bar" style="margin:2px 0 12px">
+      <button onclick="toggleDrawer('filter-tools',false);openPastePanel()">&#128203; Paste a list</button>
+      <button onclick="toggleDrawer('filter-tools',false);openViewsPanel()">&#128190; Saved views</button>
     </div>
   </div>
   <div class="header-tools" id="menu-tools">
@@ -3147,11 +3137,19 @@ function openDocType(code){
   showDecodePanel(c,'document type',body);
 }
 // Shared panel plumbing for the decoders — sidebar on wide screens, sheet on phones.
+// Any panel that replaces the body must also reset the scroll. Without this a
+// panel opened after you had scrolled the previous one started mid-content.
+function resetPanelScroll(){
+  ['mobile-panel-body','sidebar-content'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.scrollTop=0;
+  });
+}
 function showDecodePanel(code,kind,body){
   const title=`<span style="font-family:monospace;font-weight:700;color:var(--fi)">${code}</span> <span style="color:var(--text-muted);font-size:.72rem">${kind}</span>`;
   if(window.innerWidth<=700){
     document.getElementById('mobile-panel-title').innerHTML=title;
     document.getElementById('mobile-panel-body').innerHTML=body;
+    resetPanelScroll();
     document.getElementById('mobile-panel').classList.add('active');
     document.getElementById('overlay-backdrop').classList.add('active');
     mobilePanelOpen=true;
@@ -3159,6 +3157,7 @@ function showDecodePanel(code,kind,body){
   }else{
     document.getElementById('sidebar-header').innerHTML=title;
     document.getElementById('sidebar-content').innerHTML=body;
+    resetPanelScroll();
   }
   hideResults();
   if(window.webkit?.messageHandlers?.hapticFeedback){
@@ -3270,6 +3269,7 @@ function openPlaybook(pid){
   if(window.innerWidth<=700){
     document.getElementById('mobile-panel-title').innerHTML=title;
     document.getElementById('mobile-panel-body').innerHTML=body;
+    resetPanelScroll();
     document.getElementById('mobile-panel').classList.add('active');
     document.getElementById('overlay-backdrop').classList.add('active');
     mobilePanelOpen=true;
@@ -3277,6 +3277,7 @@ function openPlaybook(pid){
   }else{
     document.getElementById('sidebar-header').innerHTML=title;
     document.getElementById('sidebar-content').innerHTML=body;
+    resetPanelScroll();
   }
   toggleTools(false);
   if(window.webkit?.messageHandlers?.hapticFeedback){
@@ -3833,6 +3834,42 @@ function openBapiBrowser(q){
     .innerHTML='<span style="font-weight:700">🔌 BAPIs &amp; function modules</span>';
 }
 
+
+// Paste-a-list and saved views as their own small overlays rather than blocks
+// permanently occupying the filter drawer -- both are things you do
+// occasionally, not settings you scan.
+function openPastePanel(){
+  showDecodePanel('📋','paste a list', `
+    <div class="lc-box lc-changed">
+      <div class="lc-head">📋 <strong>Paste a table list</strong></div>
+      <div class="lc-body">Paste names from a spec or a spreadsheet — commas, spaces or one per
+        line. The chart will show only those. Anything not in the index is named, not skipped
+        quietly.</div>
+    </div>
+    <textarea class="td-notebox" id="paste-list" rows="5"
+      placeholder="BSEG, BKPF, MARA&#10;or one per line"></textarea>
+    <button class="todo-add" onclick="pasteBoard()">Show these on the chart</button>
+    <div class="pb-sub" id="paste-msg"></div>
+    <div style="height:16px"></div>`);
+  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+    .innerHTML='<span style="font-weight:700">📋 Paste a table list</span>';
+}
+function openViewsPanel(){
+  showDecodePanel('💾','saved views', `
+    <div class="lc-box lc-changed">
+      <div class="lc-head">💾 <strong>Saved views</strong></div>
+      <div class="lc-body">Which system, which modules, which fates, what is on the board and
+        where you are focused — saved together under one name.</div>
+    </div>
+    <input class="td-notebox" id="view-name" placeholder="Name this view…"
+           onkeydown="if(event.key==='Enter')saveCurrentView()"/>
+    <button class="todo-add" onclick="saveCurrentView()">Save current view</button>
+    <div id="views-list"></div>
+    <div style="height:16px"></div>`);
+  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+    .innerHTML='<span style="font-weight:700">💾 Saved views</span>';
+  renderViews();
+}
 // ── Field finder ───────────────────────────────────────────────────────────
 // "Where do I find the customer number?" -- answered from key fields plus the
 // foreign keys SAP declares. Built lazily and cached; it is a scan of 2,001
@@ -4068,7 +4105,7 @@ function saveCurrentView(){
   const rec={name, state:currentViewState()};
   if(i>=0) VIEWS[i]=rec; else VIEWS.push(rec);
   saveViews(); if(el) el.value='';
-  renderViews();
+  renderViews();   // the panel is open; keep it current
 }
 function applyView(name){
   const v=VIEWS.find(x=>x.name===name); if(!v) return;
@@ -4570,6 +4607,7 @@ function openCodex(id){
   if(window.innerWidth<=700){
     document.getElementById('mobile-panel-title').innerHTML=title;
     document.getElementById('mobile-panel-body').innerHTML=body;
+    resetPanelScroll();
     document.getElementById('mobile-panel').classList.add('active');
     document.getElementById('overlay-backdrop').classList.add('active');
     mobilePanelOpen=true;
@@ -4577,6 +4615,7 @@ function openCodex(id){
   }else{
     document.getElementById('sidebar-header').innerHTML=title;
     document.getElementById('sidebar-content').innerHTML=body;
+    resetPanelScroll();
   }
   if(window.webkit?.messageHandlers?.hapticFeedback){
     window.webkit.messageHandlers.hapticFeedback.postMessage({style:'selection'});
@@ -4792,7 +4831,16 @@ function setView(v){
   if(searchQuery) renderCodexResults(searchQuery);
 }
 
+function updateModuleSummary(){
+  const s=document.getElementById('mod-summary');
+  if(!s) return;
+  const all=Object.keys(MODULE_COLORS).length, on=activeModules.size;
+  s.textContent = on===all ? `Modules — all ${all}`
+                : on===0   ? 'Modules — none selected'
+                :            `Modules — ${on} of ${all}`;
+}
 function buildModuleFilters(){
+  updateModuleSummary();
   const el=document.getElementById('module-filters');
   el.innerHTML='';
   // All / None row — the fast way to get to "just one module": tap None, then
@@ -4815,6 +4863,7 @@ function buildModuleFilters(){
   });
 }
 function syncModuleChips(){
+  updateModuleSummary();
   document.querySelectorAll('.mod-chip[data-mod]').forEach(c=>{
     c.classList.toggle('active', activeModules.has(c.dataset.mod));
   });
@@ -4834,8 +4883,10 @@ function soloModule(mod,ev){
 }
 
 function toggleModule(mod,chip){
-  if(activeModules.has(mod)){activeModules.delete(mod);chip.classList.remove('active');}
-  else{activeModules.add(mod);chip.classList.add('active');}
+  if(activeModules.has(mod)){activeModules.delete(mod);if(chip)chip.classList.remove('active');}
+  else{activeModules.add(mod);if(chip)chip.classList.add('active');}
+  updateModuleSummary();      // the fold is collapsed most of the time; its
+  buildFateFilters();         // summary and the fate counts must still track
   updateGraph();
 }
 
@@ -5244,6 +5295,7 @@ function renderDetail(d){
   const {headerHtml, bodyHtml}=buildDetailHTML(d);
   document.getElementById('sidebar-header').innerHTML=headerHtml;
   document.getElementById('sidebar-content').innerHTML=bodyHtml;
+    resetPanelScroll();
 }
 
 let mobilePanelOpen=false;
@@ -5257,6 +5309,7 @@ function openMobilePanel(tableId){
     const {bodyHtml,color,shortDesc}=buildDetailHTML(t);
     document.getElementById('mobile-panel-title').innerHTML=`<span style="color:${color};font-family:monospace;font-weight:700">${t.id}</span> <span style="color:var(--text-muted);font-size:.72rem">${shortDesc}</span>`;
     document.getElementById('mobile-panel-body').innerHTML=bodyHtml;
+    resetPanelScroll();
   }else{
     // Nothing selected: show the same guide the desktop sidebar shows,
     // not a bare "tap a node" placeholder.
