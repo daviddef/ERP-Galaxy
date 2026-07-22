@@ -3013,15 +3013,19 @@ function tableKeys(id){
   if(t&&t.keyFields) return t.keyFields;
   return (CODEX[id]&&CODEX[id][2])||[];
 }
+// MANDT is not the only spelling. ADRC, BUT000 and PCL2 all key on CLIENT, and
+// CDHDR on MANDANT -- treating those as joinable made every one of them "join"
+// every other, on nothing but the client.
+const CLIENT_FIELDS=new Set(['MANDT','CLIENT','MANDANT']);
 function joinInfo(a,b){
   if(a===b) return null;
   const ka=tableKeys(a), kb=tableKeys(b);
-  const shared=ka.filter(f=>f!=='MANDT'&&kb.includes(f));
+  const shared=ka.filter(f=>!CLIENT_FIELDS.has(f)&&kb.includes(f));
   if(shared.length) return {kind:'shared key', fields:shared, conf:'high'};
   for(const [src,tgt] of [[a,b],[b,a]]){
     const e=FK[src];
     const f=e&&e[0]&&e[0][tgt];
-    if(f&&f!=='MANDT'){
+    if(f&&!CLIENT_FIELDS.has(f)){
       return {kind:'declared foreign key', fields:[f],
               conf: tableKeys(tgt).includes(f)?'high':'low'};
     }
@@ -3033,7 +3037,7 @@ function joinableWith(id, limit){
   const out=[];
   const seen=new Set([id]);
   const consider=new Set();
-  tableKeys(id).filter(f=>f!=='MANDT').forEach(f=>{
+  tableKeys(id).filter(f=>!CLIENT_FIELDS.has(f)).forEach(f=>{
     for(const t of TABLES) if(!seen.has(t.id)&&(t.keyFields||[]).includes(f)) consider.add(t.id);
   });
   const e=FK[id];
@@ -3170,6 +3174,9 @@ function buildJoins(id){
         onclick="openJoinCode('${id}','${r.id}','${r.fields.join(',')}','${r.conf}',event)">&lt;/&gt;</button></li>`;
   };
   return `<div class="section-title">🔑 Joins directly to (${rows.length})</div>
+    <div class="lc-src" style="margin:-4px 0 7px">Structural: these share a key field, or SAP
+      declares a foreign key. Mechanical and complete &mdash; but a valid join is not always a
+      meaningful one. <em>Relationships</em> above are the hand-mapped business links.</div>
     <ul class="relations-list">${rows.map(chip).join('')}</ul>
     <div class="lc-src">Shared primary keys, plus declared foreign keys. "?" marks a
     foreign key that is not a key field of the target — check it before relying on it.
@@ -4130,6 +4137,14 @@ const APP_GUIDE=[
         'Modules fold away once set. Paste a list of table names to chart just those, and '+
         'save the whole arrangement as a named view.',
    tour:true},
+  {icon:'🔗', title:'Relationships are not the same as joins',
+   body:'A table panel shows both, and they answer different questions. '+
+        '<strong>Relationships</strong> are hand-mapped business links — MARA has 37, and they '+
+        'are what the chart draws. <strong>Joins directly to</strong> is mechanical: every table '+
+        'sharing a key field or carrying a declared foreign key, which for MARA is 99. Much of '+
+        'that difference is technically joinable and businesswise meaningless. Use relationships '+
+        'to understand the model; use joins to write the SELECT.',
+   tour:false},
   {icon:'🧰', title:'Tools',
    body:'In the menu. To-do collects tables, playbooks, field changes and notes into one list '+
         'you can share or export as a PDF. Find a field answers "where does the customer '+
@@ -5634,7 +5649,7 @@ function buildDetailHTML(d){
     ${panelActions(d.id, d.id+' — '+(d.shortDesc||''), d.s4note||'')}
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${proseFor(d)}</div>
-    ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><ul class="relations-list">${rels}</ul>`:''}
+    ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><div class="lc-src" style="margin:-4px 0 7px">Business links, hand-mapped and drawn on the chart &mdash; what this table means to its neighbours. For every table you could technically join to, see <em>Joins directly to</em> below.</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
     ${fieldChangesFor(d.id).map(f=>`<button class="pb-link" onclick="openFieldChange('${f.id}')">📐 Field change: ${f.title} →</button>`).join('')}
