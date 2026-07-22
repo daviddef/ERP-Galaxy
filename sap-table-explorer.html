@@ -149,7 +149,11 @@
   .lc-unknown{opacity:.85;}
   .lc-new{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.09);}
   .pb-block{display:none;border-top:1px solid var(--border);padding-top:12px;}
-  .pb-sub{font-size:.66rem;color:var(--text-muted);margin:-4px 0 8px;}
+  .pb-sub{font-size:.66rem;color:var(--text-muted);margin:0 0 8px;line-height:1.45;}
+  /* Only tuck it up when it actually sits under a heading -- reused elsewhere
+     (empty states, status messages) the negative margin overlapped the element
+     above it. */
+  .lg-title + .pb-sub{margin-top:-4px;}
   .pb-row{display:flex;align-items:center;gap:9px;width:100%;background:var(--surface2);
     border:1px solid var(--border);border-radius:8px;padding:9px 10px;margin-bottom:6px;
     cursor:pointer;font-family:inherit;text-align:left;}
@@ -160,7 +164,7 @@
   .pb-list li{font-size:.78rem;color:var(--text-muted);line-height:1.5;margin-bottom:6px;}
   .pb-chips{display:flex;flex-wrap:wrap;gap:5px;}
   /* ── To-do list ─────────────────────────────────────────────────────── */
-  .todo-add{display:inline-flex;align-items:center;gap:6px;margin-top:10px;width:100%;
+  .todo-add{display:flex;align-items:center;gap:6px;margin-top:10px;width:100%;
     justify-content:center;background:rgba(52,211,153,.12);border:1px solid #34d399;
     color:#34d399;border-radius:10px;padding:9px 12px;font-size:.8rem;font-weight:700;
     cursor:pointer;font-family:inherit;}
@@ -225,6 +229,7 @@
     padding:10px 12px;margin-bottom:6px;color:var(--text);font-size:.79rem;font-weight:700;
     cursor:pointer;font-family:inherit;text-align:left;}
   .row-sub{font-size:.67rem;font-weight:400;color:var(--text-muted);}
+  #views-list,#paste-msg{margin-top:8px;}
   .fold{border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden;}
   .fold>summary{padding:10px 12px;font-size:.79rem;font-weight:700;cursor:pointer;list-style:none;}
   .fold>summary::-webkit-details-marker{display:none;}
