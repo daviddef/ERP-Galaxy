@@ -22,23 +22,17 @@ A written ECC → S/4HANA guide, generated from the app's own data so its number
 NEW — LESSONS LEARNED
 23 lessons. 16 come from SAP's own required-action text, which repeats across dozens of tables — one instruction covers 35 finance tables. 7 are our own conclusions, marked as such. 141 tables show the lessons that apply to them.
 
-NEW — TO-DO LIST
-Add tables, playbooks, field changes, decoded codes and your own notes to one working list, grouped into a suggested order. Tick off, reorder, share as text, or export a PDF that carries the full detail for every table.
-
-NEW — BAPI AND FUNCTION MODULE CATALOGUE
-3,622 BAPIs and RFC-enabled modules with their application component and cloud release status. Searchable in business language — try "work order", "goods movement", "purchase order".
-
-NEW — FIELD-LEVEL CHANGES
-Six systemic changes, each with SAP's Note number: material number CHAR 18 → 40, currency amounts to 23 digits, VBTYP → VBTYPL, object list number INT4 → INT8, segment 16 → 40, season → 10.
-
 NEW — JOIN FINDER
 Every table shows what it joins to and the exact fields to join ON, with confidence marked.
 
-ALSO NEW
-Paste a table list to chart only those. Save the whole working state as a named view. Park the detail panel mid-screen and keep browsing.
+FIXED — MAC, IPAD AND LANDSCAPE
+There were two layouts and only one was being maintained. Any window wider than a portrait phone still got an older design: no menu buttons, both drawers spilled permanently inline, a legend stuck over the chart and a narrow detail strip. On iPhone landscape the graph collapsed to nothing at all. Every size now uses the same layout, with the reading column capped on large screens.
 
-FIXED — RELATIONSHIPS NOW DRAWN ON THE CHART
-Tables listed relationships in their panel that the chart never drew — 26 of them, including ACDOCA to T001 and LIKP to VBAK. The chart and the panel were reading two different lists. They now read the same one.
+NEW — LEFT OUTER JOIN
+The ABAP generator now offers INNER or LEFT OUTER. Not every join should be an inner one: an employee with no cost centre holds a blank, not a null, so an inner join drops that employee entirely. The generated code warns that unmatched columns come back initial rather than null, and that a WHERE condition on the right-hand table quietly turns an outer join back into an inner one.
+
+FIXED — VERDICTS THAT WERE THERE BUT NEVER SHOWN
+202 tables in the wider index carried a published SAP verdict that their detail panel did not display, while the list view marked them from the same data. Also corrected several table counts that disagreed with each other, and the joins heading now says "40 of 106" rather than presenting its own cap as the total.
 
 FIXED
 Long table names no longer spill outside their circle on the chart. The ECC6 / S/4HANA filter applies to search as well as the chart, and the buttons show the filter you are actually on. Movement type 281 was cut off mid-sentence.

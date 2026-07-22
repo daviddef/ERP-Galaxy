@@ -1,29 +1,39 @@
-Build 26 — the chart now draws the relationships the panels claim.
+Build 27 — the Mac and iPad experience, landscape, and a lot of hidden verdicts.
 
-FIXED — "0 RELATIONSHIPS" WITH NO LINES ON THE CHART
-Reported on build 25: searching PCL showed six tables and no lines at all,
-while PCL1's panel listed relationships to PCL2 and PA2001. The chart drew one
-hand-maintained edge list and the panel read another, and they had drifted on
-26 edges across 21 tables — ACDOCA to T001, T156 to MSEG, LIKP to VBAK among
-them, none of which had ever been drawn. Please search PCL again: you should
-now get five lines. The whole chart went from 411 edges to 432.
+FIXED — MAC AND IPAD NOW USE THE SAME MENUS AS THE PHONE
+There were two layouts and only one was maintained. Any window wider than
+700px still got the original pre-mobile design: no burger, no filter button,
+both drawers spilled permanently inline (the clutter and the lingering
+filters), a legend stuck over the chart and a thin right-hand detail strip.
+At 1280x800 the header took 78% of the window and the graph got 16%.
+Now 60px header, 93% graph, drawers that slide in as proper menus.
+Please open it on the Mac and confirm the menus match your phone.
 
-NEW — ABAP ON RELATIONSHIPS, WHERE THERE IS ANY
-The code icon lives on joins because only a join carries the ON fields. A
-relationship is a business statement and often shares no key at all. Where a
-relationship does happen to be joinable, </> now appears on it too; where it
-does not, nothing appears, rather than offering a SELECT that could never run.
-It is suppressed on cluster tables entirely — PCL1 and PCL2 share a key and
-SQL would join them happily, which would still tell you nothing.
+FIXED — LANDSCAPE ON IPHONE WAS COMPLETELY BROKEN
+Same root cause. A phone held sideways is 852x393, wider than 700, so it took
+the desktop branch. The graph computed to zero height and could not be
+scrolled to. Please rotate the phone — you should now get the normal layout.
 
-FROM BUILD 25, WORTH A LOOK IF YOU HAVE NOT
-• PCL1 to PCL4, HRPY_RGDIR and P2RX_RT are all new
-• PCL2 — what is inside the payload (RT, CRT, WPBP, BT, VERSC), and what
-  PC_PAYRESULT is really doing when you run it
-• The S/4HANA verdict on PCL2, which we changed
+FIXED — 202 INDEX TABLES NEVER SHOWED THEIR S/4 VERDICT
+Filter to Disappears, tap a table that is not on the chart. It used to say
+nothing about disappearing while the list view drew it a red marker from the
+same data. Try ANEA, ATAB or COVP.
 
-STILL NEVER RUN ON HARDWARE
-Share list, and Share on the field guide — both go through the iOS share sheet.
+FIXED — COUNTS THAT CONTRADICTED EACH OTHER
+The app said 217 tables drawn (it is 228) and 2,001 in the index (2,057), and
+the joins heading printed its own 40-row cap as if it were the total. MARA now
+reads "40 of 106".
+
+NEW — LEFT OUTER JOIN IN THE ABAP GENERATOR
+Tap a join, then the code icon. There is now an INNER / LEFT OUTER toggle.
+Worth checking as a practitioner: the LEFT OUTER version warns that unmatched
+columns come back INITIAL rather than null, and that a WHERE condition on the
+right-hand table silently turns it back into an inner join.
+
+FIXED — SPOTLIGHT SEARCH HAD STOPPED WORKING
+Indexed items were expiring after about a month and never rebuilt, so anyone
+who had the app a while had no results. Try typing a table name into iOS
+search. Tables added recently were also missing entirely.
 
 AND AS ALWAYS
 If a verdict or description reads wrong to you as a practitioner, that is the
