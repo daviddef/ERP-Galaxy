@@ -1,31 +1,34 @@
-Build 28 — fixes the launch crash in build 27.
+Build 29 — corrects 20 wrong S/4HANA verdicts in Spotlight and the widget.
 
-FIXED — BUILD 27 CRASHED ON LAUNCH
-Apologies. Build 27 crashed for everyone on the first launch after updating.
-CoreSpotlight rejects the batching API on the shared index and throws, and the
-indexer runs whenever the build number changes — so every tester hit it. The
-batching was an unnecessary embellishment and has been removed entirely.
-Reproduced and verified fixed in the simulator before cutting this build.
+FIXED — SPOTLIGHT WAS CONTRADICTING THE APP
+Spotlight said MSEG "Disappears in S/4HANA". SAP says it is replaced by
+MATDOC — still present, no longer the system of record. Twenty tables were
+wrong, and the six BS* open-item tables were the worst of them: Spotlight said
+they disappear when SAP says they survive as compatibility views and your
+reports keep running.
 
-PLEASE CONFIRM FIRST
-Just that it launches and stays up. That is the whole point of this build.
+Search iOS for MSEG, BSIS or COSP. You should now see:
+  MSEG  — Replaced by MATDOC in S/4HANA
+  BSIS  — Compatibility view — reads work, not writes
+  COSP  — Replaced by ACDOCA in S/4HANA
 
-THEN, EVERYTHING FROM 27 THAT NOBODY COULD REACH
-• Mac and iPad now use the same menus as the phone. Previously any window
-  wider than a portrait phone got an older layout: no menu buttons, filters
-  and guides spilled permanently inline, a legend stuck over the chart and a
-  thin right-hand detail strip.
-• iPhone landscape was completely broken — the graph collapsed to nothing.
-• 202 tables in the wider index never showed their S/4 verdict. Filter to
-  Disappears and tap a table not on the chart — try ANEA, ATAB or COVP.
-• Counts that contradicted each other. MARA's joins now read "40 of 106".
-• LEFT OUTER JOIN in the ABAP generator. Tap a join, then the code icon.
-  The left outer version warns that unmatched columns come back INITIAL
-  rather than null, and that a WHERE on the right-hand table silently turns
-  it back into an inner join.
-• Spotlight search — type a table name into iOS search. Indexed entries were
-  expiring after about a month and never rebuilding.
+Replaced verdicts now name the successor, which is the useful part.
+
+Same root cause as several bugs this week: one rule written in two places. The
+verdict is now computed once and both the app and Spotlight read the same
+answer. Verified 0 of 248 disagree with SAP, down from 20.
+
+ALSO FIXED
+• The widget only knew four verdict wordings, so the new ones would have shown
+  no icon. It now covers all of them.
+• Spotlight put the description and the verdict on one line with no separator.
+
+STILL WORTH CONFIRMING FROM BUILD 28
+• That it launches — 27 crashed for everyone, 28 fixed it
+• Mac and iPad using the same menus as the phone
+• iPhone landscape
+• LEFT OUTER JOIN in the ABAP generator
 
 AND AS ALWAYS
-If a verdict or description reads wrong to you as a practitioner, that is the
-most useful feedback there is.
+If a verdict reads wrong to you as a practitioner, that is the most useful
+feedback there is — this build exists because of exactly that.
