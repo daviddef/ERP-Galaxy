@@ -121,6 +121,17 @@ PRINCIPLES = [
      "body": "KONV still exists after pricing moved to PRCD_ELEMENTS. BSEG still exists after the "
              "Universal Journal. A table that survives can still be the wrong thing to read, and "
              "code that compiles will keep returning plausible answers from it."},
+    {"id": "target-vs-reality",
+     "title": "The Simplification List is a target, not an inventory of your system",
+     "body": "Every verdict in this app comes from SAP's Simplification List, which describes the "
+             "intended architecture of S/4HANA — and it is a rolling document, currently stamped "
+             "2025 FPS01. It is not a statement about what exists in the release you are "
+             "converting to, on the day you convert. A table listed as eliminated can still be "
+             "present, and even still filled, in a given release; something SAP describes as "
+             "removed may have been re-introduced or deferred. Practitioners have reported exactly "
+             "this, though we have not verified those reports ourselves. Treat every verdict here "
+             "as “SAP says this is where it is going” and confirm against the system in front of "
+             "you before you plan work around it."},
     {"id": "check-the-source",
      "title": "Prefer SAP's words to any summary of them",
      "body": "While building this app, curated one-line notes had drifted from SAP's published "

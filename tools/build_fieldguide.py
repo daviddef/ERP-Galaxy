@@ -183,6 +183,13 @@ def main():
       "Apache-2.0 licensed ABAP Cloudification Repository. Table names, field names and Note "
       "numbers are facts; the prose around them is ours.")
     w("")
+    w("**The most important caveat, and it applies to every verdict above.** The Simplification "
+      "List describes SAP's *intended* architecture for S/4HANA. It is a rolling document — the "
+      "edition behind this guide is stamped 2025 FPS01 — and it is not an inventory of the system "
+      "you are converting to. A table listed as eliminated can still be present, and even still "
+      "populated, in a particular release. Read every verdict as *SAP says this is where it is "
+      "going*, and confirm against your own system before planning work around it.")
+    w("")
     w("**What we deliberately do not have:**")
     w("")
     w("- **Full field lists.** We hold key fields and declared foreign keys, not every column. "

@@ -198,7 +198,7 @@ Run SAP's report in the source ERP system first. Doing it afterwards is not the 
 Custom code using the old exchange rate difference customizing has to be adapted; SAP names the affected fields.  
 *Applies to 1 table · SAP Note 3053636*
 
-### From building this thing (6)
+### From building this thing (7)
 
 Ours, not SAP's. Several were learned by getting it wrong here first.
 
@@ -217,6 +217,9 @@ KNA1, LFA1, MARA, MARC and RESB are all named as successors in the Simplificatio
 **“Still there” does not mean “still correct”**  
 KONV still exists after pricing moved to PRCD_ELEMENTS. BSEG still exists after the Universal Journal. A table that survives can still be the wrong thing to read, and code that compiles will keep returning plausible answers from it.
 
+**The Simplification List is a target, not an inventory of your system**  
+Every verdict in this app comes from SAP's Simplification List, which describes the intended architecture of S/4HANA — and it is a rolling document, currently stamped 2025 FPS01. It is not a statement about what exists in the release you are converting to, on the day you convert. A table listed as eliminated can still be present, and even still filled, in a given release; something SAP describes as removed may have been re-introduced or deferred. Practitioners have reported exactly this, though we have not verified those reports ourselves. Treat every verdict here as “SAP says this is where it is going” and confirm against the system in front of you before you plan work around it.
+
 **Prefer SAP's words to any summary of them**  
 While building this app, curated one-line notes had drifted from SAP's published verdicts on 20 tables — VBUK and VBUP read “unchanged” where SAP had eliminated them. Wherever a summary and the Simplification List disagree, the list wins.
 
@@ -233,6 +236,8 @@ While building this app, curated one-line notes had drifted from SAP's published
 ## Where this comes from, and where it stops
 
 **Sources.** SAP's public Simplification List for S/4HANA 2025 FPS01, and SAP's Apache-2.0 licensed ABAP Cloudification Repository. Table names, field names and Note numbers are facts; the prose around them is ours.
+
+**The most important caveat, and it applies to every verdict above.** The Simplification List describes SAP's *intended* architecture for S/4HANA. It is a rolling document — the edition behind this guide is stamped 2025 FPS01 — and it is not an inventory of the system you are converting to. A table listed as eliminated can still be present, and even still populated, in a particular release. Read every verdict as *SAP says this is where it is going*, and confirm against your own system before planning work around it.
 
 **What we deliberately do not have:**
 
