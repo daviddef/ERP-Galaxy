@@ -69,3 +69,28 @@ That last row is the argument for holding off on AdMob until external review is 
 It is likely to be required for **public App Store** release even though the app collects
 nothing. A one-page "this app collects no data and makes no network requests" policy would
 cover it — and stays true only while there are no ads.
+
+---
+
+## Build 20 (2026-07-22)
+
+Live for internal testing. Everything since the build in App Store review: field guide,
+23 lessons, BAPI catalogue, list view, field finder, business-concept aliases, fate filter,
+paste-to-board, saved views, zoom-to-fit, and the corrected verdicts.
+
+**Uploading a TestFlight build does not disturb an in-flight App Store submission.** The
+version pins a specific build — 1.0.1 stayed on build 19 throughout — so TestFlight and review
+run independently. Verified after upload rather than assumed.
+
+**`POST /v1/builds/{id}/relationships/betaGroups` returns 422 "Builds cannot be assigned to
+this internal group" — and that is not a failure.** Internal groups receive every processed
+build automatically, so there is nothing to assign. The field that actually answers "is it
+testable" is `buildBetaDetail.internalBuildState`, which read `IN_BETA_TESTING` already. Check
+that before trying to fix the 422.
+
+External (`erp_ext`) sits at `READY_FOR_BETA_SUBMISSION`: reaching external testers needs a
+beta review pass, unlike internal.
+
+`betaBuildLocalizations` already existed for **both** en-AU and en-US on this build, so they
+were PATCHed rather than created — creating would have collided. Earlier notes here say a
+locale mismatch fails misleadingly; the safe order is list first, then patch or create.
