@@ -7993,6 +7993,21 @@
   "submodule": "FI-CS",
   "tier": 2
  },
+ "HRDCT_TPY_RGDIR": {
+  "addon": null,
+  "desc": "Test payroll results directory, used by Payroll Control Center simulation runs. The counterpart to HRPY_RGDIR.",
+  "id": "HRDCT_TPY_RGDIR",
+  "keyFields": [
+   "MANDT",
+   "PERNR",
+   "SEQNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
  "HRP1001": {
   "desc": "Stores HR Organizational Management Infotype 1001 records, which capture relationships between objects.",
   "id": "HRP1001",
@@ -10326,6 +10341,37 @@
  "HRPVAC": {
   "desc": "List of vacant positions in HR.",
   "id": "HRPVAC",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "HRPY_RGDIR": {
+  "addon": null,
+  "desc": "Payroll results directory as a transparent table. One row per payroll result, so unlike the cluster itself you can SELECT it — it is how you find which sequence numbers exist for an employee before reading PCL2.",
+  "id": "HRPY_RGDIR",
+  "keyFields": [
+   "MANDT",
+   "PERNR",
+   "SEQNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "HRPY_WPBP": {
+  "addon": null,
+  "desc": "Transparent work centre and basic pay table. Predates declustering and does not carry the WPBP split, which is why declustering creates P2RX_WPBP instead of reusing it.",
+  "id": "HRPY_WPBP",
+  "keyFields": [
+   "MANDT",
+   "PERNR",
+   "SEQNR",
+   "WPBP_SEQ"
+  ],
+  "keySource": "public-reference",
   "lore": null,
   "module": "HR",
   "submodule": "HR",
@@ -13393,6 +13439,85 @@
   "lore": "Bank details for the IS-Oil Check Write function, keyed by an organisational level plus bank ID and bank account. Industry-solution banking data kept apart from the standard FI bank configuration.",
   "module": "FI",
   "submodule": "FI-BL",
+  "tier": 2
+ },
+ "P2RX_BT": {
+  "addon": null,
+  "desc": "Declustered bank transfer table from the payroll result.",
+  "id": "P2RX_BT",
+  "keyFields": [
+   "MANDT",
+   "DCT_PERNR",
+   "DCT_SEQNR",
+   "DCT_ROWID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "P2RX_CRT": {
+  "addon": null,
+  "desc": "Declustered cumulated payroll results.",
+  "id": "P2RX_CRT",
+  "keyFields": [
+   "MANDT",
+   "DCT_PERNR",
+   "DCT_SEQNR",
+   "DCT_ROWID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "P2RX_RT": {
+  "addon": null,
+  "desc": "Declustered payroll results — one wage type per row, as a real SELECTable table. Only exists where HCM Declustering Tools is active.",
+  "id": "P2RX_RT",
+  "keyFields": [
+   "MANDT",
+   "DCT_PERNR",
+   "DCT_SEQNR",
+   "DCT_ROWID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "P2RX_VERSC": {
+  "addon": null,
+  "desc": "Declustered payroll control record for the result.",
+  "id": "P2RX_VERSC",
+  "keyFields": [
+   "MANDT",
+   "DCT_PERNR",
+   "DCT_SEQNR"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "P2RX_WPBP": {
+  "addon": null,
+  "desc": "Declustered work centre and basic pay split from the payroll result. A separate table from HRPY_WPBP, which cannot be used because it does not carry the WPBP split.",
+  "id": "P2RX_WPBP",
+  "keyFields": [
+   "MANDT",
+   "DCT_PERNR",
+   "DCT_SEQNR",
+   "DCT_ROWID"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
   "tier": 2
  },
  "PA0003": {
@@ -21862,10 +21987,58 @@
   "tier": 2
  },
  "PCL1": {
-  "desc": null,
+  "desc": "Holds HR working data that does not belong in an infotype record: time events from data collection terminals, incentive wage data, the personal calendar, travel expense data, and the long texts attached to infotype records.",
   "id": "PCL1",
   "keyFields": [
    "CLIENT",
+   "RELID",
+   "SRTFD",
+   "SRTF2"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "PCL2": {
+  "addon": null,
+  "desc": "The payroll and time evaluation results themselves, plus the generated schemas that produced them and the directory you need in order to find any of it.",
+  "id": "PCL2",
+  "keyFields": [
+   "MANDT",
+   "RELID",
+   "SRTFD",
+   "SRTF2"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "PCL3": {
+  "addon": null,
+  "desc": "Recruitment data: the applicant action log and time schedule, and the texts attached to applicant infotypes.",
+  "id": "PCL3",
+  "keyFields": [
+   "MANDT",
+   "RELID",
+   "SRTFD",
+   "SRTF2"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
+  "tier": 2
+ },
+ "PCL4": {
+  "addon": null,
+  "desc": "The audit trail. Every change to HR master data and applicant data is logged here, which makes it the table auditors ask about and the one nobody can read.",
+  "id": "PCL4",
+  "keyFields": [
+   "MANDT",
    "RELID",
    "SRTFD",
    "SRTF2"
@@ -31565,6 +31738,21 @@
   "lore": "Field status variant settings used for funds reservation, one row per variant. It determines which fields a reservation presents and how they behave, not what is being reserved or for how much.",
   "module": "FM",
   "submodule": "FM",
+  "tier": 2
+ },
+ "TRMAC": {
+  "addon": null,
+  "desc": "RMAC macros used in ABAP programs. Where the RP-IMP-Cn-xx cluster read macros actually live.",
+  "id": "TRMAC",
+  "keyFields": [
+   "MANDT",
+   "AREA",
+   "NAME"
+  ],
+  "keySource": "public-reference",
+  "lore": null,
+  "module": "HR",
+  "submodule": "HR",
   "tier": 2
  },
  "TRVOR": {
