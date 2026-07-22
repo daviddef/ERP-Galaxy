@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What happened to ANEK in S/4HANA?</title>
+<meta name="description" content="ANEK is replaced in SAP S/4HANA. Data now lives in ACDOCA. SAP Note 2270333.">
+<link rel="canonical" href="https://daviddef.github.io/ERP-Galaxy/s4/ANEK.html">
+<meta property="og:title" content="What happened to ANEK in S/4HANA?">
+<meta property="og:description" content="ANEK is replaced in SAP S/4HANA. Data now lives in ACDOCA. SAP Note 2270333.">
+<meta property="og:type" content="article">
+<style>
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#6e6e73;--card:#f5f5f7;--line:#e5e5ea;--acc:#4f9cf9}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1117;--fg:#e6edf3;--mut:#8b949e;--card:#161b22;--line:#30363d}}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:760px;
+ margin:0 auto;padding:28px 20px 64px;line-height:1.65;color:var(--fg);background:var(--bg)}
+a{color:var(--acc)}
+header.site{display:flex;justify-content:space-between;align-items:center;gap:12px;
+ border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:26px;flex-wrap:wrap}
+header.site a{font-weight:700;text-decoration:none;color:var(--fg)}
+h1{font-size:1.75rem;line-height:1.25;margin:.2em 0 .4em}
+h2{font-size:1.15rem;margin-top:2em}
+.verdict{border-left:4px solid var(--v);background:var(--card);padding:16px 18px;border-radius:10px;margin:18px 0}
+.verdict .label{font-weight:700;color:var(--v);font-size:1.05rem}
+.facts{width:100%;border-collapse:collapse;margin:14px 0}
+.facts th,.facts td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.facts th{width:38%;color:var(--mut);font-weight:600;font-size:.9rem}
+code{background:var(--card);padding:1px 6px;border-radius:4px;font-size:.92em;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:14px 0;padding:0;list-style:none}
+.grid a{display:block;padding:9px 11px;background:var(--card);border-radius:8px;text-decoration:none;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+.grid small{display:block;color:var(--mut);font-weight:400;font-family:-apple-system,system-ui,sans-serif;font-size:.76rem}
+.cta{background:var(--card);border-radius:12px;padding:18px 20px;margin:30px 0}
+.ad{margin:26px 0;min-height:90px}
+footer{margin-top:3.5em;font-size:.85rem;color:var(--mut);border-top:1px solid var(--line);padding-top:1.2em}
+.tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--mut)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What happened to ANEK in S/4HANA?", "acceptedAnswer": {"@type": "Answer", "text": "ANEK is replaced in SAP S/4HANA. The table may still exist, but it is no longer where the data lives, and there is no same-named view standing in for it. Existing SELECTs either fail or quietly return stale and partial answers, which is the more dangerous outcome. Data now lives in ACDOCA."}}]}</script>
+</head><body>
+<header class="site">
+  <a href="https://daviddef.github.io/ERP-Galaxy/">ERP Galaxy</a>
+  <span class="tag">Independent SAP reference</span>
+</header>
+
+<h1>What happened to ANEK in S/4HANA?</h1>
+<p><strong>ANEK</strong> is replaced in SAP S/4HANA.</p>
+<div class="verdict" style="--v:#c2410c">
+  <div class="label">Replaced — your code must change</div>
+  <p style="margin:.4em 0 0">The table may still exist, but it is no longer where the data lives, and there is no same-named view standing in for it. Existing SELECTs either fail or quietly return stale and partial answers, which is the more dangerous outcome.</p>
+</div>
+
+<table class="facts"><tr><th>Table</th><td><code>ANEK</code></td></tr><tr><th>What it is</th><td>Header data for asset posting documents, one row per company code, asset, fiscal year, and line number.</td></tr><tr><th>Module</th><td>FI</td></tr><tr><th>Fate in S/4HANA</th><td><strong style="color:#c2410c">Replaced — your code must change</strong></td></tr><tr><th>Data now lives in</th><td><code>ACDOCA</code></td></tr><tr><th>SAP Note</th><td>2270333</td></tr></table>
+<!-- ad slot 1: set ADSENSE_CLIENT in tools/build_site.py -->
+<div class="cta">
+  <strong>Check this against the whole picture.</strong>
+  <p style="margin:.5em 0 0">ERP Galaxy is a free iOS app holding 2,273 SAP tables, 248 published
+  S/4HANA verdicts, their key fields and how they join &mdash; entirely offline, with no account and
+  no data collection. <a href="https://apps.apple.com/app/id6791550922">Get it on the App&nbsp;Store</a>.</p>
+</div>
+<h2>Other FI tables that are replaced</h2>
+<ul class="grid"><li><a href="ANEA.html">ANEA</a></li><li><a href="ANEP.html">ANEP</a></li><li><a href="ANLC.html">ANLC</a></li><li><a href="ANLP.html">ANLP</a></li><li><a href="FAGLFLEXA.html">FAGLFLEXA</a></li><li><a href="FAGLFLEXT.html">FAGLFLEXT</a></li><li><a href="FMGLFLEXA.html">FMGLFLEXA</a></li><li><a href="FMGLFLEXT.html">FMGLFLEXT</a></li><li><a href="GLFUNCT.html">GLFUNCT</a></li><li><a href="JVGLFLEXA.html">JVGLFLEXA</a></li><li><a href="JVGLFLEXT.html">JVGLFLEXT</a></li><li><a href="J_1IMOCUST.html">J_1IMOCUST</a></li></ul>
+<p><a href="https://daviddef.github.io/ERP-Galaxy/s4/">All 248 verdicts</a></p>
+
+<footer>
+<p>Not affiliated with, sponsored by, or endorsed by SAP SE. SAP, S/4HANA, ABAP and Fiori are
+trademarks of SAP SE. Verdicts here are our own summaries of SAP's publicly published
+Simplification List, written in our own words &mdash; they are not reproductions of SAP
+documentation, and they describe SAP's intended architecture rather than any particular system.
+Confirm against your own system before planning work.</p>
+<p><a href="https://daviddef.github.io/ERP-Galaxy/">Home</a> &middot; <a href="https://daviddef.github.io/ERP-Galaxy/privacy.html">Privacy</a> &middot;
+<a href="https://apps.apple.com/app/id6791550922">iOS app</a></p>
+</footer>
+</body></html>

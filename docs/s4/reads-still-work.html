@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>59 SAP tables that survive as compatibility views</title>
+<meta name="description" content="SAP tables that still return data in S/4HANA through a compatibility view — reads work, writes do not.">
+<link rel="canonical" href="https://daviddef.github.io/ERP-Galaxy/s4/reads-still-work.html">
+<meta property="og:title" content="59 SAP tables that survive as compatibility views">
+<meta property="og:description" content="SAP tables that still return data in S/4HANA through a compatibility view — reads work, writes do not.">
+<meta property="og:type" content="article">
+<style>
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#6e6e73;--card:#f5f5f7;--line:#e5e5ea;--acc:#4f9cf9}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1117;--fg:#e6edf3;--mut:#8b949e;--card:#161b22;--line:#30363d}}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:760px;
+ margin:0 auto;padding:28px 20px 64px;line-height:1.65;color:var(--fg);background:var(--bg)}
+a{color:var(--acc)}
+header.site{display:flex;justify-content:space-between;align-items:center;gap:12px;
+ border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:26px;flex-wrap:wrap}
+header.site a{font-weight:700;text-decoration:none;color:var(--fg)}
+h1{font-size:1.75rem;line-height:1.25;margin:.2em 0 .4em}
+h2{font-size:1.15rem;margin-top:2em}
+.verdict{border-left:4px solid var(--v);background:var(--card);padding:16px 18px;border-radius:10px;margin:18px 0}
+.verdict .label{font-weight:700;color:var(--v);font-size:1.05rem}
+.facts{width:100%;border-collapse:collapse;margin:14px 0}
+.facts th,.facts td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.facts th{width:38%;color:var(--mut);font-weight:600;font-size:.9rem}
+code{background:var(--card);padding:1px 6px;border-radius:4px;font-size:.92em;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:14px 0;padding:0;list-style:none}
+.grid a{display:block;padding:9px 11px;background:var(--card);border-radius:8px;text-decoration:none;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+.grid small{display:block;color:var(--mut);font-weight:400;font-family:-apple-system,system-ui,sans-serif;font-size:.76rem}
+.cta{background:var(--card);border-radius:12px;padding:18px 20px;margin:30px 0}
+.ad{margin:26px 0;min-height:90px}
+footer{margin-top:3.5em;font-size:.85rem;color:var(--mut);border-top:1px solid var(--line);padding-top:1.2em}
+.tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--mut)}
+</style>
+
+</head><body>
+<header class="site">
+  <a href="https://daviddef.github.io/ERP-Galaxy/">ERP Galaxy</a>
+  <span class="tag">Independent SAP reference</span>
+</header>
+<h1>59 SAP tables that survive as compatibility views</h1><p>These still answer a SELECT, which is exactly why they get missed. They are no longer real tables, writes are not supported, and the failure surfaces late.</p><!-- ad slot 2: set ADSENSE_CLIENT in tools/build_site.py --><ul class="grid"><li><a href="BSAD.html">BSAD<small>Customer Secondary Index — Cleared Items</small></a></li><li><a href="BSAK.html">BSAK<small>Vendor Secondary Index — Cleared Items</small></a></li><li><a href="BSAS.html">BSAS<small>G/L Secondary Index — Cleared Items</small></a></li><li><a href="BSID.html">BSID<small>Customer Secondary Index — Open Items</small></a></li><li><a href="BSIK.html">BSIK<small>Vendor Secondary Index — Open Items</small></a></li><li><a href="BSIS.html">BSIS<small>G/L Secondary Index — Open Items</small></a></li><li><a href="COVP.html">COVP<small></small></a></li><li><a href="FAGLBSAS.html">FAGLBSAS<small>Secondary index of cleared general ledger account line ite</small></a></li><li><a href="FAGLBSIS.html">FAGLBSIS<small>Secondary index of general ledger account line items, one </small></a></li><li><a href="FMBDT.html">FMBDT<small>Budget totals for Funds Management, one row per fiscal yea</small></a></li><li><a href="FMRBT.html">FMRBT<small></small></a></li><li><a href="GLT0.html">GLT0<small>G/L Account Transaction Figures (Classic GL)</small></a></li><li><a href="KNC1.html">KNC1<small>Customer master transaction figures, such as balances by f</small></a></li><li><a href="KNC3.html">KNC3<small>Special G/L transaction figures held against the customer </small></a></li><li><a href="LFC1.html">LFC1<small>Vendor master transaction figures, such as balances by fis</small></a></li><li><a href="LFC3.html">LFC3<small>Special G/L transaction figures held against the vendor ma</small></a></li><li><a href="MARC.html">MARC<small>Plant Data for Material</small></a></li><li><a href="MARCH.html">MARCH<small>Historical plant-level material master data, one row per m</small></a></li><li><a href="MARD.html">MARD<small>Storage Location Stock Data</small></a></li><li><a href="MARDH.html">MARDH<small>Historical storage-location-level material master data, on</small></a></li><li><a href="MCHB.html">MCHB<small>Batch Stocks</small></a></li><li><a href="MCHBH.html">MCHBH<small>Historical batch stock quantities, one row per material, p</small></a></li><li><a href="MCSD.html">MCSD<small>Stock of a material held for or by a customer, one row per</small></a></li><li><a href="MCSDH.html">MCSDH<small>Historical customer stock quantities, one row per material</small></a></li><li><a href="MCSS.html">MCSS<small>Total customer stock quantities summarized at plant level,</small></a></li><li><a href="MCSSH.html">MCSSH<small>Historical totals of customer-supplied stock, one row per </small></a></li><li><a href="MKOL.html">MKOL<small>Special stock of a material held at or by a vendor, one ro</small></a></li><li><a href="MKOLH.html">MKOLH<small>Historical special stock quantities held at or by a vendor</small></a></li><li><a href="MSCD.html">MSCD<small>Customer stock held at a vendor&#x27;s location, one row per ma</small></a></li><li><a href="MSCDH.html">MSCDH<small>Historical quantities of customer stock held at a vendor&#x27;s</small></a></li><li><a href="MSCS.html">MSCS<small>Total customer stock held at a vendor&#x27;s location, summariz</small></a></li><li><a href="MSFD.html">MSFD<small>Sales-order stock held at a vendor&#x27;s location, one row per</small></a></li><li><a href="MSFDH.html">MSFDH<small>Historical sales-order stock quantities held at a vendor&#x27;s</small></a></li><li><a href="MSFS.html">MSFS<small>Total sales-order stock held at a vendor&#x27;s location, summa</small></a></li><li><a href="MSID.html">MSID<small>Stock owned by a vendor and held at another vendor&#x27;s locat</small></a></li><li><a href="MSIDH.html">MSIDH<small>Historical quantities of vendor-owned stock held at anothe</small></a></li><li><a href="MSIS.html">MSIS<small>Total vendor-owned stock held at another vendor&#x27;s location</small></a></li><li><a href="MSKA.html">MSKA<small>Stock of a material reserved for a specific sales order, o</small></a></li><li><a href="MSKAH.html">MSKAH<small>Historical quantities of sales-order stock, one row per ma</small></a></li><li><a href="MSKU.html">MSKU<small>Special stock of a material held for a customer, one row p</small></a></li><li><a href="MSKUH.html">MSKUH<small>Historical quantities of special stock held for a customer</small></a></li><li><a href="MSLB.html">MSLB<small>Special stock of a material held at a vendor, such as cons</small></a></li><li><a href="MSLBH.html">MSLBH<small>Historical quantities of special stock held at a vendor, o</small></a></li><li><a href="MSPR.html">MSPR<small>Stock of a material assigned to a project WBS element, one</small></a></li><li><a href="MSPRH.html">MSPRH<small>Historical quantities of project stock, one row per materi</small></a></li><li><a href="MSRD.html">MSRD<small>Project stock held at a vendor&#x27;s location, one row per mat</small></a></li><li><a href="MSRDH.html">MSRDH<small>Historical quantities of project stock held at a vendor&#x27;s </small></a></li><li><a href="MSRS.html">MSRS<small>Total project stock held at a vendor&#x27;s location, summarize</small></a></li><li><a href="MSSA.html">MSSA<small>Total sales-order stock summarized at plant level, one row</small></a></li><li><a href="MSSAH.html">MSSAH<small>Historical totals of sales-order stock, one row per materi</small></a></li><li><a href="MSSL.html">MSSL<small>Total special stock held at a vendor, summarized at plant </small></a></li><li><a href="MSSQ.html">MSSQ<small>Total project stock summarized at plant level, one row per</small></a></li><li><a href="MSSQH.html">MSSQH<small>Historical totals of project stock, one row per material, </small></a></li><li><a href="MSTB.html">MSTB<small>Stock currently in transit.</small></a></li><li><a href="MSTBH.html">MSTBH<small>Historical quantities of stock in transit, one row per mat</small></a></li><li><a href="MSTE.html">MSTE<small>Stock in transit linked to a Sales and Distribution docume</small></a></li><li><a href="MSTEH.html">MSTEH<small>Historical quantities of stock in transit tied to a sales </small></a></li><li><a href="MSTQ.html">MSTQ<small>Stock in transit for a project, one row per material, plan</small></a></li><li><a href="MSTQH.html">MSTQH<small>Historical quantities of stock in transit for a project, o</small></a></li></ul>
+<footer>
+<p>Not affiliated with, sponsored by, or endorsed by SAP SE. SAP, S/4HANA, ABAP and Fiori are
+trademarks of SAP SE. Verdicts here are our own summaries of SAP's publicly published
+Simplification List, written in our own words &mdash; they are not reproductions of SAP
+documentation, and they describe SAP's intended architecture rather than any particular system.
+Confirm against your own system before planning work.</p>
+<p><a href="https://daviddef.github.io/ERP-Galaxy/">Home</a> &middot; <a href="https://daviddef.github.io/ERP-Galaxy/privacy.html">Privacy</a> &middot;
+<a href="https://apps.apple.com/app/id6791550922">iOS app</a></p>
+</footer>
+</body></html>
