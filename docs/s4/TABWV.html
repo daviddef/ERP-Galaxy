@@ -35,7 +35,7 @@ code{background:var(--card);padding:1px 6px;border-radius:4px;font-size:.92em;
 .ad{margin:26px 0;min-height:90px}
 footer{margin-top:3.5em;font-size:.85rem;color:var(--mut);border-top:1px solid var(--line);padding-top:1.2em}
 .tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--mut)}
-</style>
+</style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4156851882993001" crossorigin="anonymous"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What happened to TABWV in S/4HANA?", "acceptedAnswer": {"@type": "Answer", "text": "TABWV is replaced in SAP S/4HANA. The table may still exist, but it is no longer where the data lives, and there is no same-named view standing in for it. Existing SELECTs either fail or quietly return stale and partial answers, which is the more dangerous outcome. Data now lives in TABWD."}}]}</script>
 </head><body>
 <header class="site">
@@ -51,7 +51,7 @@ footer{margin-top:3.5em;font-size:.85rem;color:var(--mut);border-top:1px solid v
 </div>
 
 <table class="facts"><tr><th>Table</th><td><code>TABWV</code></td></tr><tr><th>What it is</th><td>Default asset transaction types assigned to a business transaction, one row per business transaction.</td></tr><tr><th>Module</th><td>FI</td></tr><tr><th>Fate in S/4HANA</th><td><strong style="color:#c2410c">Replaced — your code must change</strong></td></tr><tr><th>Data now lives in</th><td><code>TABWD</code></td></tr><tr><th>SAP Note</th><td>2270388</td></tr></table>
-<!-- ad slot 1: set ADSENSE_CLIENT in tools/build_site.py -->
+<!-- ad slot 1: add its AdSense unit id to AD_SLOTS -->
 <div class="cta">
   <strong>Check this against the whole picture.</strong>
   <p style="margin:.5em 0 0">ERP Galaxy is a free iOS app holding 2,273 SAP tables, 248 published

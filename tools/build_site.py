@@ -25,10 +25,15 @@ OUT = ROOT / 'docs'
 SITE = OUT / 's4'
 BASE = 'https://daviddef.github.io/ERP-Galaxy'
 APP = 'https://apps.apple.com/app/id6791550922'
-# Replace with the real AdSense publisher id once the account is approved.
-# Left empty deliberately: an unapproved or placeholder id renders a broken slot
-# and can jeopardise review of the account.
-ADSENSE_CLIENT = ''
+# AdSense publisher id. The `ca-` prefix is what the tag expects; the id shown
+# in the AdSense dashboard omits it.
+ADSENSE_CLIENT = 'ca-pub-4156851882993001'
+# Manual ad units, keyed by the slot name used in the page templates. These are
+# the numeric ids AdSense gives you when you create an ad unit -- they are NOT
+# invented. Leave empty and the pages carry only the publisher script, which is
+# what Auto ads and account review need; a made-up slot id never fills and
+# renders as a blank reserved box.
+AD_SLOTS = {}
 
 lifecycle = json.load(open(ROOT / 'data' / 's4_lifecycle.json'))
 index = json.load(open(ROOT / 'data' / 'tables.json'))
@@ -97,11 +102,16 @@ footer{margin-top:3.5em;font-size:.85rem;color:var(--mut);border-top:1px solid v
 """
 
 def ad_slot(slot):
-    """Only emits markup once a publisher id is configured."""
-    if not ADSENSE_CLIENT:
-        return f'<!-- ad slot {slot}: set ADSENSE_CLIENT in tools/build_site.py -->'
+    """Emit a manual unit only when a REAL slot id exists for it.
+
+    Until then the page carries the publisher script and nothing else, which is
+    what Auto ads use and what account review needs to see.
+    """
+    sid = AD_SLOTS.get(slot)
+    if not (ADSENSE_CLIENT and sid):
+        return f'<!-- ad slot {slot}: add its AdSense unit id to AD_SLOTS -->'
     return (f'<div class="ad"><ins class="adsbygoogle" style="display:block" '
-            f'data-ad-client="{ADSENSE_CLIENT}" data-ad-slot="{slot}" '
+            f'data-ad-client="{ADSENSE_CLIENT}" data-ad-slot="{sid}" '
             f'data-ad-format="auto" data-full-width-responsive="true"></ins>'
             f'<script>(adsbygoogle=window.adsbygoogle||[]).push({{}});</script></div>')
 
