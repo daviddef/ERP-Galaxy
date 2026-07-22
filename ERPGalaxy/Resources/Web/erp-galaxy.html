@@ -5518,12 +5518,20 @@ function getVisibleLinks(ids){
   // LINKS_RAW itself contains a few reciprocal pairs (T001<->T001W), which drew
   // as two overlapping lines. Dedupe undirected.
   const ck=new Set(); const curated=[];
-  LINKS_RAW.forEach(([a,b])=>{
+  const push=(a,b)=>{
+    if(a===b) return;                       // MARC declared a relation to itself
     if(!ids.has(a)||!ids.has(b)) return;
     const k=[a,b].sort().join('|');
     if(ck.has(k)) return;
     ck.add(k); curated.push({source:a,target:b});
-  });
+  };
+  LINKS_RAW.forEach(([a,b])=>push(a,b));
+  // The panel lists each table's own `relations`, but the chart only ever drew
+  // LINKS_RAW -- two hand-maintained sources for the same fact, which had
+  // drifted on 26 edges across 21 tables. A panel saying "PCL1 relates to PCL2"
+  // while the chart drew nothing between them is the app contradicting itself.
+  // Draw from both, deduped, so stating a relationship is enough to see it.
+  TABLES.forEach(t=>(t.relations||[]).forEach(r=>push(t.id, r.to)));
   // On a board, also draw declared foreign keys between the locked tables —
   // otherwise index tables would sit there unconnected.
   if(!onlyLocked) return curated;
@@ -5724,10 +5732,19 @@ function buildDetailHTML(d){
     const rc=rt?MODULE_COLORS[rt.module]:'#94a3b8';
     const arrow = r.dir==='in' ? '←' : '→';
     const note = r.desc || (rt?rt.shortDesc:'') || '';
+    // A relationship is a business statement and carries no fields, so it cannot
+    // by itself produce ABAP. Some relationships do happen to be joinable, and
+    // people look for the code here first -- so offer it where it genuinely
+    // exists, and stay silent where it does not rather than generating a SELECT
+    // that could never run.
+    const ji = clusterInfo(d.id)||clusterInfo(r.to) ? null : joinInfo(d.id, r.to);
+    const code = ji ? `<button class="jn-code" title="ABAP — these also share ${ji.fields.join(' + ')}"
+        aria-label="ABAP for this join"
+        onclick="event.stopPropagation();openJoinCode('${d.id}','${r.to}','${ji.fields.join(',')}','${ji.conf}',event)">&lt;/&gt;</button>` : '';
     return `<li class="rel-item" onclick="jumpTo('${r.to}')">
       <span class="rel-dir">${arrow}</span>
       <span class="rel-to" style="color:${rc}">${r.to}</span>
-      <span class="rel-via">${note}</span></li>`;
+      <span class="rel-via">${note}</span>${code}</li>`;
   }).join('');
 
   const keys=(d.keyFields||[]).map(f=>`<div class="key-field-chip">${fieldLabel(f)}</div>`).join('');
@@ -5819,7 +5836,7 @@ function buildDetailHTML(d){
     ${panelActions(d.id, d.id+' — '+(d.shortDesc||''), d.s4note||'')}
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${proseFor(d)}</div>
-    ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><div class="lc-src" style="margin:-4px 0 7px">Business links, hand-mapped and drawn on the chart &mdash; what this table means to its neighbours. For every table you could technically join to, see <em>Joins directly to</em> below.</div><ul class="relations-list">${rels}</ul>`:''}
+    ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><div class="lc-src" style="margin:-4px 0 7px">Business links, hand-mapped and drawn on the chart &mdash; what this table means to its neighbours. Not the same as a join: a relationship says what these mean to each other, and many share no key at all. Where one is also joinable, &lt;/&gt; gives you the ABAP. For every table you could technically join to, see <em>Joins directly to</em> below.</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
     ${fieldChangesFor(d.id).map(f=>`<button class="pb-link" onclick="openFieldChange('${f.id}')">📐 Field change: ${f.title} →</button>`).join('')}
