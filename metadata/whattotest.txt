@@ -1,27 +1,19 @@
-Build 23 — walkthrough, App guide, and the greyscale pass.
+Build 24 — fixes the collapsible sections that did nothing in builds 22 and 23.
 
-NEW — FIRST-RUN WALKTHROUGH
-Six cards on first launch. To see it, delete the app and reinstall from TestFlight, or open the App guide and tap "Replay the walkthrough" — the flag is set once so it will not nag you after updates.
+FIXED — MODULES, PLAYBOOKS AND LEGEND NOW OPEN
+All three collapsible sections expanded into nothing. They were flex items in a column, so an open section was squashed to about its heading height and the rest was clipped — which also cut the descenders off the heading text, as you saw. Please open all three and confirm they show their content and collapse again.
 
-NEW — APP GUIDE
-Menu > Learn > App guide. Every feature and where to find it. The last section is deliberately about what the app will NOT tell you: verdicts state SAP's target architecture rather than your release, ~1,970 tables have no SAP entry, and nothing here knows about your Z-tables.
+FROM BUILD 23, STILL WORTH A LOOK
+• First-run walkthrough — delete and reinstall to see it, or App guide > Replay the walkthrough
+• App guide — Menu > Learn
+• The graph toolbar's third button is now Show as table; zoom-to-fit runs automatically on filter changes instead
+• Greyscale chrome — if the floating to-do button now reads as too recessive against the graph, say so
 
-CHANGED — GRAPH TOOLBAR
-The home button is now a Show-as-table control. Zoom-to-fit has not been lost — it now runs automatically whenever a filter changes, including module changes, which it did not before. If you find a case where the chart ends up badly framed after filtering, that is worth reporting.
-
-CHANGED — GREYSCALE CHROME
-The TO DO button, the graph controls and the floating button are neutral now, so the coloured migration-fate badge is the only saturated thing in a panel. The floating button also lost its purple gradient and emoji for a dark circle with a line icon. If it now reads as too recessive against the graph, say so — it is a one-line revert.
-
-FROM BUILD 22, WORTH RE-CHECKING
-• Labels should sit inside their circles at any zoom
-• Modules fold summary should match what the chart shows
-• Paste a list — include a deliberate typo and check the bad name is reported
-• Detail panel should always open at the top
+CONFIRMED WORKING ON DEVICE
+PDF export. That had never been run on hardware until now.
 
 STILL NEVER RUN ON HARDWARE
-• To-do > Export PDF
-• Share list, and Share on the field guide
-These compile and their code paths are verified, but nobody has run them on a device.
+• Share list, and Share on the field guide — both go through the iOS share sheet
 
 AND AS ALWAYS
 If a verdict or description reads wrong to you as a practitioner, that is the most useful feedback there is.
