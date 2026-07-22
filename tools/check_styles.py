@@ -32,7 +32,19 @@ def main():
         for m in missing:
             print("  ." + m)
         sys.exit(1)
-    print(f"styles ok — {len(used)} classes used, all defined")
+    # Duplicate ids: getElementById silently returns the first, so the element
+    # you can see and the one the code updates can differ. A mis-ordered splice
+    # once duplicated a whole drawer block this way.
+    import collections
+    ids = collections.Counter(re.findall(r'id="([^"$]+)"', body))
+    dupes = {k: v for k, v in ids.items() if v > 1 and "${" not in k}
+    if dupes:
+        print("DUPLICATE IDS — did a splice land in the wrong place?")
+        for k, v in sorted(dupes.items()):
+            print(f"  #{k} x{v}")
+        sys.exit(1)
+
+    print(f"styles ok — {len(used)} classes used, all defined; {len(ids)} unique ids")
 
 
 if __name__ == "__main__":

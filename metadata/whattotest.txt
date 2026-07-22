@@ -1,36 +1,34 @@
-Build 21 — mostly navigation, plus a fix for styling that was broken in build 20.
+Build 22 — the things you reported in build 21, plus tidier filters.
 
-FIXED — MISSING STYLES IN BUILD 20
-The field guide, the lessons overlay and the table list all shipped in build 20 with their CSS accidentally deleted, so they rendered as unstyled text. If you looked at any of those in build 20 and thought they looked broken, they were. Worth a second look now.
+FIXED — LABELS BURSTING OUT OF THE BUBBLES
+Long names like FAGLFLEXT were drawn far wider than their circle. Labels are now fitted to the node: they shrink, they may overhang a touch on purpose, and only genuinely long names truncate with an ellipsis. 19 of 217 truncate; the full name is still in the tooltip and in the panel. Short names are unchanged.
 
-REBUILT MENU
-Three groups instead of eleven stacked blocks, and it fits on one screen:
-• TOOLS — a 2x2 grid: To-do (with a count), Find a field, BAPIs, Table list
-• LEARN — field guide and lessons as rows; playbooks and legend now fold away
-• DISPLAY — Brief / Detailed
+FIXED — TEXT OVERLAPPING THE BUTTON ABOVE IT
+The saved-views empty state sat on top of its own button. Same fault was present on the paste-list result message, which you could only see after actually pasting something.
 
-MOVED TO THE FILTER ICON
-Paste a table list, and Saved views. Both decide what the chart shows, so they sit with the other filters rather than in the menu.
+FIXED — DETAIL PANEL NOW OPENS AT THE TOP
+Open a table after scrolling a previous one and it used to start mid-content.
 
-NEW — HALF-HEIGHT PANEL
-Open any table, then tap "⇕ Half" in the panel header. The panel parks mid-screen and the dimming comes off, so the graph stays live underneath — tap table after table and the panel just re-fills instead of closing. Tap "⇕ Full" to go back. The choice is remembered.
+"SHOW AS TABLE" IS NOW CALLED THAT
+It was labelled "Table list", which is why you could not find it. Burger menu, top right of the Tools grid.
 
-BAPI SEARCH NOW TAKES BUSINESS LANGUAGE
-This is the one I would most like tested. Previously you had to know the exact name. Now try:
-• "work order" → BAPI_ALM_ORDER_MAINTAIN and the rest of the PM work-order family
-• "goods movement", "purchase order", "inspection lot", "business partner", "cost centre"
-Every result shows its SAP application component, so you can judge whether the match is sensible. Please tell me if any of these return something you would not expect — the abbreviation glossary behind it is hand-written and is the part most likely to be wrong.
+HALF / FULL IS A PROPER BUTTON
+A 32px icon button in the panel header with a chevron that rotates on state, rather than a text label. Same visual weight as the close button next to it.
 
-FLOATING BUTTON
-Used to reopen the table detail panel, which tapping a table already does. It now opens your to-do list and shows the count.
+FILTERS ARE SHORTER
+• Modules collapse into a fold that says what it is doing — "Modules — all 13", "9 of 13", "none selected"
+• Paste a list and Saved views are now buttons that open their own small overlays
+The whole drawer fits on one screen now.
 
-TABLE LIST
-Its buttons moved above the table — with 400 rows they were pushed off the bottom of the sheet and could not be reached.
+WORTH A LOOK
+• The graph — labels should sit in their circles at every zoom level. If any still spill, tell me which.
+• Modules fold — open it, turn some off, close it, and check the summary matches what the chart shows.
+• Paste a list — paste a few names with a deliberate typo and check the unrecognised one is named.
 
-STILL WORTH CHECKING FROM BUILD 20 — never run on hardware
+STILL NEVER RUN ON HARDWARE
 • To-do → Export PDF
 • Share list, and Share on the field guide
-Both compile and the code paths are verified, but neither has ever run on a real device.
+These compile and the code paths are verified, but no one has ever run them on a device.
 
 AND AS ALWAYS
-If a verdict or a description reads wrong to you as a practitioner, that is the most valuable feedback. Several real data errors in these builds were found exactly that way.
+If a verdict or description reads wrong to you as a practitioner, that is the most useful feedback. Several real data errors in these builds were found exactly that way.
