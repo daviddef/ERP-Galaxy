@@ -324,3 +324,29 @@ panel saying "not in S/4HANA").
 compare to what was sent, and only then submit. 3,724 characters against the 4,000 limit —
 **measured as characters, not bytes**. The file is 3,798 bytes on disk; em dashes and curly
 quotes are multi-byte, and `wc -c` is not the number Apple enforces.
+
+---
+
+## 1.0.1 resubmitted with build 19 → 22 (2026-07-22)
+
+Sixth swap. Justified on data correctness again, not features: build 19 still showed index
+tables that carry a **published SAP verdict** as "carries over". Reading them properly moved
+**Disappears from 11 to 70**. That is the same class of error as the VBUK/VBUP one that
+prompted the build-19 swap, and it was still live in what was queued.
+
+Also in 22, and each worth its own line because each was a real defect:
+- field guide, lessons and list view shipped in build 20 with their CSS accidentally deleted —
+  they rendered as unstyled text
+- long table names were drawn wider than their circle on the chart
+- the saved-views empty state and the paste-list message overlapped the button above them
+- a detail panel opened mid-content if the previous one had been scrolled
+
+Everything else is additive: field guide, 23 lessons, BAPI catalogue with business-language
+search, field finder, show-as-table, fate filter, paste-to-board, saved views, half-height
+panel.
+
+Version was `WAITING_FOR_REVIEW` and never `IN_REVIEW` on every one of these six swaps, so the
+only cost each time was queue position. **Check that state before cancelling** — the cost of
+pulling something already in review is materially different, and the API tells you.
+
+`whatsNew` 3,265 characters, patched and read back before the submit call.
