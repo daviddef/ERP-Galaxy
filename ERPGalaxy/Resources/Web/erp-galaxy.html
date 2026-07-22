@@ -336,6 +336,14 @@
   .overlay-backdrop.active{display:block;}
   .mobile-panel{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);border-radius:16px 16px 0 0;z-index:201;max-height:80vh;flex-direction:column;overflow:hidden;}
   .mobile-panel.active{display:flex;}
+  /* Half detent: the sheet parks mid-screen and the backdrop comes off, so the
+     graph stays tappable and you can walk from table to table without the
+     panel closing between each one. */
+  .mobile-panel.half{max-height:46vh;}
+  .sheet-snap{background:none;border:1px solid var(--border);color:var(--text-muted);
+    border-radius:8px;padding:3px 9px;font-size:.74rem;cursor:pointer;font-family:inherit;
+    margin-right:6px;white-space:nowrap;}
+  .sheet-snap.on{border-color:var(--fi);color:var(--fi);}
   .mobile-panel-drag{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;}
   .mobile-panel-header{padding:8px 14px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
   .mobile-panel-close{background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:4px;}
@@ -402,6 +410,9 @@
   /* Fixed = viewport coords, so it must own its safe-area offset. The zoom
      controls are absolute inside the already-padded container; keeping the two
      in one column below is what stops them colliding. */
+  .fab-count{position:absolute;top:-2px;right:-2px;background:#34d399;color:#04231a;
+    font-size:.62rem;font-weight:800;min-width:18px;height:18px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;padding:0 4px;}
   .mobile-fab{display:none;position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);
     width:56px;height:56px;background:linear-gradient(135deg,var(--fi),var(--co));border-radius:50%;border:none;
     color:#fff;font-size:1.4rem;cursor:pointer;align-items:center;justify-content:center;z-index:100;
@@ -475,10 +486,9 @@
     <div class="mode-label">Migration fate</div>
     <div class="pb-sub">Show only what happens to a table in S/4HANA</div>
     <div class="module-filters" id="fate-filters"></div>
-    <button class="todo-add" onclick="toggleDrawer('filter-tools',false);openList()">
-      &#128203; Show as list</button>
-    <div class="depth-hint">Counts above are for the 217 tables drawn in the galaxy. The list
-      also reaches the rest of the 2,001-table index, where most migration verdicts sit.</div>
+    <div class="depth-hint">Counts above are for the 217 tables drawn in the galaxy.
+      &#8220;Show as list&#8221; in the menu also reaches the rest of the index, where most
+      migration verdicts sit.</div>
     <div class="mode-label">Modules</div>
     <div class="module-filters" id="module-filters"></div>
   </div>
@@ -493,6 +503,12 @@
       <button class="todo-add todo-btn" onclick="toggleDrawer('menu-tools',false);openTodo()">
         Open to-do list<span class="todo-count" id="todo-count" style="display:none">0</span>
       </button>
+    </div>
+    <div class="pb-block">
+      <div class="lg-title">&#128203; Show as list</div>
+      <div class="pb-sub">Every table matching your filters, as a table you can scan</div>
+      <button class="todo-add" onclick="toggleDrawer('menu-tools',false);openList()">
+        Open the list</button>
     </div>
     <div class="pb-block">
       <div class="lg-title">&#128214; ECC &#8594; S/4HANA field guide</div>
@@ -587,13 +603,16 @@
     <div class="count-badge" id="count-badge">Loading...</div>
   </div>
   <!-- Mobile floating action button -->
-  <button class="mobile-fab" id="mobile-fab" onclick="openMobilePanel()" title="Table Details">📋</button>
+  <button class="mobile-fab" id="mobile-fab" onclick="openTodo()" title="To-do list">✅<span
+    class="fab-count" id="fab-count" style="display:none">0</span></button>
   <!-- Mobile overlay panel -->
   <div class="overlay-backdrop" id="overlay-backdrop" onclick="closeMobilePanel()"></div>
   <div class="mobile-panel" id="mobile-panel">
     <div class="mobile-panel-drag"></div>
     <div class="mobile-panel-header">
       <div id="mobile-panel-title" style="font-weight:600;font-size:.88rem;">Table Detail</div>
+      <button class="sheet-snap" id="sheet-snap" onclick="toggleSheetDetent()"
+        title="Park the panel mid-screen and keep browsing">⇕ Half</button>
       <button class="mobile-panel-close" onclick="closeMobilePanel()">✕</button>
     </div>
     <div class="mobile-panel-body" id="mobile-panel-body">
@@ -3071,6 +3090,7 @@ function showDecodePanel(code,kind,body){
     document.getElementById('mobile-panel').classList.add('active');
     document.getElementById('overlay-backdrop').classList.add('active');
     mobilePanelOpen=true;
+    applySheetDetent();
   }else{
     document.getElementById('sidebar-header').innerHTML=title;
     document.getElementById('sidebar-content').innerHTML=body;
@@ -3188,6 +3208,7 @@ function openPlaybook(pid){
     document.getElementById('mobile-panel').classList.add('active');
     document.getElementById('overlay-backdrop').classList.add('active');
     mobilePanelOpen=true;
+    applySheetDetent();
   }else{
     document.getElementById('sidebar-header').innerHTML=title;
     document.getElementById('sidebar-content').innerHTML=body;
@@ -3543,7 +3564,8 @@ function openBapi(name){
         ${b.name.startsWith('BAPI_')?' Part of SAP\’s BAPI interface set.':''}</div>
     </div>
     <div class="section-title">🧩 Where it lives</div>
-    <div class="plain-english">Application component <strong>${esc(b.component)||'—'}</strong></div>
+    <div class="plain-english">Application component <strong>${esc(b.component)||'—'}</strong>${
+      BAPI_AREA[(b.component||'').split('-')[0]]?' — '+esc(BAPI_AREA[b.component.split('-')[0]]):''}</div>
     ${st?`<div class="section-title">☁️ Cloud release status</div>
       <div class="plain-english" style="color:${st.col}">${st.label}</div>
       <div class="lc-src" style="margin-top:4px">SAP\’s C1 release contract — whether it may be
@@ -3606,17 +3628,116 @@ function bapiRows(id){
       <strong>${viaLabel(via)}</strong> in SAP’s cloudification data. SAP does not publish
       which tables a module touches.</div>`;
 }
-// Name search over the catalogue, for the burger-menu browser.
+// Searching a BAPI catalogue by exact name only is useless unless you already
+// know the name -- which is the one situation where you don't need a search.
+// So we index three things we actually hold, plus a vocabulary aid:
+//
+//   1. the name, and its underscore-separated tokens  (mechanical, no claims)
+//   2. SAP's application component, e.g. PM-WOC-MO    (SAP's own classification)
+//   3. the business area that component sits in       (our mapping of the prefix)
+//   4. a hand-written glossary of the abbreviations SAP uses in BAPI names
+//
+// The glossary is a SEARCH AID, not an assertion. Typing "work order" surfaces
+// the PM work-order components; it does not claim any particular module is
+// "the" work order BAPI. Every result shows its component so you can judge.
+const BAPI_AREA={
+  PM:'Plant Maintenance', SD:'Sales & Distribution', MM:'Materials Management',
+  FI:'Financial Accounting', FIN:'Finance', CO:'Controlling', PP:'Production Planning',
+  QM:'Quality Management', PS:'Project System', LO:'Logistics', LE:'Logistics Execution',
+  EHS:'Environment, Health & Safety', CA:'Cross-Application', BC:'Basis / technical',
+  AP:'Application Platform', IS:'Industry Solution', PA:'Personnel Administration',
+  PY:'Payroll', PT:'Time Management', PPM:'Portfolio & Project Management',
+  CRM:'Customer Relationship Management', SCM:'Supply Chain Management',
+  SRM:'Supplier Relationship Management', RE:'Real Estate', FS:'Financial Services',
+  BW:'Business Warehouse', TR:'Treasury', WM:'Warehouse Management', MDG:'Master Data Governance',
+};
+// Business phrase -> fragments that appear in BAPI names or components.
+const BAPI_TERMS=[
+  ['work order',        ['BAPI_ALM_ORDER','PM-WOC']],
+  ['maintenance order', ['BAPI_ALM_ORDER','PM-WOC']],
+  ['maintenance notification',['BAPI_ALM_NOTIF','PM-WOC']],
+  ['service order',     ['BAPI_ALM_ORDER','CS-']],
+  ['notification',      ['_NOTIF']],
+  ['equipment',         ['BAPI_EQUI','_EQUI']],
+  ['functional location',['FUNCLOC','FUNC_LOC']],
+  ['business partner',  ['BAPI_BUPA','BUSINESSPARTNER']],
+  ['customer',          ['BAPI_CUSTOMER','_CUSTOMER']],
+  ['vendor',            ['BAPI_VENDOR','_VENDOR']],
+  ['supplier',          ['BAPI_VENDOR','SUPPLIER']],
+  ['material',          ['BAPI_MATERIAL','_MATERIAL']],
+  ['batch',             ['BAPI_BATCH','_BATCH']],
+  ['sales order',       ['BAPI_SALESORDER','BAPISDORDER']],
+  ['purchase order',    ['BAPI_PO_','PURCHASEORDER']],
+  ['purchase requisition',['BAPI_REQUISITION','PURCHASE_REQUI']],
+  ['delivery',          ['_DELIVERY']],
+  ['billing',           ['BAPI_BILLING']],
+  ['invoice',           ['BAPI_INCOMINGINVOICE','_INVOICE']],
+  ['goods movement',    ['BAPI_GOODSMVT']],
+  ['goods receipt',     ['BAPI_GOODSMVT']],
+  ['goods issue',       ['BAPI_GOODSMVT']],
+  ['stock',             ['BAPI_MATERIAL_STOCK','_STOCK']],
+  ['production order',  ['BAPI_PRODORD']],
+  ['process order',     ['BAPI_PROCORD']],
+  ['planned order',     ['BAPI_PLANNEDORDER']],
+  ['bill of material',  ['BAPI_MATERIAL_BOM','_BOM']],
+  ['routing',           ['BAPI_ROUTING']],
+  ['work centre',       ['BAPI_WORKCENTER']],
+  ['work center',       ['BAPI_WORKCENTER']],
+  ['cost centre',       ['BAPI_COSTCENTER']],
+  ['cost center',       ['BAPI_COSTCENTER']],
+  ['profit centre',     ['BAPI_PROFITCENTER']],
+  ['profit center',     ['BAPI_PROFITCENTER']],
+  ['internal order',    ['BAPI_INTERNALORDER']],
+  ['general ledger',    ['BAPI_ACC_GL','BAPI_GL_']],
+  ['g/l account',       ['BAPI_ACC_GL','GLACC']],
+  ['accounting document',['BAPI_ACC_DOCUMENT']],
+  ['asset',             ['BAPI_FIXEDASSET']],
+  ['company code',      ['BAPI_COMPANYCODE']],
+  ['employee',          ['BAPI_EMPLOYEE']],
+  ['payroll',           ['PY-','BAPI_PAYROLL']],
+  ['inspection lot',    ['BAPI_INSPECTIONLOT','INSPLOT']],
+  ['quality notification',['BAPI_QUALNOT']],
+  ['project',           ['BAPI_PROJECT','BAPI_NETWORK','BAPI_BUS2054']],
+  ['document',          ['BAPI_DOCUMENT']],
+  ['classification',    ['BAPI_CLASS','BAPI_CHARACT']],
+  ['background job',    ['BAPI_XBP','BAPI_XMI']],
+];
+/** Everything a given module can be matched on. */
+function bapiHaystack(name){
+  const b=BAPIS[name]; if(!b) return '';
+  const comp=b[0]||'';
+  const area=BAPI_AREA[comp.split('-')[0]]||'';
+  return (name+' '+name.split('_').join(' ')+' '+comp+' '+comp.split('-').join(' ')+' '+area).toUpperCase();
+}
 function bapiSearch(q, limit){
-  q=String(q||'').trim().toUpperCase();
-  if(q.length<2) return [];
-  const out=[];
+  const raw=String(q||'').trim();
+  if(raw.length<2) return [];
+  const Q=raw.toUpperCase();
+  // Fragments in declared order: index 0 is the most specific, so a hit there
+  // outranks a hit on a looser one. Without this, "work order" ranked
+  // BAPI_ACC_PURCHASE_ORDER_CHECK above BAPI_ALM_ORDER_MAINTAIN.
+  const frags=[];
+  BAPI_TERMS.forEach(([term,fs])=>{
+    if(Q.includes(term.toUpperCase())) fs.forEach((f,i)=>frags.push([f,i]));
+  });
+  const words=Q.split(/[^A-Z0-9_]+/).filter(w=>w.length>2&&
+    !['SAP','BAPI','THE','FOR','AND','FUNCTION','MODULE'].includes(w));
+  const scored=[];
   for(const n in BAPIS){
-    if(n.includes(q)) out.push(n);
-    else if((BAPIS[n][0]||'').toUpperCase().includes(q)) out.push(n);
-    if(out.length>=(limit||60)) break;
+    const hay=bapiHaystack(n);
+    let s=null;
+    if(n===Q) s=[0,0];
+    else if(n.includes(Q)) s=[1,0];
+    else {
+      let best=null;
+      frags.forEach(([f,i])=>{ if(hay.includes(f) && (best===null||i<best)) best=i; });
+      if(best!==null) s=[2,best];
+      else if(words.length && words.every(w=>hay.includes(w))) s=[3,0];
+    }
+    if(s) scored.push([s[0],s[1],n]);
   }
-  return out.sort();
+  scored.sort((a,b)=>a[0]-b[0]||a[1]-b[1]||a[2].localeCompare(b[2]));
+  return scored.slice(0, limit||60).map(x=>x[2]);
 }
 function openBapiBrowser(q){
   const query=q!==undefined?q:(document.getElementById('bapi-q')?.value||'');
@@ -3625,16 +3746,18 @@ function openBapiBrowser(q){
   const body=!query||query.length<2
     ? `<div class="td-empty">Search ${Object.keys(BAPIS).length.toLocaleString()} BAPIs and
         remote-enabled function modules by name or application component —
-        <strong>BAPI_SALESORDER</strong>, <strong>MM-PUR</strong>, <strong>GETLIST</strong>.</div>`
+        <strong>BAPI_SALESORDER</strong>, <strong>MM-PUR</strong>, <strong>GETLIST</strong> —
+        or in business language: <strong>work order</strong>, <strong>goods movement</strong>,
+        <strong>business partner</strong>.</div>`
     : (hits.length
        ? hits.map(n=>{const b=bapiInfo(n);
            return `<div class="td-item" onclick="openBapi('${n}')">
              <div class="td-main"><div class="td-title" style="font-family:monospace">${esc(n)}</div>
-               <div class="td-meta">${esc(b.component)||'—'}${b.rfc?' · RFC':''}${b.tables.length?' · '+b.tables.length+' related table'+(b.tables.length>1?'s':''):''}</div>
+               <div class="td-meta">${esc(b.component)||'—'}${BAPI_AREA[(b.component||'').split('-')[0]]?' · '+esc(BAPI_AREA[b.component.split('-')[0]]):''}${b.rfc?' · RFC':''}${b.tables.length?' · '+b.tables.length+' related table'+(b.tables.length>1?'s':''):''}</div>
              </div></div>`;}).join('')
        : `<div class="td-empty">Nothing matching “${esc(query)}”.</div>`);
   showDecodePanel('🔌','function modules',
-    `<input class="td-notebox" id="bapi-q" value="${esc(query)}" placeholder="BAPI_SALESORDER, MM-PUR…"
+    `<input class="td-notebox" id="bapi-q" value="${esc(query)}" placeholder="work order, goods movement, BAPI_SALESORDER…"
        style="margin:0 0 10px" onkeydown="if(event.key==='Enter')openBapiBrowser(this.value)"/>
      <button class="todo-add" onclick="openBapiBrowser(document.getElementById('bapi-q').value)">Search</button>
      <div style="height:10px"></div>${body}
@@ -3977,6 +4100,8 @@ function refreshTodoUI(){
   const n=TODO.filter(x=>!x.done).length;
   const b=document.getElementById('todo-count');
   if(b){ b.textContent=n; b.style.display=n?'flex':'none'; }
+  const f=document.getElementById('fab-count');
+  if(f){ f.textContent=n; f.style.display=n?'flex':'none'; }
   document.querySelectorAll('[data-todo]').forEach(btn=>{
     const [kind,...r]=btn.getAttribute('data-todo').split(':');
     const on=inTodo(kind,r.join(':'));
@@ -4383,6 +4508,7 @@ function openCodex(id){
     document.getElementById('mobile-panel').classList.add('active');
     document.getElementById('overlay-backdrop').classList.add('active');
     mobilePanelOpen=true;
+    applySheetDetent();
   }else{
     document.getElementById('sidebar-header').innerHTML=title;
     document.getElementById('sidebar-content').innerHTML=body;
@@ -4436,6 +4562,7 @@ function exitFocus(){
 
 function init(){
   setFunMode(funMode);
+  applySheetDetent();
   buildFateFilters();
   setView(currentView);
   renderViews();
@@ -4536,6 +4663,10 @@ function openList(){
       ${FATE_GROUPS.map(g=>{const n=g.fates.reduce((a,f)=>a+(counts[f]||0),0);
         return n?`<span style="color:${g.col};font-size:.72rem;font-weight:700;margin-right:10px">${g.label} ${n}</span>`:'';}).join('')}
     </div>`:''}
+    <div class="td-bar" style="margin-top:0">
+      <button onclick="boardFromList(${JSON.stringify(shown.map(r=>r.id)).replace(/"/g,'&quot;')})">Put these on the chart</button>
+      <button onclick="copyList()">Copy as text</button>
+    </div>
     <div class="lv-wrap">
       <table class="lv">
         <thead><tr><th>Table</th><th>Module</th><th>S/4</th></tr></thead>
@@ -4551,10 +4682,6 @@ function openList(){
     </div>
     ${rows.length>shown.length?`<div class="lc-src" style="margin-top:8px">Showing the first
       ${shown.length} of ${rows.length.toLocaleString()} — narrow the filters to see the rest.</div>`:''}
-    <div class="td-bar">
-      <button onclick="boardFromList(${JSON.stringify(shown.map(r=>r.id)).replace(/"/g,'&quot;')})">Put these on the chart</button>
-      <button onclick="copyList()">Copy as text</button>
-    </div>
     <div style="height:16px"></div>`;
   showDecodePanel('📋','list',body);
   document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
@@ -5053,6 +5180,7 @@ function openMobilePanel(tableId){
   }
   document.getElementById('mobile-panel').classList.add('active');
   document.getElementById('overlay-backdrop').classList.add('active');
+  applySheetDetent();
 }
 // Swipe the sheet down to dismiss. The grab handle implied this worked; it didn't.
 function initSheetSwipe(){
@@ -5120,6 +5248,29 @@ function initSheetSwipe(){
   });
 }
 
+// Half detent. In half mode the backdrop comes off, which is the whole point:
+// the graph stays live underneath, so you can tap table after table and the
+// panel just re-fills instead of closing between each one.
+let sheetHalf=false;
+try{ sheetHalf = localStorage.getItem('erpgalaxy.sheetHalf')==='1'; }catch(e){}
+function applySheetDetent(){
+  const p=document.getElementById('mobile-panel');
+  const b=document.getElementById('overlay-backdrop');
+  const btn=document.getElementById('sheet-snap');
+  if(!p) return;
+  p.classList.toggle('half', sheetHalf);
+  if(btn){ btn.classList.toggle('on', sheetHalf); btn.textContent = sheetHalf?'⇕ Full':'⇕ Half'; }
+  // Only the full sheet is modal.
+  if(b) b.classList.toggle('active', !sheetHalf && p.classList.contains('active'));
+}
+function toggleSheetDetent(){
+  sheetHalf=!sheetHalf;
+  try{ localStorage.setItem('erpgalaxy.sheetHalf', sheetHalf?'1':'0'); }catch(e){}
+  applySheetDetent();
+  if(window.webkit?.messageHandlers?.hapticFeedback){
+    window.webkit.messageHandlers.hapticFeedback.postMessage({style:'selection'});
+  }
+}
 function closeMobilePanel(){
   mobilePanelOpen=false;
   document.getElementById('mobile-panel').classList.remove('active');
