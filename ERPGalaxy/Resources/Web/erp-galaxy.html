@@ -260,6 +260,13 @@
     border-radius:10px;padding:10px 16px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;}
   .wt-next{flex:1;background:rgba(79,156,249,.16);border:1px solid var(--fi);color:#cfe3ff;
     border-radius:10px;padding:10px 16px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:inherit;}
+  .jn-code{margin-left:auto;flex:0 0 auto;background:rgba(255,255,255,.05);
+    border:1px solid var(--border);color:var(--text-muted);border-radius:7px;
+    padding:3px 7px;font-size:.66rem;font-family:monospace;cursor:pointer;line-height:1.2;}
+  .jn-code:hover{border-color:var(--fi);color:var(--fi);}
+  pre.abap{background:#0b0f16;border:1px solid var(--border);border-radius:10px;
+    padding:12px;overflow-x:auto;font-size:.7rem;line-height:1.55;color:#cbd5e1;
+    font-family:'Courier New',monospace;white-space:pre;margin:10px 0 0;}
   .sf-step{display:flex;gap:9px;align-items:flex-start;padding:6px 0;
     border-bottom:1px solid var(--border);}
   .sf-step:last-of-type{border-bottom:0;}
@@ -3041,6 +3048,72 @@ function joinableWith(id, limit){
                  || x.id.localeCompare(y.id));
   return out.slice(0, limit||40);
 }
+
+// ── ABAP snippet for a join ────────────────────────────────────────────────
+// Generated entirely from data we already hold: the two tables' key fields and
+// the ON fields the join finder derived. Nothing here is invented -- if a field
+// is not in our key list it does not appear in the SELECT.
+//
+// Modern Open SQL (7.40+ strict): comma-separated field list, escaped host
+// variables, INTO TABLE @DATA. Client handling is left implicit because Open SQL
+// adds it automatically for client-dependent tables; saying otherwise would be
+// wrong for the majority of these.
+function abapForJoin(a, b, onFields, conf){
+  // Lowercase throughout: that is the prevailing convention in modern ABAP and
+  // matches SAP's own style guidance. Uppercase reads like a 4.6 dump.
+  const lc=s=>String(s).toLowerCase();
+  const keys=id=>tableKeys(id).filter(f=>!['MANDT','CLIENT','MANDANT'].includes(f)).map(lc);
+  const on=onFields.map(lc), A=lc(a), B=lc(b);
+  const cols=[...keys(a).map(f=>`a~${f}`), ...keys(b).filter(f=>!on.includes(f)).map(f=>`b~${f}`)];
+  const sel=cols.length?cols:['a~*'];
+  // ON / AND aligned in a column so multi-field joins stay readable.
+  const cond=on.map((f,i)=>(i===0?'    ON  ':'    AND ')+`a~${f} = b~${f}`).join('\n');
+  const warn = conf==='low'
+    ? `* NOTE: this link comes from a declared foreign key that is NOT part of\n`+
+      `*       ${B}'s primary key. Confirm the cardinality before relying on it --\n`+
+      `*       it may not be the unique join you expect.\n`
+    : '';
+  return `${warn}SELECT ${sel.join(',\n       ')}\n`+
+    `  FROM ${A} AS a\n`+
+    `  INNER JOIN ${B} AS b\n`+
+    `${cond}\n`+
+    `  INTO TABLE @DATA(lt_result)\n`+
+    `  UP TO 100 ROWS.\n\n`+
+    `IF sy-subrc = 0.\n`+
+    `  " lt_result now holds the joined rows\n`+
+    `ENDIF.`;
+}
+function openJoinCode(a, b, fieldsCsv, conf, ev){
+  if(ev) ev.stopPropagation();
+  const onFields=fieldsCsv.split(',');
+  const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const src=abapForJoin(a,b,onFields,conf);
+  window._lastAbap=src;
+  showDecodePanel('</>','ABAP', `
+    <div class="lc-box lc-changed">
+      <div class="lc-head">&lt;/&gt; <strong>${esc(a)} ⋈ ${esc(b)}</strong></div>
+      <div class="lc-body">Joined on <code>${onFields.map(esc).join('</code> + <code>')}</code>${
+        conf==='low'?' — <strong>low confidence</strong>, see the note in the code.':'.'}</div>
+    </div>
+    <pre class="abap">${esc(src)}</pre>
+    <div class="td-bar">
+      <button onclick="copyAbap()">Copy</button>
+      <button onclick="${TABLES.find(t=>t.id===b)?`jumpTo('${b}')`:`openCodex('${b}')`}">Open ${esc(b)}</button>
+    </div>
+    <div class="lc-src" style="margin-top:10px">Written from this app's key fields and the join it
+      derived, in Open SQL for 7.40+. The client field is omitted because Open SQL adds it
+      automatically for client-dependent tables. Check the field list against your own system
+      before running it.</div>
+    <div style="height:16px"></div>`);
+  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+    .innerHTML=`<span style="font-family:monospace;font-weight:700">&lt;/&gt; ${esc(a)} ⋈ ${esc(b)}</span>`;
+}
+function copyAbap(){
+  const t=window._lastAbap||'';
+  const h=window.webkit?.messageHandlers?.exportTodo;
+  if(h){ h.postMessage({format:'share', text:t, html:''}); return; }
+  navigator.clipboard?.writeText(t);
+}
 function buildJoins(id){
   const rows=joinableWith(id, 40);
   if(!rows.length) return '';
@@ -3051,7 +3124,9 @@ function buildJoins(id){
     const warn=r.conf==='low'?`<span class="jn-warn" title="This foreign key is not a key field of the target — verify before relying on it">?</span>`:'';
     return `<li class="rel-item" onclick="${open}">
       <span class="rel-to" style="color:${col}">${r.id}</span>${warn}
-      <span class="rel-via">ON ${r.fields.join(' + ')}</span></li>`;
+      <span class="rel-via">ON ${r.fields.join(' + ')}</span>
+      <button class="jn-code" title="ABAP for this join" aria-label="ABAP for this join"
+        onclick="openJoinCode('${id}','${r.id}','${r.fields.join(',')}','${r.conf}',event)">&lt;/&gt;</button></li>`;
   };
   return `<div class="section-title">🔑 Joins directly to (${rows.length})</div>
     <ul class="relations-list">${rows.map(chip).join('')}</ul>
