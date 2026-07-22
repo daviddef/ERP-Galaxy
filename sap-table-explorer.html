@@ -194,6 +194,13 @@
     cursor:pointer;font-family:inherit;}
   .td-bar button:hover{border-color:var(--text-muted);}
   .td-empty{color:var(--text-muted);font-size:.78rem;line-height:1.6;padding:10px 0;}
+  .panel-actions{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;
+    padding-bottom:12px;border-bottom:1px solid var(--border);}
+  .panel-actions .todo-add{width:auto;flex:1 1 auto;margin-top:0;min-width:150px;}
+  .pa-pb{flex:1 1 auto;min-width:130px;display:inline-flex;align-items:center;justify-content:center;
+    gap:6px;background:rgba(167,139,250,.12);border:1px solid #a78bfa;color:#c4b5fd;
+    border-radius:10px;padding:9px 12px;font-size:.78rem;font-weight:700;cursor:pointer;
+    font-family:inherit;line-height:1.2;}
   .fate-chip{display:flex;align-items:center;gap:7px;width:100%;background:rgba(255,255,255,.03);
     border:1px solid var(--border);border-radius:9px;padding:7px 9px;margin-bottom:5px;
     color:var(--text-muted);font-size:.76rem;font-family:inherit;cursor:pointer;text-align:left;}
@@ -3393,6 +3400,14 @@ function openBapi(name){
   document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
     .innerHTML=`<span style="font-family:monospace;font-weight:700;color:var(--fi)">${esc(b.name)}</span>`;
 }
+/** The two things you reach for most, kept at the top of every table panel so
+ *  they never need scrolling to: put it on the to-do list, and jump to the
+ *  playbook it belongs to. */
+function panelActions(id, title, detail){
+  const pbs=playbooksFor(id).map(p=>
+    `<button class="pa-pb" onclick="openPlaybook('${p.id}')">${p.icon} ${p.name}</button>`).join('');
+  return `<div class="panel-actions">${todoAddBtn('table',id,title,detail)}${pbs}</div>`;
+}
 /** Successor views can run to a dozen or more for a hub table like MARA;
  *  naming them all buries the point of the sentence. */
 function viaLabel(views){
@@ -4142,13 +4157,12 @@ function openCodex(id){
         <div class="lc-body">In the index, but SAP declares no foreign keys for it and we haven't hand-mapped its business relationships — so it has no place in the galaxy yet.</div>
       </div>`;
   const body=`
+    ${panelActions(id, id+' — '+(desc||''), '')}
     ${head}
     <div class="section-title">🧠 What it is</div>
     <div class="plain-english">${codexProse(id)||'No description available.'}</div>
-    ${playbooksFor(id).map(p=>`<button class="pb-link" onclick="openPlaybook('${p.id}')">${p.icon} Part of the ${p.name} playbook →</button>`).join('')}
     ${fieldChangesFor(id).map(f=>`<button class="pb-link" onclick="openFieldChange('${f.id}')">📐 Field change: ${f.title} →</button>`).join('')}
     ${bapiRows(id)}
-    ${todoAddBtn('table',id,id+' — '+(desc||''),'')}
     ${fks}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keyHtml}</div>
@@ -4706,15 +4720,14 @@ function buildDetailHTML(d){
     </div>`;
 
   const bodyHtml=`
+    ${panelActions(d.id, d.id+' — '+(d.shortDesc||''), d.s4note||'')}
     <div class="section-title">🧠 Plain English</div>
     <div class="plain-english">${proseFor(d)}</div>
     ${rels?`<div class="section-title">🔗 Relationships (${graphRelations(d).length})</div><ul class="relations-list">${rels}</ul>`:''}
     <div class="section-title">🧭 ECC6 → S/4HANA</div>
     ${buildLifecycle(d, !!journeySection)}
-    ${playbooksFor(d.id).map(p=>`<button class="pb-link" onclick="openPlaybook('${p.id}')">${p.icon} Part of the ${p.name} playbook →</button>`).join('')}
     ${fieldChangesFor(d.id).map(f=>`<button class="pb-link" onclick="openFieldChange('${f.id}')">📐 Field change: ${f.title} →</button>`).join('')}
     ${bapiRows(d.id)}
-    ${todoAddBtn('table',d.id,d.id+' — '+(d.shortDesc||''),d.s4note||'')}
     ${journeySection}
     <div class="section-title">🔑 Primary Key Fields</div>
     <div class="key-fields">${keys||'<span style="color:var(--text-muted)">See ABAP Dictionary</span>'}</div>
