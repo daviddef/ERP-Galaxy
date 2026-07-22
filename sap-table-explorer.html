@@ -459,13 +459,18 @@
   .sheet-snap.on{border-color:var(--fi);color:var(--fi);background:rgba(79,156,249,.14);}
   .sheet-snap.on svg{transform:rotate(180deg);}
   .sheet-snap svg{transition:transform .22s ease;}
-  @media (max-width:700px){ .sheet-snap{display:inline-flex;} }
+  @media (max-width:700px), (max-height:520px){ .sheet-snap{display:inline-flex;} }
   .mobile-panel-drag{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;}
   .mobile-panel-header{padding:8px 14px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
   .mobile-panel-close{background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:4px;}
   .mobile-panel-body{flex:1;overflow-y:auto;padding:14px;}
   /* Responsive */
-  @media (max-width:700px){
+  /* Short viewports are phones held sideways: 852x393 is wider than 700 but
+     has nowhere to put a header that grows to 657px. Without the height
+     clause the desktop branch applied, .header-tools{display:contents} spilled
+     both drawers inline, and the graph computed to 0px with body overflow
+     hidden -- so it was not merely ugly, it was unreachable. */
+  @media (max-width:700px), (max-height:520px){
     .sidebar{display:none;}
     /* Header is search + burger. Nothing else. */
     header{gap:8px;padding:8px 10px;flex-wrap:nowrap;}
@@ -608,7 +613,7 @@
     <div class="mode-label">Migration fate</div>
     <div class="pb-sub">Show only what happens to a table in S/4HANA</div>
     <div class="module-filters" id="fate-filters"></div>
-    <div class="depth-hint">Counts above are for the 217 tables drawn in the galaxy.
+    <div class="depth-hint">Counts above are for the <span id="drawn-count">228</span> tables drawn in the galaxy.
       &#8220;Show as table&#8221; in the menu also reaches the rest of the index, where most
       migration verdicts sit.</div>
     <details class="fold" id="mod-fold">
@@ -2936,6 +2941,14 @@ function noteAgrees(status, note){
     return status==='replaced'||status==='compat_view'||status==='deprecated';
   return true;   // neutral prose adds detail without claiming a verdict
 }
+// One definition of "are we on the phone layout", shared by CSS and JS.
+// These had drifted apart the moment the media query learned about short
+// viewports: CSS switched a landscape phone to the sheet while JS kept writing
+// to the sidebar, so both panels were live at once with different content.
+// Kept in step by asking the browser the same question the stylesheet asks.
+const MOBILE_MQ = window.matchMedia('(max-width:700px), (max-height:520px)');
+function isMobileLayout(){ return MOBILE_MQ.matches; }
+
 function buildLifecycle(d, hideChips){
   const note=d.s4note||null;   // curated prose, used only where it agrees (see noteAgrees)
   // SAP Note + required action apply whatever branch we take, so build once.
@@ -3220,7 +3233,7 @@ function openJoinCode(a, b, fieldsCsv, conf, ev){
       automatically for client-dependent tables. Check the field list against your own system
       before running it.</div>
     <div style="height:16px"></div>`);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML=`<span style="font-family:monospace;font-weight:700">&lt;/&gt; ${esc(a)} ⋈ ${esc(b)}</span>`;
 }
 // Copy and share are genuinely different actions and were conflated: the one
@@ -3282,7 +3295,8 @@ function buildJoins(id){
       <button class="jn-code" title="ABAP for this join" aria-label="ABAP for this join"
         onclick="openJoinCode('${id}','${r.id}','${r.fields.join(',')}','${r.conf}',event)">&lt;/&gt;</button></li>`;
   };
-  return `<div class="section-title">🔑 Joins directly to (${rows.length})</div>
+  const totalJoins=joinableWith(id, Infinity).length;
+  return `<div class="section-title">🔑 Joins directly to (${rows.length<totalJoins?`${rows.length} of ${totalJoins}`:rows.length})</div>
     <div class="lc-src" style="margin:-4px 0 7px">Structural: these share a key field, or SAP
       declares a foreign key. Mechanical and complete &mdash; but a valid join is not always a
       meaningful one. <em>Relationships</em> above are the hand-mapped business links.</div>
@@ -3441,7 +3455,7 @@ function resetPanelScroll(){
 }
 function showDecodePanel(code,kind,body){
   const title=`<span style="font-family:monospace;font-weight:700;color:var(--fi)">${code}</span> <span style="color:var(--text-muted);font-size:.72rem">${kind}</span>`;
-  if(window.innerWidth<=700){
+  if(isMobileLayout()){
     document.getElementById('mobile-panel-title').innerHTML=title;
     document.getElementById('mobile-panel-body').innerHTML=body;
     resetPanelScroll();
@@ -3523,7 +3537,7 @@ function openFieldChange(fid){
       · ${fc.release} · component ${fc.component}</div>
     <div style="height:16px"></div>`;
   showDecodePanel('📐','field change',body);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML=`<span style="font-weight:700">📐 ${fc.title}</span>`;
 }
 // Says out loud how the table list was derived, so partial coverage reads as
@@ -3561,7 +3575,7 @@ function openPlaybook(pid){
       · items ${p.items.join(', ')}</div>
     <div style="height:16px"></div>`;
   const title=`<span style="font-weight:700">${p.icon} ${p.name}</span>`;
-  if(window.innerWidth<=700){
+  if(isMobileLayout()){
     document.getElementById('mobile-panel-title').innerHTML=title;
     document.getElementById('mobile-panel-body').innerHTML=body;
     resetPanelScroll();
@@ -3811,7 +3825,7 @@ function openFieldGuide(){
     '<div class="fg">'+mdToHtml(FIELD_GUIDE)+'</div>'+
     '<div class="td-bar"><button onclick="shareFieldGuide()">Share the guide</button></div>'+
     '<div style="height:16px"></div>');
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">📖 ECC → S/4HANA field guide</span>';
 }
 function shareFieldGuide(){
@@ -3867,7 +3881,7 @@ function openLessons(filterId){
     ${principles.map(l=>lessonCard(l,false)).join('')}
     <div style="height:16px"></div>`;
   showDecodePanel('🎓','lessons',body);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">🎓 Lessons learned</span>';
 }
 /** Compact lessons block for a table panel. */
@@ -3944,7 +3958,7 @@ function openBapi(name){
     <div class="lc-src" style="margin-top:14px">SAP ABAP Cloudification Repository · Apache-2.0</div>
     <div style="height:16px"></div>`;
   showDecodePanel('🔌','function module',body);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML=`<span style="font-family:monospace;font-weight:700;color:var(--fi)">${esc(b.name)}</span>`;
 }
 /** The two things you reach for most, kept at the top of every table panel so
@@ -4125,7 +4139,7 @@ function openBapiBrowser(q){
      <div class="lc-src" style="margin-top:12px">SAP ABAP Cloudification Repository (Apache-2.0).
        Names, components and release status only — SAP publishes no parameter signatures publicly.</div>
      <div style="height:16px"></div>`);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">🔌 BAPIs &amp; function modules</span>';
 }
 
@@ -4146,7 +4160,7 @@ function openPastePanel(){
     <button class="todo-add" onclick="pasteBoard()">Show these on the chart</button>
     <div class="pb-sub" id="paste-msg"></div>
     <div style="height:16px"></div>`);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">📋 Paste a table list</span>';
 }
 function openViewsPanel(){
@@ -4161,7 +4175,7 @@ function openViewsPanel(){
     <button class="todo-add" onclick="saveCurrentView()">Save current view</button>
     <div id="views-list"></div>
     <div style="height:16px"></div>`);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">💾 Saved views</span>';
   renderViews();
 }
@@ -4174,7 +4188,7 @@ function openViewsPanel(){
 // works. The payload lives compressed in a single field, so no SELECT reads a
 // payroll result and no JOIN on the business data is possible. Saying that
 // plainly is worth more than any number of relationships we could draw.
-const CLUSTER_TABLES={"common":{"title":"How a cluster table works","why":"A cluster table combines records sharing a key into one physical row, written to the database compressed. Retrieval is very fast when you know the key, and impossible by any other route — the payload is a binary string, so no SELECT on it means anything and no external tool can interpret it.","ddic":"These are ordinary TRANSPARENT tables. The clustering is done by the application inside the CLUSTD field, not by the Dictionary. That distinction decides their S/4HANA fate — see below.","keyLayout":[{"f":"MANDT","n":"CLNT 3","what":"Client"},{"f":"RELID","n":"CHAR 2","what":"Cluster ID — which subarea of the table this row belongs to"},{"f":"SRTFD","n":"CHAR 40","what":"Work area key. Its internal layout differs per cluster ID."},{"f":"SRTF2","n":"INT4","what":"Row number, for when one cluster spans several rows"},{"f":"CLUSTR","n":"INT2","what":"How much of CLUSTD this row actually uses"},{"f":"CLUSTD","n":"LRAW 3900","what":"The payload — the serialised binary image of the ABAP tables and field strings"}],"identical":"All four PCLn have the same structure. SAP states this explicitly.","noPcl5":"There is no PCL5. SAP consistently writes PCLn where n is 1, 2, 3 or 4.","payloadField":"CLUSTD","verbs":["EXPORT TO DATABASE","IMPORT FROM DATABASE","DELETE FROM DATABASE"],"includeConvention":{"pattern":"RPCnxxy0","parts":[{"p":"n","what":"1, 2, 3 or 4 — which PCLn"},{"p":"xx","what":"the cluster ID"},{"p":"y","what":"country grouping: 0 for international, otherwise the country indicator from T500L"}],"examples":["RPC2RX00 — payroll results, international","RPC1TX00 — infotype long texts, PCL1","RPC4LA00 — change logs, PCL4"],"discrepancy":"Community code very often cites RPC2RX09 and RPC2CD09 instead, which do not fit SAP's published rule. Both forms are in circulation. Check what exists in your system rather than trusting either.","note":"The INCLUDE defines both the work area key and the shape of what an IMPORT returns. Work-area structures follow the pattern PCnnn — PC200 is the payroll key (personnel number plus sequence number), PC261 the payroll directory."},"macros":{"read":"RP-IMP-Cn-xx","pattern":"RP-IMP-C2-RX reads cluster RX from PCL2; RP-EXP-C4-LA writes cluster LA to PCL4. SAP's position is that only these macros should be used.","buffered":"The macro route needs the buffer includes RPPPXD00, RPPPXD10 and RPPPXM00. The macros themselves live in table TRMAC.","authWarning":"A bare IMPORT FROM DATABASE performs NO cluster authorisation check. The check only happens on the buffered macro route. Anything reading payroll data directly is bypassing the authorisation SAP intended."},"countryPattern":"Payroll clusters follow R + the country grouping from T500L. RX is the international form, RD Germany, RU the United States. Every payroll country has its own, so treat this as a rule rather than looking for a fixed list.","twoStep":"Payroll results need two keys, personnel number and sequence number, and you do not know the sequence number up front. Read the directory first — HRPY_RGDIR is transparent and can simply be SELECTed — then read the result. Function module CD_EVALUATION_PERIODS works out which periods are relevant; each result carries status A (current), P (previous) or O (old).","insideCluster":{"title":"What is actually inside the payload","intro":"Decompress a payroll result and you get a set of ABAP internal tables. These are the names practitioners use daily and they are NOT database tables — you will not find them in SE11. They exist only inside CLUSTD, which is the single most confusing thing about payroll data.","tables":[{"t":"RGDIR","what":"The directory — every payroll run for this personnel number. Also exists as the real table HRPY_RGDIR, which you can SELECT."},{"t":"RT","what":"Results table. The wage types and amounts for the period. This is the one people mean by 'payroll results'."},{"t":"CRT","what":"Cumulative results table. Year-to-date and other cumulations."},{"t":"WPBP","what":"Work centre and basic pay. The organisational assignment and pay as they stood at the time of the run — snapshotted from infotypes 0001 and 0008, which is why it can differ from what those infotypes say today."},{"t":"BT","what":"Bank transfers. The payment splits and direct deposits."},{"t":"VERSC","what":"Payroll status and control information for the result."}],"declusterLink":"These are exactly what declustering writes out as real tables — RT becomes P2RX_RT, CRT becomes P2RX_CRT, and so on. The internal table name is the last part of the transparent table name."}},"tables":{"PCL1":{"name":"HR Cluster 1","sapDesc":"Basis for HR work area data — time data recording, incentive wage time tickets, and the supplementary texts attached to infotypes.","desc":"Holds HR working data that does not belong in an infotype record: time events from data collection terminals, incentive wage data, the personal calendar, travel expense data, and the long texts attached to infotype records.","areas":[{"id":"B1","what":"Time events / PDC"},{"id":"G1","what":"Group incentive wages"},{"id":"L1","what":"Individual incentive wages"},{"id":"PC","what":"Personal calendar"},{"id":"TE","what":"Travel expenses — results"},{"id":"TS","what":"Travel expenses — master data"},{"id":"TX","what":"Infotype long texts"},{"id":"ZI","what":"PDC interface to cost accounting"}],"keyNote":"For TX the work area key is PSKEY — personnel number, infotype, subtype, object ID, lock indicator, end date, start date, sequence number. That is why an infotype's long text is keyed the same way as the infotype record itself."},"PCL2":{"name":"HR Cluster 2","sapDesc":"Derived information — payroll results above all, plus every generated payroll schema.","desc":"The payroll and time evaluation results themselves, plus the generated schemas that produced them and the directory you need in order to find any of it.","areas":[{"id":"B2","what":"Time accounting results"},{"id":"CD","what":"Cluster directory — read this first to get the sequence number"},{"id":"PS","what":"Generated schemas"},{"id":"PT","what":"Texts for generated schemas"},{"id":"RX","what":"Payroll results, international"},{"id":"Rn","what":"Payroll results, country-specific. n is the country grouping from T500L — RD is Germany, RU the United States."},{"id":"ZL","what":"Personal work schedule"}],"keyNote":"For payroll results the work area key is PC200 — personnel number plus a sequence number. The country-independent part of the definition sits in one INCLUDE and the country-specific part in another, which is how one payroll engine serves every country."},"PCL3":{"name":"HR Cluster 3","sapDesc":"Applicant data.","desc":"Recruitment data: the applicant action log and time schedule, and the texts attached to applicant infotypes.","areas":[{"id":"AP","what":"Applicant action log and time schedule"},{"id":"TY","what":"Texts for applicant data infotypes"}]},"PCL4":{"name":"HR Cluster 4","sapDesc":"Change documents for HR master data and recruitment.","desc":"The audit trail. Every change to HR master data and applicant data is logged here, which makes it the table auditors ask about and the one nobody can read.","areas":[{"id":"LA","what":"Change logs — long-term documents"},{"id":"SA","what":"Short-term documents, HR master data"},{"id":"SB","what":"Short-term documents, applicant master data"}],"keyNote":"For LA the work area key is PC400 — a transaction class (A for master data), personnel number, infotype, the date and time of the change, and a sequence number."}},"s4":{"headline":"The table is unchanged. The right to run the application that uses it is what changed.","notAClusterTable":{"title":"Not affected by the 1809 pool-and-cluster item","body":"SAP ended support for pooled and cluster tables in S/4HANA 1809 (Note 2577406) — that item killed CDCLS, RFBLG and DOKCLU. It does NOT apply here. Those were Dictionary table clusters, which have no real database table of their own. PCL1–PCL4 are ordinary transparent tables that happen to hold an application-level data cluster in an LRAW field. No S/4HANA conversion turns PCL2 into transparent tables. Anyone telling you otherwise is conflating two different meanings of the phrase 'cluster table'."},"compatibility":{"title":"What actually changes: entitlement","body":"Classic ERP HCM runs inside S/4HANA only in Compatibility Mode, covered by Simplification List item Note 2273108 and licensed under the Compatibility Scope Matrix, Note 2269324. Those use rights were due to end 31 December 2025 and SAP extended them to 31 May 2026, describing it as a final transition period. The licensed successor is SAP HCM for S/4HANA, component S4HCM 100. This is the real S/4HANA question for anything touching PCL1–PCL4 — not the table, the entitlement.","notes":["2273108","2269324"]},"declustering":{"title":"Declustering — the only thing that makes payroll results relational","feature":"HCM Declustering Tools","bf":"HCM_LOC_CI_50","body":"An OPTIONAL business function, switched on in SFW5. It writes payroll results to plain transparent tables IN ADDITION TO the cluster, synchronously during the payroll run. It is not a migration: PCL2 remains the system of record, the two are kept in sync, and you can switch declustering off and discard the transparent tables — but you cannot discard PCL2.","notAnS4Feature":"Worth being precise about, because it is easy to mis-sell: this is an ECC-era feature, available since SAP_HR 6.04 / EhP4 SPS13. S/4HANA did not introduce it and does not turn it on for you.","mandatoryWhen":"Optional in general — but MANDATORY if you run Payroll Control Center. SAP lists it as a required business function for PCC.","targets":{"convention":"P + cluster file number + RELID + underscore + the internal table name. So P2RX_RT is PCL2, cluster RX, internal table RT.","examples":[{"t":"P2RX_RT","what":"Results table"},{"t":"P2RX_CRT","what":"Cumulated results table"},{"t":"P2RX_BT","what":"Bank transfers"},{"t":"P2RX_WPBP","what":"Work centre and basic pay"},{"t":"P2RX_VERSC","what":"Payroll control record"}]},"limits":["Only the main payroll cluster IDs are supported — RX, RA and CN. SAP states that RELIDs for special country-specific functions are NOT supported, so this is not a blanket 'all payroll results become transparent'.","There is already a transparent table HRPY_WPBP, but it does not carry the WPBP split, so declustering cannot use it and creates its own table instead.","Non-standard access to the clusters — direct SQL, unbuffered report access — is not supported. Hand-rolled cluster writers will silently desync the transparent tables.","No secondary indexes are shipped, because the tables are meant to live on columnar storage."],"objects":[{"o":"SFW5","what":"Activates the business function"},{"o":"HRDCT_LOAD_PY_RX","what":"Initial load — fills the transparent tables from what PCL2 already holds"},{"o":"RPCDCT_SYNC_DCT_DATA","what":"Rebuilds missing declustered rows from the cluster"},{"o":"RPCDCT_DEL_DCT_DATA","what":"Deletes declustered data — explicitly NOT the data in PCLn"},{"o":"RPTDCT_INITIAL_LOAD_B2","what":"The time evaluation equivalent, for cluster B2"}]},"ecPayroll":{"title":"Employee Central Payroll does not escape this","body":"A common claim is that SuccessFactors Employee Central Payroll replaces the clusters with API-driven structures. It does not. EC Payroll is the classic ABAP payroll engine hosted by SAP — the identical declustering documentation is published under the EC Payroll product, naming the same HRPY_RGDIR, P2RX_RT and business functions. It writes PCL2 exactly as ECC does."},"reporting":{"title":"Reading results relationally","body":"Declustering plus Payroll Control Center is what SAP actually documents. PCC validation rules are built as ordinary database joins across the declustered tables and the result directories. There is no delivered CDS view layer over payroll results that we could find — do not plan on one."},"unverified":["No SAP Note number specific to declustering could be established. We do not print one rather than invent one.","No Simplification List item for declustering appears to exist; it is a plain product feature."],"reading":{"title":"PC_PAYRESULT — how you actually look at a payroll result","body":"The transaction people reach for. Worth understanding what it is doing: it does not read any database table you could query. It IMPORTs the cluster for the personnel number and sequence number, decompresses it in memory, and shows you the internal tables that come out. That is why you can see a wage type on screen and still find no table to SELECT it from.","steps":["Read the directory (HRPY_RGDIR, or cluster CD) to get the sequence numbers for the employee","IMPORT the payroll result for that PERNR and SEQNR","Display the internal tables that were inside it"],"alsoSee":"PC00_M99_CLSTR displays cluster contents more generally; the RPUP1D00 to RPUP4D00 reports view and delete the raw contents of PCL1 to PCL4 respectively."}},"source":"SAP help.sap.com (Declustering in HCM Payroll; PCLn structure; ABAP data cluster documentation) for everything about SAP's own behaviour and the S/4HANA position. Cluster area lists come from a community reference document supplied by the user, because SAP does not publish them.","areasCaveat":"SAP does not enumerate the RELID areas of PCL1, PCL3 or PCL4 anywhere public. It tells you to read the fixed values of the RELID domain in your own Data Dictionary. The lists below are community-sourced and are the one part of this page we cannot stand behind — check SE11 if it matters."};   //   //   //   //   //   // populated from data/cluster_tables.json at build
+const CLUSTER_TABLES={"common":{"title":"How a cluster table works","why":"A cluster table combines records sharing a key into one physical row, written to the database compressed. Retrieval is very fast when you know the key, and impossible by any other route — the payload is a binary string, so no SELECT on it means anything and no external tool can interpret it.","ddic":"These are ordinary TRANSPARENT tables. The clustering is done by the application inside the CLUSTD field, not by the Dictionary. That distinction decides their S/4HANA fate — see below.","keyLayout":[{"f":"MANDT","n":"CLNT 3","what":"Client"},{"f":"RELID","n":"CHAR 2","what":"Cluster ID — which subarea of the table this row belongs to"},{"f":"SRTFD","n":"CHAR 40","what":"Work area key. Its internal layout differs per cluster ID."},{"f":"SRTF2","n":"INT4","what":"Row number, for when one cluster spans several rows"},{"f":"CLUSTR","n":"INT2","what":"How much of CLUSTD this row actually uses"},{"f":"CLUSTD","n":"LRAW 3900","what":"The payload — the serialised binary image of the ABAP tables and field strings"}],"identical":"All four PCLn have the same structure. SAP states this explicitly.","noPcl5":"There is no PCL5. SAP consistently writes PCLn where n is 1, 2, 3 or 4.","payloadField":"CLUSTD","verbs":["EXPORT TO DATABASE","IMPORT FROM DATABASE","DELETE FROM DATABASE"],"includeConvention":{"pattern":"RPCnxxy0","parts":[{"p":"n","what":"1, 2, 3 or 4 — which PCLn"},{"p":"xx","what":"the cluster ID"},{"p":"y","what":"country grouping: 0 for international, otherwise the country indicator from T500L"}],"examples":["RPC2RX00 — payroll results, international","RPC1TX00 — infotype long texts, PCL1","RPC4LA00 — change logs, PCL4"],"discrepancy":"Community code very often cites RPC2RX09 and RPC2CD09 instead, which do not fit SAP's published rule. Both forms are in circulation. Check what exists in your system rather than trusting either.","note":"The INCLUDE defines both the work area key and the shape of what an IMPORT returns. Work-area structures follow the pattern PCnnn — PC200 is the payroll key (personnel number plus sequence number), PC261 the payroll directory."},"macros":{"read":"RP-IMP-Cn-xx","pattern":"RP-IMP-C2-RX reads cluster RX from PCL2; RP-EXP-C4-LA writes cluster LA to PCL4. SAP's position is that only these macros should be used.","buffered":"The macro route needs the buffer includes RPPPXD00, RPPPXD10 and RPPPXM00. The macros themselves live in table TRMAC.","authWarning":"A bare IMPORT FROM DATABASE performs NO cluster authorisation check. The check only happens on the buffered macro route. Anything reading payroll data directly is bypassing the authorisation SAP intended."},"countryPattern":"Payroll clusters follow R + the country grouping from T500L. RX is the international form, RD Germany, RU the United States. Every payroll country has its own, so treat this as a rule rather than looking for a fixed list.","twoStep":"Payroll results need two keys, personnel number and sequence number, and you do not know the sequence number up front. Read the directory first — HRPY_RGDIR is transparent and can simply be SELECTed — then read the result. Function module CD_EVALUATION_PERIODS works out which periods are relevant; each result carries status A (current), P (previous) or O (old).","insideCluster":{"title":"What is actually inside the payload","intro":"Decompress a payroll result and you get a set of ABAP internal tables. These are the names practitioners use daily and they are NOT database tables — you will not find them in SE11. They exist only inside CLUSTD, which is the single most confusing thing about payroll data.","tables":[{"t":"RGDIR","what":"The directory — every payroll run for this personnel number. Also exists as the real table HRPY_RGDIR, which you can SELECT."},{"t":"RT","what":"Results table. The wage types and amounts for the period. This is the one people mean by 'payroll results'."},{"t":"CRT","what":"Cumulative results table. Year-to-date and other cumulations."},{"t":"WPBP","what":"Work centre and basic pay. The organisational assignment and pay as they stood at the time of the run — snapshotted from infotypes 0001 and 0008, which is why it can differ from what those infotypes say today."},{"t":"BT","what":"Bank transfers. The payment splits and direct deposits."},{"t":"VERSC","what":"Payroll status and control information for the result."}],"declusterLink":"These are exactly what declustering writes out as real tables — RT becomes P2RX_RT, CRT becomes P2RX_CRT, and so on. The internal table name is the last part of the transparent table name."}},"tables":{"PCL1":{"name":"HR Cluster 1","sapDesc":"Basis for HR work area data — time data recording, incentive wage time tickets, and the supplementary texts attached to infotypes.","desc":"Holds HR working data that does not belong in an infotype record: time events from data collection terminals, incentive wage data, the personal calendar, travel expense data, and the long texts attached to infotype records.","areas":[{"id":"B1","what":"Time events / PDC"},{"id":"G1","what":"Group incentive wages"},{"id":"L1","what":"Individual incentive wages"},{"id":"PC","what":"Personal calendar"},{"id":"TE","what":"Travel expenses — results"},{"id":"TS","what":"Travel expenses — master data"},{"id":"TX","what":"Infotype long texts"},{"id":"ZI","what":"PDC interface to cost accounting"}],"keyNote":"For TX the work area key is PSKEY — personnel number, infotype, subtype, object ID, lock indicator, end date, start date, sequence number. That is why an infotype's long text is keyed the same way as the infotype record itself."},"PCL2":{"name":"HR Cluster 2","sapDesc":"Derived information — payroll results above all, plus every generated payroll schema.","desc":"The payroll and time evaluation results themselves, plus the generated schemas that produced them and the directory you need in order to find any of it.","areas":[{"id":"B2","what":"Time accounting results"},{"id":"CD","what":"Cluster directory — read this first to get the sequence number"},{"id":"PS","what":"Generated schemas"},{"id":"PT","what":"Texts for generated schemas"},{"id":"RX","what":"Payroll results, international"},{"id":"Rn","what":"Payroll results, country-specific. n is the country grouping from T500L — RD is Germany, RU the United States."},{"id":"ZL","what":"Personal work schedule"}],"keyNote":"For payroll results the work area key is PC200 — personnel number plus a sequence number. The country-independent part of the definition sits in one INCLUDE and the country-specific part in another, which is how one payroll engine serves every country."},"PCL3":{"name":"HR Cluster 3","sapDesc":"Applicant data.","desc":"Recruitment data: the applicant action log and time schedule, and the texts attached to applicant infotypes.","areas":[{"id":"AP","what":"Applicant action log and time schedule"},{"id":"TY","what":"Texts for applicant data infotypes"}]},"PCL4":{"name":"HR Cluster 4","sapDesc":"Change documents for HR master data and recruitment.","desc":"The audit trail. Every change to HR master data and applicant data is logged here, which makes it the table auditors ask about and the one nobody can read.","areas":[{"id":"LA","what":"Change logs — long-term documents"},{"id":"SA","what":"Short-term documents, HR master data"},{"id":"SB","what":"Short-term documents, applicant master data"}],"keyNote":"For LA the work area key is PC400 — a transaction class (A for master data), personnel number, infotype, the date and time of the change, and a sequence number."}},"s4":{"headline":"The table is unchanged. The right to run the application that uses it is what changed.","notAClusterTable":{"title":"Not affected by the 1809 pool-and-cluster item","body":"SAP ended support for pooled and cluster tables in S/4HANA 1809 (Note 2577406) — that item killed CDCLS, RFBLG and DOKCLU. It does NOT apply here. Those were Dictionary table clusters, which have no real database table of their own. PCL1–PCL4 are ordinary transparent tables that happen to hold an application-level data cluster in an LRAW field. No S/4HANA conversion turns PCL2 into transparent tables. Anyone telling you otherwise is conflating two different meanings of the phrase 'cluster table'."},"compatibility":{"title":"What actually changes: entitlement","body":"Classic ERP HCM runs inside S/4HANA only in Compatibility Mode, covered by Simplification List item Note 2273108 and licensed under the Compatibility Scope Matrix, Note 2269324. Those use rights were due to end 31 December 2025 and SAP extended them to 31 May 2026, describing it as a final transition period. The licensed successor is SAP HCM for S/4HANA, component S4HCM 100. This is the real S/4HANA question for anything touching PCL1–PCL4 — not the table, the entitlement.","notes":["2273108","2269324"]},"declustering":{"title":"Declustering — the only thing that makes payroll results relational","feature":"HCM Declustering Tools","bf":"HCM_LOC_CI_50","body":"An OPTIONAL business function, switched on in SFW5. It writes payroll results to plain transparent tables IN ADDITION TO the cluster, synchronously during the payroll run. It is not a migration: PCL2 remains the system of record, the two are kept in sync, and you can switch declustering off and discard the transparent tables — but you cannot discard PCL2.","notAnS4Feature":"Worth being precise about, because it is easy to mis-sell: this is an ECC-era feature, available since SAP_HR 6.04 / EhP4 SPS13. S/4HANA did not introduce it and does not turn it on for you.","mandatoryWhen":"Optional in general — but MANDATORY if you run Payroll Control Center. SAP lists it as a required business function for PCC.","targets":{"convention":"P + cluster file number + RELID + underscore + the internal table name. So P2RX_RT is PCL2, cluster RX, internal table RT.","examples":[{"t":"P2RX_RT","what":"Results table"},{"t":"P2RX_CRT","what":"Cumulated results table"},{"t":"P2RX_BT","what":"Bank transfers"},{"t":"P2RX_WPBP","what":"Work centre and basic pay"},{"t":"P2RX_VERSC","what":"Payroll control record"}]},"limits":["Only the main payroll cluster IDs are supported — RX, RA and CN. SAP states that RELIDs for special country-specific functions are NOT supported, so this is not a blanket 'all payroll results become transparent'.","There is already a transparent table HRPY_WPBP, but it does not carry the WPBP split, so declustering cannot use it and creates its own table instead.","Non-standard access to the clusters — direct SQL, unbuffered report access — is not supported. Hand-rolled cluster writers will silently desync the transparent tables.","No secondary indexes are shipped, because the tables are meant to live on columnar storage."],"objects":[{"o":"SFW5","what":"Activates the business function"},{"o":"HRDCT_LOAD_PY_RX","what":"Initial load — fills the transparent tables from what PCL2 already holds"},{"o":"RPCDCT_SYNC_DCT_DATA","what":"Rebuilds missing declustered rows from the cluster"},{"o":"RPCDCT_DEL_DCT_DATA","what":"Deletes declustered data — explicitly NOT the data in PCLn"},{"o":"RPTDCT_INITIAL_LOAD_B2","what":"The time evaluation equivalent, for cluster B2"}]},"ecPayroll":{"title":"Employee Central Payroll does not escape this","body":"A common claim is that SuccessFactors Employee Central Payroll replaces the clusters with API-driven structures. It does not. EC Payroll is the classic ABAP payroll engine hosted by SAP — the identical declustering documentation is published under the EC Payroll product, naming the same HRPY_RGDIR, P2RX_RT and business functions. It writes PCL2 exactly as ECC does."},"reporting":{"title":"Reading results relationally","body":"Declustering plus Payroll Control Center is what SAP actually documents. PCC validation rules are built as ordinary database joins across the declustered tables and the result directories. There is no delivered CDS view layer over payroll results that we could find — do not plan on one."},"unverified":["No SAP Note number specific to declustering could be established. We do not print one rather than invent one.","No Simplification List item for declustering appears to exist; it is a plain product feature."],"reading":{"title":"PC_PAYRESULT — how you actually look at a payroll result","body":"The transaction people reach for. Worth understanding what it is doing: it does not read any database table you could query. It IMPORTs the cluster for the personnel number and sequence number, decompresses it in memory, and shows you the internal tables that come out. That is why you can see a wage type on screen and still find no table to SELECT it from.","steps":["Read the directory (HRPY_RGDIR, or cluster CD) to get the sequence numbers for the employee","IMPORT the payroll result for that PERNR and SEQNR","Display the internal tables that were inside it"],"alsoSee":"PC00_M99_CLSTR displays cluster contents more generally; the RPUP1D00 to RPUP4D00 reports view and delete the raw contents of PCL1 to PCL4 respectively."}},"source":"SAP help.sap.com (Declustering in HCM Payroll; PCLn structure; ABAP data cluster documentation) for everything about SAP's own behaviour and the S/4HANA position. Cluster area lists come from a community reference document supplied by the user, because SAP does not publish them.","areasCaveat":"SAP does not enumerate the RELID areas of PCL1, PCL3 or PCL4 anywhere public. It tells you to read the fixed values of the RELID domain in your own Data Dictionary. The lists below are community-sourced and are the one part of this page we cannot stand behind — check SE11 if it matters."};   //   //   //   //   //   //   // populated from data/cluster_tables.json at build
 function clusterInfo(id){ return (CLUSTER_TABLES.tables||{})[id]||null; }
 function clusterRows(id){
   const c=clusterInfo(id); if(!c) return '';
@@ -4398,7 +4412,7 @@ function openAppGuide(){
       </div>`).join('') +
     `<div class="td-bar"><button onclick="startWalkthrough(0)">Replay the walkthrough</button></div>
      <div style="height:16px"></div>`);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">🧭 App guide</span>';
 }
 
@@ -4633,7 +4647,7 @@ function openFieldFinder(q, mode){
        onkeydown="if(event.key==='Enter')openFieldFinder(this.value)"/>
      <button class="todo-add" onclick="openFieldFinder(document.getElementById('field-q').value)">Find</button>
      <div style="height:10px"></div>${body}<div style="height:16px"></div>`);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">🧲 Where is a field a key?</span>';
 }
 
@@ -4886,7 +4900,7 @@ function openTodo(){
       dependency graph SAP publishes. Reorder freely with the arrows.</div>
     <div style="height:16px"></div>`;
   showDecodePanel('✅','to-do',html);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML=`<span style="font-weight:700">✅ To-do list</span>`;
 }
 function renderTodo(){ if(document.getElementById('todo-body')) openTodo(); }
@@ -5172,10 +5186,21 @@ function openCodex(id){
         <div class="lc-head">📇 <strong>Index entry</strong></div>
         <div class="lc-body">In the index, but SAP declares no foreign keys for it and we haven't hand-mapped its business relationships — so it has no place in the galaxy yet.</div>
       </div>`;
+  // 202 index tables carry a published SAP verdict, and this panel never showed
+  // it -- while the list view drew them a fate icon from the same data. So you
+  // could filter to "Disappears", see a red marker, tap it, and read nothing
+  // about it disappearing. The flags are neutral on purpose: index tables have
+  // no ecc/s4 flags, so SAP's verdict drives the whole box, exactly as
+  // tableFate() already does for them.
+  const lifecycle = S4_LIFECYCLE[id]
+    ? `<div class="section-title">🧭 ECC6 → S/4HANA</div>
+       ${buildLifecycle({id, s4note:null, ecc:true, s4:true}, false)}`
+    : '';
   const body=`
     ${panelActions(id, id+' — '+(desc||''), '')}
     ${newBox}
-    ${newBox?'':head}
+    ${newBox?'':(lifecycle?'':head)}
+    ${lifecycle}
     <div class="section-title">🧠 What it is</div>
     <div class="plain-english">${codexProse(id)||'No description available.'}</div>
     ${fieldChangesFor(id).map(f=>`<button class="pb-link" onclick="openFieldChange('${f.id}')">📐 Field change: ${f.title} →</button>`).join('')}
@@ -5190,7 +5215,7 @@ function openCodex(id){
     <div class="lc-src" style="margin-top:14px">${MODULE_NAMES[mod]||mod} · keys &amp; foreign keys from public SAP reference data</div>
     <div style="height:16px"></div>`;
   const title=`<span style="color:${col};font-family:monospace;font-weight:700">${id}</span> ${favBtn(id)}${lockBtn(id)}`;
-  if(window.innerWidth<=700){
+  if(isMobileLayout()){
     document.getElementById('mobile-panel-title').innerHTML=title;
     document.getElementById('mobile-panel-body').innerHTML=body;
     resetPanelScroll();
@@ -5251,6 +5276,7 @@ function exitFocus(){
 }
 
 function init(){
+  const dc=document.getElementById('drawn-count'); if(dc) dc.textContent=TABLES.length;
   setFunMode(funMode);
   maybeWalkthrough();
   applySheetDetent();
@@ -5349,7 +5375,7 @@ function openList(){
       <button class="${listScope==='graph'?'ff-on':''}" onclick="listScope='graph';openList()">Galaxy only</button>
     </div>
     <div class="lc-src" style="margin:2px 0 10px">${rows.length.toLocaleString()} table${rows.length===1?'':'s'}
-      match the current filters${listScope==='all'?' across all 2,001 in the index':' among the 217 drawn in the galaxy'}.</div>
+      match the current filters${listScope==='all'?` across all ${Object.keys(CODEX).length.toLocaleString()} in the index`:` among the ${TABLES.length} drawn in the galaxy`}.</div>
     ${Object.keys(counts).length?`<div class="ff-row" style="border:0;padding-bottom:8px">
       ${FATE_GROUPS.map(g=>{const n=g.fates.reduce((a,f)=>a+(counts[f]||0),0);
         return n?`<span style="color:${g.col};font-size:.72rem;font-weight:700;margin-right:10px">${g.label} ${n}</span>`:'';}).join('')}
@@ -5375,7 +5401,7 @@ function openList(){
       ${shown.length} of ${rows.length.toLocaleString()} — narrow the filters to see the rest.</div>`:''}
     <div style="height:16px"></div>`;
   showDecodePanel('📋','table',body);
-  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+  document.getElementById(isMobileLayout()?'mobile-panel-title':'sidebar-header')
     .innerHTML='<span style="font-weight:700">📋 Show as table</span>';
 }
 function copyList(){
@@ -5727,7 +5753,7 @@ function selectTable(d,links,tables){
     .attr('stroke-opacity',l=>(src(l)===d.id||tgt(l)===d.id)?.9:.12);
   renderDetail(d);
   // On mobile, open the overlay panel
-  if(window.innerWidth<=700){openMobilePanel(d.id);}
+  if(isMobileLayout()){openMobilePanel(d.id);}
 }
 
 
