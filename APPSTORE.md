@@ -350,3 +350,27 @@ only cost each time was queue position. **Check that state before cancelling** �
 pulling something already in review is materially different, and the API tells you.
 
 `whatsNew` 3,265 characters, patched and read back before the submit call.
+
+---
+
+## 1.0.1 resubmitted with build 23 (2026-07-22)
+
+Seventh and final swap of the session. Adds a first-run walkthrough and an App guide, on top of
+everything from build 22.
+
+Every one of these seven swaps cancelled from `WAITING_FOR_REVIEW`, never `IN_REVIEW`. That is
+the only reason they were cheap — the cost is queue position, nothing else. **Read the state
+before cancelling**; the API reports it, and a submission already in review is a materially
+different decision.
+
+The pattern that made repeated swaps safe, worth keeping:
+1. Upload the replacement and wait for `processingState: VALID` **before** cancelling anything.
+2. Cancel, then poll until the old submission leaves its open state — a new one cannot be
+   created while it lingers.
+3. Attach the build (`PATCH .../relationships/build` returns 204 with an empty body — success).
+4. PATCH `whatsNew`, **check the result, then GET it back and compare**. Measure the limit in
+   characters, not bytes.
+5. Only then create the `reviewSubmission` and submit.
+
+Uploading a TestFlight build never disturbed the submission: a version pins a specific build,
+so TestFlight and review run independently.
