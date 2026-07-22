@@ -239,6 +239,22 @@
   .fold>summary::after{content:'\25BE';float:right;color:var(--text-muted);}
   .fold[open]>summary::after{content:'\25B4';}
   .fold>div{padding:0 12px 12px;}
+  .walkthrough{display:none;position:fixed;inset:0;z-index:400;background:rgba(6,9,14,.86);
+    backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:22px;}
+  .walkthrough.active{display:flex;}
+  .wt-card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
+    border-radius:18px;padding:26px 22px 18px;box-shadow:0 20px 60px rgba(0,0,0,.6);}
+  .wt-icon{font-size:2.4rem;line-height:1;margin-bottom:12px;}
+  .wt-title{font-size:1.12rem;font-weight:800;margin-bottom:9px;line-height:1.25;}
+  .wt-text{font-size:.84rem;line-height:1.62;color:var(--text-muted);}
+  .wt-dots{display:flex;gap:5px;justify-content:center;margin:18px 0 14px;}
+  .wt-dot{width:6px;height:6px;border-radius:50%;background:var(--border);}
+  .wt-dot.on{background:var(--fi);width:18px;border-radius:3px;}
+  .wt-nav{display:flex;gap:8px;}
+  .wt-back{flex:0 0 auto;background:none;border:1px solid var(--border);color:var(--text-muted);
+    border-radius:10px;padding:10px 16px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;}
+  .wt-next{flex:1;background:rgba(79,156,249,.16);border:1px solid var(--fi);color:#cfe3ff;
+    border-radius:10px;padding:10px 16px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:inherit;}
   /* List view */
   .lv-wrap{max-height:46vh;overflow-y:auto;border:1px solid var(--border);border-radius:10px;}
   table.lv{width:100%;border-collapse:collapse;font-size:.76rem;}
@@ -597,6 +613,9 @@
     </div>
 
     <div class="sec-label">Learn</div>
+    <button class="row-link" onclick="toggleDrawer('menu-tools',false);openAppGuide()">
+      <span>&#129517; App guide</span>
+      <span class="row-sub">How everything here works, and what it will not do</span></button>
     <button class="row-link" onclick="toggleDrawer('menu-tools',false);openFieldGuide()">
       <span>&#128214; ECC &#8594; S/4HANA field guide</span>
       <span class="row-sub">The whole picture, in one read</span></button>
@@ -640,6 +659,9 @@
       <button class="toggle-btn mode-fun active" id="btn-fun" onclick="setFunMode(true)">&#127917; Detailed</button>
     </div>
     <div class="depth-hint">Detailed gives the full explainer in larger, higher-contrast text.</div>
+  </div>
+  <div class="walkthrough" id="walkthrough">
+    <div class="wt-card" id="wt-body"></div>
   </div>
   <div class="tools-backdrop" id="tools-backdrop" onclick="toggleTools(false)"></div>
   <div class="codex-results" id="codex-results"></div>
@@ -3890,6 +3912,122 @@ function openViewsPanel(){
     .innerHTML='<span style="font-weight:700">💾 Saved views</span>';
   renderViews();
 }
+
+// ── App guide and first-run walkthrough ────────────────────────────────────
+// One body of content, two presentations: the guide is the full reference, the
+// walkthrough is a short first-run subset of it. Keeping them in one array
+// stops the tour promising something the guide describes differently.
+const APP_GUIDE=[
+  {icon:'🌌', title:'What this is',
+   body:'Every SAP table in one place, with SAP’s own verdict on what happens to it in '+
+        'S/4HANA. Completely offline — no account, no network, nothing collected. ECC '+
+        'mainstream maintenance ends 31 December 2027, and everything here is built around '+
+        'the question that deadline forces: what happens to this table when we convert?',
+   tour:true},
+  {icon:'🪐', title:'The chart',
+   body:'Each planet is a table; lines are relationships. Colour is its migration fate — red '+
+        'disappears, amber changes or moves, green is new in S/4HANA, slate carries over. '+
+        'Tap one for the detail panel. Bigger planets have more connections.',
+   tour:true},
+  {icon:'🔍', title:'Search understands more than table names',
+   body:'Type a table (BSEG), a field (MATNR), a movement type (261), a document type (KR), '+
+        'a function module (BAPI_PO_CREATE1) — or plain business language. "visa" finds '+
+        'infotype 0048. Answers appear above the results.',
+   tour:true},
+  {icon:'⚗️', title:'Filters',
+   body:'The funnel icon. Choose ECC6, S/4HANA or both — it applies to search as well as the '+
+        'chart. Filter by migration fate to see only what disappears or only what changes. '+
+        'Modules fold away once set. Paste a list of table names to chart just those, and '+
+        'save the whole arrangement as a named view.',
+   tour:true},
+  {icon:'🧰', title:'Tools',
+   body:'In the menu. To-do collects tables, playbooks, field changes and notes into one list '+
+        'you can share or export as a PDF. Find a field answers "where does the customer '+
+        'number live". BAPIs searches 3,622 function modules in business language. Show as '+
+        'table lists everything matching your filters, reaching the whole index rather than '+
+        'just the chart.',
+   tour:true},
+  {icon:'📖', title:'Field guide and lessons',
+   body:'The field guide is a written ECC → S/4HANA briefing generated from this app’s own '+
+        'data, so its numbers always match. Lessons collects what repeatedly matters — 16 '+
+        'drawn from SAP’s own required-action text, 7 our own conclusions, each marked as '+
+        'which.',
+   tour:false},
+  {icon:'✅', title:'The to-do list',
+   body:'Anything with a ＋ TO DO button goes on it. Items group into a suggested working '+
+        'order — what applies, switches to decide, prepare before conversion, then custom '+
+        'code. Export as a PDF and each table brings its description, S/4 fate, SAP Note, key '+
+        'fields and joins with it.',
+   tour:false},
+  {icon:'⚖️', title:'What this app will not do',
+   body:'Verdicts come from SAP’s Simplification List, which states target architecture — not '+
+        'an inventory of the release you are converting to. A table listed as eliminated can '+
+        'still be present. Around 1,970 tables have no SAP entry at all; they are marked "No '+
+        'verdict" rather than safe, because absence of an item is not a promise. And nothing '+
+        'here knows about your system: your Z-tables, appends and modifications are yours to '+
+        'assess.',
+   tour:true},
+];
+
+function openAppGuide(){
+  const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  showDecodePanel('🧭','app guide',
+    `<div class="lc-box lc-changed">
+       <div class="lc-head">🧭 <strong>How this app works</strong></div>
+       <div class="lc-body">Every feature, and the limits worth knowing before you rely on it.</div>
+     </div>` +
+    APP_GUIDE.map(s=>`<div class="lesson">
+        <div class="lesson-h">${s.icon} ${esc(s.title)}</div>
+        <div class="lesson-b">${s.body}</div>
+      </div>`).join('') +
+    `<div class="td-bar"><button onclick="startWalkthrough(0)">Replay the walkthrough</button></div>
+     <div style="height:16px"></div>`);
+  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+    .innerHTML='<span style="font-weight:700">🧭 App guide</span>';
+}
+
+// ── Walkthrough ────────────────────────────────────────────────────────────
+let wtStep=0;
+const WT=()=>APP_GUIDE.filter(s=>s.tour);
+function startWalkthrough(i){
+  closeMobilePanel();
+  wtStep=i||0;
+  document.getElementById('walkthrough').classList.add('active');
+  renderWalkthrough();
+}
+function renderWalkthrough(){
+  const steps=WT(), s=steps[wtStep];
+  const dots=steps.map((_,i)=>`<span class="wt-dot ${i===wtStep?'on':''}"></span>`).join('');
+  document.getElementById('wt-body').innerHTML=`
+    <div class="wt-icon">${s.icon}</div>
+    <div class="wt-title">${s.title}</div>
+    <div class="wt-text">${s.body}</div>
+    <div class="wt-dots">${dots}</div>
+    <div class="wt-nav">
+      ${wtStep>0?`<button class="wt-back" onclick="walkStep(-1)">Back</button>`:`<button class="wt-back" onclick="endWalkthrough()">Skip</button>`}
+      <button class="wt-next" onclick="${wtStep===steps.length-1?'endWalkthrough()':'walkStep(1)'}">
+        ${wtStep===steps.length-1?'Get started':'Next'}</button>
+    </div>`;
+}
+function walkStep(d){
+  const steps=WT();
+  wtStep=Math.max(0,Math.min(steps.length-1,wtStep+d));
+  renderWalkthrough();
+  if(window.webkit?.messageHandlers?.hapticFeedback){
+    window.webkit.messageHandlers.hapticFeedback.postMessage({style:'selection'});
+  }
+}
+function endWalkthrough(){
+  document.getElementById('walkthrough').classList.remove('active');
+  try{ localStorage.setItem('erpgalaxy.seenTour','1'); }catch(e){}
+}
+// First run only. Anyone who has already used the app should not be interrupted
+// by it after an update, so the flag is set on completion AND on skip.
+function maybeWalkthrough(){
+  let seen=true;
+  try{ seen = localStorage.getItem('erpgalaxy.seenTour')==='1'; }catch(e){}
+  if(!seen) setTimeout(()=>startWalkthrough(0), 400);
+}
 // ── Field finder ───────────────────────────────────────────────────────────
 // "Where do I find the customer number?" -- answered from key fields plus the
 // foreign keys SAP declares. Built lazily and cached; it is a scan of 2,001
@@ -4686,6 +4824,7 @@ function exitFocus(){
 
 function init(){
   setFunMode(funMode);
+  maybeWalkthrough();
   applySheetDetent();
   buildFateFilters();
   setView(currentView);
