@@ -4586,6 +4586,28 @@
   "submodule": "FI-GL",
   "tier": 2
  },
+ "BC001": {
+  "desc": "Vendor-to-partner assignment links. Entries must be migrated to the CVI_VEND_LINK table before conversion.",
+  "id": "BC001",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "submodule": "AP-MD-BP",
+  "tier": 2
+ },
+ "BD001": {
+  "desc": "Customer-to-partner assignment links. Entries must be migrated to the CVI_CUST_LINK table before conversion.",
+  "id": "BD001",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "SD",
+  "moduleInferred": true,
+  "submodule": "AP-MD-BP",
+  "tier": 2
+ },
  "BFIT_A": {
   "desc": "G/L account items for subsequent business area/profit center adjustment postings in Financial Accounting.",
   "id": "BFIT_A",
@@ -4785,6 +4807,17 @@
   "moduleInferred": true,
   "source": "simplification-list",
   "submodule": "FI",
+  "tier": 2
+ },
+ "BP1010": {
+  "desc": "Creditworthiness data for the Financial Services Business Partner. Four of its fields are flagged for removal in a future release.",
+  "id": "BP1010",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "FI",
+  "moduleInferred": true,
+  "submodule": "FS-BP",
   "tier": 2
  },
  "BPBK": {
@@ -5895,6 +5928,28 @@
   "module": "EHS",
   "source": "ehs-top50",
   "submodule": "EHS",
+  "tier": 2
+ },
+ "CVI_CUST_LINK": {
+  "desc": "Maps a customer to its business partner. SAP calls it one of the new link tables that the obsolete BD001 assignments must be migrated into.",
+  "id": "CVI_CUST_LINK",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "SD",
+  "moduleInferred": true,
+  "submodule": "AP-MD-BP",
+  "tier": 2
+ },
+ "CVI_VEND_LINK": {
+  "desc": "Maps a vendor to its business partner. SAP calls it one of the new link tables that the obsolete BC001 assignments must be migrated into.",
+  "id": "CVI_VEND_LINK",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "submodule": "AP-MD-BP",
   "tier": 2
  },
  "DBTABLOG": {
@@ -32130,6 +32185,28 @@
   "moduleSource": "sap-application-component:SD-BF-MIG",
   "source": "simplification-list",
   "submodule": "FI",
+  "tier": 2
+ },
+ "VBBE": {
+  "desc": "Holds each ATP-relevant requirement explicitly. In S/4HANA it replaces the pre-aggregated VBBS as the sole store for ATP requirements.",
+  "id": "VBBE",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "SD",
+  "moduleInferred": true,
+  "submodule": "SD-BF-AC",
+  "tier": 2
+ },
+ "VBBS": {
+  "desc": "Pre-aggregated ATP requirements. Obsolete in S/4HANA — advanced ATP stores each requirement explicitly in VBBE instead.",
+  "id": "VBBS",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "SD",
+  "moduleInferred": true,
+  "submodule": "SD-BF-AC",
   "tier": 2
  },
  "VBEPDG": {

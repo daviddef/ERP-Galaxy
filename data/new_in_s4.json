@@ -30,5 +30,13 @@
  "T130F_C": {
   "evidence": "Therefore, all entries from the table T130F that are relevant for the copy control must be copied to the new table T130F_C, and their field contents must be identical. If the precheck issues a warning message, it may be the case that the fields",
   "held": "index"
+ },
+ "CVI_CUST_LINK": {
+  "evidence": "You need to migrate these entries to the new link tables CVI_CUST_LINK / CVI_VEND_LINK.",
+  "held": "index"
+ },
+ "CVI_VEND_LINK": {
+  "evidence": "You need to migrate these entries to the new link tables CVI_CUST_LINK / CVI_VEND_LINK.",
+  "held": "index"
  }
 }

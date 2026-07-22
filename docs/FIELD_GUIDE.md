@@ -18,17 +18,17 @@ Every verdict in this guide is one of five outcomes. They are not equally surviv
 
 | Outcome | Tables | What it means for your code |
 |---|---:|---|
-| **Disappears** | 62 | Not in S/4HANA. Reads and writes both fail. |
+| **Disappears** | 63 | Not in S/4HANA. Reads and writes both fail. |
 | **Replaced** | 78 | Still present, no longer the system of record. Code compiles and returns stale or partial answers. |
 | **Compatibility view only** | 59 | Reads work, writes do not. Reporting keeps running, so this is the one that surfaces late. |
-| **Changed** | 34 | Survives with different structure, semantics or content. |
+| **Changed** | 37 | Survives with different structure, semantics or content. |
 | **Unchanged** | 11 | SAP states it is unaffected. |
 
-**244 tables carry a published verdict.** 234 of those cite a specific SAP Note, and 157 carry SAP's own required-action text.
+**248 tables carry a published verdict.** 238 of those cite a specific SAP Note, and 161 carry SAP's own required-action text.
 
 ### The number that matters most is the one nobody quotes
 
-Roughly **1,971 tables have no Simplification List entry at all.**
+Roughly **1,972 tables have no Simplification List entry at all.**
 
 That is not a clean bill of health. It means SAP has not published a change for them. Absence of an item is not a promise, and treating "no news" as "no change" is the single easiest way to be blindsided. Anything material to your business deserves a check regardless of whether it appears here.
 
@@ -41,6 +41,8 @@ Destinations, not risks — but worth knowing, because data you are looking for 
 | Table | Held in the app |
 |---|---|
 | `ACDOCA` | curated |
+| `CVI_CUST_LINK` | index |
+| `CVI_VEND_LINK` | index |
 | `EHFNDD_LISU_RT` | index |
 | `FMLC_ERD` | index |
 | `MATDOC` | curated |
@@ -222,7 +224,7 @@ While building this app, curated one-line notes had drifted from SAP's published
 
 ## What else is in the dataset
 
-- **2,223 tables** with keys and declared foreign keys
+- **2,230 tables** with keys and declared foreign keys
 - **91 movement types** and **10 document types**, decoded
 - **3,622 BAPIs and RFC-enabled function modules**, with cloud release status; 47 carry a derivable link to a table
 

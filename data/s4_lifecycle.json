@@ -53,6 +53,24 @@
   "sapNote": "2577406",
   "source": "simplification-list-2023"
  },
+ "BC001": {
+  "action": "Migrate the assignment entries to the CVI link tables before conversion.",
+  "evidence": "Usage of obsolete links in tables BD001 / BC001. You need to migrate these entries to the new link tables CVI_CUST_LINK / CVI_VEND_LINK.",
+  "item": "5.1.10",
+  "replacedBy": "CVI_VEND_LINK",
+  "s4status": "changed",
+  "sapNote": "3010257",
+  "source": "simplification-list-2025-heading"
+ },
+ "BD001": {
+  "action": "Migrate the assignment entries to the CVI link tables before conversion.",
+  "evidence": "Usage of obsolete links in tables BD001 / BC001. You need to migrate these entries to the new link tables CVI_CUST_LINK / CVI_VEND_LINK.",
+  "item": "5.1.10",
+  "replacedBy": "CVI_CUST_LINK",
+  "s4status": "changed",
+  "sapNote": "3010257",
+  "source": "simplification-list-2025-heading"
+ },
  "BP001": {
   "evidence": "The fields BP001-XUBNAME and BP001-PERS_NR are not available any more in",
   "item": "45.1",
@@ -60,6 +78,15 @@
   "s4status": "changed",
   "sapNote": "2900607",
   "source": "simplification-list-2023"
+ },
+ "BP1010": {
+  "action": "Four fields are flagged for future removal. Check custom code and interfaces that read them before they go.",
+  "evidence": "Date of Credit Standing Information and RATING of the Financial Services Business Partner table Creditworthiness Data (table name BP1010) will become obsolete in a future release.",
+  "item": "5.1.25",
+  "replacedBy": null,
+  "s4status": "changed",
+  "sapNote": "3327581",
+  "source": "simplification-list-2025-heading"
  },
  "BPID001": {
   "evidence": "FSBP Table Additional Partner Numbers (BPID001) obsolete",
@@ -1995,6 +2022,15 @@
   "s4status": "changed",
   "sapNote": "2267306",
   "source": "simplification-list-2023"
+ },
+ "VBBS": {
+  "action": "The old ERP-ATP check code is redirected to use VBBE. Custom code reading the pre-aggregated requirements needs to read VBBE instead.",
+  "evidence": "With the new HANA ATP, we do not need pre-aggregation anymore, and therefore this table is obsolete. Instead of the VBBS we use the VBBE, where each ATP-relevant requirement is explicitly stored.",
+  "item": "15.1.1",
+  "replacedBy": "VBBE",
+  "s4status": "deprecated",
+  "sapNote": "2209696",
+  "source": "simplification-list-2025-heading"
  },
  "VBFA": {
   "action": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
