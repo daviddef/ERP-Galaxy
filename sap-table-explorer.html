@@ -201,6 +201,16 @@
     gap:6px;background:rgba(167,139,250,.12);border:1px solid #a78bfa;color:#c4b5fd;
     border-radius:10px;padding:9px 12px;font-size:.78rem;font-weight:700;cursor:pointer;
     font-family:inherit;line-height:1.2;}
+  .lv-wrap{max-height:52vh;overflow-y:auto;border:1px solid var(--border);border-radius:10px;}
+  table.lv{width:100%;border-collapse:collapse;font-size:.76rem;}
+  table.lv thead th{position:sticky;top:0;background:var(--surface2);text-align:left;
+    padding:7px 9px;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--text-muted);border-bottom:1px solid var(--border);z-index:1;}
+  table.lv td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:top;}
+  table.lv tbody tr{cursor:pointer;}
+  table.lv tbody tr:hover{background:rgba(255,255,255,.04);}
+  .lv-id{display:block;font-family:monospace;font-weight:700;color:var(--text);}
+  .lv-desc{display:block;color:var(--text-muted);font-size:.68rem;margin-top:1px;line-height:1.35;}
   .fate-chip{display:flex;align-items:center;gap:7px;width:100%;background:rgba(255,255,255,.03);
     border:1px solid var(--border);border-radius:9px;padding:7px 9px;margin-bottom:5px;
     color:var(--text-muted);font-size:.76rem;font-family:inherit;cursor:pointer;text-align:left;}
@@ -469,6 +479,10 @@
     <div class="mode-label">Migration fate</div>
     <div class="pb-sub">Show only what happens to a table in S/4HANA</div>
     <div class="module-filters" id="fate-filters"></div>
+    <button class="todo-add" onclick="toggleDrawer('filter-tools',false);openList()">
+      &#128203; Show as list</button>
+    <div class="depth-hint">Counts above are for the 217 tables drawn in the galaxy. The list
+      also reaches the rest of the 2,001-table index, where most migration verdicts sit.</div>
     <div class="mode-label">Modules</div>
     <div class="module-filters" id="module-filters"></div>
   </div>
@@ -2636,7 +2650,12 @@ const FATE_GROUPS=[
   {id:'dies',   label:'Disappears',   col:'#ef4444', fates:['dies']},
   {id:'changed',label:'Changes',      col:'#f59e0b', fates:['changes','moves','compat']},
   {id:'arrives',label:'New in S/4',   col:'#22c55e', fates:['arrives']},
-  {id:'safe',   label:'Carries over', col:'#64748b', fates:['safe','unknown']},
+  {id:'safe',   label:'Carries over', col:'#64748b', fates:['safe']},
+  // Kept apart from "carries over" on purpose. 1,803 index tables have no
+  // Simplification List item at all, and the app's own panel says absence of an
+  // item is not a promise -- folding them in with tables SAP actually calls
+  // unchanged would turn "we don't know" into "it's fine".
+  {id:'unknown',label:'No verdict',   col:'#475569', fates:['unknown']},
 ];
 let activeFates=new Set(FATE_GROUPS.map(g=>g.id));
 try{ const v=JSON.parse(localStorage.getItem('erpgalaxy.fates')||'null');
@@ -3208,7 +3227,19 @@ function inEra(id, view){
 }
 function tableFate(id){
   const t=TABLES.find(x=>x.id===id);
-  if(!t) return 'unknown';                       // Codex entry: no ECC/S4 flags
+  if(!t){
+    // Index tables have no ECC/S4 flags, but 198 of our 244 Simplification List
+    // verdicts sit on them. Returning 'unknown' here filed every one of those
+    // under "carries over" -- telling you a table SAP deprecated was safe.
+    const e=S4_LIFECYCLE[id];
+    if(!e) return 'unknown';
+    if(e[0]==='compat_view') return 'compat';
+    if(e[0]==='replaced')    return 'moves';
+    if(e[0]==='deprecated')  return 'dies';
+    if(e[0]==='changed')     return 'changes';
+    if(e[0]==='unchanged')   return 'safe';
+    return 'unknown';
+  }
   // A table absent from ECC can only be a destination — flags are decisive here.
   if(!t.ecc && t.s4) return 'arrives';
   const e=S4_LIFECYCLE[id];
@@ -3576,11 +3607,28 @@ function openFieldFinder(q, mode){
   if(mode) fieldQueryMode=mode;
   const fields=parseFieldQuery(query);
   const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  // A business term rather than a field name -- "visa" is not a field, but we
+  // know which table holds it, so answer that instead of "nothing found".
+  const concept=fields.length?null:conceptFor(query);
   let body;
-  if(!fields.length){
+  if(concept){
+    const t=concept.table;
+    const open=TABLES.find(x=>x.id===t)?`jumpTo('${t}')`:`openCodex('${t}')`;
+    body=`<div class="lc-box lc-changed">
+        <div class="lc-head">📇 <strong>${esc(concept.label)}</strong></div>
+        <div class="lc-body">${concept.note}</div>
+      </div>
+      <div class="section-title">🪐 Table</div>
+      <div class="pb-chips"><button class="pb-chip" style="border-color:#f472b6;color:#f472b6"
+        onclick="${open}">${t}</button></div>
+      <div class="lc-src" style="margin-top:10px">Matched as a business term, not a field name.
+        This app holds key fields and declared foreign keys, so the individual visa fields inside
+        the table are not indexed — but the table that holds them is.</div>`;
+  } else if(!fields.length){
     body=`<div class="td-empty">Type one or more fields — SAP names like
       <strong>KUNNR</strong>, <strong>PERNR</strong>, <strong>WERKS</strong>, or plain English like
-      <strong>customer number, personnel number, plant</strong>.<br><br>
+      <strong>customer number, personnel number, plant</strong>. Business terms work too —
+      try <strong>visa</strong>.<br><br>
       You'll get every table where that field is part of the key or a declared foreign key,
       and you can put the whole set on the board.</div>`;
   } else {
@@ -4258,27 +4306,108 @@ function init(){
 function fateGroupOf(id){
   const f=tableFate(id);
   const g=FATE_GROUPS.find(x=>x.fates.includes(f));
-  return g?g.id:'safe';
+  return g?g.id:'unknown';
 }
 function fateActive(id){ return activeFates.has(fateGroupOf(id)); }
 function setAllFates(on){
   activeFates = on ? new Set(FATE_GROUPS.map(g=>g.id)) : new Set();
-  persistFates(); buildFateFilters(); updateGraph();
+  persistFates(); buildFateFilters(); updateGraph(); reflow();
   if(searchQuery) renderCodexResults(searchQuery);
+}
+// A filtered set keeps the coordinates it had inside the full graph, so the
+// survivors stay spread out over the old layout. Re-heat briefly so they draw
+// together, then fit the view to them.
+function reflow(){
+  if(!simulation) return;
+  simulation.alpha(0.6).restart();
+  setTimeout(()=>fitToNodes(600), 700);
 }
 function toggleFate(id){
   if(activeFates.has(id)) activeFates.delete(id); else activeFates.add(id);
-  persistFates(); buildFateFilters(); updateGraph();
+  persistFates(); buildFateFilters(); updateGraph(); reflow();
   if(searchQuery) renderCodexResults(searchQuery);
 }
 function soloFate(id,ev){
   if(ev) ev.stopPropagation();
   activeFates=new Set([id]);
-  persistFates(); buildFateFilters(); updateGraph();
+  persistFates(); buildFateFilters(); updateGraph(); reflow();
   if(searchQuery) renderCodexResults(searchQuery);
 }
 function persistFates(){
   try{ localStorage.setItem('erpgalaxy.fates',JSON.stringify([...activeFates])); }catch(e){}
+}
+// ── List view ──────────────────────────────────────────────────────────────
+// The graph can only draw the 217 curated tables. 198 of our 244 migration
+// verdicts sit on index tables that have no node, so filtering by fate in the
+// graph shows a fraction of what we actually know. The list is where the whole
+// catalogue is reachable, which is why it says which scope you are looking at.
+let listScope='all';   // 'all' = whole catalogue, 'graph' = just the galaxy
+function listRows(){
+  const rows=[];
+  const push=(id,mod,desc,inGraph)=>{
+    if(!activeModules.has(mod)) return;
+    if(!fateActive(id)) return;
+    if(!inEra(id)) return;
+    rows.push({id,mod,desc,fate:tableFate(id),inGraph});
+  };
+  TABLES.forEach(t=>push(t.id,t.module,t.shortDesc||'',true));
+  if(listScope==='all'){
+    for(const id in CODEX){
+      if(TABLES.some(t=>t.id===id)) continue;
+      push(id,CODEX[id][0],CODEX[id][1]||'',false);
+    }
+  }
+  const order={dies:0,compat:1,moves:2,changes:3,arrives:4,safe:5,unknown:6};
+  return rows.sort((a,b)=>(order[a.fate]-order[b.fate])||a.id.localeCompare(b.id));
+}
+function openList(){
+  const rows=listRows();
+  const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const counts={};
+  rows.forEach(r=>counts[r.fate]=(counts[r.fate]||0)+1);
+  const shown=rows.slice(0,400);
+  const body=`
+    <div class="td-bar">
+      <button class="${listScope==='all'?'ff-on':''}" onclick="listScope='all';openList()">Whole catalogue</button>
+      <button class="${listScope==='graph'?'ff-on':''}" onclick="listScope='graph';openList()">Galaxy only</button>
+    </div>
+    <div class="lc-src" style="margin:2px 0 10px">${rows.length.toLocaleString()} table${rows.length===1?'':'s'}
+      match the current filters${listScope==='all'?' across all 2,001 in the index':' among the 217 drawn in the galaxy'}.</div>
+    ${Object.keys(counts).length?`<div class="ff-row" style="border:0;padding-bottom:8px">
+      ${FATE_GROUPS.map(g=>{const n=g.fates.reduce((a,f)=>a+(counts[f]||0),0);
+        return n?`<span style="color:${g.col};font-size:.72rem;font-weight:700;margin-right:10px">${g.label} ${n}</span>`:'';}).join('')}
+    </div>`:''}
+    <div class="lv-wrap">
+      <table class="lv">
+        <thead><tr><th>Table</th><th>Module</th><th>S/4</th></tr></thead>
+        <tbody>${shown.map(r=>{
+          const F=FATE[r.fate]||FATE.unknown;
+          const open=r.inGraph?`jumpTo('${r.id}')`:`openCodex('${r.id}')`;
+          return `<tr onclick="${open}">
+            <td><span class="lv-id">${esc(r.id)}</span><span class="lv-desc">${esc(r.desc).slice(0,70)}</span></td>
+            <td><span style="color:${MODULE_COLORS[r.mod]||'#94a3b8'}">${esc(r.mod)}</span></td>
+            <td><span style="color:${F.col}">${F.icon}</span></td>
+          </tr>`;}).join('')}</tbody>
+      </table>
+    </div>
+    ${rows.length>shown.length?`<div class="lc-src" style="margin-top:8px">Showing the first
+      ${shown.length} of ${rows.length.toLocaleString()} — narrow the filters to see the rest.</div>`:''}
+    <div class="td-bar">
+      <button onclick="boardFromList(${JSON.stringify(shown.map(r=>r.id)).replace(/"/g,'&quot;')})">Put these on the chart</button>
+      <button onclick="copyList()">Copy as text</button>
+    </div>
+    <div style="height:16px"></div>`;
+  showDecodePanel('📋','list',body);
+  document.getElementById(window.innerWidth<=700?'mobile-panel-title':'sidebar-header')
+    .innerHTML='<span style="font-weight:700">📋 Table list</span>';
+}
+function copyList(){
+  const rows=listRows();
+  const txt='ERP Galaxy — table list\n\n'+rows.map(r=>
+    `${r.id}\t${r.mod}\t${(FATE[r.fate]||FATE.unknown).label}\t${r.desc}`).join('\n');
+  const h=window.webkit?.messageHandlers?.exportTodo;
+  if(h){ h.postMessage({format:'share', text:txt, html:''}); return; }
+  navigator.clipboard?.writeText(txt);
 }
 function buildFateFilters(){
   const el=document.getElementById('fate-filters');
@@ -4920,7 +5049,28 @@ function moveTooltip(e){
 function hideTooltip(){document.getElementById('tooltip').classList.remove('visible');}
 function zoomIn(){svg.transition().duration(300).call(zoomBehavior.scaleBy,1.35);}
 function zoomOut(){svg.transition().duration(300).call(zoomBehavior.scaleBy,0.74);}
-function resetZoom(){svg.transition().duration(500).call(zoomBehavior.transform,d3.zoomIdentity);}
+// Zoom to fit whatever is currently on screen. Resetting to zoomIdentity was
+// nearly useless: filter down to 11 tables and the force layout leaves them
+// scattered across a canvas sized for 217, so "home" put you back at 1:1 over
+// mostly empty space. Fitting the actual bounding box is what the button was
+// always supposed to do.
+function fitToNodes(duration){
+  if(!svg||!node) return;
+  const ns=node.data();
+  if(!ns.length){ svg.transition().duration(duration||500).call(zoomBehavior.transform,d3.zoomIdentity); return; }
+  const xs=ns.map(d=>d.x).filter(v=>isFinite(v)), ys=ns.map(d=>d.y).filter(v=>isFinite(v));
+  if(!xs.length) return;
+  const pad=70;
+  const x0=Math.min(...xs)-pad, x1=Math.max(...xs)+pad;
+  const y0=Math.min(...ys)-pad, y1=Math.max(...ys)+pad;
+  const el=document.getElementById('graph-container');
+  const w=el.clientWidth, hgt=el.clientHeight;
+  const k=Math.min(4, Math.max(0.05, Math.min(w/(x1-x0), hgt/(y1-y0))));
+  const tx=w/2-k*(x0+x1)/2, ty=hgt/2-k*(y0+y1)/2;
+  svg.transition().duration(duration||500)
+     .call(zoomBehavior.transform, d3.zoomIdentity.translate(tx,ty).scale(k));
+}
+function resetZoom(){ fitToNodes(500); }
 window.addEventListener('load',init);
 window.addEventListener('resize',()=>buildGraph());
 </script>
