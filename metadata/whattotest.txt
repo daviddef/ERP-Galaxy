@@ -1,41 +1,36 @@
-Build 20 — everything added since the build currently in App Store review.
+Build 21 — mostly navigation, plus a fix for styling that was broken in build 20.
 
-WORTH A LOOK FIRST — these are the two I could not test without a device:
-• To-do list → Export PDF. Add a few tables, then Export PDF from the to-do panel. It renders natively, so this is the one thing most likely to misbehave.
-• Share list, and the Share button in the field guide. Both go through the iOS share sheet.
+FIXED — MISSING STYLES IN BUILD 20
+The field guide, the lessons overlay and the table list all shipped in build 20 with their CSS accidentally deleted, so they rendered as unstyled text. If you looked at any of those in build 20 and thought they looked broken, they were. Worth a second look now.
 
-NEW — FIELD GUIDE
-Burger menu → Open the guide. A written ECC → S/4HANA guide generated from the app's own data, so its numbers always match what the app holds. Shareable.
+REBUILT MENU
+Three groups instead of eleven stacked blocks, and it fits on one screen:
+• TOOLS — a 2x2 grid: To-do (with a count), Find a field, BAPIs, Table list
+• LEARN — field guide and lessons as rows; playbooks and legend now fold away
+• DISPLAY — Brief / Detailed
 
-NEW — LESSONS LEARNED
-Burger menu → Open lessons. 23 lessons: 16 taken from SAP's own required-action text, 7 our own conclusions. Tables that have a lesson show it on their own panel — try MKPF, KONV, VBUK, BSEG.
+MOVED TO THE FILTER ICON
+Paste a table list, and Saved views. Both decide what the chart shows, so they sit with the other filters rather than in the menu.
 
-NEW — BAPIs AND FUNCTION MODULES
-Burger menu → Open catalogue. 3,622 BAPIs and RFC-enabled modules, searchable by name or application component. Try BAPI_SALESORDER, or MM-PUR.
-Where a module links to a table it is labelled "Related, not read/write" — SAP does not publish which tables a module touches, so that link is derived and says so. Try BAPI_AP_ACC_GETOPENITEMS, or open MARA.
+NEW — HALF-HEIGHT PANEL
+Open any table, then tap "⇕ Half" in the panel header. The panel parks mid-screen and the dimming comes off, so the graph stays live underneath — tap table after table and the panel just re-fills instead of closing. Tap "⇕ Full" to go back. The choice is remembered.
 
-NEW — WHERE IS THIS FIELD?
-Burger menu. Ask in SAP names or plain English: "customer number, personnel number and plant". Business terms work too — try "visa", which now finds infotype 0048.
+BAPI SEARCH NOW TAKES BUSINESS LANGUAGE
+This is the one I would most like tested. Previously you had to know the exact name. Now try:
+• "work order" → BAPI_ALM_ORDER_MAINTAIN and the rest of the PM work-order family
+• "goods movement", "purchase order", "inspection lot", "business partner", "cost centre"
+Every result shows its SAP application component, so you can judge whether the match is sensible. Please tell me if any of these return something you would not expect — the abbreviation glossary behind it is hand-written and is the part most likely to be wrong.
 
-NEW — SHOW AS LIST
-Filter icon → Show as list. Every table matching your filters as a table, with a Whole catalogue / Galaxy only toggle. The graph can only draw 217 tables, so this is where the rest of the 2,000+ are reachable.
+FLOATING BUTTON
+Used to reopen the table detail panel, which tapping a table already does. It now opens your to-do list and shows the count.
 
-NEW — FILTER BY MIGRATION FATE
-Filter icon. Show only what disappears, changes, is new, carries over, or has no verdict at all.
+TABLE LIST
+Its buttons moved above the table — with 400 rows they were pushed off the bottom of the sheet and could not be reached.
 
-NEW — PASTE A TABLE LIST, AND SAVED VIEWS
-Paste table names from a spec and the chart shows only those. Save the whole working state under a name and reopen it.
+STILL WORTH CHECKING FROM BUILD 20 — never run on hardware
+• To-do → Export PDF
+• Share list, and Share on the field guide
+Both compile and the code paths are verified, but neither has ever run on a real device.
 
-CORRECTED DATA — please sanity-check anything you know well
-• 198 index tables were being shown as "carries over" when SAP had actually published a verdict on them. Disappears went from 11 to 70.
-• VBUK, VBUP, MARC and MARD were showing our old note saying "unchanged" over the top of SAP's verdict saying otherwise.
-• 5 more verdicts added that our parser had missed, including VBBS.
-• Movement type 281 was cut off mid-sentence.
-
-CHANGED LAYOUT
-• Filters moved to their own icon next to the burger menu
-• Add to to-do and the playbook link now sit at the top of a table panel
-• Reading mode is now Brief / Detailed
-• New launch screen
-
-If something reads wrong to you as a practitioner, that is the most useful feedback — several real data errors in this build were found exactly that way.
+AND AS ALWAYS
+If a verdict or a description reads wrong to you as a practitioner, that is the most valuable feedback. Several real data errors in these builds were found exactly that way.
