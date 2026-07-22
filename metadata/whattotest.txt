@@ -1,19 +1,30 @@
-Build 24 — fixes the collapsible sections that did nothing in builds 22 and 23.
+Build 25 — payroll cluster tables, which the app was previously getting wrong.
 
-FIXED — MODULES, PLAYBOOKS AND LEGEND NOW OPEN
-All three collapsible sections expanded into nothing. They were flex items in a column, so an open section was squashed to about its heading height and the rest was clipped — which also cut the descenders off the heading text, as you saw. Please open all three and confirm they show their content and collapse again.
+NEW — CLUSTER TABLES ARE NOW THEIR OWN CLASS
+PCL3 and PCL4 were missing from the app entirely and PCL1 had no description
+at all. All four are now there, along with HRPY_RGDIR and P2RX_RT.
 
-FROM BUILD 23, STILL WORTH A LOOK
-• First-run walkthrough — delete and reinstall to see it, or App guide > Replay the walkthrough
-• App guide — Menu > Learn
-• The graph toolbar's third button is now Show as table; zoom-to-fit runs automatically on filter changes instead
-• Greyscale chrome — if the floating to-do button now reads as too recessive against the graph, say so
+More importantly, the app used to list key fields and derived joins on these
+tables as though you could SELECT them. You cannot. Open PCL2 and you should
+now see, before anything else, a block saying no SELECT will read this data.
 
-CONFIRMED WORKING ON DEVICE
-PDF export. That had never been run on hardware until now.
+WORTH CHECKING AS A PRACTITIONER
+• PCL2 — the RELID areas, what is actually inside the payload (RT, CRT, WPBP,
+  BT, VERSC), and what PC_PAYRESULT is really doing when you run it
+• The S/4HANA section on PCL2. We changed this verdict. It used to say
+  "Unchanged in S/4." which was true but missed the point entirely.
+• Tap a join on PCL2 and then the code icon — the ABAP generator should give
+  you IMPORT FROM DATABASE, not a SELECT with a JOIN
+• The RELID area lists are the one part we cannot fully stand behind. SAP does
+  not publish them. If any area looks wrong against your own SE11, tell us.
+
+FROM BUILD 24, STILL WORTH A LOOK
+• First-run walkthrough — delete and reinstall, or App guide > Replay
+• The collapsible Modules, Playbooks and Legend sections, fixed in 24
 
 STILL NEVER RUN ON HARDWARE
-• Share list, and Share on the field guide — both go through the iOS share sheet
+Share list, and Share on the field guide — both go through the iOS share sheet.
 
 AND AS ALWAYS
-If a verdict or description reads wrong to you as a practitioner, that is the most useful feedback there is.
+If a verdict or description reads wrong to you as a practitioner, that is the
+most useful feedback there is.

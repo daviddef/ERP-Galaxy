@@ -8,6 +8,14 @@ Worth stating plainly. Tables in the wider index that carry a published SAP verd
 
 Tables with no SAP entry at all are now their own bucket — "No verdict" — rather than counted as safe. Absence of an item is not a promise.
 
+NEW — PAYROLL CLUSTER TABLES, PROPERLY
+PCL3 and PCL4 were missing from the app entirely; PCL1 had no description. All four are now there with their RELID areas, plus HRPY_RGDIR and the declustered payroll tables.
+
+More to the point, the app used to offer key fields and joins on these as though you could SELECT them. You cannot — the payload is one compressed binary field. Cluster tables now say so first, before anything else, and the ABAP generator gives you IMPORT FROM DATABASE instead of a join that could never work. PCL2 also shows what is actually inside the payload — RT, CRT, WPBP, BT, VERSC — and what PC_PAYRESULT is really doing.
+
+CORRECTED — PCL2 IN S/4HANA
+It said "Unchanged in S/4." True, and beside the point. SAP's end of support for pool and cluster tables in 1809 does not apply to these, because they are transparent tables holding an application-level cluster rather than Dictionary table clusters. What changes is entitlement, not the table. Declustering is optional, additive, and older than S/4HANA.
+
 NEW — FIELD GUIDE
 A written ECC → S/4HANA guide, generated from the app's own data so its numbers always match what the app holds. Readable offline, and shareable.
 
@@ -23,29 +31,17 @@ NEW — BAPI AND FUNCTION MODULE CATALOGUE
 NEW — WHERE IS THIS FIELD?
 Ask by SAP name or plain English: "customer number, personnel number and plant". Business terms work too — "visa" finds infotype 0048.
 
-NEW — SHOW AS TABLE
-Every table matching your filters as a scannable table, reaching the whole index rather than only the 217 drawn on the chart.
-
 NEW — FIELD-LEVEL CHANGES
 Six systemic changes, each with SAP's Note number: material number CHAR 18 → 40, currency amounts to 23 digits, VBTYP → VBTYPL, object list number INT4 → INT8, segment 16 → 40, season → 10.
 
-NEW — FILTER BY MIGRATION FATE
-Show only what disappears, changes, is new, carries over, or has no verdict.
-
 NEW — MIGRATION PLAYBOOKS
 Business Partner / CVI, material number length, Universal Journal, inventory documents.
-
-NEW — MOVEMENT AND DOCUMENT TYPE DECODER
-Type 261 and get "components being consumed by a production order". 91 movement types, plus document types.
 
 NEW — JOIN FINDER
 Every table shows what it joins to and the exact fields to join ON, with confidence marked.
 
 ALSO NEW
 Paste a table list to chart only those. Save the whole working state as a named view. Park the detail panel mid-screen and keep browsing.
-
-MORE CONTEXT ON MORE TABLES
-Fun mode now has something to say about 1,021 tables, up from 132. 113 tables had their module corrected from SAP's own application component instead of a guess.
 
 FIXED
 Long table names no longer spill outside their circle on the chart. The ECC6 / S/4HANA filter applies to search as well as the chart, and the buttons show the filter you are actually on. Movement type 281 was cut off mid-sentence.
