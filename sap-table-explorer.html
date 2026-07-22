@@ -200,10 +200,13 @@
   .td-empty{color:var(--text-muted);font-size:.78rem;line-height:1.6;padding:10px 0;}
   .panel-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;
     padding-bottom:12px;border-bottom:1px solid var(--border);}
-  .pa-todo{background:rgba(52,211,153,.12);border:1px solid #34d399;color:#34d399;
+  /* Neutral on purpose: the coloured badge next to it carries the migration
+     verdict, and two saturated chips side by side compete for the same attention. */
+  .pa-todo{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);
     border-radius:9px;padding:8px 14px;font-size:.76rem;font-weight:800;letter-spacing:.02em;
     cursor:pointer;font-family:inherit;white-space:nowrap;}
-  .pa-todo.on{background:rgba(52,211,153,.28);color:#d1fae5;border-color:#6ee7b7;}
+  .pa-todo:hover{border-color:var(--text-muted);}
+  .pa-todo.on{background:rgba(255,255,255,.14);border-color:var(--text-muted);color:#fff;}
   .pa-fate{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--fc);
     color:var(--fc);border-radius:9px;padding:7px 10px;font-size:.72rem;font-weight:700;
     background:color-mix(in srgb,var(--fc) 12%,transparent);white-space:nowrap;}
@@ -377,8 +380,8 @@
   .legend-item{display:flex;align-items:center;gap:5px;margin:2px 0;}
   .legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
   .graph-controls{position:absolute;bottom:12px;right:12px;display:flex;flex-direction:column;gap:4px;}
-  .ctrl-btn{width:30px;height:30px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
-  .ctrl-btn:hover{background:var(--surface2);}
+  .ctrl-btn{width:30px;height:30px;background:rgba(20,24,33,.85);border:1px solid var(--border);border-radius:6px;color:#9aa4b2;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,border-color .2s;}
+  .ctrl-btn:hover{background:var(--surface2);color:var(--text);border-color:var(--text-muted);}
   .count-badge{position:absolute;top:10px;right:10px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 11px;font-size:0.68rem;color:var(--text-muted);}
   .focus-banner{display:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(79,156,249,.12);border:1px solid var(--fi);border-radius:20px;padding:5px 14px 5px 16px;font-size:.73rem;color:var(--fi);font-weight:600;align-items:center;gap:8px;z-index:10;backdrop-filter:blur(8px);white-space:nowrap;}
   .focus-banner.active{display:flex;}
@@ -481,13 +484,18 @@
   /* Fixed = viewport coords, so it must own its safe-area offset. The zoom
      controls are absolute inside the already-padded container; keeping the two
      in one column below is what stops them colliding. */
-  .fab-count{position:absolute;top:-2px;right:-2px;background:#34d399;color:#04231a;
+  .fab-count{position:absolute;top:-2px;right:-2px;background:#e2e8f0;color:#0b1220;
     font-size:.62rem;font-weight:800;min-width:18px;height:18px;border-radius:9px;
     display:flex;align-items:center;justify-content:center;padding:0 4px;}
+  /* Same neutral treatment as the panel's TO DO button -- it is the same action.
+     Kept findable against a dark graph with a border and a soft ring rather
+     than with colour. */
   .mobile-fab{display:none;position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);
-    width:56px;height:56px;background:linear-gradient(135deg,var(--fi),var(--co));border-radius:50%;border:none;
-    color:#fff;font-size:1.4rem;cursor:pointer;align-items:center;justify-content:center;z-index:100;
-    box-shadow:0 4px 20px rgba(79,156,249,.4);}
+    width:56px;height:56px;background:rgba(28,33,44,.94);border-radius:50%;
+    border:1px solid var(--text-muted);color:var(--text);font-size:1.25rem;cursor:pointer;
+    align-items:center;justify-content:center;z-index:100;
+    box-shadow:0 4px 18px rgba(0,0,0,.55), 0 0 0 4px rgba(255,255,255,.03);}
+  .mobile-fab:active{background:var(--surface2);}
   /* Fun search glow */
   .search-box input:focus{border-color:var(--fi);box-shadow:0 0 0 2px rgba(79,156,249,.15);}
   @keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
@@ -650,13 +658,25 @@
     <div class="graph-controls">
       <button class="ctrl-btn" onclick="zoomIn()">+</button>
       <button class="ctrl-btn" onclick="zoomOut()">−</button>
-      <button class="ctrl-btn" onclick="resetZoom()">⌂</button>
+      <button class="ctrl-btn" onclick="openList()" title="Show as table"
+              aria-label="Show as table">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none"
+             stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+          <rect x="3.5" y="4.5" width="17" height="15" rx="2"/>
+          <path d="M3.5 9.5h17M9.5 9.5v10M15 9.5v10"/>
+        </svg>
+      </button>
     </div>
     <div class="count-badge" id="count-badge">Loading...</div>
   </div>
   <!-- Mobile floating action button -->
-  <button class="mobile-fab" id="mobile-fab" onclick="openTodo()" title="To-do list">✅<span
-    class="fab-count" id="fab-count" style="display:none">0</span></button>
+  <button class="mobile-fab" id="mobile-fab" onclick="openTodo()" title="To-do list" aria-label="To-do list">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+         stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 5h6a1 1 0 011 1v1H8V6a1 1 0 011-1z"/>
+      <path d="M8 6H6a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V7a1 1 0 00-1-1h-2"/>
+      <path d="M9 13l2 2 4-4"/>
+    </svg><span class="fab-count" id="fab-count" style="display:none">0</span></button>
   <!-- Mobile overlay panel -->
   <div class="overlay-backdrop" id="overlay-backdrop" onclick="closeMobilePanel()"></div>
   <div class="mobile-panel" id="mobile-panel">
@@ -4871,7 +4891,7 @@ function syncModuleChips(){
 function setAllModules(on){
   if(on) Object.keys(MODULE_COLORS).forEach(m=>activeModules.add(m));
   else activeModules.clear();
-  syncModuleChips(); updateGraph();
+  syncModuleChips(); updateGraph(); reflow();
 }
 function soloModule(mod,ev){
   if(ev) ev.stopPropagation();
@@ -4887,7 +4907,7 @@ function toggleModule(mod,chip){
   else{activeModules.add(mod);if(chip)chip.classList.add('active');}
   updateModuleSummary();      // the fold is collapsed most of the time; its
   buildFateFilters();         // summary and the fate counts must still track
-  updateGraph();
+  updateGraph(); reflow();
 }
 
 function buildLegend(){
