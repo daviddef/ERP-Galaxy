@@ -42,10 +42,16 @@ private func moduleColor(_ m: String) -> Color {
 }
 
 private func fateStyle(_ fate: String) -> (String, Color)? {
-    if fate.contains("Disappears") { return ("❌", Color(red: 0.94, green: 0.27, blue: 0.27)) }
-    if fate.contains("New")        { return ("🆕", Color(red: 0.13, green: 0.77, blue: 0.37)) }
-    if fate.contains("Changes")    { return ("⚠️", Color(red: 0.96, green: 0.62, blue: 0.04)) }
-    if fate.contains("Carries")    { return ("✅", Color(red: 0.13, green: 0.77, blue: 0.37)) }
+    // Order matters: "Compatibility view" must be tested before anything that
+    // could also match it. These mirror the icons the web app uses, so the same
+    // outcome looks the same wherever you meet it.
+    if fate.contains("Disappears")         { return ("❌", Color(red: 0.94, green: 0.27, blue: 0.27)) }
+    if fate.contains("Compatibility view") { return ("🪞", Color(red: 0.31, green: 0.61, blue: 0.98)) }
+    if fate.contains("Replaced")           { return ("➡️", Color(red: 0.96, green: 0.62, blue: 0.04)) }
+    if fate.contains("Changes")            { return ("⚠️", Color(red: 0.96, green: 0.62, blue: 0.04)) }
+    if fate.contains("New")                { return ("🆕", Color(red: 0.13, green: 0.77, blue: 0.37)) }
+    if fate.contains("Unchanged")          { return ("✅", Color(red: 0.13, green: 0.77, blue: 0.37)) }
+    if fate.contains("Carries")            { return ("✅", Color(red: 0.13, green: 0.77, blue: 0.37)) }
     return nil
 }
 

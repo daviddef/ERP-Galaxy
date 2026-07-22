@@ -38,9 +38,56 @@ for tid, v in sorted(index.items()):
                  'ecc': True, 's4': True, 's4status': None,
                  'desc': v.get('desc') or tid, 'tier': 2})
 
+# The fate is computed HERE, once, using the same precedence as tableFate() in
+# the web app -- SAP's published verdict outranks our coarse ecc/s4 flags.
+# TableStore.swift used to re-derive this from the flags alone, so Spotlight
+# told people BSIS "Disappears in S/4HANA" when SAP says it survives as a
+# compatibility view and their reports keep working. 20 tables were wrong.
+# One rule, one place, and Swift just reads the answer.
+lifecycle = json.load(open(root / 'data' / 's4_lifecycle.json'))
+new_in_s4 = json.load(open(root / 'data' / 'new_in_s4.json'))
+
+VERDICT = {
+    'deprecated':  'Disappears in S/4HANA',
+    'replaced':    'Replaced in S/4HANA',
+    'compat_view': 'Compatibility view — reads work, not writes',
+    'changed':     'Changes in S/4HANA',
+    'unchanged':   'Unchanged in S/4HANA',
+}
+
+def fate_of(r):
+    tid = r['id']
+    if tid in new_in_s4:
+        return 'New in S/4HANA'
+    e = lifecycle.get(tid)
+    curated = r['tier'] == 1
+    if curated and not r['ecc'] and r['s4']:
+        return 'New in S/4HANA'
+    if e:
+        v = VERDICT.get(e['s4status'])
+        if v:
+            by = e.get('replacedBy')
+            # A successor name is the single most useful thing a search result
+            # can carry -- it answers "then where is my data?" without a tap.
+            if by and e['s4status'] == 'replaced':
+                return f'Replaced by {by} in S/4HANA'
+            return v
+    if not curated:
+        return ''
+    if r['ecc'] and not r['s4']:
+        return 'Disappears in S/4HANA'
+    return {'deprecated': 'Disappears in S/4HANA', 'modified': 'Changes in S/4HANA',
+            'new': 'New in S/4HANA'}.get(r.get('s4status'), 'Carries over to S/4HANA')
+
+for r in rows:
+    r['fate'] = fate_of(r)
+
 rows.sort(key=lambda r: (r['tier'], r['id']))
 out = root / 'ERPGalaxy' / 'Resources' / 'Data' / 'tables_native.json'
 prev = len(json.load(open(out)))
 json.dump(rows, open(out, 'w'), ensure_ascii=False)
+import collections
 print(f'{prev} -> {len(rows)} tables '
       f'(curated {sum(1 for r in rows if r["tier"]==1)}, index {sum(1 for r in rows if r["tier"]==2)})')
+c = collections.Counter(r['fate'].split(' in ')[0].split(' \u2014 ')[0] for r in rows if r['fate'])
+print('  fates:', dict(c.most_common()))

@@ -11,18 +11,16 @@ struct SAPTable: Codable, Identifiable, Hashable {
     let ecc: Bool?
     let s4: Bool?
 
-    /// Mirrors tableFate() in the web app: flags first, but SAP's published
-    /// verdict outranks them (a compatibility view is not "gone").
-    var fate: String {
-        if ecc == false && s4 == true { return "New in S/4HANA" }
-        if ecc == true && s4 == false { return "Disappears in S/4HANA" }
-        switch s4status {
-        case "deprecated": return "Disappears in S/4HANA"
-        case "modified":   return "Changes in S/4HANA"
-        case "new":        return "New in S/4HANA"
-        default:           return tier == 1 ? "Carries over to S/4HANA" : ""
-        }
-    }
+    /// Computed at build time by tools/build_native.py, using the same
+    /// precedence as tableFate() in the web app: SAP's published verdict
+    /// outranks our coarse ecc/s4 flags.
+    ///
+    /// This used to be re-derived here from the flags alone, which is why
+    /// Spotlight told people BSIS "Disappears in S/4HANA" when SAP says it
+    /// survives as a compatibility view and their reports keep working. Twenty
+    /// tables were wrong. A rule stated in two places drifts; now it is stated
+    /// once and Swift reads the answer.
+    let fate: String
 }
 
 enum TableStore {

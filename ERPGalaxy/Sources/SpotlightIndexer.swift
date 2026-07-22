@@ -42,7 +42,11 @@ enum SpotlightIndexer {
                 let a = CSSearchableItemAttributeSet(contentType: UTType.text)
                 a.title = t.id
                 let fate = t.fate
-                a.contentDescription = fate.isEmpty ? t.desc : "\(t.desc)\n\(fate)"
+                // Spotlight collapses the description to one line, so a newline here
+            // rendered as "Material Document Line Items (ECC) Disappears in
+            // S/4HANA" -- a run-on sentence. A separator keeps the two facts
+            // visibly separate.
+            a.contentDescription = fate.isEmpty ? t.desc : "\(t.desc) · \(fate)"
                 // Let people find a table by module or plain words, not just its id.
                 a.keywords = [t.id, t.module, "SAP", "table"] + t.desc
                     .split(whereSeparator: { !$0.isLetter && !$0.isNumber })
