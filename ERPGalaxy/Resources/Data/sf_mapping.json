@@ -1,58 +1,87 @@
 {
  "_source": {
-  "guide": "Replicating Employee Master Data from Employee Central to SAP ERP HCM Using SAP Cloud Integration as the Middleware",
-  "product": "SAP SuccessFactors Employee Central Integration to SAP Business Suite",
-  "note": "Field mappings are facts read from SAP's published integration guide and restated here. SAP's prose and table layouts are not reproduced. Authored by hand: SAP's terms of use prohibit automated extraction.",
-  "verified": "Seed set confirmed by loading the guide. Anything not yet confirmed is absent rather than guessed."
+  "mappingGuide": "Replicating Employee Master Data from Employee Central to SAP ERP HCM Using SAP Cloud Integration as the Middleware (For Implementation Started Before Q2 2017)",
+  "processGuide": "Replicating Employee Master Data and Organizational Assignments from Employee Central to SAP ERP HCM",
+  "addOn": "PA_SE_IN (SFSF EC INTEGRATION); ECS4HCM for SAP HCM for S/4HANA",
+  "caveat": "The field-level mapping only exists in the LEGACY pre-BIB guide. The current guide has no per-infotype mapping chapters, because under the Business Integration Builder the mapping is configured per customer in Transformation Templates. Treat this as SAP's documented baseline, not as what any given system does.",
+  "licence": "Facts restated from published SAP guides and authored by hand. SAP's prose and table layouts are not reproduced; automated extraction is prohibited by their terms."
  },
+ "_chain": {
+  "title": "How the data gets here",
+  "steps": [
+   {"n": "ECPAO_EE_ORG_REPL_QUERY", "what": "ABAP report in ERP. Reads your Customizing and triggers the pull."},
+   {"n": "getEmployeeMasterDataAndOrgAssignmentBundleReplicationQuery", "what": "Outbound web service — sends the query to SAP Cloud Integration."},
+   {"n": "CompoundEmployee API", "what": "SuccessFactors-side API that Cloud Integration calls to read the EC data."},
+   {"n": "EmployeeMasterDataAndOrgAssignmentBundleReplicationRequest", "what": "Inbound web service in ERP. Writes to staging and raises SAP_SFIOM_EE_ORGAS_RPPQ_CREATED."},
+   {"n": "Business Integration Builder", "what": "Transformation Templates map each EC field to an infotype field — this part is configured per customer."},
+   {"n": "Personnel Administration", "what": "The infotype record is created or updated."}
+  ],
+  "note": "One program covers every in-scope infotype — there is no separate service per table. Organizational objects use RH_SFIOM_ORG_OBJ_REPL_QUERY; cost centres replicate the other way, ERP to EC, via ODTF_REPL_CC."
+ },
+ "_ftsdEligible": ["PA0007", "PA0008", "PA0014", "PA0015", "PA0016", "PA0021", "PA0041", "PA0185"],
  "infotypes": {
   "PA0000": {
    "name": "Actions",
-   "ecOwned": true,
-   "ecObject": "Job Information / Employment Information",
+   "ecObject": "Job Information",
    "fields": [
-    {"ec": "event", "table": "PA0000", "field": "MASSN", "desc": "Action type"},
-    {"ec": "event-reason", "table": "PA0000", "field": "MASSG", "desc": "Reason for action"}
+    {"ec": "Event", "field": "MASSN", "desc": "Action type"},
+    {"ec": "Event Reason", "field": "MASSG", "desc": "Reason for action"}
    ]
   },
   "PA0001": {
    "name": "Organisational Assignment",
-   "ecOwned": true,
-   "ecObject": "Job Information",
+   "ecObject": "Job Information · Compensation Information",
    "fields": [
-    {"ec": "company", "table": "PA0001", "field": "BUKRS", "desc": "Company code"},
-    {"ec": "cost-center", "table": "PA0001", "field": "KOSTL", "desc": "Cost centre"}
-   ]
+    {"ec": "Company", "field": "BUKRS", "desc": "Company code"},
+    {"ec": "Cost Center", "field": "KOSTL", "desc": "Cost centre"},
+    {"ec": "Location", "field": "BTRTL", "desc": "Personnel subarea"},
+    {"ec": "Location", "field": "WERKS", "desc": "Personnel area"}
+   ],
+   "derived": ["SBMOD", "SACHP", "VDSK1"]
   },
   "PA0002": {
    "name": "Personal Data",
-   "ecOwned": true,
-   "ecObject": "Biographical Information / Personal Information",
+   "ecObject": "Biographical Information · Personal Information · National ID Card",
    "fields": [
-    {"ec": "date-of-birth", "table": "PA0002", "field": "GBDAT", "desc": "Date of birth"},
-    {"ec": "place-of-birth", "table": "PA0002", "field": "GBORT", "desc": "Place of birth"}
+    {"ec": "date-of-birth", "field": "GBDAT", "desc": "Date of birth"},
+    {"ec": "place-of-birth", "field": "GBORT", "desc": "Place of birth"},
+    {"ec": "country-of-birth", "field": "GBLND", "desc": "Country of birth"},
+    {"ec": "region-of-birth", "field": "GBDEP", "desc": "State of birth"},
+    {"ec": "birth-name", "field": "NAME2", "desc": "Name at birth"},
+    {"ec": "firstName", "field": "VORNA", "desc": "First name"},
+    {"ec": "lastName", "field": "NACHN", "desc": "Last name"},
+    {"ec": "Gender", "field": "GESCH", "desc": "Gender key"},
+    {"ec": "nationality", "field": "NATIO", "desc": "Nationality"},
+    {"ec": "Marital Status", "field": "FAMST", "desc": "Marital status key"}
    ]
   },
+  "PA0006": {"name": "Addresses", "ecObject": "Address Information", "fields": []},
   "PA0007": {
    "name": "Planned Working Time",
-   "ecOwned": true,
    "ecObject": "Job Information",
    "fields": [
-    {"ec": "workschedule-id", "table": "PA0007", "field": "SCHKZ", "desc": "Work schedule rule"}
+    {"ec": "Work Schedule ID", "field": "SCHKZ", "desc": "Work schedule rule"},
+    {"ec": "is-fulltime-employee", "field": "TEILK", "desc": "Part-time indicator"},
+    {"ec": "workingDaysPerWeek", "field": "WKWDY", "desc": "Working days per week"}
    ]
   },
   "PA0008": {
    "name": "Basic Pay",
-   "ecOwned": true,
-   "ecObject": "Compensation Information / Pay Component Recurring",
+   "ecObject": "Job Information · Pay Component Recurring",
    "fields": [
-    {"ec": "fte", "table": "PA0008", "field": "BSGRD", "desc": "Capacity utilisation level"}
+    {"ec": "FTE", "field": "BSGRD", "desc": "Capacity utilisation level"},
+    {"ec": "Pay Scale Area", "field": "TRFGB", "desc": "Pay scale area"},
+    {"ec": "Pay Scale Type", "field": "TRFAR", "desc": "Pay scale type"},
+    {"ec": "Pay Scale Group", "field": "TRFGR", "desc": "Pay scale group"},
+    {"ec": "Pay Scale Level", "field": "TRFST", "desc": "Pay scale level"}
    ]
-  }
- },
- "_pending": [
-  "PA0006 Addresses", "PA0009 Bank Details", "PA0014 Recurring Payments",
-  "PA0015 Additional Payments", "PA0021 Family/Related Person",
-  "PA0027 Cost Distribution", "PA0041 Date Specifications", "PA0105 Communication"
- ]
+  },
+  "PA0009": {"name": "Bank Details", "ecObject": "Payment Information", "fields": []},
+  "PA0014": {"name": "Recurring Payments/Deductions", "ecObject": "Pay Component Recurring", "fields": []},
+  "PA0015": {"name": "Additional Payments", "ecObject": "Pay Component Non-Recurring", "fields": []},
+  "PA0021": {"name": "Family Member/Dependents", "ecObject": "Dependents", "fields": []},
+  "PA0027": {"name": "Cost Distribution", "ecObject": "Cost Distribution", "fields": []},
+  "PA0041": {"name": "Date Specifications", "ecObject": "Dates", "fields": []},
+  "PA0105": {"name": "Communication", "ecObject": "Email Address Information", "fields": []}
+ }
 }
