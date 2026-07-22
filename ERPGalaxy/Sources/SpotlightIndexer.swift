@@ -10,6 +10,11 @@ enum SpotlightIndexer {
     private static let domain = "com.daviddef.erpgalaxy.tables"
     private static let versionKey = "spotlight.indexed.build"
 
+    /// All state is touched only on this queue, which is also what makes the
+    /// re-entrancy guard below sound.
+    private static let queue = DispatchQueue(label: "com.daviddef.erpgalaxy.spotlight")
+    private static var isIndexing = false
+
     /// Tied to the bundle version rather than a hand-bumped constant, because
     /// the constant was a step someone had to remember and the dataset changes
     /// every build.
@@ -19,48 +24,73 @@ enum SpotlightIndexer {
 
     static func indexIfNeeded() {
         guard CSSearchableIndex.isIndexingAvailable() else { return }
-        guard UserDefaults.standard.string(forKey: versionKey) != version else { return }
 
-        let items = TableStore.all.map { t -> CSSearchableItem in
-            let a = CSSearchableItemAttributeSet(contentType: UTType.text)
-            a.title = t.id
-            let fate = t.fate
-            a.contentDescription = fate.isEmpty ? t.desc : "\(t.desc)\n\(fate)"
-            // Let people find a table by module or plain words, not just its id.
-            a.keywords = [t.id, t.module, "SAP", "table"] + t.desc
-                .split(whereSeparator: { !$0.isLetter && !$0.isNumber })
-                .filter { $0.count > 3 }
-                .prefix(8)
-                .map(String.init)
-            a.displayName = "\(t.id) — \(t.module)"
-            let item = CSSearchableItem(uniqueIdentifier: t.id, domainIdentifier: domain, attributeSet: a)
-            // Without this the default expiry is about a month. Combined with the
-            // version gate below, the index was built once, silently expired, and
-            // never rebuilt -- so anyone who had kept the app longer than that had
-            // no Spotlight results at all. It is a catalogue, not news; it does
-            // not go stale on a timer.
-            item.expirationDate = .distantFuture
-            return item
-        }
+        // Off the main thread: building 2,273 attribute sets is real work, and
+        // this is called from .task during launch.
+        queue.async {
+            // The version gate alone is not enough to stop a second run. It is
+            // only closed once indexing finishes, which takes seconds, and
+            // .task can fire more than once — a changed view identity, a
+            // reconnected scene, or a second scene on iPad and Mac. Build 27
+            // crashed on exactly that: two runs overlapped and CoreSpotlight
+            // raised an exception. This guard closes the window immediately.
+            guard !isIndexing else { return }
+            guard UserDefaults.standard.string(forKey: versionKey) != version else { return }
+            isIndexing = true
 
-        let index = CSSearchableIndex.default()
-        index.deleteSearchableItems(withDomainIdentifiers: [domain]) { _ in
-            // Batch: a single 2,000-item call is rejected on some devices.
-            index.beginBatch()
-            for chunk in stride(from: 0, to: items.count, by: 500).map({
-                Array(items[$0..<min($0 + 500, items.count)])
-            }) {
-                index.indexSearchableItems(chunk)
+            let items = TableStore.all.map { t -> CSSearchableItem in
+                let a = CSSearchableItemAttributeSet(contentType: UTType.text)
+                a.title = t.id
+                let fate = t.fate
+                a.contentDescription = fate.isEmpty ? t.desc : "\(t.desc)\n\(fate)"
+                // Let people find a table by module or plain words, not just its id.
+                a.keywords = [t.id, t.module, "SAP", "table"] + t.desc
+                    .split(whereSeparator: { !$0.isLetter && !$0.isNumber })
+                    .filter { $0.count > 3 }
+                    .prefix(8)
+                    .map(String.init)
+                a.displayName = "\(t.id) — \(t.module)"
+                let item = CSSearchableItem(uniqueIdentifier: t.id, domainIdentifier: domain, attributeSet: a)
+                // Without this the default expiry is about a month. Combined with
+                // the version gate, the index was built once, silently expired,
+                // and never rebuilt — so anyone who had kept the app longer than
+                // that had no Spotlight results at all. It is a catalogue, not
+                // news; it does not go stale on a timer.
+                item.expirationDate = .distantFuture
+                return item
             }
-            // Only record success once the batch has actually landed. The old code
-            // marked the index complete before any chunk returned, so a crash or a
-            // backgrounding part-way through left it permanently half-built.
-            index.endBatch(withClientState: Data(version.utf8)) { error in
-                if let error {
-                    print("Spotlight index error: \(error.localizedDescription)")
-                    return
+
+            let chunks = stride(from: 0, to: items.count, by: 500).map {
+                Array(items[$0..<min($0 + 500, items.count)])
+            }
+
+            let index = CSSearchableIndex.default()
+            index.deleteSearchableItems(withDomainIdentifiers: [domain]) { _ in
+                // Deliberately NOT beginBatch/endBatch. That pairing is what
+                // crashed build 27: beginBatch throws if a batch is already open,
+                // and it bought nothing here. Per-chunk completions give the same
+                // guarantee — only record success once every chunk has landed —
+                // with no exception to trip over.
+                let group = DispatchGroup()
+                var failed = false
+                for chunk in chunks {
+                    group.enter()
+                    index.indexSearchableItems(chunk) { error in
+                        if let error {
+                            failed = true
+                            print("Spotlight index error: \(error.localizedDescription)")
+                        }
+                        group.leave()
+                    }
                 }
-                UserDefaults.standard.set(version, forKey: versionKey)
+                group.notify(queue: queue) {
+                    // A partial index must not be recorded as complete, or it
+                    // never gets rebuilt.
+                    if !failed {
+                        UserDefaults.standard.set(version, forKey: versionKey)
+                    }
+                    isIndexing = false
+                }
             }
         }
     }
