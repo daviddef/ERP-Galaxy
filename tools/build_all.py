@@ -8,7 +8,8 @@ dataset now has a step, and this runs all of them so nobody has to remember.
 """
 import subprocess, sys, pathlib
 root = pathlib.Path(__file__).resolve().parent
-STEPS = ['build_codex.py', 'build_fk.py', 'build_sfmap.py', 'build_clusters.py']
+STEPS = ['build_codex.py', 'build_fk.py', 'build_sfmap.py', 'build_clusters.py',
+         'build_native.py']
 for s in STEPS:
     print(f'── {s}')
     r = subprocess.run([sys.executable, str(root / s)], capture_output=True, text=True)
