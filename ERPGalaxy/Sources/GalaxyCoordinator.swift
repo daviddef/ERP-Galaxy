@@ -167,10 +167,17 @@ final class GalaxyCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHa
 
     // MARK: - Navigation
 
+    /// 0.35s covers the D3 force simulation settling; the rest is deliberate.
+    /// The bundled HTML loads fast enough that the splash was gone before the
+    /// orbits had moved, so it held for a blink and read as a flash of dark.
+    private static let splashSettle: TimeInterval = 0.35
+    private static let splashLinger: TimeInterval = 1.0
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         impactLight.prepare()
         selection.prepare()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+        let delay = Self.splashSettle + Self.splashLinger
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             self?.isLoaded.wrappedValue = true
         }
     }
