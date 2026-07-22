@@ -1,5 +1,8 @@
 A much bigger answer to "what happens to my tables in S/4HANA" — down to the column, with somewhere to put what you find.
 
+NEW — WALKTHROUGH AND APP GUIDE
+First launch now opens a short walkthrough of what the app does, and an App guide in the menu covers every feature — including, deliberately, what the app will not tell you.
+
 CORRECTED MIGRATION VERDICTS
 Worth stating plainly. Tables in the wider index that carry a published SAP verdict were being shown as "carries over". They are not. Disappears went from 11 to 70 once they were read properly. Separately, VBUK and VBUP read "unchanged" where SAP had eliminated them, and MARC and MARD read "unchanged" where SAP says compatibility view only. Where our wording disagreed with SAP's Simplification List, SAP now wins.
 

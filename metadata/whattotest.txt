@@ -1,34 +1,27 @@
-Build 22 — the things you reported in build 21, plus tidier filters.
+Build 23 — walkthrough, App guide, and the greyscale pass.
 
-FIXED — LABELS BURSTING OUT OF THE BUBBLES
-Long names like FAGLFLEXT were drawn far wider than their circle. Labels are now fitted to the node: they shrink, they may overhang a touch on purpose, and only genuinely long names truncate with an ellipsis. 19 of 217 truncate; the full name is still in the tooltip and in the panel. Short names are unchanged.
+NEW — FIRST-RUN WALKTHROUGH
+Six cards on first launch. To see it, delete the app and reinstall from TestFlight, or open the App guide and tap "Replay the walkthrough" — the flag is set once so it will not nag you after updates.
 
-FIXED — TEXT OVERLAPPING THE BUTTON ABOVE IT
-The saved-views empty state sat on top of its own button. Same fault was present on the paste-list result message, which you could only see after actually pasting something.
+NEW — APP GUIDE
+Menu > Learn > App guide. Every feature and where to find it. The last section is deliberately about what the app will NOT tell you: verdicts state SAP's target architecture rather than your release, ~1,970 tables have no SAP entry, and nothing here knows about your Z-tables.
 
-FIXED — DETAIL PANEL NOW OPENS AT THE TOP
-Open a table after scrolling a previous one and it used to start mid-content.
+CHANGED — GRAPH TOOLBAR
+The home button is now a Show-as-table control. Zoom-to-fit has not been lost — it now runs automatically whenever a filter changes, including module changes, which it did not before. If you find a case where the chart ends up badly framed after filtering, that is worth reporting.
 
-"SHOW AS TABLE" IS NOW CALLED THAT
-It was labelled "Table list", which is why you could not find it. Burger menu, top right of the Tools grid.
+CHANGED — GREYSCALE CHROME
+The TO DO button, the graph controls and the floating button are neutral now, so the coloured migration-fate badge is the only saturated thing in a panel. The floating button also lost its purple gradient and emoji for a dark circle with a line icon. If it now reads as too recessive against the graph, say so — it is a one-line revert.
 
-HALF / FULL IS A PROPER BUTTON
-A 32px icon button in the panel header with a chevron that rotates on state, rather than a text label. Same visual weight as the close button next to it.
-
-FILTERS ARE SHORTER
-• Modules collapse into a fold that says what it is doing — "Modules — all 13", "9 of 13", "none selected"
-• Paste a list and Saved views are now buttons that open their own small overlays
-The whole drawer fits on one screen now.
-
-WORTH A LOOK
-• The graph — labels should sit in their circles at every zoom level. If any still spill, tell me which.
-• Modules fold — open it, turn some off, close it, and check the summary matches what the chart shows.
-• Paste a list — paste a few names with a deliberate typo and check the unrecognised one is named.
+FROM BUILD 22, WORTH RE-CHECKING
+• Labels should sit inside their circles at any zoom
+• Modules fold summary should match what the chart shows
+• Paste a list — include a deliberate typo and check the bad name is reported
+• Detail panel should always open at the top
 
 STILL NEVER RUN ON HARDWARE
-• To-do → Export PDF
+• To-do > Export PDF
 • Share list, and Share on the field guide
-These compile and the code paths are verified, but no one has ever run them on a device.
+These compile and their code paths are verified, but nobody has run them on a device.
 
 AND AS ALWAYS
-If a verdict or description reads wrong to you as a practitioner, that is the most useful feedback. Several real data errors in these builds were found exactly that way.
+If a verdict or description reads wrong to you as a practitioner, that is the most useful feedback there is.
