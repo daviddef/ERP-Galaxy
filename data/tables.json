@@ -4399,6 +4399,297 @@
   "submodule": "FI-GL",
   "tier": 2
  },
+ "ADR10": {
+  "addon": null,
+  "desc": "Printer destinations.",
+  "id": "ADR10",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR11": {
+  "addon": null,
+  "desc": "Secure Store and Forward (SSF) communication data.",
+  "id": "ADR11",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR12": {
+  "addon": null,
+  "desc": "FTP and URL communication data.",
+  "id": "ADR12",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR13": {
+  "addon": null,
+  "desc": "Pager and paging-service numbers.",
+  "id": "ADR13",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR2": {
+  "addon": null,
+  "desc": "Telephone numbers. One row per number, so an address with three phone numbers has three rows here rather than three fields on ADRC.",
+  "id": "ADR2",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR3": {
+  "addon": null,
+  "desc": "Fax numbers.",
+  "id": "ADR3",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR4": {
+  "addon": null,
+  "desc": "Teletex numbers.",
+  "id": "ADR4",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR5": {
+  "addon": null,
+  "desc": "Telex numbers.",
+  "id": "ADR5",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR6": {
+  "addon": null,
+  "desc": "Email addresses. This is where an email actually lives — not on KNA1, LFA1 or ADRC. The usual reason a 'where is the email address' search comes up empty.",
+  "id": "ADR6",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR7": {
+  "addon": null,
+  "desc": "Remote mail addresses, for SAP-to-SAP communication.",
+  "id": "ADR7",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR8": {
+  "addon": null,
+  "desc": "X.400 numbers.",
+  "id": "ADR8",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADR9": {
+  "addon": null,
+  "desc": "RFC destinations held as a communication type against an address.",
+  "id": "ADR9",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "PERSNUMBER",
+   "DATE_FROM",
+   "CONSNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRCOMC": {
+  "addon": null,
+  "desc": "Serial number counter for communication data. Housekeeping rather than business data.",
+  "id": "ADRCOMC",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRCT": {
+  "addon": null,
+  "desc": "Address texts.",
+  "id": "ADRCT",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRG": {
+  "addon": null,
+  "desc": "Assignment of addresses to further address groups.",
+  "id": "ADRG",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRGP": {
+  "addon": null,
+  "desc": "Assignment of persons to further person groups.",
+  "id": "ADRGP",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRT": {
+  "addon": null,
+  "desc": "Communication data texts — the free-text notes attached to a specific communication entry.",
+  "id": "ADRT",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRU": {
+  "addon": null,
+  "desc": "Communication usages, controlling which communication entry is used in which context.",
+  "id": "ADRU",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRV": {
+  "addon": null,
+  "desc": "Address where-used list. Given an address number, this tells you which application table and key is using it — the way back from ADRC to the owning object.",
+  "id": "ADRV",
+  "keyFields": [
+   "CLIENT",
+   "ADDRNUMBER",
+   "APPL_TABLE",
+   "APPL_FIELD",
+   "APPL_KEY"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "ADRVP": {
+  "addon": null,
+  "desc": "Person where-used list. The person equivalent of ADRV.",
+  "id": "ADRVP",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
  "AGKO": {
   "desc": "Stores cleared account records in General Ledger accounting.",
   "id": "AGKO",
@@ -5113,6 +5404,57 @@
   "submodule": "FI",
   "tier": 2
  },
+ "BUT020": {
+  "addon": null,
+  "desc": "Business Partner addresses. The link table between a business partner and its address numbers in ADRC — a BP can hold several.",
+  "id": "BUT020",
+  "keyFields": [
+   "CLIENT",
+   "PARTNER",
+   "ADDRNUMBER"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "BUT021": {
+  "addon": null,
+  "desc": "Business Partner address usages. Says which address is used for what purpose, rather than holding the address itself.",
+  "id": "BUT021",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "BUT021_FS": {
+  "addon": null,
+  "desc": "Time-dependent business partner address usages. The same idea as BUT021 but valid over a date range.",
+  "id": "BUT021_FS",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "BUT100": {
+  "addon": null,
+  "desc": "Business Partner roles. The table that makes one partner act as customer, vendor or both — the mechanism behind 'one entity, many faces'.",
+  "id": "BUT100",
+  "keyFields": [
+   "CLIENT",
+   "PARTNER",
+   "RLTYP",
+   "DFVAL"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
  "BUTADRSEARCH": {
   "desc": "Search-help data for locating business partners by address, one row per partner and address number.",
   "id": "BUTADRSEARCH",
@@ -5517,6 +5859,26 @@
   "module": "BASIS",
   "moduleInferred": true,
   "source": "simplification-list",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "CDPOS_STR": {
+  "addon": null,
+  "desc": "Change document items for fields held as STRINGs, which do not fit the classic CDPOS layout.",
+  "id": "CDPOS_STR",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "CDPOS_UID": {
+  "addon": null,
+  "desc": "Change document items where the table key exceeds 70 characters and cannot be held in CDPOS.",
+  "id": "CDPOS_UID",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
   "submodule": "BASIS",
   "tier": 2
  },
@@ -23560,6 +23922,16 @@
   "submodule": "MM-IM",
   "tier": 2
  },
+ "SRRELROLES": {
+  "addon": null,
+  "desc": "Object Relationship Service roles. The generic framework SAP uses to relate business objects to each other without a hard-coded foreign key.",
+  "id": "SRRELROLES",
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
  "SSCH": {
   "desc": "Strata definitions used in inventory sampling.",
   "id": "SSCH",
@@ -23597,6 +23969,40 @@
   "lore": null,
   "module": "EHS",
   "submodule": "EHS",
+  "tier": 2
+ },
+ "STXB": {
+  "addon": null,
+  "desc": "SAPscript texts held in non-SAPscript format.",
+  "id": "STXB",
+  "keyFields": [
+   "CLIENT",
+   "TDOBJECT",
+   "TDNAME",
+   "TDID",
+   "TDSPRAS"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "STXH": {
+  "addon": null,
+  "desc": "SAPscript text header. The index of long texts across SAP — sales order texts, material texts, customer texts. STXL holds the content.",
+  "id": "STXH",
+  "keyFields": [
+   "CLIENT",
+   "TDOBJECT",
+   "TDNAME",
+   "TDID",
+   "TDSPRAS"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
   "tier": 2
  },
  "STXL": {
@@ -31613,6 +32019,57 @@
   "lore": "Printer determination for output, keyed by application, output type, plant, storage location and user group. Where the paper comes out, decided down to storage location; T685 defines the output type.",
   "module": "MM",
   "submodule": "MM-IM",
+  "tier": 2
+ },
+ "TOA01": {
+  "addon": null,
+  "desc": "ArchiveLink link table 1. Connects an SAP business object to a document in an external archive — scanned invoices and the like.",
+  "id": "TOA01",
+  "keyFields": [
+   "MANDANT",
+   "SAP_OBJECT",
+   "OBJECT_ID",
+   "ARCHIV_ID",
+   "ARC_DOC_ID"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "TOA02": {
+  "addon": null,
+  "desc": "ArchiveLink link table 2. Same structure as TOA01; which table is used is set in Customizing per object type.",
+  "id": "TOA02",
+  "keyFields": [
+   "MANDANT",
+   "SAP_OBJECT",
+   "OBJECT_ID",
+   "ARCHIV_ID",
+   "ARC_DOC_ID"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
+  "tier": 2
+ },
+ "TOA03": {
+  "addon": null,
+  "desc": "ArchiveLink link table 3.",
+  "id": "TOA03",
+  "keyFields": [
+   "MANDANT",
+   "SAP_OBJECT",
+   "OBJECT_ID",
+   "ARCHIV_ID",
+   "ARC_DOC_ID"
+  ],
+  "keySource": "authored",
+  "lore": null,
+  "module": "BASIS",
+  "submodule": "BASIS",
   "tier": 2
  },
  "TPAKD": {
