@@ -6253,6 +6253,18 @@
   "submodule": "MM-PUR",
   "tier": 2
  },
+ "EHFNDD_LISU_RT": {
+  "desc": "Destination for listed substances transferred out of EHFNDD_LISU_ROOT during conversion.",
+  "id": "EHFNDD_LISU_RT",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "EHS",
+  "moduleInferred": true,
+  "newInS4": true,
+  "submodule": "EHS",
+  "tier": 2
+ },
  "EHQMT_BASIC_DATA": {
   "desc": "Basic data for inspection plans in the EHS-QM integration.",
   "id": "EHQMT_BASIC_DATA",
@@ -7533,6 +7545,18 @@
   "lore": "The Funds Management totals table, carrying balances in the standard ledger, record type, version, year and object key shape. Company code via T001, currency via TCURC, business area via TGSB.",
   "module": "FM",
   "submodule": "FM",
+  "tier": 2
+ },
+ "FMLC_ERD": {
+  "desc": "Holds exchange rate difference data in S/4HANA; SAP names it as the new table used where T169P was previously read.",
+  "id": "FMLC_ERD",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "newInS4": true,
+  "submodule": "MM-IV",
   "tier": 2
  },
  "FMRBT": {
@@ -11123,6 +11147,18 @@
   "keySource": "public-reference",
   "lore": "Short document data for material movements, keyed exactly like a movement line: material document, year and line. A condensed index sitting alongside the full movement record rather than replacing it.",
   "module": "MM",
+  "submodule": "MM-IM",
+  "tier": 2
+ },
+ "MATDOCOIL": {
+  "desc": "The oil and gas counterpart to MATDOC. SAP names both as the new material document tables that MM-IM data moves into.",
+  "id": "MATDOCOIL",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "newInS4": true,
   "submodule": "MM-IM",
   "tier": 2
  },
@@ -21800,6 +21836,18 @@
   "submodule": "MM-PUR",
   "tier": 2
  },
+ "PPH_DBVM": {
+  "desc": "The new planning file used by MRP live in S/4HANA, and by classic MRP as well.",
+  "id": "PPH_DBVM",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "PP",
+  "moduleInferred": true,
+  "newInS4": true,
+  "submodule": "PP-MRP",
+  "tier": 2
+ },
  "PSGLFLEXA": {
   "desc": null,
   "id": "PSGLFLEXA",
@@ -27228,6 +27276,18 @@
   "lore": "Per-user control over system messages, keyed by message class, message number and user name, with USR02 as the user. Lets one person's error be another person's warning.",
   "module": "FI",
   "submodule": "FI-GL",
+  "tier": 2
+ },
+ "T130F_C": {
+  "desc": "The new Customizing table that copy-control-relevant entries from T130F must be copied into.",
+  "id": "T130F_C",
+  "keyFields": [],
+  "keySource": null,
+  "lore": null,
+  "module": "MM",
+  "moduleInferred": true,
+  "newInS4": true,
+  "submodule": "MM-MD",
   "tier": 2
  },
  "T134H": {

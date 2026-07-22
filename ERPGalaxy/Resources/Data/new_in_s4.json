@@ -1,0 +1,34 @@
+{
+ "ACDOCA": {
+  "evidence": "Description General Ledger in S/4H is based in the Universal Journal; the line items are stored in the new database table ACDOCA, optimized to SAP HANA. You can migrate Ledgers of New General Ledger of the Business Suite or the Classic General Ledger GL to",
+  "held": "curated"
+ },
+ "EHFNDD_LISU_RT": {
+  "evidence": "• This report transfers existing listed substances from table EHFNDD_LISU_ROOT to the new table EHFNDD_LISU_RT. • Comment: This report is run automatically when converting to SAP S/4HANA 1610 and higher. Run the",
+  "held": "index"
+ },
+ "FMLC_ERD": {
+  "evidence": "Parameter I_T169P is still filled whereas the new table FMLC_ERD is used. Additionally the new parameter IS_ERD_SETTING was introduced that contains the customizing information for the",
+  "held": "index"
+ },
+ "MATDOC": {
+  "evidence": "Data is moved from existing MM-IM tables to new tables MATDOC and MATDOCOIL. Due to this change the old inconsistency check reports for aggregate and history tables are now deprecated. The following",
+  "held": "curated"
+ },
+ "MATDOCOIL": {
+  "evidence": "Data is moved from existing MM-IM tables to new tables MATDOC and MATDOCOIL. Due to this change the old inconsistency check reports for aggregate and history tables are now deprecated. The following",
+  "held": "index"
+ },
+ "PPH_DBVM": {
+  "evidence": "will be considered, if the MRP Live forces a material to be planned using classic MRP. New Planning File MRP live uses the new planning file PPH_DBVM. Refer to note 2268088 for details of planning file table PPH_DBVM. In SAP S/4HANA the new planning file is also used by",
+  "held": "index"
+ },
+ "PRCD_ELEMENTS": {
+  "evidence": "In SAP S/4HANA, table KONV has been replaced in its data persistency role by the new table PRCD_ELEMENTS. However, KONV is and can still be used for data declaration purposes. It still defines the structure of the pricing",
+  "held": "curated"
+ },
+ "T130F_C": {
+  "evidence": "Therefore, all entries from the table T130F that are relevant for the copy control must be copied to the new table T130F_C, and their field contents must be identical. If the precheck issues a warning message, it may be the case that the fields",
+  "held": "index"
+ }
+}
