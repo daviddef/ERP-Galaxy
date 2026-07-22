@@ -1,0 +1,58 @@
+{
+ "_source": {
+  "guide": "Replicating Employee Master Data from Employee Central to SAP ERP HCM Using SAP Cloud Integration as the Middleware",
+  "product": "SAP SuccessFactors Employee Central Integration to SAP Business Suite",
+  "note": "Field mappings are facts read from SAP's published integration guide and restated here. SAP's prose and table layouts are not reproduced. Authored by hand: SAP's terms of use prohibit automated extraction.",
+  "verified": "Seed set confirmed by loading the guide. Anything not yet confirmed is absent rather than guessed."
+ },
+ "infotypes": {
+  "PA0000": {
+   "name": "Actions",
+   "ecOwned": true,
+   "ecObject": "Job Information / Employment Information",
+   "fields": [
+    {"ec": "event", "table": "PA0000", "field": "MASSN", "desc": "Action type"},
+    {"ec": "event-reason", "table": "PA0000", "field": "MASSG", "desc": "Reason for action"}
+   ]
+  },
+  "PA0001": {
+   "name": "Organisational Assignment",
+   "ecOwned": true,
+   "ecObject": "Job Information",
+   "fields": [
+    {"ec": "company", "table": "PA0001", "field": "BUKRS", "desc": "Company code"},
+    {"ec": "cost-center", "table": "PA0001", "field": "KOSTL", "desc": "Cost centre"}
+   ]
+  },
+  "PA0002": {
+   "name": "Personal Data",
+   "ecOwned": true,
+   "ecObject": "Biographical Information / Personal Information",
+   "fields": [
+    {"ec": "date-of-birth", "table": "PA0002", "field": "GBDAT", "desc": "Date of birth"},
+    {"ec": "place-of-birth", "table": "PA0002", "field": "GBORT", "desc": "Place of birth"}
+   ]
+  },
+  "PA0007": {
+   "name": "Planned Working Time",
+   "ecOwned": true,
+   "ecObject": "Job Information",
+   "fields": [
+    {"ec": "workschedule-id", "table": "PA0007", "field": "SCHKZ", "desc": "Work schedule rule"}
+   ]
+  },
+  "PA0008": {
+   "name": "Basic Pay",
+   "ecOwned": true,
+   "ecObject": "Compensation Information / Pay Component Recurring",
+   "fields": [
+    {"ec": "fte", "table": "PA0008", "field": "BSGRD", "desc": "Capacity utilisation level"}
+   ]
+  }
+ },
+ "_pending": [
+  "PA0006 Addresses", "PA0009 Bank Details", "PA0014 Recurring Payments",
+  "PA0015 Additional Payments", "PA0021 Family/Related Person",
+  "PA0027 Cost Distribution", "PA0041 Date Specifications", "PA0105 Communication"
+ ]
+}
