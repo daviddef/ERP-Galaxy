@@ -1,0 +1,383 @@
+[
+ {
+  "id": "sap-1",
+  "kind": "sourced",
+  "title": "Read the Universal Journal, not the old FI tables",
+  "body": "The classic FI index and totals tables are no longer the system of record. Custom programs that select from them need to read ACDOCA instead. This single instruction covers more tables than any other in the Simplification List.",
+  "sapAction": "Adapt access to new simplified finance data model in your customer-specific programs – refer to SAP note 1976487.",
+  "tables": [
+   "ANEA",
+   "ANEK",
+   "ANEP",
+   "ANLC",
+   "ANLP",
+   "BSAD",
+   "BSAK",
+   "BSAS",
+   "BSID",
+   "BSIK",
+   "BSIM",
+   "BSIS",
+   "CKMI1",
+   "COEP",
+   "FAGLBSAS",
+   "FAGLBSIS",
+   "FAGLFLEXA",
+   "FMGLFLEXA",
+   "FMGLFLEXT",
+   "GLT0",
+   "JVGLFLEXA",
+   "JVGLFLEXT",
+   "KNC1",
+   "KNC3",
+   "LFC1",
+   "LFC3",
+   "MLCD",
+   "MLCR",
+   "MLHD",
+   "MLIT",
+   "MLPP",
+   "PSGLFLEXA",
+   "PSGLFLEXT",
+   "T012K",
+   "T012T"
+  ],
+  "notes": [
+   "2270333"
+  ]
+ },
+ {
+  "id": "sap-2",
+  "kind": "sourced",
+  "title": "Anything writing MKPF or MSEG must write MATDOC",
+  "body": "Inventory management collapsed into one document table. Reads may survive through compatibility views, but updates do not — code that writes the old tables has to be changed.",
+  "sapAction": "Any update to MKPF, MSEG, MSEGO1 & MSEGO2 tables in custom code needs to be changed for MATDOC & MATDOCOIL tables correspondingly.",
+  "tables": [
+   "MARCHO1",
+   "MARCO1",
+   "MARDHO1",
+   "MARDO1",
+   "MCHABO1",
+   "MCHBO1",
+   "MKOLHO1",
+   "MKOLO1",
+   "MKPF",
+   "MSEG",
+   "MSEGO1",
+   "MSEGO2",
+   "MSKAHO1",
+   "MSKAO1",
+   "MSKUHO1",
+   "MSKUO1",
+   "MSLBHO1",
+   "MSLBO1",
+   "MSPRHO1",
+   "MSPRO1"
+  ],
+  "notes": [
+   "2328419"
+  ]
+ },
+ {
+  "id": "sap-3",
+  "kind": "sourced",
+  "title": "Turn off the statistical moving average for throughput",
+  "body": "Not mandatory, but SAP recommends it: leaving it active costs transactional throughput in Material Ledger processing.",
+  "sapAction": "Deactivation of the statistical moving average is not mandatory in SAP S/4HANA, but is nevertheless recommended in order to achieve a significant increase of transactional data throughput for goods movements.",
+  "tables": [
+   "CKLMLCR",
+   "CKMLCR",
+   "CKMLCRWIP",
+   "CKMLKEPH",
+   "CKMLLACRWIP",
+   "CKMLLAPPWIP",
+   "CKMLMV003",
+   "CKMLMV004",
+   "CKMLMV004WIP",
+   "CKMLMV011",
+   "CKMLPP",
+   "CKMLPPWIP",
+   "CKMLPRKEKO",
+   "CKMLPRKEPH",
+   "MLCRF",
+   "MLKEPH",
+   "MLPPF"
+  ],
+  "notes": [
+   "2354768"
+  ]
+ },
+ {
+  "id": "sap-4",
+  "kind": "sourced",
+  "title": "Table pools and clusters are gone — including CDCLS",
+  "body": "Removed as of 1809. Code referencing the container objects breaks; the logical tables survive as transparent tables. This is why change-document access needs checking.",
+  "sapAction": "As in release 1809 table pools and table clusters (both have the object type R3TR SQLT; example table pool is ATAB; example table cluster is CDCLS) are removed, customer coding that has references to table pools or table clusters needs to b…",
+  "tables": [
+   "ATAB",
+   "BSEG",
+   "CDCLS",
+   "CDPOS",
+   "DD06L",
+   "DD06T",
+   "DD16S",
+   "DOKCLU",
+   "DOKTL",
+   "INDX",
+   "RFBLG",
+   "STXL"
+  ],
+  "notes": [
+   "2577406"
+  ]
+ },
+ {
+  "id": "sap-5",
+  "kind": "sourced",
+  "title": "Append structures on VBUK or VBUP need rework",
+  "body": "The SD status tables were eliminated and their fields folded into the header and item tables. Any customer append on them has nowhere to go without adaptation.",
+  "sapAction": "Adapt customer code according to the custom code check results, see SAP Note 2198647 for a detailed description. • If you have added one or more append structures to database tables VBUK or VBUP (document status header and item table) in th…",
+  "tables": [
+   "LIKP",
+   "LIPS",
+   "S066",
+   "S067",
+   "VAKPA",
+   "VAPMA",
+   "VBAK",
+   "VBAP",
+   "VBFA",
+   "VBOX",
+   "VBRK",
+   "VLKPA"
+  ],
+  "notes": [
+   "2267306"
+  ]
+ },
+ {
+  "id": "sap-6",
+  "kind": "sourced",
+  "title": "LIS in PP is an interim solution — don't invest heavily",
+  "body": "SAP is explicit that the Logistics Information System is a bridge in S/4HANA. Building new reporting on these structures is building on something with a stated end.",
+  "sapAction": "Invest reasonably in the LIS. The LIS is intended as an interim solution in S/4HANA, which can be used until PP analytics in HANA and SAP Digital Manufacturing Insights DMI have the required scope.",
+  "tables": [
+   "S021",
+   "S022",
+   "S023",
+   "S024",
+   "S025",
+   "S026",
+   "S028",
+   "S225",
+   "S227"
+  ],
+  "notes": [
+   "2268063"
+  ]
+ },
+ {
+  "id": "sap-7",
+  "kind": "sourced",
+  "title": "LIS in PM is an interim solution — don't invest heavily",
+  "body": "Same position as PP: the information structures remain usable, but SAP frames them as an interim step rather than a destination.",
+  "sapAction": "Invest reasonably in the LIS. The LIS is intended as an interim solution, which can be used until PM analytics in HANA has the required scope.",
+  "tables": [
+   "S061",
+   "S062",
+   "S063",
+   "S064",
+   "S065",
+   "S070",
+   "S114",
+   "S115",
+   "S116"
+  ],
+  "notes": [
+   "2267463"
+  ]
+ },
+ {
+  "id": "sap-8",
+  "kind": "sourced",
+  "title": "KONV appends must move to PRCD_ELEMENTS",
+  "body": "Pricing conditions changed their persistence table. KONV still exists, which is exactly why this one is missed — the appends do not come along automatically.",
+  "sapAction": "Carefully follow the instructions in SAP Notes 2188695, 2189301, and 2220005. • If you have added one or more append structures to database table KONV in the source release to store additional data, and these fields are to be used in SAP S/…",
+  "tables": [
+   "J_3GPRLHD",
+   "KOND3",
+   "KONDN",
+   "KONH",
+   "KONHM",
+   "KONV",
+   "NACH",
+   "WIND"
+  ],
+  "notes": [
+   "2267308"
+  ]
+ },
+ {
+  "id": "sap-9",
+  "kind": "sourced",
+  "title": "Foreign trade customizing tables retired in 1709",
+  "body": "A small set of customizing tables became obsolete. Worth checking early because they are easy to overlook in a config comparison.",
+  "sapAction": "The following tables and fields become obsolete in release 1709: Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4HANA Cloud • Customizing table T605Z: Foreign Trade: Proposal for Bus.",
+  "tables": [
+   "T161W",
+   "T605U",
+   "T605Z",
+   "T616U",
+   "T616Z"
+  ],
+  "notes": [
+   "2468294"
+  ]
+ },
+ {
+  "id": "sap-10",
+  "kind": "sourced",
+  "title": "CO compatibility views are a stopgap, not a destination",
+  "body": "Reading CO data through the compatibility views works, but SAP asks you to move to direct ACDOCA access for the affected value types.",
+  "sapAction": "Please check your customer-specific programs using CO tables. Customer coding should be adapted by replacing the access via compatibility views with direct access to ACDOCA for value types 04 and 11. Details are described in note 2185026.",
+  "tables": [
+   "COBK",
+   "COSP_BAK",
+   "COSS_BAK",
+   "COVP"
+  ],
+  "notes": [
+   "2270404"
+  ]
+ },
+ {
+  "id": "sap-11",
+  "kind": "sourced",
+  "title": "Clean up total requirements before converting",
+  "body": "A pre-conversion housekeeping step. Custom code reading the requirements tables needs checking at the same time.",
+  "sapAction": "Follow the instructions for \"Clean up Total Requirements\" in the SAP help portal (Link) Related SAP Notes Custom Code related information Custom code reading one of the tables RQIT, RQHD, or MDRI will no longer work.",
+  "tables": [
+   "MDRI",
+   "RQHD",
+   "RQIT"
+  ],
+  "notes": [
+   "2268089"
+  ]
+ },
+ {
+  "id": "sap-12",
+  "kind": "sourced",
+  "title": "Classic Profit Centre planning needs a new home",
+  "body": "Planning in classic PCA is not carried forward as-is; SAP names the alternatives, and the choice between them is a design decision, not a technical one.",
+  "sapAction": "As alternatives to planning in classical PCA you have the following options: • SAP Analytics Cloud for planning with SAP S/4HANA (SAC) • SAP S/4HANA G/L planning transactions • SAP S/4HANA integrated planning (using SAP Fiori app F1711 (Imp…",
+  "tables": [
+   "GLPCA",
+   "GLPCT"
+  ],
+  "notes": [
+   "2993220"
+  ]
+ },
+ {
+  "id": "sap-13",
+  "kind": "sourced",
+  "title": "Substance volume tracking selection criteria change",
+  "body": "An EHS consequence of the SD status tables disappearing — the selection criteria have to be adapted.",
+  "sapAction": "Adaption of the selection criteria for substance volume tracking as described in SAP Note 2198406.",
+  "tables": [
+   "VBUK",
+   "VBUP"
+  ],
+  "notes": [
+   "2267439"
+  ]
+ },
+ {
+  "id": "sap-14",
+  "kind": "sourced",
+  "title": "BUTADRSEARCH survives only for compatibility",
+  "body": "Business partner address search data is retained for compatibility reasons, not because it is still the right thing to read.",
+  "sapAction": "Be informed that the redundant storage of 'Business Partner' data in BUTADRSEARCH is only kept for compatibility reasons (customers doing a conversion that have already activated this indexing) and must not be activated by new customers.",
+  "tables": [
+   "BUTADRSEARCH"
+  ],
+  "notes": [
+   "2576961"
+  ]
+ },
+ {
+  "id": "sap-15",
+  "kind": "sourced",
+  "title": "Migrate table-logging config before you convert",
+  "body": "Run SAP's report in the source ERP system first. Doing it afterwards is not the documented path.",
+  "sapAction": "Transfer the configuration/customizing settings using SAP report AUT_MIGRATE_ENHAT_DB_DATA in SAP ERP before transforming/migrating to SAP S/4HANA.",
+  "tables": [
+   "DBTABLOG"
+  ],
+  "notes": [
+   "2268131"
+  ]
+ },
+ {
+  "id": "sap-16",
+  "kind": "sourced",
+  "title": "Exchange-rate-difference customizing moved on",
+  "body": "Custom code using the old exchange rate difference customizing has to be adapted; SAP names the affected fields.",
+  "sapAction": "Custom code that uses the old customizing of exchange rate difference handling has to be adopted. The following fields of table T169P are affected: • XPLCU • KURST Simplification List for SAP S/4HANA 2025 – Feature Pack Stack 1 and SAP S/4H…",
+  "tables": [
+   "T169P"
+  ],
+  "notes": [
+   "3053636"
+  ]
+ },
+ {
+  "id": "no-item-no-promise",
+  "title": "No simplification item is not a promise",
+  "body": "1,803 of the tables in this app have no Simplification List entry at all. That means SAP has not published a change — not that the table is safe. The app files these under “No verdict” rather than “Carries over”, because collapsing the two turns “we don't know” into “it's fine”, and that is the error most likely to hurt you.",
+  "kind": "principle",
+  "tables": [],
+  "notes": []
+ },
+ {
+  "id": "compat-reads-not-writes",
+  "title": "A compatibility view is a read, not a reprieve",
+  "body": "59 tables survive only as compatibility views. Reporting keeps working, which is exactly why they get missed — the failure surfaces later, on the first write. Treat “still readable” and “still there” as different findings.",
+  "kind": "principle",
+  "tables": [],
+  "notes": []
+ },
+ {
+  "id": "irreversible-switches",
+  "title": "Some switches cannot be unflipped",
+  "body": "The amount field length extension is off by default and, once activated in Customizing, SAP states it cannot be reversed. Decide switches like this before conversion planning hardens, not after.",
+  "kind": "principle",
+  "tables": [],
+  "notes": []
+ },
+ {
+  "id": "successor-not-new",
+  "title": "A successor table is not necessarily a new table",
+  "body": "KNA1, LFA1, MARA, MARC and RESB are all named as successors in the Simplification List, and all long predate S/4HANA. “Data now lives here” and “this is new” are different claims, and conflating them invents history.",
+  "kind": "principle",
+  "tables": [],
+  "notes": []
+ },
+ {
+  "id": "still-there-still-right",
+  "title": "“Still there” does not mean “still correct”",
+  "body": "KONV still exists after pricing moved to PRCD_ELEMENTS. BSEG still exists after the Universal Journal. A table that survives can still be the wrong thing to read, and code that compiles will keep returning plausible answers from it.",
+  "kind": "principle",
+  "tables": [],
+  "notes": []
+ },
+ {
+  "id": "check-the-source",
+  "title": "Prefer SAP's words to any summary of them",
+  "body": "While building this app, curated one-line notes had drifted from SAP's published verdicts on 20 tables — VBUK and VBUP read “unchanged” where SAP had eliminated them. Wherever a summary and the Simplification List disagree, the list wins.",
+  "kind": "principle",
+  "tables": [],
+  "notes": []
+ }
+]
