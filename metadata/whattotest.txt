@@ -1,0 +1,41 @@
+Build 20 — everything added since the build currently in App Store review.
+
+WORTH A LOOK FIRST — these are the two I could not test without a device:
+• To-do list → Export PDF. Add a few tables, then Export PDF from the to-do panel. It renders natively, so this is the one thing most likely to misbehave.
+• Share list, and the Share button in the field guide. Both go through the iOS share sheet.
+
+NEW — FIELD GUIDE
+Burger menu → Open the guide. A written ECC → S/4HANA guide generated from the app's own data, so its numbers always match what the app holds. Shareable.
+
+NEW — LESSONS LEARNED
+Burger menu → Open lessons. 23 lessons: 16 taken from SAP's own required-action text, 7 our own conclusions. Tables that have a lesson show it on their own panel — try MKPF, KONV, VBUK, BSEG.
+
+NEW — BAPIs AND FUNCTION MODULES
+Burger menu → Open catalogue. 3,622 BAPIs and RFC-enabled modules, searchable by name or application component. Try BAPI_SALESORDER, or MM-PUR.
+Where a module links to a table it is labelled "Related, not read/write" — SAP does not publish which tables a module touches, so that link is derived and says so. Try BAPI_AP_ACC_GETOPENITEMS, or open MARA.
+
+NEW — WHERE IS THIS FIELD?
+Burger menu. Ask in SAP names or plain English: "customer number, personnel number and plant". Business terms work too — try "visa", which now finds infotype 0048.
+
+NEW — SHOW AS LIST
+Filter icon → Show as list. Every table matching your filters as a table, with a Whole catalogue / Galaxy only toggle. The graph can only draw 217 tables, so this is where the rest of the 2,000+ are reachable.
+
+NEW — FILTER BY MIGRATION FATE
+Filter icon. Show only what disappears, changes, is new, carries over, or has no verdict at all.
+
+NEW — PASTE A TABLE LIST, AND SAVED VIEWS
+Paste table names from a spec and the chart shows only those. Save the whole working state under a name and reopen it.
+
+CORRECTED DATA — please sanity-check anything you know well
+• 198 index tables were being shown as "carries over" when SAP had actually published a verdict on them. Disappears went from 11 to 70.
+• VBUK, VBUP, MARC and MARD were showing our old note saying "unchanged" over the top of SAP's verdict saying otherwise.
+• 5 more verdicts added that our parser had missed, including VBBS.
+• Movement type 281 was cut off mid-sentence.
+
+CHANGED LAYOUT
+• Filters moved to their own icon next to the burger menu
+• Add to to-do and the playbook link now sit at the top of a table panel
+• Reading mode is now Brief / Detailed
+• New launch screen
+
+If something reads wrong to you as a practitioner, that is the most useful feedback — several real data errors in this build were found exactly that way.
