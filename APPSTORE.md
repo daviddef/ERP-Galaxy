@@ -374,3 +374,25 @@ The pattern that made repeated swaps safe, worth keeping:
 
 Uploading a TestFlight build never disturbed the submission: a version pins a specific build,
 so TestFlight and review run independently.
+
+---
+
+## 1.0.1 resubmitted with build 24 (2026-07-22)
+
+Eighth swap. Fixes collapsible sections — Modules, Playbooks and Legend — which expanded into
+nothing in builds 22 and 23. They were flex items in a column drawer, so an open `<details>`
+was compressed to roughly its summary height and `overflow:hidden` clipped the rest.
+
+**How it got shipped twice:** the restructure was verified structurally — sections present,
+functions reachable, styles defined, screenshots taken — but every screenshot was of the
+*collapsed* state, which looks perfect. Nothing opened a fold and measured it. A rendered height
+smaller than its own content is the check that would have caught it, and it is cheap:
+
+    open the section, compare element height against child height
+
+Worth doing for any collapsible or scrollable container before shipping.
+
+**Sequencing rule reinforced this round:** build 24 had uploaded but had not yet appeared in
+`/v1/builds` when the swap was requested. Cancelling at that moment would have left 1.0.1 in
+`DEVELOPER_REJECTED` with nothing attachable. Always confirm the replacement is present and
+`VALID` *first* — the script now aborts rather than cancelling if it is not.
